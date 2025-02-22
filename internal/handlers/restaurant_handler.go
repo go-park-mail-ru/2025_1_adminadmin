@@ -37,6 +37,8 @@ func RestaurantList(w http.ResponseWriter, r *http.Request) {
 		offset = 0
 	}
 
+	w.Header().Set("total", strconv.Itoa(len(restaurants)))
+
 	if offset > len(restaurants){
 		err = json.NewEncoder(w).Encode([]models.Restaurant{})
 		if err != nil {
