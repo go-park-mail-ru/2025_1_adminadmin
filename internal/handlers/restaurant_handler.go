@@ -22,38 +22,94 @@ var restaurants = []models.Restaurant{
 	{Id: uuid.NewV4(), Name: "Sea Breeze", Description: "Свежие морепродукты", Type: "Морепродукты", Rating: 4.9},
 }
 
-func RestaurantList(w http.ResponseWriter, r *http.Request) {
+var defaultRestaurantOptions = RestaurantOptions{
+	count:  10,
+	offset: 0,
+}
 
+type RestaurantOptions struct {
+	count  int
+	offset int
+}
+
+type applyRestaurantOption interface {
+	apply(*RestaurantOptions)
+}
+
+type funcRestaurantOption struct {
+	f func(option *RestaurantOptions)
+}
+
+func (fdo *funcRestaurantOption) apply(opt *RestaurantOptions) {
+	fdo.f(opt)
+}
+
+func newFuncRestaurantOption(f func(option *RestaurantOptions)) *funcRestaurantOption {
+	return &funcRestaurantOption{
+		f: f,
+	}
+}
+
+func WithCustomCount(count int) applyRestaurantOption {
+	return newFuncRestaurantOption(func(o *RestaurantOptions) {
+		if count >= 0 && count <= len(restaurants) {
+			o.count = count
+		} 
+		if count > len(restaurants) {
+			o.count = len(restaurants)
+		}
+		if count < 0 {
+			o.count = 0
+		}
+	})
+}
+
+func WithCustomOffset(offset int) applyRestaurantOption {
+	return newFuncRestaurantOption(func(o *RestaurantOptions) {
+		if offset >= 0 && offset < len(restaurants) {
+			o.offset = offset
+		} else {
+			o.count = 0
+		}
+	})
+}
+
+type Options struct {
+	opts RestaurantOptions
+}
+
+func NewOptions(opts ...applyRestaurantOption) *Options {
+	options := defaultRestaurantOptions
+	for _, option := range opts {
+		option.apply(&options)
+	}
+	return &Options{opts: options}
+
+}
+
+func RestaurantList(w http.ResponseWriter, r *http.Request) {
 	countStr := r.URL.Query().Get("count")
 	offsetStr := r.URL.Query().Get("offset")
 
 	count, err := strconv.Atoi(countStr)
-	if err != nil || count < 0 || count > len(restaurants) {
-		count = len(restaurants)
+	if err != nil {
+		count = defaultRestaurantOptions.count
 	}
 
 	offset, err := strconv.Atoi(offsetStr)
-	if err != nil || offset < 0 {
-		offset = 0
+	if err != nil {
+		offset = defaultRestaurantOptions.offset
 	}
+
+	params := NewOptions(WithCustomCount(count), WithCustomOffset(offset))
 
 	w.Header().Set("total", strconv.Itoa(len(restaurants)))
-
-	if offset > len(restaurants){
-		err = json.NewEncoder(w).Encode([]models.Restaurant{})
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
-		return
-	}
-	
-	end := offset + count
+	end := params.opts.offset + params.opts.count
 	if end > len(restaurants){
 		end = len(restaurants)
 	}
 
-	err = json.NewEncoder(w).Encode(restaurants[offset:end])
+	err = json.NewEncoder(w).Encode(restaurants[params.opts.offset:end])
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
