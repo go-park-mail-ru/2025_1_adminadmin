@@ -19,6 +19,10 @@ func main() {
 
 		auth.HandleFunc("/signin", handlers.SignIn).Methods(http.MethodPost, http.MethodOptions)
 	}
+	restaurants := r.PathPrefix("/restaurants").Subrouter()
+	{
+		restaurants.HandleFunc("/", handlers.RestaurantList).Methods(http.MethodGet, http.MethodOptions)
+	}
 	http.Handle("/", r)
 	srv := http.Server{
 		Handler:           r,
