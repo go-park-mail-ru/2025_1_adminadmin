@@ -43,14 +43,13 @@ func RestaurantList(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+		return
 	}
 	
 	end := offset + count
 	if end > len(restaurants){
 		end = len(restaurants)
 	}
-
-
 
 	err = json.NewEncoder(w).Encode(restaurants[offset:end])
 	if err != nil {
