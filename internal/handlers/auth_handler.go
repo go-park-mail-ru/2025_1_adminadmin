@@ -1,13 +1,21 @@
 package handlers
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	"github.com/satori/uuid"
 )
+
+var users = make(map[string]models.User)
+
+func hashSHA256(password string) string {
+	hash := sha256.Sum256([]byte(password))
+	return hex.EncodeToString(hash[:])
+}
 
 func SignIn(w http.ResponseWriter, r *http.Request) {
 	var req models.SignInReq
@@ -16,18 +24,14 @@ func SignIn(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	fmt.Printf("%+v", req)
-	user := models.User{
-		Login:       "test",
-		Id:          uuid.FromStringOrNil("8b6e19d0-833e-45c6-a5c4-cff9cf4d295b"),
-		Description: "dsf",
-		UserPic:     "default.png",
-	}
-	err = json.NewEncoder(w).Encode(user)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
+
+	user, exists := users[req.Login]
+	if !exists || user.PasswordHash != hashSHA256(req.Password) {
+		http.Error(w, "Неверные данные", http.StatusUnauthorized)
 		return
 	}
+
+	w.WriteHeader(http.StatusOK)
 }
 
 func SignUp(w http.ResponseWriter, r *http.Request) {
@@ -37,16 +41,21 @@ func SignUp(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	fmt.Printf("%+v", req)
-	user := models.User{
-		Login:       "test",
-		Id:          uuid.FromStringOrNil("8b6e19d0-833e-45c6-a5c4-cff9cf4d295b"),
-		Description: "dsf",
-		UserPic:     "default.png",
-	}
-	err = json.NewEncoder(w).Encode(user)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
+	_, exists := users[req.Login]
+	if exists {
+		http.Error(w, "Данный логин уже занят", http.StatusConflict)
 		return
 	}
+
+	hashedPassword := hashSHA256(req.Password)
+
+	user := models.User{
+		Login:        req.Login,
+		Id:           uuid.NewV4(),
+		Description:  "New User",
+		UserPic:      "default.png",
+		PasswordHash: hashedPassword,
+	}
+	users[req.Login] = user
+	w.WriteHeader(http.StatusCreated)
 }
