@@ -21,6 +21,7 @@ func main() {
 	{
 		auth.HandleFunc("/signup", handlers.SignUp).Methods(http.MethodPost, http.MethodOptions)
 		auth.HandleFunc("/signin", handlers.SignIn).Methods(http.MethodPost, http.MethodOptions)
+		auth.HandleFunc("/check", handlers.Check).Methods(http.MethodGet, http.MethodOptions)
 	}
 	restaurants := r.PathPrefix("/restaurants").Subrouter()
 	{

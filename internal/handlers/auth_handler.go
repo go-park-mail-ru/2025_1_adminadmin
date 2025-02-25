@@ -4,10 +4,14 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"unicode"
+	"os"
+	"time"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
+	"github.com/golang-jwt/jwt"
 	"github.com/satori/uuid"
 )
 
@@ -57,6 +61,14 @@ func validPassword(password string) bool {
 	return up && low && digit && special
 }
 
+func generateToken(login string) (string, error) {
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"login": login,
+		"exp":   time.Now().Add(time.Hour * 24).Unix(),
+	})
+	return token.SignedString([]byte(os.Getenv("JWT_SECRET")))
+}
+
 func SignIn(w http.ResponseWriter, r *http.Request) {
 	var req models.SignInReq
 	err := json.NewDecoder(r.Body).Decode(&req)
@@ -76,6 +88,23 @@ func SignIn(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	token, err := generateToken(user.Login)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	http.SetCookie(w, &http.Cookie{
+		Name:    "token",
+		Value:   token,
+		Expires: time.Now().Add(24 * time.Hour),
+	})
+
+	err = json.NewEncoder(w).Encode(user)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 	w.WriteHeader(http.StatusOK)
 }
 
@@ -108,10 +137,56 @@ func SignUp(w http.ResponseWriter, r *http.Request) {
 	user := models.User{
 		Login:        req.Login,
 		Id:           uuid.NewV4(),
+		PhoneNumber:  "88005553535",
 		Description:  "New User",
 		UserPic:      "default.png",
 		PasswordHash: hashedPassword,
 	}
 	users[req.Login] = user
+
+	token, err := generateToken(user.Login)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	http.SetCookie(w, &http.Cookie{
+		Name:    "token",
+		Value:   token,
+		Expires: time.Now().Add(24 * time.Hour),
+	})
+
+	err = json.NewEncoder(w).Encode(user)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 	w.WriteHeader(http.StatusCreated)
+}
+
+func Check(w http.ResponseWriter, r *http.Request) {
+	cookie, err := r.Cookie("token")
+	if err != nil {
+		if err == http.ErrNoCookie {
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	tokenStr := cookie.Value
+
+	token, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+		}
+		return []byte(os.Getenv("JWT_SECRET")), nil
+	})
+
+	if err != nil || !token.Valid {
+        w.WriteHeader(http.StatusUnauthorized)
+        return
+    }
+
+    w.WriteHeader(http.StatusOK)
 }
