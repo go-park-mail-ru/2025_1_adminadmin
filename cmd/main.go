@@ -1,7 +1,11 @@
 package main
 
 import (
+	"context"
 	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
 	"time"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/handlers"
@@ -31,6 +35,17 @@ func main() {
 		ReadHeaderTimeout: 10 * time.Second,
 	}
 
-	srv.ListenAndServe()
+	go func() {
+		srv.ListenAndServe()
+	}()
 
+	stop := make(chan os.Signal, 1)
+	signal.Notify(stop, os.Interrupt, syscall.SIGTERM)
+
+	<-stop
+
+	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	defer cancel()
+
+	srv.Shutdown(ctx)
 }
