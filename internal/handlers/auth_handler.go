@@ -100,6 +100,8 @@ func SignIn(w http.ResponseWriter, r *http.Request) {
 		Expires: time.Now().Add(24 * time.Hour),
 	})
 
+	w.Header().Set("Content-Type", "application/json")
+
 	err = json.NewEncoder(w).Encode(user)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -155,6 +157,8 @@ func SignUp(w http.ResponseWriter, r *http.Request) {
 		Value:   token,
 		Expires: time.Now().Add(24 * time.Hour),
 	})
+
+	w.Header().Set("Content-Type", "application/json")
 
 	err = json.NewEncoder(w).Encode(user)
 	if err != nil {
