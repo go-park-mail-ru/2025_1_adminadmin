@@ -27,7 +27,7 @@ func TestSignIn(t *testing.T) {
 
 	testUser := models.User{
 		Login:        "test123",
-		PasswordHash: hashPassword(salt, "password123"), // Используем тот же пароль, что и в запросе
+		PasswordHash: hashPassword(salt, "password123"),
 		Id:           uuid.NewV4(),
 		PhoneNumber:  "88005553535",
 		Description:  "New User",
