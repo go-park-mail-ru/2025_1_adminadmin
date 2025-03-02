@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"bytes"
+	"crypto/rand"
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
@@ -14,6 +16,7 @@ import (
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	"github.com/golang-jwt/jwt"
 	"github.com/satori/uuid"
+	"golang.org/x/crypto/argon2"
 )
 
 var users = make(map[string]models.User)
@@ -21,6 +24,18 @@ var users = make(map[string]models.User)
 func hashSHA256(password string) string {
 	hash := sha256.Sum256([]byte(password))
 	return hex.EncodeToString(hash[:])
+}
+
+func hashPassword(salt []byte, plainPassword string) []byte {
+	hashedPass := argon2.IDKey([]byte(plainPassword), salt, 1, 64*1024, 4, 32)
+	return append(salt, hashedPass...)
+}
+
+func checkPassword(passHash []byte, plainPassword string) bool {
+	salt := make([]byte, 8)
+	copy(salt, passHash[:8])
+	userPassHash := hashPassword(salt, plainPassword)
+	return bytes.Equal(userPassHash, passHash)
 }
 
 var allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-"
@@ -85,7 +100,7 @@ func SignIn(w http.ResponseWriter, r *http.Request) {
 	}
 
 	user, exists := users[req.Login]
-	if !exists || user.PasswordHash != hashSHA256(req.Password) {
+	if !exists || !checkPassword(user.PasswordHash, req.Password) {
 		http.Error(w, "Неверные данные", http.StatusUnauthorized)
 		return
 	}
@@ -151,7 +166,10 @@ func SignUp(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	hashedPassword := hashSHA256(req.Password)
+	salt := make([]byte, 8)
+	rand.Read(salt)
+
+	hashedPassword := hashPassword(salt, req.Password)
 
 	user := models.User{
 		Login:        req.Login,

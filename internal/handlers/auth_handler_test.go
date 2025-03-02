@@ -346,3 +346,52 @@ func TestCheck(t *testing.T) {
 		})
 	}
 }
+
+func TestValidLogin(t *testing.T) {
+	tests := []struct {
+		name  string
+		login string
+		want  bool
+	}{
+		{"Valid login", "user_123", true},
+		{"Too short", "ab", false},
+		{"Too long", "abcdefghijklmnopqrstuvwxyzABCDEF", false},
+		{"Invalid characters", "user@name", false},
+		{"Empty login", "", false},
+		{"Valid with hyphen", "user-name", true},
+		{"Valid with underscore", "user_name", true},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := validLogin(tt.login); got != tt.want {
+				t.Errorf("validLogin(%q) = %v, want %v", tt.login, got, tt.want)
+			}
+		})
+	}
+}
+
+func TestValidPassword(t *testing.T) {
+	tests := []struct {
+		name     string
+		password string
+		want     bool
+	}{
+		{"Valid password", "Password1!", true},
+		{"Too short", "Pass1!", false},
+		{"Too long", "ThisPasswordIsWayTooLong123!", false},
+		{"No uppercase", "password1!", false},
+		{"No lowercase", "PASSWORD1!", false},
+		{"No digit", "Password!", false},
+		{"No special character", "Password1", false},
+		{"Empty password", "", false},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := validPassword(tt.password); got != tt.want {
+				t.Errorf("validPassword(%q) = %v, want %v", tt.password, got, tt.want)
+			}
+		})
+	}
+}

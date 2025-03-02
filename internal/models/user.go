@@ -8,5 +8,5 @@ type User struct {
 	Id           uuid.UUID `json:"id"`
 	Description  string    `json:"description"`
 	UserPic      string    `json:"path"`
-	PasswordHash string    `json:"-"`
+	PasswordHash []byte   `json:"-"`
 }
