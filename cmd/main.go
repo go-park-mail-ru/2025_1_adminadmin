@@ -60,7 +60,7 @@ func main() {
 	}
 
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:3000"}, // Без слэша в конце
+		AllowedOrigins:   []string{"http://localhost:3000/login"}, 
 		AllowedMethods:   []string{http.MethodGet, http.MethodPost, http.MethodOptions},
 		AllowedHeaders:   []string{"Content-Type", "Authorization"},
 		AllowCredentials: true,
@@ -71,7 +71,7 @@ func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self';")
 
-		w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000") 
+		w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000/login") 
 		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
 		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 		w.Header().Set("Access-Control-Allow-Credentials", "true")
