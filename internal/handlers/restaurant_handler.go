@@ -6,11 +6,20 @@ import (
 	"strconv"
 
 	utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/utils/options"
+	"github.com/jackc/pgx/v4/pgxpool"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	"github.com/gorilla/mux"
 	uuid "github.com/satori/uuid"
 )
+
+type Handler struct{
+	db *pgxpool.Pool 
+}
+
+func CreateHandler(p *pgxpool.Pool) *Handler{
+	return &Handler{db : p}
+}
 
 var restaurants = []models.Restaurant{
 	{Id: uuid.NewV4(), Name: "La Piazza", Description: "Итальянская кухня", Type: "Итальянский", Rating: 4.5},
@@ -25,10 +34,10 @@ var restaurants = []models.Restaurant{
 	{Id: uuid.NewV4(), Name: "Sea Breeze", Description: "Свежие морепродукты", Type: "Морепродукты", Rating: 4.9},
 }
 
-func RestaurantList(w http.ResponseWriter, r *http.Request) {
+func (h *Handler)RestaurantList(w http.ResponseWriter, r *http.Request) {
 	countStr := r.URL.Query().Get("count")
 	offsetStr := r.URL.Query().Get("offset")
-
+	h.db.Query(r.Context(),"")
 	count, err := strconv.Atoi(countStr)
 	if err != nil {
 		count = 10

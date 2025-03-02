@@ -40,7 +40,7 @@ func main() {
 		log.Fatalf("Ошибка при подключении к PostgreSQL: %v", err)
 	}
 	defer pool.Close()
-
+	h := handlers.CreateHandler(pool)
 	r := mux.NewRouter().PathPrefix("/api").Subrouter()
 	r.NotFoundHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Not Found", http.StatusTeapot)
@@ -56,7 +56,7 @@ func main() {
 	}
 	restaurants := r.PathPrefix("/restaurants").Subrouter()
 	{
-		restaurants.HandleFunc("/list", handlers.RestaurantList).Methods(http.MethodGet, http.MethodOptions)
+		restaurants.HandleFunc("/list", h.RestaurantList).Methods(http.MethodGet, http.MethodOptions)
 		restaurants.HandleFunc("/{id}", handlers.RestaurantByID).Methods(http.MethodGet, http.MethodOptions)
 	}
 
