@@ -12,6 +12,7 @@ import (
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/handlers"
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/rs/cors"
 )
 
 func initDB() (*pgxpool.Pool, error) {
@@ -44,7 +45,7 @@ func main() {
 	r.NotFoundHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Not Found", http.StatusTeapot)
 	})
-	
+
 	auth := r.PathPrefix("/auth").Subrouter()
 	{
 		auth.HandleFunc("/signup", handlers.SignUp).Methods(http.MethodPost, http.MethodOptions)
@@ -57,9 +58,22 @@ func main() {
 		restaurants.HandleFunc("/{id}", handlers.RestaurantByID).Methods(http.MethodGet, http.MethodOptions)
 
 	}
+
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{http.MethodGet, http.MethodPost, http.MethodOptions},
+		AllowedHeaders:   []string{"Content-Type", "Authorization"},
+		AllowCredentials: true,
+	})
+
+	http.Handle("/", http.StripPrefix("/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self';")
+		c.Handler(r).ServeHTTP(w, r)
+	})))
+
 	http.Handle("/", r)
 	srv := http.Server{
-		Handler:           r,
+		Handler:           c.Handler(r),
 		Addr:              ":5458",
 		ReadTimeout:       10 * time.Second,
 		WriteTimeout:      10 * time.Second,
