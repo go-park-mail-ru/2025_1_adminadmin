@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -39,16 +40,25 @@ func main() {
 	}
 
 	go func() {
-		srv.ListenAndServe()
+		err := srv.ListenAndServe()
+		if err != nil && err != http.ErrServerClosed {
+			log.Fatalf("Ошибка при запуске сервера: %v", err)
+		}
 	}()
 
 	stop := make(chan os.Signal, 1)
 	signal.Notify(stop, os.Interrupt, syscall.SIGTERM)
 
 	<-stop
+	log.Println("Получен сигнал остановки")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
 
-	srv.Shutdown(ctx)
+	err := srv.Shutdown(ctx)
+	if err != nil {
+		log.Printf("Ошибка при остановке сервера: %v", err)
+	} else {
+		log.Println("Сервер успешно остановлен")
+	}
 }

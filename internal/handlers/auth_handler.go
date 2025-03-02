@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 	"unicode"
 
@@ -22,13 +23,14 @@ func hashSHA256(password string) string {
 	return hex.EncodeToString(hash[:])
 }
 
+var allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-"
+
 func validLogin(login string) bool {
 	if len(login) < 3 || len(login) > 20 {
 		return false
 	}
 	for _, char := range login {
-		isLatin := !(char >= 'a' && char <= 'z') && !(char >= 'A' && char <= 'Z')
-		if isLatin && !unicode.IsDigit(char) && char != '_' && char != '-' {
+		if !strings.Contains(allowedChars, string(char)) {
 			return false
 		}
 	}
@@ -38,7 +40,7 @@ func validLogin(login string) bool {
 func validPassword(password string) bool {
 	var up, low, digit, special bool
 
-	if len(password) < 8 {
+	if len(password) < 8 || len(password) > 25 {
 		return false
 	}
 
