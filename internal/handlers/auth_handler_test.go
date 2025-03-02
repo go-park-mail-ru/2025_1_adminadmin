@@ -16,7 +16,10 @@ import (
 	"github.com/satori/uuid"
 )
 
+
+
 func TestSignIn(t *testing.T) {
+	salt := make([]byte, 8)
 	type args struct {
 		w *httptest.ResponseRecorder
 		r *http.Request
@@ -24,7 +27,7 @@ func TestSignIn(t *testing.T) {
 
 	testUser := models.User{
 		Login:        "test123",
-		PasswordHash: hashSHA256("password123"),
+		PasswordHash: hashPassword(salt, "password123"), // Используем тот же пароль, что и в запросе
 		Id:           uuid.NewV4(),
 		PhoneNumber:  "88005553535",
 		Description:  "New User",
@@ -124,7 +127,7 @@ func TestSignUp(t *testing.T) {
 
 	testUser := models.User{
 		Login:        "existing_user",
-		PasswordHash: hashSHA256("Pass@123"),
+		PasswordHash: []byte(hashSHA256("Pass@123")),
 		Id:           uuid.NewV4(),
 		PhoneNumber:  "88005553535",
 		Description:  "Existing User",
@@ -150,7 +153,7 @@ func TestSignUp(t *testing.T) {
 		{
 			name: "Invalid login format",
 			args: args{
-				r: httptest.NewRequest("POST", "http://localhost:5458/api/auth/signup", bytes.NewBuffer([]byte(`{"login":"u","first_name":"Тайлер","second_name":"Дерден","phone_number":"88005553535","password":"password123"}`))),
+				r: httptest.NewRequest("POST", "http://localhost:5458/api/auth/signup", bytes.NewBuffer([]byte(`{"login":"u","first_name":"Тайлер","second_name":"Дерден","phone_number":"88005553535","password":"Pass@123"}`))),
 				w: httptest.NewRecorder(),
 			},
 			expectedCode: http.StatusBadRequest,
