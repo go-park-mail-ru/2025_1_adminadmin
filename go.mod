@@ -6,6 +6,7 @@ require (
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/gorilla/mux v1.8.1
 	github.com/jackc/pgx/v4 v4.18.3
+	github.com/rs/cors v1.11.1
 	github.com/satori/uuid v1.2.0
 	github.com/stretchr/testify v1.10.0
 	golang.org/x/crypto v0.35.0
