@@ -10,9 +10,9 @@ import (
 	"time"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/handlers"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/middleware"
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
-	"github.com/rs/cors"
 )
 
 func initDB() (*pgxpool.Pool, error) {
@@ -46,6 +46,8 @@ func main() {
 		http.Error(w, "Not Found", http.StatusTeapot)
 	})
 
+	r.Use(middleware.CorsMiddleware)
+
 	auth := r.PathPrefix("/auth").Subrouter()
 	{
 		auth.HandleFunc("/signup", handlers.SignUp).Methods(http.MethodPost, http.MethodOptions)
@@ -56,25 +58,12 @@ func main() {
 	{
 		restaurants.HandleFunc("/list", handlers.RestaurantList).Methods(http.MethodGet, http.MethodOptions)
 		restaurants.HandleFunc("/{id}", handlers.RestaurantByID).Methods(http.MethodGet, http.MethodOptions)
-
 	}
 
-	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:3000"},
-		AllowedMethods:   []string{http.MethodGet, http.MethodPost, http.MethodOptions},
-		AllowedHeaders:   []string{"Content-Type", "Authorization"},
-		AllowCredentials: true,
-	})
 
-	handlerWithCORS := c.Handler(r)
-
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self';")
-		handlerWithCORS.ServeHTTP(w, r)
-	})
-
+	http.Handle("/", r)
 	srv := http.Server{
-		Handler:           handlerWithCORS,
+		Handler:           r, 
 		Addr:              ":5458",
 		ReadTimeout:       10 * time.Second,
 		WriteTimeout:      10 * time.Second,
