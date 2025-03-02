@@ -71,7 +71,7 @@ func main() {
 		c.Handler(r).ServeHTTP(w, r)
 	})))
 
-	http.Handle("/", r)
+	http.Handle("/", c)
 	srv := http.Server{
 		Handler:           c.Handler(r),
 		Addr:              ":5458",
