@@ -70,11 +70,22 @@ func main() {
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self';")
+
+		w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000") 
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+		w.Header().Set("Access-Control-Allow-Credentials", "true")
+
+		if r.Method == http.MethodOptions {
+			w.WriteHeader(http.StatusOK)
+			return
+		}
+
 		handlerWithCORS.ServeHTTP(w, r)
 	})
 
 	srv := http.Server{
-		Handler:           handlerWithCORS, 
+		Handler:           handlerWithCORS,
 		Addr:              ":5458",
 		ReadTimeout:       10 * time.Second,
 		WriteTimeout:      10 * time.Second,
