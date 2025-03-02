@@ -42,7 +42,7 @@ services:
       - "8443:8443"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf 
-      - /etc/letsencrypt/live/doordashers.ru:/etc/letsencrypt/live/doordashers.ru
+      - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
       - main
     networks:
