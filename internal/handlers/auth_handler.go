@@ -6,9 +6,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"unicode"
 	"os"
 	"time"
+	"unicode"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	"github.com/golang-jwt/jwt"
@@ -95,10 +95,25 @@ func SignIn(w http.ResponseWriter, r *http.Request) {
 	}
 
 	http.SetCookie(w, &http.Cookie{
-		Name:    "token",
-		Value:   token,
-		Expires: time.Now().Add(24 * time.Hour),
+		Name:     "AdminJWT",
+		Value:    token,
+		HttpOnly: true,
+		Secure:   true,
+		Expires:  time.Now().Add(24 * time.Hour),
 	})
+
+	csrfToken := uuid.NewV4().String()
+
+	http.SetCookie(w, &http.Cookie{
+		Name:     "CSRF-Token",
+		Value:    csrfToken,
+		Expires:  time.Now().Add(24 * time.Hour),
+		HttpOnly: false,
+		Secure:   true,
+		SameSite: http.SameSiteStrictMode,
+	})
+
+	w.Header().Set("X-CSRF-Token", csrfToken)
 
 	w.Header().Set("Content-Type", "application/json")
 
@@ -139,7 +154,7 @@ func SignUp(w http.ResponseWriter, r *http.Request) {
 	user := models.User{
 		Login:        req.Login,
 		Id:           uuid.NewV4(),
-		PhoneNumber:  "88005553535",
+		PhoneNumber:  req.PhoneNumber,
 		Description:  "New User",
 		UserPic:      "default.png",
 		PasswordHash: hashedPassword,
@@ -153,23 +168,38 @@ func SignUp(w http.ResponseWriter, r *http.Request) {
 	}
 
 	http.SetCookie(w, &http.Cookie{
-		Name:    "token",
-		Value:   token,
-		Expires: time.Now().Add(24 * time.Hour),
+		Name:     "AdminJWT",
+		Value:    token,
+		Expires:  time.Now().Add(24 * time.Hour),
+		HttpOnly: true,
+		Secure:   true,
 	})
+
+	csrfToken := uuid.NewV4().String()
+
+	http.SetCookie(w, &http.Cookie{
+		Name:     "CSRF-Token",
+		Value:    csrfToken,
+		Expires:  time.Now().Add(24 * time.Hour),
+		HttpOnly: false,
+		Secure:   true,
+		SameSite: http.SameSiteStrictMode,
+	})
+
+	w.Header().Set("X-CSRF-Token", csrfToken)
 
 	w.Header().Set("Content-Type", "application/json")
 
+	w.WriteHeader(http.StatusCreated)
 	err = json.NewEncoder(w).Encode(user)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	w.WriteHeader(http.StatusCreated)
 }
 
 func Check(w http.ResponseWriter, r *http.Request) {
-	cookie, err := r.Cookie("token")
+	cookie, err := r.Cookie("AdminJWT")
 	if err != nil {
 		if err == http.ErrNoCookie {
 			w.WriteHeader(http.StatusUnauthorized)
@@ -187,10 +217,22 @@ func Check(w http.ResponseWriter, r *http.Request) {
 		return []byte(os.Getenv("JWT_SECRET")), nil
 	})
 
-	if err != nil || !token.Valid {
-        w.WriteHeader(http.StatusUnauthorized)
-        return
-    }
+	csrfToken := r.Header.Get("X-CSRF-Token")
+	if csrfToken == "" {
+		w.WriteHeader(http.StatusForbidden)
+		return
+	}
 
-    w.WriteHeader(http.StatusOK)
+	csrfCookie, err := r.Cookie("CSRF-Token")
+	if err != nil || csrfCookie.Value != csrfToken {
+		w.WriteHeader(http.StatusForbidden)
+		return
+	}
+
+	if token == nil || !token.Valid {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
 }
