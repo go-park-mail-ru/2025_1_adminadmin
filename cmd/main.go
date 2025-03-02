@@ -60,20 +60,21 @@ func main() {
 	}
 
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:3000/"},
+		AllowedOrigins:   []string{"http://localhost:3000"}, // Без слэша в конце
 		AllowedMethods:   []string{http.MethodGet, http.MethodPost, http.MethodOptions},
 		AllowedHeaders:   []string{"Content-Type", "Authorization"},
 		AllowCredentials: true,
 	})
 
-	http.Handle("/", http.StripPrefix("/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self';")
-		c.Handler(r).ServeHTTP(w, r)
-	})))
+	handlerWithCORS := c.Handler(r)
 
-	http.Handle("/", c)
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self';")
+		handlerWithCORS.ServeHTTP(w, r)
+	})
+
 	srv := http.Server{
-		Handler:           c.Handler(r),
+		Handler:           handlerWithCORS, 
 		Addr:              ":5458",
 		ReadTimeout:       10 * time.Second,
 		WriteTimeout:      10 * time.Second,
