@@ -1,0 +1,28 @@
+name: Deploy Backend
+
+on:
+  push:
+    branches:
+      - dev
+      - main 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+              cd /home/tp_code/2025_1_adminadmin
+              docker-compose down || exit 1
+              git pull || exit 1
+              docker-compose build || exit 1
+              docker-compose up -d || exit 1
