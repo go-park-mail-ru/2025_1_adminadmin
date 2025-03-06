@@ -3,8 +3,6 @@ package handlers
 import (
 	"bytes"
 	"crypto/rand"
-	"crypto/sha256"
-	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -20,11 +18,6 @@ import (
 )
 
 var users = make(map[string]models.User)
-
-func hashSHA256(password string) string {
-	hash := sha256.Sum256([]byte(password))
-	return hex.EncodeToString(hash[:])
-}
 
 func hashPassword(salt []byte, plainPassword string) []byte {
 	hashedPass := argon2.IDKey([]byte(plainPassword), salt, 1, 64*1024, 4, 32)
@@ -86,7 +79,7 @@ func generateToken(login string) (string, error) {
 	return token.SignedString([]byte(os.Getenv("JWT_SECRET")))
 }
 
-func SignIn(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) SignIn(w http.ResponseWriter, r *http.Request) {
 	var req models.SignInReq
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
@@ -99,9 +92,11 @@ func SignIn(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user, exists := users[req.Login]
-	if !exists || !checkPassword(user.PasswordHash, req.Password) {
-		http.Error(w, "Неверные данные", http.StatusUnauthorized)
+	var user models.User
+	err = h.db.QueryRow(r.Context(), "SELECT id, login, password_hash FROM users WHERE login = $1", req.Login).Scan(
+		&user.Id, &user.Login, &user.PasswordHash)
+	if err != nil || !checkPassword(user.PasswordHash, req.Password) {
+		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
 
@@ -142,7 +137,7 @@ func SignIn(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-func SignUp(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) SignUp(w http.ResponseWriter, r *http.Request) {
 	var req models.SignUpReq
 	err := json.NewDecoder(r.Body).Decode(&req)
 	if err != nil {
@@ -160,26 +155,26 @@ func SignUp(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_, exists := users[req.Login]
-	if exists {
-		http.Error(w, "Данный логин уже занят", http.StatusConflict)
+	salt := make([]byte, 8)
+	rand.Read(salt)
+	hashedPassword := hashPassword(salt, req.Password)
+
+	userID := uuid.NewV4()
+	_, err = h.db.Exec(r.Context(), "INSERT INTO users (id, login, password_hash) VALUES ($1, $2, $3)",
+		userID, req.Login, hashedPassword)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
-	salt := make([]byte, 8)
-	rand.Read(salt)
-
-	hashedPassword := hashPassword(salt, req.Password)
-
 	user := models.User{
 		Login:        req.Login,
-		Id:           uuid.NewV4(),
+		Id:           userID,
 		PhoneNumber:  req.PhoneNumber,
 		Description:  "New User",
 		UserPic:      "default.png",
 		PasswordHash: hashedPassword,
 	}
-	users[req.Login] = user
 
 	token, err := generateToken(user.Login)
 	if err != nil {
