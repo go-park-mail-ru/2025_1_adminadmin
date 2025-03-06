@@ -57,13 +57,12 @@ func main() {
 	restaurants := r.PathPrefix("/restaurants").Subrouter()
 	{
 		restaurants.HandleFunc("/list", h.RestaurantList).Methods(http.MethodGet, http.MethodOptions)
-		restaurants.HandleFunc("/{id}", handlers.RestaurantByID).Methods(http.MethodGet, http.MethodOptions)
+		restaurants.HandleFunc("/{id}", h.RestaurantByID).Methods(http.MethodGet, http.MethodOptions)
 	}
-
 
 	http.Handle("/", r)
 	srv := http.Server{
-		Handler:           r, 
+		Handler:           r,
 		Addr:              ":5458",
 		ReadTimeout:       10 * time.Second,
 		WriteTimeout:      10 * time.Second,
