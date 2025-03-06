@@ -79,7 +79,7 @@ func (h *Handler) RestaurantList(w http.ResponseWriter, r *http.Request) {
 
 	count, err := strconv.Atoi(countStr)
 	if err != nil {
-		count = 10
+		count = 100
 	}
 
 	offset, err := strconv.Atoi(offsetStr)
