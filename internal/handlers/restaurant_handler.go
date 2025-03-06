@@ -94,7 +94,8 @@ func (h *Handler) RestaurantList(w http.ResponseWriter, r *http.Request) {
 	}
 	defer rows.Close()
 
-	var restaurants []models.Restaurant
+	restaurants = []models.Restaurant{}
+
 	for rows.Next() {
 		var restaurant models.Restaurant
 		err = rows.Scan(&restaurant.Id, &restaurant.Name, &restaurant.Description, &restaurant.Type, &restaurant.Rating)
@@ -105,14 +106,13 @@ func (h *Handler) RestaurantList(w http.ResponseWriter, r *http.Request) {
 		restaurants = append(restaurants, restaurant)
 	}
 
-	w.Header().Set("total", strconv.Itoa(len(restaurants)))
-	w.Header().Set("Content-Type", "application/json")
-
-	err = json.NewEncoder(w).Encode(restaurants)
-	if err != nil {
+	if err = rows.Err(); err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(restaurants)
 }
 
 func (h *Handler) RestaurantByID(w http.ResponseWriter, r *http.Request) {
