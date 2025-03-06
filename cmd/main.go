@@ -16,9 +16,7 @@ import (
 )
 
 func initDB() (*pgxpool.Pool, error) {
-	connStr := "postgres://" + os.Getenv("POSTGRES_USER") + ":" + os.Getenv("POSTGRES_PASSWORD") +
-		"@" + os.Getenv("POSTGRES_HOST") + ":" + "5432" + "/" + os.Getenv("POSTGRES_DB") +
-		"?sslmode=disable"
+	connStr := os.Getenv("POSTGRES_CONN")
 
 	pool, err := pgxpool.Connect(context.Background(), connStr)
 	if err != nil {
