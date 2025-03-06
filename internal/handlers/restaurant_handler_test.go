@@ -7,10 +7,13 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/driftprogramming/pgxpoolmock"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
+	"github.com/golang/mock/gomock"
 	"github.com/gorilla/mux"
 	"github.com/satori/uuid"
 )
+
 //TODO: correct tests
 
 func TestRestaurantList(t *testing.T) {
@@ -94,10 +97,18 @@ func TestRestaurantList(t *testing.T) {
 		},
 	}
 
+	ctrl := gomock.NewController(t)
+	mockPool := pgxpoolmock.NewMockPgxPool(ctrl)
+	defer ctrl.Finish()
+	pgxRows := pgxpoolmock.NewRows([]string{"id", "name", "description", "type", "rating"}).AddRow(uuid.NewV4(), "restaurant #1", "bla bla bla", "some kitchen", 4.5).AddRow(uuid.NewV4(), "restaurant #1", "bla bla bla", "some kitchen", 4.5).ToPgxRows()
+	pgxRows.Next()
+	mockPool.EXPECT().Query(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).Return(pgxRows, nil).AnyTimes()
+	h := Handler{db: mockPool}
+
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
 
-			RestaurantList(test.args.w, test.args.r)
+			h.RestaurantList(test.args.w, test.args.r)
 
 			if test.args.w.Code != test.expectedCode {
 				t.Errorf("unexpected status code: expected %d got %d", test.expectedCode, test.args.w.Code)
@@ -173,10 +184,18 @@ func TestRestaurantByID(t *testing.T) {
 		},
 	}
 
+	ctrl := gomock.NewController(t)
+	mockPool := pgxpoolmock.NewMockPgxPool(ctrl)
+	defer ctrl.Finish()
+	pgxRows := pgxpoolmock.NewRows([]string{"id", "name", "description", "type", "rating"}).AddRow(uuid.NewV4(), "restaurant #1", "bla bla bla", "some kitchen", 4.5).ToPgxRows()
+	pgxRows.Next()
+	mockPool.EXPECT().Query(gomock.Any(), gomock.Any(), 0, 100).Return(pgxRows, nil)
+	h := Handler{db: mockPool}
+
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
 			router := mux.NewRouter()
-			router.HandleFunc("/api/restaurants/{id}", RestaurantByID).Methods(http.MethodGet)
+			router.HandleFunc("/api/restaurants/{id}", h.RestaurantByID).Methods(http.MethodGet)
 
 			w := httptest.NewRecorder()
 			router.ServeHTTP(w, test.args.r)

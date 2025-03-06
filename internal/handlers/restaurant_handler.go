@@ -1,10 +1,12 @@
 package handlers
 
 import (
+	_ "embed"
 	"encoding/json"
 	"net/http"
 	"strconv"
 
+	"github.com/jackc/pgtype/pgxtype"
 	"github.com/jackc/pgx/v4/pgxpool"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
@@ -12,8 +14,11 @@ import (
 	uuid "github.com/satori/uuid"
 )
 
+//go:embed scripts/select.sql
+var selectAll string
+
 type Handler struct {
-	db *pgxpool.Pool
+	db pgxtype.Querier
 }
 
 func CreateHandler(p *pgxpool.Pool) *Handler {
@@ -87,7 +92,7 @@ func (h *Handler) RestaurantList(w http.ResponseWriter, r *http.Request) {
 		offset = 0
 	}
 
-	rows, err := h.db.Query(r.Context(), "SELECT id, name, description, type, rating FROM restaurants LIMIT $1 OFFSET $2", count, offset)
+	rows, err := h.db.Query(r.Context(), selectAll, count, offset)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
