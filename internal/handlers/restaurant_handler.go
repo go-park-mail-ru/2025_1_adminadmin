@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"strconv"
 
-	utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/utils/options"
 	"github.com/jackc/pgx/v4/pgxpool"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
@@ -13,12 +12,12 @@ import (
 	uuid "github.com/satori/uuid"
 )
 
-type Handler struct{
-	db *pgxpool.Pool 
+type Handler struct {
+	db *pgxpool.Pool
 }
 
-func CreateHandler(p *pgxpool.Pool) *Handler{
-	return &Handler{db : p}
+func CreateHandler(p *pgxpool.Pool) *Handler {
+	return &Handler{db: p}
 }
 
 var restaurants = []models.Restaurant{
@@ -74,10 +73,10 @@ var restaurants = []models.Restaurant{
 	{Id: uuid.NewV4(), Name: "Sea Breeze", Description: "Свежие морепродукты", Type: "Морепродукты", Rating: 4.9},
 }
 
-func (h *Handler)RestaurantList(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) RestaurantList(w http.ResponseWriter, r *http.Request) {
 	countStr := r.URL.Query().Get("count")
 	offsetStr := r.URL.Query().Get("offset")
-	h.db.Query(r.Context(),"")
+
 	count, err := strconv.Atoi(countStr)
 	if err != nil {
 		count = 10
@@ -88,50 +87,59 @@ func (h *Handler)RestaurantList(w http.ResponseWriter, r *http.Request) {
 		offset = 0
 	}
 
-	params := utils.NewOptions(utils.WithCustomCount(count, len(restaurants)), utils.WithCustomOffset(offset, len(restaurants)))
+	rows, err := h.db.Query(r.Context(), "SELECT id, name, description, type, rating FROM restaurants LIMIT $1 OFFSET $2", count, offset)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	defer rows.Close()
 
-	w.Header().Set("total", strconv.Itoa(len(restaurants)))
-	end := params.GetOffset() + params.GetCount()
-	if end > len(restaurants) {
-		end = len(restaurants)
+	var restaurants []models.Restaurant
+	for rows.Next() {
+		var restaurant models.Restaurant
+		err = rows.Scan(&restaurant.Id, &restaurant.Name, &restaurant.Description, &restaurant.Type, &restaurant.Rating)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		restaurants = append(restaurants, restaurant)
 	}
 
+	w.Header().Set("total", strconv.Itoa(len(restaurants)))
 	w.Header().Set("Content-Type", "application/json")
 
-	err = json.NewEncoder(w).Encode(restaurants[params.GetOffset():end])
+	err = json.NewEncoder(w).Encode(restaurants)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 }
 
-func RestaurantByID(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) RestaurantByID(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	idStr := vars["id"]
 	if idStr == "" {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
+
 	id := uuid.FromStringOrNil(idStr)
 	if id == uuid.Nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
-	found := false
-	for _, restaurant := range restaurants {
-		if id == restaurant.Id {
-			w.Header().Set("Content-Type", "application/json")
-			err := json.NewEncoder(w).Encode(restaurant)
-			if err != nil {
-				w.WriteHeader(http.StatusInternalServerError)
-				return
-			}
-			found = true
-			break
-		}
-	}
-	if !found {
+	var restaurant models.Restaurant
+	err := h.db.QueryRow(r.Context(), "SELECT id, name, description, type, rating FROM restaurants WHERE id = $1", id).Scan(&restaurant.Id, &restaurant.Name, &restaurant.Description, &restaurant.Type, &restaurant.Rating)
+	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	err = json.NewEncoder(w).Encode(restaurant)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
 }
