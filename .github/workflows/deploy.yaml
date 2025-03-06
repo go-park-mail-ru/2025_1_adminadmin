@@ -21,7 +21,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-              cd /home/tp_code/2025_1_adminadmin
+              cd /home/kranus34/tp_code/2025_1_adminadmin
               docker-compose down || exit 1
               git pull || exit 1
               docker-compose build || exit 1
