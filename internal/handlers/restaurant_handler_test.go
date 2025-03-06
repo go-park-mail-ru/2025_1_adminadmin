@@ -11,6 +11,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/satori/uuid"
 )
+//TODO: correct tests
 
 func TestRestaurantList(t *testing.T) {
 	type args struct {
