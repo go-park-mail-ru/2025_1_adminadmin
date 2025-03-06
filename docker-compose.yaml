@@ -8,7 +8,7 @@ services:
     ports:
       - "5458:5458"
     environment:
-      POSTGRES_CONN: postgres://admin_test:Admin_test2025$@postgres:5432/adminadmin_v1?sslmode=disable
+      POSTGRES_CONN: ${POSTGRES_CONN}
     depends_on:
       - postgres
     networks:
