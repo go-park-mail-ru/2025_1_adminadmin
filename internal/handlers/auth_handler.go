@@ -158,6 +158,16 @@ func (h *Handler) SignUp(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if req.FirstName == "" || req.LastName == "" {
+		http.Error(w, "Имя и фамилия обязательны", http.StatusBadRequest)
+		return
+	}
+
+	if req.PhoneNumber == "" {
+		http.Error(w, "Телефон обязателен", http.StatusBadRequest)
+		return
+	}
+
 	salt := make([]byte, 8)
 	rand.Read(salt)
 	hashedPassword := hashPassword(salt, req.Password)
@@ -165,10 +175,10 @@ func (h *Handler) SignUp(w http.ResponseWriter, r *http.Request) {
 	userID := uuid.NewV4()
 	_, err = h.db.Exec(r.Context(), 
 		"INSERT INTO users (id, login, first_name, last_name, phone_number, description, user_pic, password_hash) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
-		userID, req.Login, req.FirstName, req.SecondName, req.PhoneNumber, "", "default.jpg", hashedPassword)
+		userID, req.Login, req.FirstName, req.LastName, req.PhoneNumber, "", "default.jpg", hashedPassword)
 
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
+		http.Error(w, "Ошибка сохранения пользователя", http.StatusBadRequest)
 		return
 	}
 
@@ -176,7 +186,7 @@ func (h *Handler) SignUp(w http.ResponseWriter, r *http.Request) {
 		Id:           userID,
 		Login:        req.Login,
 		FirstName:    req.FirstName,
-		LastName:     req.SecondName,
+		LastName:     req.LastName,
 		PhoneNumber:  req.PhoneNumber,
 		Description:  "",
 		UserPic:      "default.jpg",
