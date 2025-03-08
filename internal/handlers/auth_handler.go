@@ -240,7 +240,7 @@ func (h *Handler) SignUp(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func Check(w http.ResponseWriter, r *http.Request) {
+func (h *Handler) Check(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("AdminJWT")
 	if err != nil {
 		if err == http.ErrNoCookie {
@@ -275,6 +275,29 @@ func Check(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
+
+	w.WriteHeader(http.StatusOK)
+}
+
+func (h *Handler) LogOut(w http.ResponseWriter, r *http.Request) {
+	http.SetCookie(w, &http.Cookie{
+		Name:     "AdminJWT",
+		Value:    "",
+		Expires:  time.Unix(0, 0),
+		HttpOnly: true,
+		//Secure:   true,
+		Path:     "/",
+	})
+
+	http.SetCookie(w, &http.Cookie{
+		Name:     "CSRF-Token",
+		Value:    "",
+		Expires:  time.Unix(0, 0),
+		HttpOnly: false,
+		//Secure:   true,
+		SameSite: http.SameSiteStrictMode,
+		Path:     "/",
+	})
 
 	w.WriteHeader(http.StatusOK)
 }

@@ -50,7 +50,9 @@ func main() {
 	{
 		auth.HandleFunc("/signup", h.SignUp).Methods(http.MethodPost, http.MethodOptions)
 		auth.HandleFunc("/signin", h.SignIn).Methods(http.MethodPost, http.MethodOptions)
-		auth.HandleFunc("/check", handlers.Check).Methods(http.MethodGet, http.MethodOptions)
+		auth.HandleFunc("/check", h.Check).Methods(http.MethodGet, http.MethodOptions)
+		auth.HandleFunc("/logout", h.LogOut).Methods(http.MethodGet, http.MethodOptions)
+
 	}
 	restaurants := r.PathPrefix("/restaurants").Subrouter()
 	{
