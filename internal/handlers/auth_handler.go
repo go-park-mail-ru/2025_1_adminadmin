@@ -72,11 +72,17 @@ func validPassword(password string) bool {
 }
 
 func generateToken(login string) (string, error) {
+	secret := os.Getenv("JWT_SECRET")
+	if secret == "" {
+		return "", nil
+	}
+
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"login": login,
-		"exp":   time.Now().Add(time.Hour * 24).Unix(),
+		"exp":   time.Now().Add(24 * time.Hour).Unix(),
 	})
-	return token.SignedString([]byte(os.Getenv("JWT_SECRET")))
+
+	return token.SignedString([]byte(secret))
 }
 
 func (h *Handler) SignIn(w http.ResponseWriter, r *http.Request) {
@@ -93,11 +99,11 @@ func (h *Handler) SignIn(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var user models.User
-	err = h.db.QueryRow(r.Context(), 
-		"SELECT id, first_name, last_name, phone_number, description, user_pic, password_hash FROM users WHERE login = $1", 
+	err = h.db.QueryRow(r.Context(),
+		"SELECT id, first_name, last_name, phone_number, description, user_pic, password_hash FROM users WHERE login = $1",
 		req.Login).Scan(
 		&user.Id, &user.FirstName, &user.LastName, &user.PhoneNumber, &user.Description, &user.UserPic, &user.PasswordHash)
- 
+
 	if err != nil || !checkPassword(user.PasswordHash, req.Password) {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
@@ -175,7 +181,7 @@ func (h *Handler) SignUp(w http.ResponseWriter, r *http.Request) {
 	hashedPassword := hashPassword(salt, req.Password)
 
 	userID := uuid.NewV4()
-	_, err = h.db.Exec(r.Context(), 
+	_, err = h.db.Exec(r.Context(),
 		"INSERT INTO users (id, login, first_name, last_name, phone_number, description, user_pic, password_hash) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
 		userID, req.Login, req.FirstName, req.LastName, req.PhoneNumber, "", "default.jpg", hashedPassword)
 
@@ -207,6 +213,7 @@ func (h *Handler) SignUp(w http.ResponseWriter, r *http.Request) {
 		Expires:  time.Now().Add(24 * time.Hour),
 		HttpOnly: true,
 		Secure:   true,
+		Path:     "/",
 	})
 
 	csrfToken := uuid.NewV4().String()
@@ -218,6 +225,7 @@ func (h *Handler) SignUp(w http.ResponseWriter, r *http.Request) {
 		HttpOnly: false,
 		Secure:   true,
 		SameSite: http.SameSiteStrictMode,
+		Path:     "/",
 	})
 
 	w.Header().Set("X-CSRF-Token", csrfToken)
