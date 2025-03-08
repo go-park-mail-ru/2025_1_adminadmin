@@ -93,8 +93,11 @@ func (h *Handler) SignIn(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var user models.User
-	err = h.db.QueryRow(r.Context(), "SELECT id, login, password_hash FROM users WHERE login = $1", req.Login).Scan(
-		&user.Id, &user.Login, &user.PasswordHash)
+	err = h.db.QueryRow(r.Context(), 
+		"SELECT id, first_name, last_name, phone_number, description, user_pic, password_hash FROM users WHERE login = $1", 
+		req.Login).Scan(
+		&user.Id, &user.FirstName, &user.LastName, &user.PhoneNumber, &user.Description, &user.UserPic, &user.PasswordHash)
+ 
 	if err != nil || !checkPassword(user.PasswordHash, req.Password) {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
@@ -160,19 +163,23 @@ func (h *Handler) SignUp(w http.ResponseWriter, r *http.Request) {
 	hashedPassword := hashPassword(salt, req.Password)
 
 	userID := uuid.NewV4()
-	_, err = h.db.Exec(r.Context(), "INSERT INTO users (id, login, password_hash) VALUES ($1, $2, $3)",
-		userID, req.Login, hashedPassword)
+	_, err = h.db.Exec(r.Context(), 
+		"INSERT INTO users (id, login, first_name, last_name, phone_number, description, user_pic, password_hash) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
+		userID, req.Login, req.FirstName, req.SecondName, req.PhoneNumber, "", "default.jpg", hashedPassword)
+
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
 	user := models.User{
-		Login:        req.Login,
 		Id:           userID,
+		Login:        req.Login,
+		FirstName:    req.FirstName,
+		LastName:     req.SecondName,
 		PhoneNumber:  req.PhoneNumber,
-		Description:  "New User",
-		UserPic:      "default.png",
+		Description:  "",
+		UserPic:      "default.jpg",
 		PasswordHash: hashedPassword,
 	}
 

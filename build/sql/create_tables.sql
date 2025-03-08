@@ -3,9 +3,11 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TABLE IF NOT EXISTS users (
     id UUID PRIMARY KEY,
     login TEXT NOT NULL UNIQUE,                     
-    phone_number TEXT,                             
-    description TEXT,                              
-    user_pic TEXT,                                 
+    phone_number TEXT,                              
+    first_name TEXT NOT NULL,  
+    last_name TEXT NOT NULL,   
+    description TEXT DEFAULT '',  
+    user_pic TEXT DEFAULT 'default.jpg', 
     password_hash BYTEA NOT NULL                   
 );
 
@@ -73,9 +75,11 @@ INSERT INTO users (id, login, phone_number, description, user_pic, password_hash
 VALUES (
     uuid_generate_v4(), 
     'testuser', 
+    'Dmitriy',  
+    'Nagiev', 
     '88005553535', 
-    'New User',
-    'default.png',
+    '',
+    'default.jpg',
     decode('a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6', 'hex')
 );
 

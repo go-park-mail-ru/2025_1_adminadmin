@@ -135,7 +135,7 @@ func (h *Handler) RestaurantByID(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var restaurant models.Restaurant
-	err := h.db.QueryRow(r.Context(), "SELECT id, name, description, type, rating FROM restaurants WHERE id = $1", id).Scan(&restaurant.Id, &restaurant.Name, &restaurant.Description, &restaurant.Type, &restaurant.Rating)
+	err := h.db.QueryRow(r.Context(), "SELECT name, description, type, rating FROM restaurants WHERE id = $1", id).Scan(&restaurant.Name, &restaurant.Description, &restaurant.Type, &restaurant.Rating)
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		return
