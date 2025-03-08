@@ -115,6 +115,7 @@ func (h *Handler) SignIn(w http.ResponseWriter, r *http.Request) {
 		HttpOnly: true,
 		Secure:   true,
 		Expires:  time.Now().Add(24 * time.Hour),
+		Path:     "/",
 	})
 
 	csrfToken := uuid.NewV4().String()
@@ -126,6 +127,7 @@ func (h *Handler) SignIn(w http.ResponseWriter, r *http.Request) {
 		HttpOnly: false,
 		Secure:   true,
 		SameSite: http.SameSiteStrictMode,
+		Path:     "/",
 	})
 
 	w.Header().Set("X-CSRF-Token", csrfToken)
