@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS restaurants (
     rating FLOAT                                   
 );
 
+INSERT INTO restaurants (id, name, description, type, rating) VALUES
 (uuid_generate_v4(), 'Kebab King 267', 'Лучший кебаб в городе', 'Турецкий', 4.0),
 (uuid_generate_v4(), 'Green Garden 268', 'Вегетарианская кухня', 'Вегетарианский', 4.8),
 (uuid_generate_v4(), 'Sea Breeze 269', 'Свежие морепродукты', 'Морепродукты', 4.9),
