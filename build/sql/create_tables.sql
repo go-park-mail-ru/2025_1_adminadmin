@@ -155,7 +155,7 @@ INSERT INTO restaurants (id, name, description, type, rating) VALUES
 (uuid_generate_v4(), 'Ocean Catch 399', 'Свежайшие морепродукты', 'Морепродукты', 4.9),
 (uuid_generate_v4(), 'La Piazza 400', 'Итальянская кухня', 'Итальянский', 4.5);
 
-INSERT INTO users (id, login, phone_number, description, user_pic, password_hash)
+INSERT INTO users (id, login, first_name, last_name, phone_number, description, user_pic, password_hash)
 VALUES (
     uuid_generate_v4(), 
     'testuser', 
