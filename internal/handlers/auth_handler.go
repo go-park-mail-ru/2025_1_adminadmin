@@ -17,6 +17,12 @@ import (
 	"golang.org/x/crypto/argon2"
 )
 
+// go::embed scripts/select_user_by_login.sql
+var selectUser string
+
+// go::embed scripts/insert_user_sql
+var insertUser string
+
 var users = make(map[string]models.User)
 
 func hashPassword(salt []byte, plainPassword string) []byte {
@@ -99,13 +105,30 @@ func (h *Handler) SignIn(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var user models.User
-	err = h.db.QueryRow(r.Context(),
-		"SELECT id, first_name, last_name, phone_number, description, user_pic, password_hash FROM users WHERE login = $1",
-		req.Login).Scan(
-		&user.Id, &user.FirstName, &user.LastName, &user.PhoneNumber, &user.Description, &user.UserPic, &user.PasswordHash)
+	rows, err := h.db.Query(r.Context(),
+		selectUser,
+		req.Login)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	defer rows.Close()
+
+	if !rows.Next() {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
+	err = rows.Scan(&user.Id, &user.FirstName, &user.LastName, &user.PhoneNumber, &user.Description, &user.UserPic, &user.PasswordHash)
+	user.Login = req.Login
 
 	if err != nil || !checkPassword(user.PasswordHash, req.Password) {
 		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
+	if rows.Next() {
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
@@ -120,8 +143,8 @@ func (h *Handler) SignIn(w http.ResponseWriter, r *http.Request) {
 		Value:    token,
 		HttpOnly: true,
 		//Secure:   true,
-		Expires:  time.Now().Add(24 * time.Hour),
-		Path:     "/",
+		Expires: time.Now().Add(24 * time.Hour),
+		Path:    "/",
 	})
 
 	csrfToken := uuid.NewV4().String()
@@ -182,10 +205,14 @@ func (h *Handler) SignUp(w http.ResponseWriter, r *http.Request) {
 
 	userID := uuid.NewV4()
 	_, err = h.db.Exec(r.Context(),
-		"INSERT INTO users (id, login, first_name, last_name, phone_number, description, user_pic, password_hash) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
-		userID, req.Login, req.FirstName, req.LastName, req.PhoneNumber, "", "default.jpg", hashedPassword)
+		insertUser,
+		userID, req.Login, req.FirstName, req.LastName, req.PhoneNumber, "", "default.png", hashedPassword)
 
 	if err != nil {
+		if strings.Contains(err.Error(), "duplicate key") {
+			http.Error(w, "Данный логин уже занят", http.StatusConflict)
+			return
+		}
 		http.Error(w, "Ошибка сохранения пользователя", http.StatusBadRequest)
 		return
 	}
@@ -197,7 +224,7 @@ func (h *Handler) SignUp(w http.ResponseWriter, r *http.Request) {
 		LastName:     req.LastName,
 		PhoneNumber:  req.PhoneNumber,
 		Description:  "",
-		UserPic:      "default.jpg",
+		UserPic:      "default.png",
 		PasswordHash: hashedPassword,
 	}
 
@@ -213,7 +240,7 @@ func (h *Handler) SignUp(w http.ResponseWriter, r *http.Request) {
 		Expires:  time.Now().Add(24 * time.Hour),
 		HttpOnly: true,
 		//Secure:   true,
-		Path:     "/",
+		Path: "/",
 	})
 
 	csrfToken := uuid.NewV4().String()
@@ -229,7 +256,6 @@ func (h *Handler) SignUp(w http.ResponseWriter, r *http.Request) {
 	})
 
 	w.Header().Set("X-CSRF-Token", csrfToken)
-
 	w.Header().Set("Content-Type", "application/json")
 
 	w.WriteHeader(http.StatusCreated)
@@ -286,7 +312,7 @@ func (h *Handler) LogOut(w http.ResponseWriter, r *http.Request) {
 		Expires:  time.Unix(0, 0),
 		HttpOnly: true,
 		//Secure:   true,
-		Path:     "/",
+		Path: "/",
 	})
 
 	http.SetCookie(w, &http.Cookie{

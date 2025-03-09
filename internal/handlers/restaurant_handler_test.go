@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"strconv"
 	"testing"
 
 	"github.com/driftprogramming/pgxpoolmock"
@@ -13,8 +14,6 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/satori/uuid"
 )
-
-//TODO: correct tests
 
 func TestRestaurantList(t *testing.T) {
 	type args struct {
@@ -28,6 +27,7 @@ func TestRestaurantList(t *testing.T) {
 		offset         string
 		expectedCode   int
 		expectedLength int
+		mockRows       *pgxpoolmock.Rows
 	}{
 		{
 			name: "Default parameters",
@@ -39,6 +39,16 @@ func TestRestaurantList(t *testing.T) {
 			offset:         "",
 			expectedCode:   http.StatusOK,
 			expectedLength: 10,
+			mockRows: pgxpoolmock.NewRows([]string{"id", "name", "description", "type", "rating"}).AddRow(uuid.NewV4(), "La Piazza", "Итальянская кухня", "Итальянский", 4.5).
+				AddRow(uuid.NewV4(), "Sakura", "Японская кухня", "Японский", 4.7).
+				AddRow(uuid.NewV4(), "Steak House", "Лучшие стейки в городе", "Американский", 4.6).
+				AddRow(uuid.NewV4(), "Bistro Parisien", "Французская кухня", "Французский", 4.3).
+				AddRow(uuid.NewV4(), "Taco Loco", "Мексиканская кухня", "Мексиканский", 4.2).
+				AddRow(uuid.NewV4(), "Dragon Wok", "Китайская кухня", "Китайский", 4.4).
+				AddRow(uuid.NewV4(), "Berlin Döner", "Настоящий немецкий донер", "Немецкий", 4.1).
+				AddRow(uuid.NewV4(), "Kebab King", "Лучший кебаб в городе", "Турецкий", 4.0).
+				AddRow(uuid.NewV4(), "Green Garden", "Вегетарианская кухня", "Вегетарианский", 4.8).
+				AddRow(uuid.NewV4(), "Sea Breeze", "Свежие морепродукты", "Морепродукты", 4.9),
 		},
 		{
 			name: "Valid count and offset",
@@ -50,6 +60,11 @@ func TestRestaurantList(t *testing.T) {
 			offset:         "2",
 			expectedCode:   http.StatusOK,
 			expectedLength: 5,
+			mockRows: pgxpoolmock.NewRows([]string{"id", "name", "description", "type", "rating"}).AddRow(uuid.NewV4(), "La Piazza", "Итальянская кухня", "Итальянский", 4.5).
+				AddRow(uuid.NewV4(), "Sakura", "Японская кухня", "Японский", 4.7).
+				AddRow(uuid.NewV4(), "Steak House", "Лучшие стейки в городе", "Американский", 4.6).
+				AddRow(uuid.NewV4(), "Bistro Parisien", "Французская кухня", "Французский", 4.3).
+				AddRow(uuid.NewV4(), "Taco Loco", "Мексиканская кухня", "Мексиканский", 4.2),
 		},
 		{
 			name: "Count exceeds total restaurants",
@@ -61,6 +76,16 @@ func TestRestaurantList(t *testing.T) {
 			offset:         "",
 			expectedCode:   http.StatusOK,
 			expectedLength: 10,
+			mockRows: pgxpoolmock.NewRows([]string{"id", "name", "description", "type", "rating"}).AddRow(uuid.NewV4(), "La Piazza", "Итальянская кухня", "Итальянский", 4.5).
+				AddRow(uuid.NewV4(), "Sakura", "Японская кухня", "Японский", 4.7).
+				AddRow(uuid.NewV4(), "Steak House", "Лучшие стейки в городе", "Американский", 4.6).
+				AddRow(uuid.NewV4(), "Bistro Parisien", "Французская кухня", "Французский", 4.3).
+				AddRow(uuid.NewV4(), "Taco Loco", "Мексиканская кухня", "Мексиканский", 4.2).
+				AddRow(uuid.NewV4(), "Dragon Wok", "Китайская кухня", "Китайский", 4.4).
+				AddRow(uuid.NewV4(), "Berlin Döner", "Настоящий немецкий донер", "Немецкий", 4.1).
+				AddRow(uuid.NewV4(), "Kebab King", "Лучший кебаб в городе", "Турецкий", 4.0).
+				AddRow(uuid.NewV4(), "Green Garden", "Вегетарианская кухня", "Вегетарианский", 4.8).
+				AddRow(uuid.NewV4(), "Sea Breeze", "Свежие морепродукты", "Морепродукты", 4.9),
 		},
 		{
 			name: "Invalid count (negative)",
@@ -72,6 +97,7 @@ func TestRestaurantList(t *testing.T) {
 			offset:         "",
 			expectedCode:   http.StatusOK,
 			expectedLength: 0,
+			mockRows:       pgxpoolmock.NewRows([]string{"id", "name", "description", "type", "rating"}),
 		},
 		{
 			name: "Invalid offset (negative)",
@@ -83,6 +109,7 @@ func TestRestaurantList(t *testing.T) {
 			offset:         "-1",
 			expectedCode:   http.StatusOK,
 			expectedLength: 0,
+			mockRows:       pgxpoolmock.NewRows([]string{"id", "name", "description", "type", "rating"}),
 		},
 		{
 			name: "Offset exceeds total restaurants",
@@ -94,19 +121,31 @@ func TestRestaurantList(t *testing.T) {
 			offset:         "15",
 			expectedCode:   http.StatusOK,
 			expectedLength: 0,
+			mockRows:       pgxpoolmock.NewRows([]string{"id", "name", "description", "type", "rating"}),
 		},
 	}
 
 	ctrl := gomock.NewController(t)
-	mockPool := pgxpoolmock.NewMockPgxPool(ctrl)
 	defer ctrl.Finish()
-	pgxRows := pgxpoolmock.NewRows([]string{"id", "name", "description", "type", "rating"}).AddRow(uuid.NewV4(), "restaurant #1", "bla bla bla", "some kitchen", 4.5).AddRow(uuid.NewV4(), "restaurant #1", "bla bla bla", "some kitchen", 4.5).ToPgxRows()
-	pgxRows.Next()
-	mockPool.EXPECT().Query(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).Return(pgxRows, nil).AnyTimes()
-	h := Handler{db: mockPool}
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
+			mockPool := pgxpoolmock.NewMockPgxPool(ctrl)
+
+			count, err := strconv.Atoi(test.count)
+			if err != nil {
+				count = 100
+			}
+			offset, err := strconv.Atoi(test.offset)
+			if err != nil {
+				offset = 0
+			}
+
+			mockPool.EXPECT().
+				Query(gomock.Any(), selectAll, count, offset).
+				Return(test.mockRows.ToPgxRows(), nil)
+
+			h := Handler{db: mockPool}
 
 			h.RestaurantList(test.args.w, test.args.r)
 
@@ -122,7 +161,7 @@ func TestRestaurantList(t *testing.T) {
 			}
 
 			var restaurants []models.Restaurant
-			err := json.Unmarshal(test.args.w.Body.Bytes(), &restaurants)
+			err = json.Unmarshal(test.args.w.Body.Bytes(), &restaurants)
 			if err != nil {
 				t.Fatalf("Failed to unmarshal response: %v", err)
 			}
@@ -154,6 +193,7 @@ func TestRestaurantByID(t *testing.T) {
 		args         args
 		expectedCode int
 		expectedBody models.Restaurant
+		mockRows     *pgxpoolmock.Rows
 	}{
 		{
 			name: "Valid ID",
@@ -163,6 +203,8 @@ func TestRestaurantByID(t *testing.T) {
 			},
 			expectedCode: http.StatusOK,
 			expectedBody: testRestaurant,
+			mockRows: pgxpoolmock.NewRows([]string{"id", "name", "description", "type", "rating"}).
+				AddRow(testRestaurant.Id, testRestaurant.Name, testRestaurant.Description, testRestaurant.Type, testRestaurant.Rating),
 		},
 		{
 			name: "Non-existent ID",
@@ -172,6 +214,7 @@ func TestRestaurantByID(t *testing.T) {
 			},
 			expectedCode: http.StatusNotFound,
 			expectedBody: models.Restaurant{},
+			mockRows:     pgxpoolmock.NewRows([]string{"id", "name", "description", "type", "rating"}),
 		},
 		{
 			name: "Invalid ID",
@@ -181,19 +224,25 @@ func TestRestaurantByID(t *testing.T) {
 			},
 			expectedCode: http.StatusBadRequest,
 			expectedBody: models.Restaurant{},
+			mockRows:     nil,
 		},
 	}
 
 	ctrl := gomock.NewController(t)
-	mockPool := pgxpoolmock.NewMockPgxPool(ctrl)
 	defer ctrl.Finish()
-	pgxRows := pgxpoolmock.NewRows([]string{"id", "name", "description", "type", "rating"}).AddRow(uuid.NewV4(), "restaurant #1", "bla bla bla", "some kitchen", 4.5).ToPgxRows()
-	pgxRows.Next()
-	mockPool.EXPECT().Query(gomock.Any(), gomock.Any(), 0, 100).Return(pgxRows, nil)
-	h := Handler{db: mockPool}
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
+			mockPool := pgxpoolmock.NewMockPgxPool(ctrl)
+
+			if test.mockRows != nil {
+				mockPool.EXPECT().
+					Query(gomock.Any(), selectById, gomock.Any()).
+					Return(test.mockRows.ToPgxRows(), nil)
+			}
+
+			h := Handler{db: mockPool}
+
 			router := mux.NewRouter()
 			router.HandleFunc("/api/restaurants/{id}", h.RestaurantByID).Methods(http.MethodGet)
 
@@ -212,7 +261,7 @@ func TestRestaurantByID(t *testing.T) {
 				}
 
 				if responseRestaurant != test.expectedBody {
-					t.Errorf("Unexpected restaurant: expected %+v  got %+v", test.expectedBody, responseRestaurant)
+					t.Errorf("Unexpected restaurant: expected %+v got %+v", test.expectedBody, responseRestaurant)
 				}
 			}
 		})

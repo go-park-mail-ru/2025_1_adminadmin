@@ -14,8 +14,10 @@ import (
 	uuid "github.com/satori/uuid"
 )
 
-//go:embed scripts/select.sql
+//go:embed scripts/select_all_restaurants.sql
 var selectAll string
+//go:embed scripts/select_restaurant_by_id.sql
+var selectById string
 
 type Handler struct {
 	db pgxtype.Querier
@@ -134,9 +136,21 @@ func (h *Handler) RestaurantByID(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var restaurant models.Restaurant
-	err := h.db.QueryRow(r.Context(), "SELECT name, description, type, rating FROM restaurants WHERE id = $1", id).Scan(&restaurant.Name, &restaurant.Description, &restaurant.Type, &restaurant.Rating)
+	rows, err := h.db.Query(r.Context(), selectById, id)
 	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	defer rows.Close()
+
+	var restaurant models.Restaurant
+	if rows.Next() {
+		err = rows.Scan(&restaurant.Id, &restaurant.Name, &restaurant.Description, &restaurant.Type, &restaurant.Rating)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+	} else {
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}
