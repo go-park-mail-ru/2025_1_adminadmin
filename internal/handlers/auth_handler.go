@@ -93,9 +93,8 @@ func generateToken(login string) (string, error) {
 
 func (h *Handler) SignIn(w http.ResponseWriter, r *http.Request) {
 	var req models.SignInReq
-	err := json.NewDecoder(r.Body).Decode(&req)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, "Ошибка парсинга JSON", http.StatusBadRequest)
 		return
 	}
 
@@ -105,36 +104,35 @@ func (h *Handler) SignIn(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var user models.User
-	rows, err := h.db.Query(r.Context(),
-		selectUser,
-		req.Login)
+	rows, err := h.db.Query(r.Context(), selectUser, req.Login)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
+		http.Error(w, "Ошибка базы данных", http.StatusInternalServerError)
 		return
 	}
 	defer rows.Close()
 
 	if !rows.Next() {
-		w.WriteHeader(http.StatusUnauthorized)
+		http.Error(w, "Неверный логин или пароль", http.StatusUnauthorized)
 		return
 	}
 
-	err = rows.Scan(&user.Id, &user.FirstName, &user.LastName, &user.PhoneNumber, &user.Description, &user.UserPic, &user.PasswordHash)
+	err = rows.Scan(&user.Id, &user.FirstName, &user.LastName, &user.PhoneNumber,
+		&user.Description, &user.UserPic, &user.PasswordHash)
+	if err != nil {
+		http.Error(w, "Ошибка чтения данных пользователя", http.StatusInternalServerError)
+		return
+	}
+
 	user.Login = req.Login
 
-	if err != nil || !checkPassword(user.PasswordHash, req.Password) {
-		w.WriteHeader(http.StatusUnauthorized)
-		return
-	}
-
-	if rows.Next() {
-		w.WriteHeader(http.StatusInternalServerError)
+	if !checkPassword(user.PasswordHash, req.Password) {
+		http.Error(w, "Неверный логин или пароль", http.StatusUnauthorized)
 		return
 	}
 
 	token, err := generateToken(user.Login)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
+		http.Error(w, "Ошибка генерации токена", http.StatusInternalServerError)
 		return
 	}
 
@@ -142,33 +140,27 @@ func (h *Handler) SignIn(w http.ResponseWriter, r *http.Request) {
 		Name:     "AdminJWT",
 		Value:    token,
 		HttpOnly: true,
-		//Secure:   true,
-		Expires: time.Now().Add(24 * time.Hour),
-		Path:    "/",
+		Expires:  time.Now().Add(24 * time.Hour),
+		Path:     "/",
 	})
 
 	csrfToken := uuid.NewV4().String()
-
 	http.SetCookie(w, &http.Cookie{
 		Name:     "CSRF-Token",
 		Value:    csrfToken,
 		Expires:  time.Now().Add(24 * time.Hour),
 		HttpOnly: false,
-		//Secure:   true,
 		SameSite: http.SameSiteStrictMode,
 		Path:     "/",
 	})
 
 	w.Header().Set("X-CSRF-Token", csrfToken)
-
 	w.Header().Set("Content-Type", "application/json")
 
-	err = json.NewEncoder(w).Encode(user)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
 	w.WriteHeader(http.StatusOK)
+	if err := json.NewEncoder(w).Encode(user); err != nil {
+		http.Error(w, "Ошибка формирования JSON", http.StatusInternalServerError)
+	}
 }
 
 func (h *Handler) SignUp(w http.ResponseWriter, r *http.Request) {
@@ -306,13 +298,17 @@ func (h *Handler) Check(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) LogOut(w http.ResponseWriter, r *http.Request) {
+	cookie, err := r.Cookie("AdminJWT")
+	if err != nil || cookie.Value == "" {
+		http.Error(w, "Пользователь уже разлогинен", http.StatusBadRequest)
+		return
+	}
 	http.SetCookie(w, &http.Cookie{
 		Name:     "AdminJWT",
 		Value:    "",
 		Expires:  time.Unix(0, 0),
 		HttpOnly: true,
-		//Secure:   true,
-		Path: "/",
+		Path:     "/",
 	})
 
 	http.SetCookie(w, &http.Cookie{
@@ -320,7 +316,6 @@ func (h *Handler) LogOut(w http.ResponseWriter, r *http.Request) {
 		Value:    "",
 		Expires:  time.Unix(0, 0),
 		HttpOnly: false,
-		//Secure:   true,
 		SameSite: http.SameSiteStrictMode,
 		Path:     "/",
 	})
