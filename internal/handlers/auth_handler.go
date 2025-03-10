@@ -277,18 +277,6 @@ func (h *Handler) Check(w http.ResponseWriter, r *http.Request) {
 		return []byte(os.Getenv("JWT_SECRET")), nil
 	})
 
-	csrfToken := r.Header.Get("X-CSRF-Token")
-	if csrfToken == "" {
-		w.WriteHeader(http.StatusForbidden)
-		return
-	}
-
-	csrfCookie, err := r.Cookie("CSRF-Token")
-	if err != nil || csrfCookie.Value != csrfToken {
-		w.WriteHeader(http.StatusForbidden)
-		return
-	}
-
 	if token == nil || !token.Valid {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
