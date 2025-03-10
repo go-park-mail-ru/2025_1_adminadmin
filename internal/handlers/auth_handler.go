@@ -104,7 +104,7 @@ func (h *Handler) SignIn(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var user models.User
-	rows, err := h.db.Query(r.Context(), selectUser, req.Login)
+	rows, err := h.db.Query(r.Context(), "SELECT id, first_name, last_name, phone_number, description, user_pic, password_hash FROM users WHERE login = $1", req.Login)
 	if err != nil {
 		http.Error(w, "Ошибка базы данных", http.StatusInternalServerError)
 		return
@@ -197,7 +197,7 @@ func (h *Handler) SignUp(w http.ResponseWriter, r *http.Request) {
 
 	userID := uuid.NewV4()
 	_, err = h.db.Exec(r.Context(),
-		insertUser,
+		"INSERT INTO users (id, login, first_name, last_name, phone_number, description, user_pic, password_hash) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
 		userID, req.Login, req.FirstName, req.LastName, req.PhoneNumber, "", "default.png", hashedPassword)
 
 	if err != nil {
