@@ -261,29 +261,54 @@ func (h *Handler) SignUp(w http.ResponseWriter, r *http.Request) {
 func (h *Handler) Check(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("AdminJWT")
 	if err != nil {
-		if err == http.ErrNoCookie {
-			w.WriteHeader(http.StatusUnauthorized)
-			return
-		}
+		w.WriteHeader(http.StatusUnauthorized)
+		return
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 	tokenStr := cookie.Value
 
-	token, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
+	claims := jwt.MapClaims{}
+
+	token, err := jwt.ParseWithClaims(tokenStr, claims, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 		}
-		return []byte(os.Getenv("JWT_SECRET")), nil
+		secret := os.Getenv("JWT_SECRET")
+		if secret == "" {
+			return nil, fmt.Errorf("JWT_SECRET не установлен")
+		}
+		return []byte(secret), nil
 	})
 
-	if token == nil || !token.Valid {
+	if err != nil || !token.Valid {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
+	login, ok := claims["login"].(string)
+	if !ok || login == "" {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
+	var user models.User
+	err = h.db.QueryRow(
+		r.Context(),
+		"SELECT id, first_name, last_name, phone_number, description, user_pic FROM users WHERE login = $1",
+		login,
+	).Scan(&user.Id, &user.FirstName, &user.LastName, &user.PhoneNumber, &user.Description, &user.UserPic)
+	if err != nil {
+		http.Error(w, "Ошибка базы данных", http.StatusInternalServerError)
+		return
+	}
+
+	user.Login = login
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(user)
 }
+
 
 func (h *Handler) LogOut(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("AdminJWT")
