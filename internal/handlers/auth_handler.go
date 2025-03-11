@@ -17,12 +17,6 @@ import (
 	"golang.org/x/crypto/argon2"
 )
 
-// go::embed scripts/select_user_by_login.sql
-var selectUser string
-
-// go::embed scripts/insert_user_sql
-var insertUser string
-
 var users = make(map[string]models.User)
 
 func hashPassword(salt []byte, plainPassword string) []byte {
@@ -37,10 +31,60 @@ func checkPassword(passHash []byte, plainPassword string) bool {
 	return bytes.Equal(userPassHash, passHash)
 }
 
-var allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-"
+func sendError(w http.ResponseWriter, message string, statusCode int) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(statusCode)
+	json.NewEncoder(w).Encode(map[string]string{"error": message})
+}
+
+const (
+	minNameLength  = 2
+	maxNameLength  = 25
+	minPhoneLength = 7
+	maxPhoneLength = 15
+	maxLoginLength = 20
+	minLoginLength = 3
+	minPassLength  = 8
+	maxPassLength  = 25
+)
+
+func isValidName(name string) bool {
+	if len(name) < minNameLength || len(name) > maxNameLength {
+		return false
+	}
+	allowedRunes := "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+	for _, r := range name {
+		if !compareRune(allowedRunes, r) {
+			return false
+		}
+	}
+	return true
+}
+
+func isValidPhone(phone string) bool {
+	if len(phone) < minPhoneLength || len(phone) > maxPhoneLength {
+		return false
+	}
+	for _, r := range phone {
+		if r < '0' || r > '9' {
+			return false
+		}
+	}
+	return true
+}
+
+func compareRune(s string, r rune) bool {
+	for _, char := range s {
+		if char == r {
+			return true
+		}
+	}
+	return false
+}
 
 func validLogin(login string) bool {
-	if len(login) < 3 || len(login) > 20 {
+	allowedChars := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-"
+	if len(login) < minLoginLength || len(login) > maxLoginLength {
 		return false
 	}
 	for _, char := range login {
@@ -54,7 +98,7 @@ func validLogin(login string) bool {
 func validPassword(password string) bool {
 	var up, low, digit, special bool
 
-	if len(password) < 8 || len(password) > 25 {
+	if len(password) < minPassLength || len(password) > maxPassLength {
 		return false
 	}
 
@@ -94,44 +138,44 @@ func generateToken(login string) (string, error) {
 func (h *Handler) SignIn(w http.ResponseWriter, r *http.Request) {
 	var req models.SignInReq
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		http.Error(w, "Ошибка парсинга JSON", http.StatusBadRequest)
+		sendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
 		return
 	}
 
 	if !validLogin(req.Login) {
-		http.Error(w, "Неверный формат логина", http.StatusBadRequest)
+		sendError(w, "Неверный формат логина", http.StatusBadRequest)
 		return
 	}
 	var user models.User
 	rows, err := h.db.Query(r.Context(), "SELECT id, first_name, last_name, phone_number, description, user_pic, password_hash FROM users WHERE login = $1", req.Login)
 	if err != nil {
-		http.Error(w, "Ошибка базы данных", http.StatusInternalServerError)
+		sendError(w, "Ошибка базы данных", http.StatusInternalServerError)
 		return
 	}
 	defer rows.Close()
 
 	if !rows.Next() {
-		http.Error(w, "Неверный логин или пароль", http.StatusUnauthorized)
+		sendError(w, "Неверный логин или пароль", http.StatusUnauthorized)
 		return
 	}
 
 	err = rows.Scan(&user.Id, &user.FirstName, &user.LastName, &user.PhoneNumber,
 		&user.Description, &user.UserPic, &user.PasswordHash)
 	if err != nil {
-		http.Error(w, "Ошибка чтения данных пользователя", http.StatusInternalServerError)
+		sendError(w, "Ошибка чтения данных пользователя", http.StatusInternalServerError)
 		return
 	}
 
 	user.Login = req.Login
 
 	if !checkPassword(user.PasswordHash, req.Password) {
-		http.Error(w, "Неверный логин или пароль", http.StatusUnauthorized)
+		sendError(w, "Неверный логин или пароль", http.StatusUnauthorized)
 		return
 	}
 
 	token, err := generateToken(user.Login)
 	if err != nil {
-		http.Error(w, "Ошибка генерации токена", http.StatusInternalServerError)
+		sendError(w, "Ошибка генерации токена", http.StatusInternalServerError)
 		return
 	}
 
@@ -158,7 +202,7 @@ func (h *Handler) SignIn(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	if err := json.NewEncoder(w).Encode(user); err != nil {
-		http.Error(w, "Ошибка формирования JSON", http.StatusInternalServerError)
+		sendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
 	}
 }
 
@@ -171,22 +215,22 @@ func (h *Handler) SignUp(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !validLogin(req.Login) {
-		http.Error(w, "Неверный формат логина", http.StatusBadRequest)
+		sendError(w, "Неверный формат логина", http.StatusBadRequest)
 		return
 	}
 
 	if !validPassword(req.Password) {
-		http.Error(w, "Неверный формат пароля", http.StatusBadRequest)
+		sendError(w, "Неверный формат пароля", http.StatusBadRequest)
 		return
 	}
 
-	if req.FirstName == "" || req.LastName == "" {
-		http.Error(w, "Имя и фамилия обязательны", http.StatusBadRequest)
+	if !isValidName(req.FirstName) || !isValidName(req.LastName) {
+		sendError(w, "Имя и фамилия должны содержать только русские буквы и быть от 2 до 25 символов", http.StatusBadRequest)
 		return
 	}
 
-	if req.PhoneNumber == "" {
-		http.Error(w, "Телефон обязателен", http.StatusBadRequest)
+	if !isValidPhone(req.PhoneNumber) {
+		sendError(w, "Некорректный номер телефона", http.StatusBadRequest)
 		return
 	}
 
@@ -201,10 +245,10 @@ func (h *Handler) SignUp(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		if strings.Contains(err.Error(), "duplicate key") {
-			http.Error(w, "Данный логин уже занят", http.StatusConflict)
+			sendError(w, "Данный логин уже занят", http.StatusConflict)
 			return
 		}
-		http.Error(w, "Ошибка сохранения пользователя", http.StatusBadRequest)
+		sendError(w, "Ошибка сохранения пользователя", http.StatusBadRequest)
 		return
 	}
 
@@ -310,7 +354,7 @@ func (h *Handler) Check(w http.ResponseWriter, r *http.Request) {
 
 	rows, err := h.db.Query(r.Context(), "SELECT id, first_name, last_name, phone_number, description, user_pic FROM users WHERE login = $1", login)
 	if err != nil {
-		http.Error(w, "Ошибка базы данных", http.StatusInternalServerError)
+		sendError(w, "Ошибка базы данных", http.StatusInternalServerError)
 		return
 	}
 	defer rows.Close()
@@ -319,7 +363,7 @@ func (h *Handler) Check(w http.ResponseWriter, r *http.Request) {
 	if rows.Next() {
 		err = rows.Scan(&user.Id, &user.FirstName, &user.LastName, &user.PhoneNumber, &user.Description, &user.UserPic)
 		if err != nil {
-			http.Error(w, "Ошибка чтения данных пользователя", http.StatusInternalServerError)
+			sendError(w, "Ошибка чтения данных пользователя", http.StatusInternalServerError)
 			return
 		}
 		user.Login = login
@@ -335,7 +379,7 @@ func (h *Handler) Check(w http.ResponseWriter, r *http.Request) {
 func (h *Handler) LogOut(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("AdminJWT")
 	if err != nil || cookie.Value == "" {
-		http.Error(w, "Пользователь уже разлогинен", http.StatusBadRequest)
+		sendError(w, "Пользователь уже разлогинен", http.StatusBadRequest)
 		return
 	}
 	http.SetCookie(w, &http.Cookie{
