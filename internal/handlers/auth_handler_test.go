@@ -97,7 +97,7 @@ func TestSignIn(t *testing.T) {
 
 			if test.mockRows != nil {
 				mockPool.EXPECT().
-					Query(gomock.Any(), selectUser, testUser.Login).
+					Query(gomock.Any(), "SELECT id, first_name, last_name, phone_number, description, user_pic, password_hash FROM users WHERE login = $1", testUser.Login).
 					Return(test.mockRows.ToPgxRows(), nil)
 			}
 
@@ -230,7 +230,7 @@ func TestSignUp(t *testing.T) {
 
 			if test.mockExec == nil && test.expectedCode == http.StatusCreated {
 				mockPool.EXPECT().
-					Exec(gomock.Any(), insertUser,
+					Exec(gomock.Any(), "INSERT INTO users (id, login, first_name, last_name, phone_number, description, user_pic, password_hash) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
 						gomock.Any(),
 						"new_user",
 						"Тайлер",
@@ -243,7 +243,7 @@ func TestSignUp(t *testing.T) {
 					Return(nil, nil)
 			} else if test.mockExec != nil {
 				mockPool.EXPECT().
-					Exec(gomock.Any(), insertUser,
+					Exec(gomock.Any(), "INSERT INTO users (id, login, first_name, last_name, phone_number, description, user_pic, password_hash) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
 						gomock.Any(),
 						"existing_user",
 						"Тайлер",
@@ -331,12 +331,23 @@ func TestCheck(t *testing.T) {
 
 	csrfToken := "some_csrf_token"
 
+	testUser := models.User{
+		Login:        "test123",
+		FirstName:    "Иван",
+		LastName:     "Иванов",
+		Id:           uuid.NewV4(),
+		PhoneNumber:  "88005553535",
+		Description:  "",
+		UserPic:      "default.png",
+	}
+
 	tests := []struct {
 		name         string
 		args         args
 		token        string
 		csrfToken    string
 		expectedCode int
+		mockRows     *pgxpoolmock.Rows
 	}{
 		{
 			name: "Valid token and CSRF",
@@ -347,6 +358,8 @@ func TestCheck(t *testing.T) {
 			token:        validTokenStr,
 			csrfToken:    csrfToken,
 			expectedCode: http.StatusOK,
+			mockRows: pgxpoolmock.NewRows([]string{"id", "first_name", "last_name", "phone_number", "description", "user_pic"}).
+				AddRow(testUser.Id, testUser.FirstName, testUser.LastName, testUser.PhoneNumber, testUser.Description, testUser.UserPic),
 		},
 		{
 			name: "No token",
@@ -357,6 +370,7 @@ func TestCheck(t *testing.T) {
 			token:        "",
 			csrfToken:    csrfToken,
 			expectedCode: http.StatusUnauthorized,
+			mockRows:     nil,
 		},
 		{
 			name: "Missing CSRF token",
@@ -366,7 +380,8 @@ func TestCheck(t *testing.T) {
 			},
 			token:        validTokenStr,
 			csrfToken:    "",
-			expectedCode: http.StatusForbidden,
+			expectedCode: http.StatusUnauthorized,
+			mockRows:     nil,
 		},
 		{
 			name: "Invalid CSRF token",
@@ -377,17 +392,25 @@ func TestCheck(t *testing.T) {
 			token:        validTokenStr,
 			csrfToken:    "wrong_csrf_token",
 			expectedCode: http.StatusForbidden,
+			mockRows:     nil,
 		},
 	}
 
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockPool := pgxpoolmock.NewMockPgxPool(ctrl)
-	h := &Handler{db: mockPool}
-
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
+			mockPool := pgxpoolmock.NewMockPgxPool(ctrl)
+
+			if test.mockRows != nil {
+				mockPool.EXPECT().
+					Query(gomock.Any(), "SELECT id, first_name, last_name, phone_number, description, user_pic FROM users WHERE login = $1", "test123").
+					Return(test.mockRows.ToPgxRows(), nil)
+			}
+
+			h := &Handler{db: mockPool}
+
 			if test.token != "" {
 				test.args.r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: test.token})
 			}
@@ -401,6 +424,23 @@ func TestCheck(t *testing.T) {
 
 			if test.args.w.Code != test.expectedCode {
 				t.Errorf("Unexpected response code: expected %d got: %d", test.expectedCode, test.args.w.Code)
+			}
+
+			if test.expectedCode == http.StatusOK {
+				var responseUser models.User
+				err := json.NewDecoder(test.args.w.Body).Decode(&responseUser)
+				if err != nil {
+					t.Fatalf("Failed to decode response body: %v", err)
+				}
+
+				if responseUser.Id != testUser.Id ||
+					responseUser.FirstName != testUser.FirstName ||
+					responseUser.LastName != testUser.LastName ||
+					responseUser.PhoneNumber != testUser.PhoneNumber ||
+					responseUser.Description != testUser.Description ||
+					responseUser.UserPic != testUser.UserPic {
+					t.Errorf("Unexpected response body: expected %+v got %+v", testUser, responseUser)
+				}
 			}
 		})
 	}
