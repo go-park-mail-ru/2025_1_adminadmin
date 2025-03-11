@@ -259,7 +259,7 @@ func (h *Handler) SignUp(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) Check(w http.ResponseWriter, r *http.Request) {
-	cookie, err := r.Cookie("AdminJWT")
+	cookieCSRF, err := r.Cookie("CSRF-Token")
 	if err != nil {
 		if err == http.ErrNoCookie {
 			w.WriteHeader(http.StatusUnauthorized)
@@ -268,11 +268,27 @@ func (h *Handler) Check(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	tokenStr := cookie.Value
+
+	headerCSRF := r.Header.Get("X-CSRF-Token")
+	if cookieCSRF.Value == "" || headerCSRF == "" || cookieCSRF.Value != headerCSRF {
+		w.WriteHeader(http.StatusForbidden)
+		return
+	}
+
+	cookieJWT, err := r.Cookie("AdminJWT")
+	if err != nil {
+		if err == http.ErrNoCookie {
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	JWTStr := cookieJWT.Value
 
 	claims := jwt.MapClaims{}
 
-	token, err := jwt.ParseWithClaims(tokenStr, claims, func(token *jwt.Token) (interface{}, error) {
+	token, err := jwt.ParseWithClaims(JWTStr, claims, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 		}
@@ -282,7 +298,6 @@ func (h *Handler) Check(w http.ResponseWriter, r *http.Request) {
 		}
 		return []byte(secret), nil
 	})
-
 	if err != nil || !token.Valid {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
@@ -294,23 +309,29 @@ func (h *Handler) Check(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var user models.User
-	err = h.db.QueryRow(
-		r.Context(),
-		"SELECT id, first_name, last_name, phone_number, description, user_pic FROM users WHERE login = $1",
-		login,
-	).Scan(&user.Id, &user.FirstName, &user.LastName, &user.PhoneNumber, &user.Description, &user.UserPic)
+	rows, err := h.db.Query(r.Context(), "SELECT id, first_name, last_name, phone_number, description, user_pic FROM users WHERE login = $1", login)
 	if err != nil {
 		http.Error(w, "Ошибка базы данных", http.StatusInternalServerError)
 		return
 	}
+	defer rows.Close()
 
-	user.Login = login
+	var user models.User
+	if rows.Next() {
+		err = rows.Scan(&user.Id, &user.FirstName, &user.LastName, &user.PhoneNumber, &user.Description, &user.UserPic)
+		if err != nil {
+			http.Error(w, "Ошибка чтения данных пользователя", http.StatusInternalServerError)
+			return
+		}
+		user.Login = login
+	} else {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(user)
 }
-
 
 func (h *Handler) LogOut(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("AdminJWT")
