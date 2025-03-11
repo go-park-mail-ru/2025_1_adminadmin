@@ -102,7 +102,6 @@ func (h *Handler) SignIn(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Неверный формат логина", http.StatusBadRequest)
 		return
 	}
-
 	var user models.User
 	rows, err := h.db.Query(r.Context(), "SELECT id, first_name, last_name, phone_number, description, user_pic, password_hash FROM users WHERE login = $1", req.Login)
 	if err != nil {
