@@ -332,13 +332,13 @@ func TestCheck(t *testing.T) {
 	csrfToken := "some_csrf_token"
 
 	testUser := models.User{
-		Login:        "test123",
-		FirstName:    "Иван",
-		LastName:     "Иванов",
-		Id:           uuid.NewV4(),
-		PhoneNumber:  "88005553535",
-		Description:  "",
-		UserPic:      "default.png",
+		Login:       "test123",
+		FirstName:   "Иван",
+		LastName:    "Иванов",
+		Id:          uuid.NewV4(),
+		PhoneNumber: "88005553535",
+		Description: "",
+		UserPic:     "default.png",
 	}
 
 	tests := []struct {
