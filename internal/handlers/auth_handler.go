@@ -41,13 +41,15 @@ const (
 	maxPassLength  = 25
 )
 
+const allowedRunes = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+const allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-"
+
 func isValidName(name string) bool {
 	if len(name) < minNameLength || len(name) > maxNameLength {
 		return false
 	}
-	allowedRunes := "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
 	for _, r := range name {
-		if !compareRune(allowedRunes, r) {
+		if !strings.ContainsRune(allowedRunes, r) {
 			return false
 		}
 	}
@@ -66,17 +68,7 @@ func isValidPhone(phone string) bool {
 	return true
 }
 
-func compareRune(s string, r rune) bool {
-	for _, char := range s {
-		if char == r {
-			return true
-		}
-	}
-	return false
-}
-
 func validLogin(login string) bool {
-	allowedChars := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-"
 	if len(login) < minLoginLength || len(login) > maxLoginLength {
 		return false
 	}
