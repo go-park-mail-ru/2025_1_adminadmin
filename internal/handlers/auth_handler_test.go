@@ -18,6 +18,8 @@ import (
 	"github.com/satori/uuid"
 )
 
+var users = make(map[string]models.User)
+
 func TestSignIn(t *testing.T) {
 	salt := make([]byte, 8)
 	type args struct {
@@ -186,7 +188,7 @@ func TestSignUp(t *testing.T) {
 				w: httptest.NewRecorder(),
 			},
 			expectedCode: http.StatusBadRequest,
-			expectedBody: `Неверный формат логина`,
+			expectedBody: `{"error":"Неверный формат логина"}`,
 			mockExec:     nil,
 		},
 		{
@@ -196,7 +198,7 @@ func TestSignUp(t *testing.T) {
 				w: httptest.NewRecorder(),
 			},
 			expectedCode: http.StatusBadRequest,
-			expectedBody: `Неверный формат пароля`,
+			expectedBody: `{"error":"Неверный формат пароля"}`,
 			mockExec:     nil,
 		},
 		{
@@ -206,7 +208,7 @@ func TestSignUp(t *testing.T) {
 				w: httptest.NewRecorder(),
 			},
 			expectedCode: http.StatusConflict,
-			expectedBody: `Данный логин уже занят`,
+			expectedBody: `{"error":"Данный логин уже занят"}`,
 			mockExec:     fmt.Errorf("duplicate key"),
 		},
 		{
