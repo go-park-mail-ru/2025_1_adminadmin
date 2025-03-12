@@ -17,7 +17,6 @@ import (
 	"golang.org/x/crypto/argon2"
 )
 
-var users = make(map[string]models.User)
 
 func hashPassword(salt []byte, plainPassword string) []byte {
 	hashedPass := argon2.IDKey([]byte(plainPassword), salt, 1, 64*1024, 4, 32)

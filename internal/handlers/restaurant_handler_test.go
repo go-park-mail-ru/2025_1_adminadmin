@@ -15,6 +15,7 @@ import (
 	"github.com/satori/uuid"
 )
 
+
 func TestRestaurantList(t *testing.T) {
 	type args struct {
 		w *httptest.ResponseRecorder
@@ -186,7 +187,6 @@ func TestRestaurantByID(t *testing.T) {
 		Type:        "Test Type",
 		Rating:      4.5,
 	}
-	restaurants = append(restaurants, testRestaurant)
 
 	tests := []struct {
 		name         string
