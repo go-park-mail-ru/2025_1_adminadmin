@@ -176,6 +176,7 @@ func (h *Handler) SignIn(w http.ResponseWriter, r *http.Request) {
 		Name:     "AdminJWT",
 		Value:    token,
 		HttpOnly: true,
+		Secure:   true,
 		Expires:  time.Now().Add(24 * time.Hour),
 		Path:     "/",
 	})
@@ -186,6 +187,7 @@ func (h *Handler) SignIn(w http.ResponseWriter, r *http.Request) {
 		Value:    csrfToken,
 		Expires:  time.Now().Add(24 * time.Hour),
 		HttpOnly: false,
+		Secure:   true,
 		SameSite: http.SameSiteStrictMode,
 		Path:     "/",
 	})
