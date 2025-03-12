@@ -15,7 +15,6 @@ import (
 	"github.com/satori/uuid"
 )
 
-
 func TestRestaurantList(t *testing.T) {
 	type args struct {
 		w *httptest.ResponseRecorder

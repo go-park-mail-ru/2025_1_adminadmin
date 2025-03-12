@@ -28,7 +28,6 @@ func CreateHandler(p *pgxpool.Pool) *Handler {
 	return &Handler{db: p}
 }
 
-
 func (h *Handler) RestaurantList(w http.ResponseWriter, r *http.Request) {
 	countStr := r.URL.Query().Get("count")
 	offsetStr := r.URL.Query().Get("offset")

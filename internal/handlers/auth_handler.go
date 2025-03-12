@@ -17,7 +17,6 @@ import (
 	"golang.org/x/crypto/argon2"
 )
 
-
 func hashPassword(salt []byte, plainPassword string) []byte {
 	hashedPass := argon2.IDKey([]byte(plainPassword), salt, 1, 64*1024, 4, 32)
 	return append(salt, hashedPass...)
@@ -182,6 +181,7 @@ func (h *Handler) SignIn(w http.ResponseWriter, r *http.Request) {
 		Name:     "AdminJWT",
 		Value:    token,
 		HttpOnly: true,
+		Secure:   true,
 		Expires:  time.Now().Add(24 * time.Hour),
 		Path:     "/",
 	})
@@ -192,6 +192,7 @@ func (h *Handler) SignIn(w http.ResponseWriter, r *http.Request) {
 		Value:    csrfToken,
 		Expires:  time.Now().Add(24 * time.Hour),
 		HttpOnly: false,
+		Secure:   true,
 		SameSite: http.SameSiteStrictMode,
 		Path:     "/",
 	})
@@ -274,7 +275,7 @@ func (h *Handler) SignUp(w http.ResponseWriter, r *http.Request) {
 		Expires:  time.Now().Add(24 * time.Hour),
 		HttpOnly: true,
 		Secure:   true,
-		Path: "/",
+		Path:     "/",
 	})
 
 	csrfToken := uuid.NewV4().String()
