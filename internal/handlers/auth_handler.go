@@ -10,13 +10,13 @@ import (
 	"strings"
 	"time"
 	"unicode"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/utils/send_error"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	"github.com/golang-jwt/jwt"
 	"github.com/satori/uuid"
 	"golang.org/x/crypto/argon2"
 )
-
 
 func hashPassword(salt []byte, plainPassword string) []byte {
 	hashedPass := argon2.IDKey([]byte(plainPassword), salt, 1, 64*1024, 4, 32)
@@ -28,12 +28,6 @@ func checkPassword(passHash []byte, plainPassword string) bool {
 	copy(salt, passHash[:8])
 	userPassHash := hashPassword(salt, plainPassword)
 	return bytes.Equal(userPassHash, passHash)
-}
-
-func sendError(w http.ResponseWriter, message string, statusCode int) {
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(statusCode)
-	json.NewEncoder(w).Encode(map[string]string{"error": message})
 }
 
 const (
@@ -137,44 +131,44 @@ func generateToken(login string) (string, error) {
 func (h *Handler) SignIn(w http.ResponseWriter, r *http.Request) {
 	var req models.SignInReq
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		sendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
+		utils.SendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
 		return
 	}
 
 	if !validLogin(req.Login) {
-		sendError(w, "Неверный формат логина", http.StatusBadRequest)
+		utils.SendError(w, "Неверный формат логина", http.StatusBadRequest)
 		return
 	}
 	var user models.User
 	rows, err := h.db.Query(r.Context(), "SELECT id, first_name, last_name, phone_number, description, user_pic, password_hash FROM users WHERE login = $1", req.Login)
 	if err != nil {
-		sendError(w, "Ошибка базы данных", http.StatusInternalServerError)
+		utils.SendError(w, "Ошибка базы данных", http.StatusInternalServerError)
 		return
 	}
 	defer rows.Close()
 
 	if !rows.Next() {
-		sendError(w, "Неверный логин или пароль", http.StatusUnauthorized)
+		utils.SendError(w, "Неверный логин или пароль", http.StatusUnauthorized)
 		return
 	}
 
 	err = rows.Scan(&user.Id, &user.FirstName, &user.LastName, &user.PhoneNumber,
 		&user.Description, &user.UserPic, &user.PasswordHash)
 	if err != nil {
-		sendError(w, "Ошибка чтения данных пользователя", http.StatusInternalServerError)
+		utils.SendError(w, "Ошибка чтения данных пользователя", http.StatusInternalServerError)
 		return
 	}
 
 	user.Login = req.Login
 
 	if !checkPassword(user.PasswordHash, req.Password) {
-		sendError(w, "Неверный логин или пароль", http.StatusUnauthorized)
+		utils.SendError(w, "Неверный логин или пароль", http.StatusUnauthorized)
 		return
 	}
 
 	token, err := generateToken(user.Login)
 	if err != nil {
-		sendError(w, "Ошибка генерации токена", http.StatusInternalServerError)
+		utils.SendError(w, "Ошибка генерации токена", http.StatusInternalServerError)
 		return
 	}
 
@@ -201,7 +195,7 @@ func (h *Handler) SignIn(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 	if err := json.NewEncoder(w).Encode(user); err != nil {
-		sendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
+		utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
 	}
 }
 
@@ -214,22 +208,22 @@ func (h *Handler) SignUp(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !validLogin(req.Login) {
-		sendError(w, "Неверный формат логина", http.StatusBadRequest)
+		utils.SendError(w, "Неверный формат логина", http.StatusBadRequest)
 		return
 	}
 
 	if !validPassword(req.Password) {
-		sendError(w, "Неверный формат пароля", http.StatusBadRequest)
+		utils.SendError(w, "Неверный формат пароля", http.StatusBadRequest)
 		return
 	}
 
 	if !isValidName(req.FirstName) || !isValidName(req.LastName) {
-		sendError(w, "Имя и фамилия должны содержать только русские буквы и быть от 2 до 25 символов", http.StatusBadRequest)
+		utils.SendError(w, "Имя и фамилия должны содержать только русские буквы и быть от 2 до 25 символов", http.StatusBadRequest)
 		return
 	}
 
 	if !isValidPhone(req.PhoneNumber) {
-		sendError(w, "Некорректный номер телефона", http.StatusBadRequest)
+		utils.SendError(w, "Некорректный номер телефона", http.StatusBadRequest)
 		return
 	}
 
@@ -244,10 +238,10 @@ func (h *Handler) SignUp(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		if strings.Contains(err.Error(), "duplicate key") {
-			sendError(w, "Данный логин уже занят", http.StatusConflict)
+			utils.SendError(w, "Данный логин уже занят", http.StatusConflict)
 			return
 		}
-		sendError(w, "Ошибка сохранения пользователя", http.StatusBadRequest)
+		utils.SendError(w, "Ошибка сохранения пользователя", http.StatusBadRequest)
 		return
 	}
 
@@ -274,7 +268,7 @@ func (h *Handler) SignUp(w http.ResponseWriter, r *http.Request) {
 		Expires:  time.Now().Add(24 * time.Hour),
 		HttpOnly: true,
 		Secure:   true,
-		Path: "/",
+		Path:     "/",
 	})
 
 	csrfToken := uuid.NewV4().String()
@@ -353,7 +347,7 @@ func (h *Handler) Check(w http.ResponseWriter, r *http.Request) {
 
 	rows, err := h.db.Query(r.Context(), "SELECT id, first_name, last_name, phone_number, description, user_pic FROM users WHERE login = $1", login)
 	if err != nil {
-		sendError(w, "Ошибка базы данных", http.StatusInternalServerError)
+		utils.SendError(w, "Ошибка базы данных", http.StatusInternalServerError)
 		return
 	}
 	defer rows.Close()
@@ -362,7 +356,7 @@ func (h *Handler) Check(w http.ResponseWriter, r *http.Request) {
 	if rows.Next() {
 		err = rows.Scan(&user.Id, &user.FirstName, &user.LastName, &user.PhoneNumber, &user.Description, &user.UserPic)
 		if err != nil {
-			sendError(w, "Ошибка чтения данных пользователя", http.StatusInternalServerError)
+			utils.SendError(w, "Ошибка чтения данных пользователя", http.StatusInternalServerError)
 			return
 		}
 		user.Login = login
@@ -378,7 +372,7 @@ func (h *Handler) Check(w http.ResponseWriter, r *http.Request) {
 func (h *Handler) LogOut(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("AdminJWT")
 	if err != nil || cookie.Value == "" {
-		sendError(w, "Пользователь уже разлогинен", http.StatusBadRequest)
+		utils.SendError(w, "Пользователь уже разлогинен", http.StatusBadRequest)
 		return
 	}
 	http.SetCookie(w, &http.Cookie{
