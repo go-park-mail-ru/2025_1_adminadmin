@@ -1,0 +1,25 @@
+package usecase
+
+import (
+	"context"
+
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/repo"
+	"github.com/satori/uuid"
+)
+
+type RestaurantUsecase struct {
+	repo repo.RestaurantRepository
+}
+
+func NewRestaurantsUsecase(r repo.RestaurantRepository) *RestaurantUsecase {
+	return &RestaurantUsecase{repo: r}
+}
+
+func (u *RestaurantUsecase) GetAll(ctx context.Context, count, offset int) ([]models.Restaurant, error) {
+	return u.repo.GetAll(ctx, count, offset)
+}
+
+func (u *RestaurantUsecase) GetById(ctx context.Context, id uuid.UUID) (*models.Restaurant, error) {
+	return u.repo.GetById(ctx, id)
+}
