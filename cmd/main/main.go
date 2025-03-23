@@ -11,6 +11,9 @@ import (
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/handlers"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/middleware"
+	restaurantDelivery "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/delivery/http"
+	restaurantRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/repo"
+	restaurantUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/usecase"
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
 )
@@ -38,6 +41,10 @@ func main() {
 		log.Fatalf("Ошибка при подключении к PostgreSQL: %v", err)
 	}
 	defer pool.Close()
+
+	RestaurantRepo := restaurantRepo.NewRestaurantRepository(pool)
+	RestaurantUsecase := restaurantUsecase.NewRestaurantsUsecase(*RestaurantRepo)
+	RestaurantDelivery := restaurantDelivery.NewRestaurantHandler(*RestaurantUsecase)
 	h := handlers.CreateHandler(pool)
 	r := mux.NewRouter().PathPrefix("/api").Subrouter()
 	r.NotFoundHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -55,8 +62,8 @@ func main() {
 	}
 	restaurants := r.PathPrefix("/restaurants").Subrouter()
 	{
-		restaurants.HandleFunc("/list", h.RestaurantList).Methods(http.MethodGet, http.MethodOptions)
-		restaurants.HandleFunc("/{id}", h.RestaurantByID).Methods(http.MethodGet, http.MethodOptions)
+		restaurants.HandleFunc("/list", RestaurantDelivery.RestaurantList).Methods(http.MethodGet, http.MethodOptions)
+		restaurants.HandleFunc("/{id}", RestaurantDelivery.GetProductsByRestaurant).Methods(http.MethodGet, http.MethodOptions)
 	}
 
 	http.Handle("/", r)
