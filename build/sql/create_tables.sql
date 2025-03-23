@@ -19,6 +19,16 @@ CREATE TABLE IF NOT EXISTS restaurants (
     rating FLOAT                                   
 );
 
+CREATE TABLE IF NOT EXISTS products (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    restaurant_id UUID NOT NULL REFERENCES restaurants(id) ON DELETE CASCADE,
+    name TEXT NOT NULL,
+    price FLOAT NOT NULL,
+    image_url TEXT NOT NULL,
+    weight INT NOT NULL,
+    amount INT NOT NULL DEFAULT 0
+);
+
 INSERT INTO restaurants (id, name, description, type, rating) VALUES
 (uuid_generate_v4(), 'Kebab King 267', 'Лучший кебаб в городе', 'Турецкий', 4.0),
 (uuid_generate_v4(), 'Green Garden 268', 'Вегетарианская кухня', 'Вегетарианский', 4.8),

@@ -9,11 +9,13 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/handlers"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/middleware"
 	authHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/http"
 	authRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/repo"
 	authUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/usecase"
+	restaurantDelivery "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/delivery/http"
+	restaurantRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/repo"
+	restaurantUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/usecase"
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
 )
@@ -45,7 +47,10 @@ func main() {
 	authRepo := authRepo.CreateAuthRepo(pool)
 	authUsecase := authUsecase.CreateAuthUsecase(authRepo)
 	authHandler := authHandler.CreateAuthHandler(authUsecase)
-	h := handlers.CreateHandler(pool)
+
+	RestaurantRepo := restaurantRepo.NewRestaurantRepository(pool)
+	RestaurantUsecase := restaurantUsecase.NewRestaurantsUsecase(*RestaurantRepo)
+	RestaurantDelivery := restaurantDelivery.NewRestaurantHandler(*RestaurantUsecase)
 	r := mux.NewRouter().PathPrefix("/api").Subrouter()
 	r.NotFoundHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Not Found", http.StatusTeapot)
@@ -64,8 +69,8 @@ func main() {
 	}
 	restaurants := r.PathPrefix("/restaurants").Subrouter()
 	{
-		restaurants.HandleFunc("/list", h.RestaurantList).Methods(http.MethodGet, http.MethodOptions)
-		restaurants.HandleFunc("/{id}", h.RestaurantByID).Methods(http.MethodGet, http.MethodOptions)
+		restaurants.HandleFunc("/list", RestaurantDelivery.RestaurantList).Methods(http.MethodGet, http.MethodOptions)
+		restaurants.HandleFunc("/{id}", RestaurantDelivery.GetProductsByRestaurant).Methods(http.MethodGet, http.MethodOptions)
 	}
 
 	http.Handle("/", r)
