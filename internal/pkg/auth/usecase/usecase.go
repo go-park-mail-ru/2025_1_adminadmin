@@ -4,7 +4,9 @@ import (
 	"bytes"
 	"context"
 	"crypto/rand"
+	"io"
 	"os"
+	"path"
 	"strings"
 	"time"
 	"unicode"
@@ -202,6 +204,108 @@ func (uc *AuthUsecase) Check(ctx context.Context, login string) (models.User, er
 	if err != nil {
 		return models.User{}, auth.ErrUserNotFound
 	}
+
+	return user, nil
+}
+
+func (uc *AuthUsecase) UpdateUser(ctx context.Context, login string, updateData models.UpdateUserReq) (models.User, error) {
+	if updateData.Password != "" && !validPassword(updateData.Password) {
+		return models.User{}, auth.ErrInvalidPassword
+	}
+
+	if (updateData.FirstName != "" && !isValidName(updateData.FirstName)) || (updateData.LastName != "" && !isValidName(updateData.LastName)) {
+		return models.User{}, auth.ErrInvalidName
+	}
+
+	if updateData.PhoneNumber != "" && !isValidPhone(updateData.PhoneNumber) {
+		return models.User{}, auth.ErrInvalidPhone
+	}
+
+	user, err := uc.repo.SelectUserByLogin(ctx, login)
+	if err != nil {
+		return models.User{}, auth.ErrUserNotFound
+	}
+
+	if updateData.Password != "" {
+		salt := make([]byte, 8)
+		rand.Read(salt)
+		hashedPassword := hashPassword(salt, updateData.Password)
+
+		if bytes.Equal(hashedPassword, user.PasswordHash) {
+			return models.User{}, auth.ErrSamePassword
+		}
+
+		user.PasswordHash = hashedPassword
+	}
+
+	if updateData.FirstName != "" && updateData.FirstName != user.FirstName {
+		user.FirstName = updateData.FirstName
+	} else if updateData.FirstName == user.FirstName {
+		return models.User{}, auth.ErrSameName
+	}
+
+	if updateData.LastName != "" && updateData.LastName != user.LastName {
+		user.LastName = updateData.LastName
+	} else if updateData.LastName == user.LastName {
+		return models.User{}, auth.ErrSameName
+	}
+
+	if updateData.PhoneNumber != "" && updateData.PhoneNumber != user.PhoneNumber {
+		user.PhoneNumber = updateData.PhoneNumber
+	} else if updateData.PhoneNumber == user.PhoneNumber {
+		return models.User{}, auth.ErrSamePhone
+	}
+
+	if updateData.Description != "" && updateData.Description != user.Description {
+		user.Description = updateData.Description
+	} else if updateData.Description == user.Description {
+		return models.User{}, auth.ErrSameDescription
+	}
+
+	err = uc.repo.UpdateUser(ctx, user)
+	if err != nil {
+		return models.User{}, err
+	}
+
+	return user, nil
+}
+
+func (uc *AuthUsecase) UpdateUserPic(ctx context.Context, login string, picture io.ReadSeeker, extension string) (models.User, error) {
+	user, err := uc.repo.SelectUserByLogin(ctx, login)
+	if err != nil {
+		return models.User{}, auth.ErrUserNotFound
+	}
+
+	pictureBasePath := os.Getenv("PICTURE_BASE_PATH")
+	if pictureBasePath == "" {
+		return models.User{}, auth.ErrBasePath
+	}
+
+	imageName := uuid.NewV4().String()
+	newImagePath := path.Join(pictureBasePath, imageName+extension)
+
+	dst, err := os.Create(newImagePath)
+	if err != nil {
+		return models.User{}, auth.ErrFileCreation
+	}
+	defer dst.Close()
+
+	if _, err := io.Copy(dst, picture); err != nil {
+		return models.User{}, auth.ErrFileSaving
+	}
+
+	if err := uc.repo.UpdateUserPic(ctx, login, imageName+extension); err != nil {
+		return models.User{}, err
+	}
+
+	if user.UserPic != "default.png" {
+		oldImagePath := path.Join(pictureBasePath, user.UserPic)
+		if err := os.Remove(oldImagePath); err != nil && !os.IsNotExist(err) {
+			return models.User{}, auth.ErrFileDeletion
+		}
+	}
+
+	user.UserPic = imageName + extension
 
 	return user, nil
 }
