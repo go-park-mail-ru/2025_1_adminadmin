@@ -11,6 +11,9 @@ import (
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/handlers"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/middleware"
+	authHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/http"
+	authRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/repo"
+	authUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/usecase"
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
 )
@@ -38,6 +41,10 @@ func main() {
 		log.Fatalf("Ошибка при подключении к PostgreSQL: %v", err)
 	}
 	defer pool.Close()
+
+	AuthRepo := authRepo.CreateAuthRepo(pool)
+	AuthUsecase := authUsecase.CreateAuthUsecase(AuthRepo)
+	AuthHandler := authHandler.CreateAuthHandler(AuthUsecase)
 	h := handlers.CreateHandler(pool)
 	r := mux.NewRouter().PathPrefix("/api").Subrouter()
 	r.NotFoundHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -48,10 +55,12 @@ func main() {
 
 	auth := r.PathPrefix("/auth").Subrouter()
 	{
-		auth.HandleFunc("/signup", h.SignUp).Methods(http.MethodPost, http.MethodOptions)
-		auth.HandleFunc("/signin", h.SignIn).Methods(http.MethodPost, http.MethodOptions)
-		auth.HandleFunc("/check", h.Check).Methods(http.MethodGet, http.MethodOptions)
-		auth.HandleFunc("/logout", h.LogOut).Methods(http.MethodGet, http.MethodOptions)
+		auth.HandleFunc("/signup", AuthHandler.SignUp).Methods(http.MethodPost, http.MethodOptions)
+		auth.HandleFunc("/signin", AuthHandler.SignIn).Methods(http.MethodPost, http.MethodOptions)
+		auth.HandleFunc("/check", AuthHandler.Check).Methods(http.MethodGet, http.MethodOptions)
+		auth.HandleFunc("/logout", AuthHandler.LogOut).Methods(http.MethodGet, http.MethodOptions)
+		auth.HandleFunc("/update_user", AuthHandler.UpdateUser).Methods(http.MethodPost, http.MethodOptions)
+		auth.HandleFunc("/Update_user_pic", AuthHandler.UpdateUserPic).Methods(http.MethodPost, http.MethodOptions)
 	}
 	restaurants := r.PathPrefix("/restaurants").Subrouter()
 	{

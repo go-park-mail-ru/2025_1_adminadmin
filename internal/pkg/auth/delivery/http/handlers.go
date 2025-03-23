@@ -298,7 +298,7 @@ func (h *AuthHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (h *AuthHandler) UpdateAvatar(w http.ResponseWriter, r *http.Request) {
+func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("AdminJWT")
 	if err != nil {
 		if err == http.ErrNoCookie {
