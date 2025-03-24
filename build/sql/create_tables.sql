@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS products (
     restaurant_id UUID NOT NULL REFERENCES restaurants(id) ON DELETE CASCADE,
     name TEXT NOT NULL,
     price FLOAT NOT NULL,
-    image_url TEXT NOT NULL,
+    image_url TEXT DEFAULT 'default_prod.jpg',
     weight INT NOT NULL,
     amount INT NOT NULL DEFAULT 0
 );
