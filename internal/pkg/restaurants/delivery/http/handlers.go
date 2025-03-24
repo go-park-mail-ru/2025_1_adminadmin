@@ -5,11 +5,9 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/usecase"
 	utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/utils/send_error"
 	"github.com/gorilla/mux"
-	"github.com/mailru/easyjson"
 	"github.com/satori/uuid"
 )
 
@@ -49,9 +47,7 @@ func (h *RestaurantHandler) GetProductsByRestaurant(w http.ResponseWriter, r *ht
 		return
 	}
 
-	productList := models.ProductList(products)
-
-	data, err := easyjson.Marshal(productList)
+	data, err := json.Marshal(products)
 	if err != nil {
 		utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)
 		return
@@ -80,9 +76,7 @@ func (h *RestaurantHandler) RestaurantList(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	restaurantList := models.RestaurantList(restaurants)
-
-	data, err := easyjson.Marshal(restaurantList)
+	data, err := json.Marshal(restaurants)
 	if err != nil {
 		utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)
 		return
@@ -107,6 +101,11 @@ func (h *RestaurantHandler) RestaurantById(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(restaurant)
+	data, err := json.Marshal(restaurant)
+	if err != nil {
+		utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)
+		return
+	}
+
+	w.Write(data)
 }

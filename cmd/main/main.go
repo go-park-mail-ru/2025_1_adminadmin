@@ -63,7 +63,8 @@ func main() {
 	restaurants := r.PathPrefix("/restaurants").Subrouter()
 	{
 		restaurants.HandleFunc("/list", RestaurantDelivery.RestaurantList).Methods(http.MethodGet, http.MethodOptions)
-		restaurants.HandleFunc("/{id}", RestaurantDelivery.GetProductsByRestaurant).Methods(http.MethodGet, http.MethodOptions)
+		restaurants.HandleFunc("/{id}", RestaurantDelivery.RestaurantById).Methods(http.MethodGet, http.MethodOptions)
+		restaurants.HandleFunc("/{id}/products", RestaurantDelivery.GetProductsByRestaurant).Methods(http.MethodGet, http.MethodOptions)
 	}
 
 	http.Handle("/", r)

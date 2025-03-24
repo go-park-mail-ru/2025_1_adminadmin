@@ -20,6 +20,3 @@ type Product struct {
 func (p *Product) Sanitize() {
 	p.Name = html.EscapeString(p.Name)
 }
-
-// easyjson:json
-type ProductList []Product
