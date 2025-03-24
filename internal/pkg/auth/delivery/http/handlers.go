@@ -7,7 +7,6 @@ import (
 	"io"
 	"net/http"
 	"os"
-	"path/filepath"
 	"time"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
@@ -17,10 +16,11 @@ import (
 )
 
 const maxRequestBodySize = 10 << 20
+
 var allowedMimeTypes = map[string]string{
-    "image/jpeg":  ".jpg",
-    "image/png":   ".png",
-    "image/webp":  ".webp",
+	"image/jpeg": ".jpg",
+	"image/png":  ".png",
+	"image/webp": ".webp",
 }
 
 type AuthHandler struct {
@@ -317,12 +317,12 @@ func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) {
 	}
 
 	defer func() {
-        if r.MultipartForm != nil {
-            r.MultipartForm.RemoveAll() 
-        }
-    }()
+		if r.MultipartForm != nil {
+			r.MultipartForm.RemoveAll()
+		}
+	}()
 
-	file, fileMetadata, err := r.FormFile("user_pic")
+	file, _, err := r.FormFile("user_pic")
 	if err != nil {
 		utils.SendError(w, "Файл не найден в запросе", http.StatusBadRequest)
 		return
@@ -342,7 +342,7 @@ func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ext := filepath.Ext(fileMetadata.Filename)
+	ext := allowedMimeTypes[mimeType]
 
 	updatedUser, err := h.uc.UpdateUserPic(r.Context(), login, file, ext)
 	if err != nil {
