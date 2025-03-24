@@ -5,8 +5,11 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/usecase"
+	utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/utils/send_error"
 	"github.com/gorilla/mux"
+	"github.com/mailru/easyjson"
 	"github.com/satori/uuid"
 )
 
@@ -46,8 +49,15 @@ func (h *RestaurantHandler) GetProductsByRestaurant(w http.ResponseWriter, r *ht
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(products)
+	productList := models.ProductList(products)
+
+	data, err := easyjson.Marshal(productList)
+	if err != nil {
+		utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)
+		return
+	}
+
+	w.Write(data)
 }
 
 func (h *RestaurantHandler) RestaurantList(w http.ResponseWriter, r *http.Request) {
@@ -70,9 +80,16 @@ func (h *RestaurantHandler) RestaurantList(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(restaurants)
-	
+	restaurantList := models.RestaurantList(restaurants)
+
+	data, err := easyjson.Marshal(restaurantList)
+	if err != nil {
+		utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)
+		return
+	}
+
+	w.Write(data)
+
 }
 
 func (h *RestaurantHandler) RestaurantById(w http.ResponseWriter, r *http.Request) {

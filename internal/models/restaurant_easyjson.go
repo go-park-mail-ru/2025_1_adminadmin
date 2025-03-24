@@ -17,7 +17,73 @@ var (
 	_ easyjson.Marshaler
 )
 
-func easyjson16134a91DecodeGithubComGoParkMailRu20251AdminadminInternalModels(in *jlexer.Lexer, out *Restaurant) {
+func easyjson16134a91DecodeGithubComGoParkMailRu20251AdminadminInternalModels(in *jlexer.Lexer, out *RestaurantList) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		in.Skip()
+		*out = nil
+	} else {
+		in.Delim('[')
+		if *out == nil {
+			if !in.IsDelim(']') {
+				*out = make(RestaurantList, 0, 0)
+			} else {
+				*out = RestaurantList{}
+			}
+		} else {
+			*out = (*out)[:0]
+		}
+		for !in.IsDelim(']') {
+			var v1 Restaurant
+			(v1).UnmarshalEasyJSON(in)
+			*out = append(*out, v1)
+			in.WantComma()
+		}
+		in.Delim(']')
+	}
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjson16134a91EncodeGithubComGoParkMailRu20251AdminadminInternalModels(out *jwriter.Writer, in RestaurantList) {
+	if in == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+		out.RawString("null")
+	} else {
+		out.RawByte('[')
+		for v2, v3 := range in {
+			if v2 > 0 {
+				out.RawByte(',')
+			}
+			(v3).MarshalEasyJSON(out)
+		}
+		out.RawByte(']')
+	}
+}
+
+// MarshalJSON supports json.Marshaler interface
+func (v RestaurantList) MarshalJSON() ([]byte, error) {
+	w := jwriter.Writer{}
+	easyjson16134a91EncodeGithubComGoParkMailRu20251AdminadminInternalModels(&w, v)
+	return w.Buffer.BuildBytes(), w.Error
+}
+
+// MarshalEasyJSON supports easyjson.Marshaler interface
+func (v RestaurantList) MarshalEasyJSON(w *jwriter.Writer) {
+	easyjson16134a91EncodeGithubComGoParkMailRu20251AdminadminInternalModels(w, v)
+}
+
+// UnmarshalJSON supports json.Unmarshaler interface
+func (v *RestaurantList) UnmarshalJSON(data []byte) error {
+	r := jlexer.Lexer{Data: data}
+	easyjson16134a91DecodeGithubComGoParkMailRu20251AdminadminInternalModels(&r, v)
+	return r.Error()
+}
+
+// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
+func (v *RestaurantList) UnmarshalEasyJSON(l *jlexer.Lexer) {
+	easyjson16134a91DecodeGithubComGoParkMailRu20251AdminadminInternalModels(l, v)
+}
+func easyjson16134a91DecodeGithubComGoParkMailRu20251AdminadminInternalModels1(in *jlexer.Lexer, out *Restaurant) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -58,7 +124,7 @@ func easyjson16134a91DecodeGithubComGoParkMailRu20251AdminadminInternalModels(in
 		in.Consumed()
 	}
 }
-func easyjson16134a91EncodeGithubComGoParkMailRu20251AdminadminInternalModels(out *jwriter.Writer, in Restaurant) {
+func easyjson16134a91EncodeGithubComGoParkMailRu20251AdminadminInternalModels1(out *jwriter.Writer, in Restaurant) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -93,23 +159,23 @@ func easyjson16134a91EncodeGithubComGoParkMailRu20251AdminadminInternalModels(ou
 // MarshalJSON supports json.Marshaler interface
 func (v Restaurant) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	easyjson16134a91EncodeGithubComGoParkMailRu20251AdminadminInternalModels(&w, v)
+	easyjson16134a91EncodeGithubComGoParkMailRu20251AdminadminInternalModels1(&w, v)
 	return w.Buffer.BuildBytes(), w.Error
 }
 
 // MarshalEasyJSON supports easyjson.Marshaler interface
 func (v Restaurant) MarshalEasyJSON(w *jwriter.Writer) {
-	easyjson16134a91EncodeGithubComGoParkMailRu20251AdminadminInternalModels(w, v)
+	easyjson16134a91EncodeGithubComGoParkMailRu20251AdminadminInternalModels1(w, v)
 }
 
 // UnmarshalJSON supports json.Unmarshaler interface
 func (v *Restaurant) UnmarshalJSON(data []byte) error {
 	r := jlexer.Lexer{Data: data}
-	easyjson16134a91DecodeGithubComGoParkMailRu20251AdminadminInternalModels(&r, v)
+	easyjson16134a91DecodeGithubComGoParkMailRu20251AdminadminInternalModels1(&r, v)
 	return r.Error()
 }
 
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *Restaurant) UnmarshalEasyJSON(l *jlexer.Lexer) {
-	easyjson16134a91DecodeGithubComGoParkMailRu20251AdminadminInternalModels(l, v)
+	easyjson16134a91DecodeGithubComGoParkMailRu20251AdminadminInternalModels1(l, v)
 }
