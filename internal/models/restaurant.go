@@ -20,3 +20,6 @@ func (r *Restaurant) Sanitize() {
 	r.Description = html.EscapeString(r.Description)
 	r.Type = html.EscapeString(r.Type)
 }
+
+// easyjson:json
+type RestaurantList []Restaurant
