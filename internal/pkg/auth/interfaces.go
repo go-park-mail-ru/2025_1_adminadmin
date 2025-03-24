@@ -21,7 +21,6 @@ var (
 	ErrSamePassword       = errors.New("Новый пароль совпадает со старым")
 	ErrSameName           = errors.New("Новые имя и фамилия совпадают со старыми")
 	ErrSamePhone          = errors.New("Новый телефон совпадает со старым")
-	ErrSameDescription    = errors.New("Новое описание совпадает со старым")
 	ErrBasePath           = errors.New("Базовый путь для картинок не установлен")
 	ErrFileCreation       = errors.New("Ошибка при создании файла")
 	ErrFileSaving         = errors.New("Ошибка при сохранении файла")

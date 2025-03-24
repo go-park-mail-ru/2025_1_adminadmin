@@ -256,11 +256,7 @@ func (uc *AuthUsecase) UpdateUser(ctx context.Context, login string, updateData 
 		return models.User{}, auth.ErrSamePhone
 	}
 
-	if updateData.Description != "" && updateData.Description != user.Description {
-		user.Description = updateData.Description
-	} else if updateData.Description == user.Description {
-		return models.User{}, auth.ErrSameDescription
-	}
+	user.Description = updateData.Description
 
 	err = uc.repo.UpdateUser(ctx, user)
 	if err != nil {

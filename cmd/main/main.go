@@ -42,9 +42,9 @@ func main() {
 	}
 	defer pool.Close()
 
-	AuthRepo := authRepo.CreateAuthRepo(pool)
-	AuthUsecase := authUsecase.CreateAuthUsecase(AuthRepo)
-	AuthHandler := authHandler.CreateAuthHandler(AuthUsecase)
+	authRepo := authRepo.CreateAuthRepo(pool)
+	authUsecase := authUsecase.CreateAuthUsecase(authRepo)
+	authHandler := authHandler.CreateAuthHandler(authUsecase)
 	h := handlers.CreateHandler(pool)
 	r := mux.NewRouter().PathPrefix("/api").Subrouter()
 	r.NotFoundHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -55,12 +55,12 @@ func main() {
 
 	auth := r.PathPrefix("/auth").Subrouter()
 	{
-		auth.HandleFunc("/signup", AuthHandler.SignUp).Methods(http.MethodPost, http.MethodOptions)
-		auth.HandleFunc("/signin", AuthHandler.SignIn).Methods(http.MethodPost, http.MethodOptions)
-		auth.HandleFunc("/check", AuthHandler.Check).Methods(http.MethodGet, http.MethodOptions)
-		auth.HandleFunc("/logout", AuthHandler.LogOut).Methods(http.MethodGet, http.MethodOptions)
-		auth.HandleFunc("/update_user", AuthHandler.UpdateUser).Methods(http.MethodPost, http.MethodOptions)
-		auth.HandleFunc("/Update_user_pic", AuthHandler.UpdateUserPic).Methods(http.MethodPost, http.MethodOptions)
+		auth.HandleFunc("/signup", authHandler.SignUp).Methods(http.MethodPost, http.MethodOptions)
+		auth.HandleFunc("/signin", authHandler.SignIn).Methods(http.MethodPost, http.MethodOptions)
+		auth.HandleFunc("/check", authHandler.Check).Methods(http.MethodGet, http.MethodOptions)
+		auth.HandleFunc("/logout", authHandler.LogOut).Methods(http.MethodGet, http.MethodOptions)
+		auth.HandleFunc("/update_user", authHandler.UpdateUser).Methods(http.MethodPost, http.MethodOptions)
+		auth.HandleFunc("/update_userpic", authHandler.UpdateUserPic).Methods(http.MethodPost, http.MethodOptions)
 	}
 	restaurants := r.PathPrefix("/restaurants").Subrouter()
 	{

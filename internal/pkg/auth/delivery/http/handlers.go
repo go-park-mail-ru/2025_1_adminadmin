@@ -16,12 +16,38 @@ import (
 	"github.com/golang-jwt/jwt"
 )
 
+const maxRequestBodySize = 10 << 20
+var allowedMimeTypes = map[string]string{
+    "image/jpeg":  ".jpg",
+    "image/png":   ".png",
+    "image/webp":  ".webp",
+}
+
 type AuthHandler struct {
-	uc auth.AuthUsecase
+	uc     auth.AuthUsecase
+	secret string
 }
 
 func CreateAuthHandler(uc auth.AuthUsecase) *AuthHandler {
-	return &AuthHandler{uc: uc}
+	return &AuthHandler{uc: uc, secret: os.Getenv("JWT_SECRET")}
+}
+
+func GetLoginFromJWT(JWTStr string, claims jwt.MapClaims, secret string) (string, bool) {
+	token, err := jwt.ParseWithClaims(JWTStr, claims, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+		}
+		if secret == "" {
+			return nil, fmt.Errorf("JWT_SECRET не установлен")
+		}
+		return []byte(secret), nil
+	})
+	if err != nil || !token.Valid {
+		return "", false
+	}
+
+	login, ok := claims["login"].(string)
+	return login, ok
 }
 
 func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) {
@@ -41,8 +67,6 @@ func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) {
 			utils.SendError(w, err.Error(), http.StatusBadRequest)
 		case auth.ErrInvalidCredentials:
 			utils.SendError(w, err.Error(), http.StatusUnauthorized)
-		case auth.ErrGeneratingToken:
-			utils.SendError(w, err.Error(), http.StatusInternalServerError)
 		default:
 			utils.SendError(w, "Неизвестная ошибка", http.StatusInternalServerError)
 		}
@@ -89,18 +113,14 @@ func (h *AuthHandler) SignUp(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		switch err {
-		case auth.ErrInvalidLogin:
-			utils.SendError(w, err.Error(), http.StatusBadRequest)
-		case auth.ErrInvalidPassword:
-			utils.SendError(w, err.Error(), http.StatusBadRequest)
+		case auth.ErrInvalidLogin, auth.ErrInvalidPassword:
+			utils.SendError(w, "Неправильный логин или пароль", http.StatusBadRequest)
 		case auth.ErrInvalidName:
 			utils.SendError(w, err.Error(), http.StatusBadRequest)
 		case auth.ErrInvalidPhone:
 			utils.SendError(w, err.Error(), http.StatusBadRequest)
 		case auth.ErrCreatingUser:
 			utils.SendError(w, err.Error(), http.StatusBadRequest)
-		case auth.ErrGeneratingToken:
-			utils.SendError(w, err.Error(), http.StatusInternalServerError)
 		default:
 			utils.SendError(w, "Неизвестная ошибка", http.StatusInternalServerError)
 		}
@@ -165,22 +185,7 @@ func (h *AuthHandler) Check(w http.ResponseWriter, r *http.Request) {
 
 	claims := jwt.MapClaims{}
 
-	token, err := jwt.ParseWithClaims(JWTStr, claims, func(token *jwt.Token) (interface{}, error) {
-		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
-		}
-		secret := os.Getenv("JWT_SECRET")
-		if secret == "" {
-			return nil, fmt.Errorf("JWT_SECRET не установлен")
-		}
-		return []byte(secret), nil
-	})
-	if err != nil || !token.Valid {
-		w.WriteHeader(http.StatusUnauthorized)
-		return
-	}
-
-	login, ok := claims["login"].(string)
+	login, ok := GetLoginFromJWT(JWTStr, claims, h.secret)
 	if !ok || login == "" {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
@@ -239,22 +244,8 @@ func (h *AuthHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	JWTStr := cookie.Value
 
 	claims := jwt.MapClaims{}
-	token, err := jwt.ParseWithClaims(JWTStr, claims, func(token *jwt.Token) (interface{}, error) {
-		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("неверный метод подписи: %v", token.Header["alg"])
-		}
-		secret := os.Getenv("JWT_SECRET")
-		if secret == "" {
-			return nil, fmt.Errorf("JWT_SECRET не установлен")
-		}
-		return []byte(secret), nil
-	})
-	if err != nil || !token.Valid {
-		utils.SendError(w, "Недействительный токен", http.StatusUnauthorized)
-		return
-	}
 
-	login, ok := claims["login"].(string)
+	login, ok := GetLoginFromJWT(JWTStr, claims, h.secret)
 	if !ok || login == "" {
 		utils.SendError(w, "Недействительный токен: login отсутствует", http.StatusUnauthorized)
 		return
@@ -281,10 +272,6 @@ func (h *AuthHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 			utils.SendError(w, err.Error(), http.StatusBadRequest)
 		case auth.ErrSamePhone:
 			utils.SendError(w, err.Error(), http.StatusBadRequest)
-		case auth.ErrSameDescription:
-			utils.SendError(w, err.Error(), http.StatusBadRequest)
-		case auth.ErrUserNotFound:
-			utils.SendError(w, err.Error(), http.StatusNotFound)
 		default:
 			utils.SendError(w, "Ошибка обновления данных пользователя", http.StatusInternalServerError)
 		}
@@ -308,31 +295,16 @@ func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) {
 		utils.SendError(w, "Ошибка при чтении куки", http.StatusBadRequest)
 		return
 	}
-	tokenString := cookie.Value
+	JWTStr := cookie.Value
 
 	claims := jwt.MapClaims{}
-	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
-		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("неверный метод подписи: %v", token.Header["alg"])
-		}
-		secret := os.Getenv("JWT_SECRET")
-		if secret == "" {
-			return nil, fmt.Errorf("JWT_SECRET не установлен")
-		}
-		return []byte(secret), nil
-	})
-	if err != nil || !token.Valid {
-		utils.SendError(w, "Недействительный токен", http.StatusUnauthorized)
-		return
-	}
 
-	login, ok := claims["login"].(string)
+	login, ok := GetLoginFromJWT(JWTStr, claims, h.secret)
 	if !ok || login == "" {
 		utils.SendError(w, "Недействительный токен: login отсутствует", http.StatusUnauthorized)
 		return
 	}
 
-	const maxRequestBodySize = 10 << 20 
 	r.Body = http.MaxBytesReader(w, r.Body, maxRequestBodySize)
 
 	if err := r.ParseMultipartForm(maxRequestBodySize); err != nil {
@@ -344,27 +316,33 @@ func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	file, handler, err := r.FormFile("user_pic")
+	defer func() {
+        if r.MultipartForm != nil {
+            r.MultipartForm.RemoveAll() 
+        }
+    }()
+
+	file, fileMetadata, err := r.FormFile("user_pic")
 	if err != nil {
 		utils.SendError(w, "Файл не найден в запросе", http.StatusBadRequest)
 		return
 	}
 	defer file.Close()
 
-	buffer := make([]byte, 512) 
+	buffer := make([]byte, 512)
 	if _, err := file.Read(buffer); err != nil {
 		utils.SendError(w, "Ошибка при чтении файла", http.StatusBadRequest)
 		return
 	}
-	file.Seek(0, io.SeekStart) 
+	file.Seek(0, io.SeekStart)
 
 	mimeType := http.DetectContentType(buffer)
-	if mimeType != "image/jpeg" && mimeType != "image/png" && mimeType != "image/webp" {
-		utils.SendError(w, "Недопустимый формат файла. Разрешены только JPEG, PNG и WEBP", http.StatusBadRequest)
+	if _, ok := allowedMimeTypes[mimeType]; !ok {
+		utils.SendError(w, "Недопустимый формат файла.", http.StatusBadRequest)
 		return
 	}
 
-	ext := filepath.Ext(handler.Filename)
+	ext := filepath.Ext(fileMetadata.Filename)
 
 	updatedUser, err := h.uc.UpdateUserPic(r.Context(), login, file, ext)
 	if err != nil {
