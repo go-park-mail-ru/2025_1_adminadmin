@@ -52,7 +52,7 @@ func (h *RestaurantHandler) GetProductsByRestaurant(w http.ResponseWriter, r *ht
 		utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)
 		return
 	}
-
+	w.Header().Set("Content-Type", "application/json")
 	w.Write(data)
 }
 
@@ -81,7 +81,7 @@ func (h *RestaurantHandler) RestaurantList(w http.ResponseWriter, r *http.Reques
 		utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)
 		return
 	}
-
+	w.Header().Set("Content-Type", "application/json")
 	w.Write(data)
 
 }
@@ -106,6 +106,6 @@ func (h *RestaurantHandler) RestaurantById(w http.ResponseWriter, r *http.Reques
 		utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)
 		return
 	}
-
+	w.Header().Set("Content-Type", "application/json")
 	w.Write(data)
 }
