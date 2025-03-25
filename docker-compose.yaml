@@ -10,8 +10,10 @@ services:
     environment:
       POSTGRES_CONN: ${POSTGRES_CONN}
       JWT_SECRET: ${JWT_SECRET}
+      REDIS_ADDR: "redis:6379"
     depends_on:
       - postgres
+      - redis
     networks:
       - adminadmin-network
 
@@ -31,6 +33,17 @@ services:
       - ./build/sql/create_tables.sql:/docker-entrypoint-initdb.d/initdb.sql
       - adminadmin-db-data:/var/lib/postgresql/data
 
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - adminadmin-network
+    volumes:
+      - redis-data:/data
+
   nginx:
     image: nginx:latest
     container_name: nginx
@@ -47,6 +60,7 @@ services:
       - adminadmin-network
 
 volumes:
+  redis-data:
   adminadmin-db-data:
 
 networks:
