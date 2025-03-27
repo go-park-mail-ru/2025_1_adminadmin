@@ -19,6 +19,13 @@ CREATE TABLE IF NOT EXISTS restaurants (
     rating FLOAT                                   
 );
 
+CREATE TABLE IF NOT EXISTS addresses (
+    id UUID PRIMARY KEY,  
+    address TEXT NOT NULL,                                                           
+    user_id UUID,                                   
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL                                  
+);
+
 CREATE TABLE IF NOT EXISTS products (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     restaurant_id UUID NOT NULL REFERENCES restaurants(id) ON DELETE CASCADE,

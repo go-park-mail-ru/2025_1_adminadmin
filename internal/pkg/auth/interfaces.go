@@ -6,6 +6,7 @@ import (
 	"io"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
+	"github.com/satori/uuid"
 )
 
 var (
@@ -32,6 +33,9 @@ type AuthRepo interface {
 	SelectUserByLogin(ctx context.Context, login string) (models.User, error)
 	UpdateUser(ctx context.Context, user models.User) error
 	UpdateUserPic(ctx context.Context, login string, userPic string) error
+	InsertAddress(ctx context.Context, address models.Address) error
+	DeleteAddress(ctx context.Context, addressId uuid.UUID) error
+	SelectUserAddresses(ctx context.Context, login string) ([]models.Address, error)
 }
 
 type AuthUsecase interface {
@@ -40,4 +44,7 @@ type AuthUsecase interface {
 	Check(ctx context.Context, login string) (models.User, error)
 	UpdateUser(ctx context.Context, login string, updateData models.UpdateUserReq) (models.User, error)
 	UpdateUserPic(ctx context.Context, login string, picture io.ReadSeeker, extension string) (models.User, error)
+	GetUserAddresses(ctx context.Context, login string) ([]models.Address, error)
+	DeleteAddress(ctx context.Context, addressId uuid.UUID) error
+	AddAddress(ctx context.Context, address models.Address) error
 }

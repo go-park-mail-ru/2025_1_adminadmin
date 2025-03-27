@@ -5,6 +5,7 @@ import (
 	"context"
 	"crypto/rand"
 	"io"
+	"log/slog"
 	"os"
 	"path"
 	"strings"
@@ -13,6 +14,7 @@ import (
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/utils/log"
 	"github.com/golang-jwt/jwt"
 	"github.com/satori/uuid"
 	"golang.org/x/crypto/argon2"
@@ -106,7 +108,7 @@ func validPassword(password string) bool {
 	return up && low && digit && special
 }
 
-func generateToken(login string) (string, error) {
+func generateToken(login string, id uuid.UUID) (string, error) {
 	secret := os.Getenv("JWT_SECRET")
 	if secret == "" {
 		return "", nil
@@ -114,6 +116,7 @@ func generateToken(login string) (string, error) {
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"login": login,
+		"id": id,
 		"exp":   time.Now().Add(24 * time.Hour).Unix(),
 	})
 
@@ -129,43 +132,56 @@ func CreateAuthUsecase(repo auth.AuthRepo) *AuthUsecase {
 }
 
 func (uc *AuthUsecase) SignIn(ctx context.Context, data models.SignInReq) (models.User, string, string, error) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
 	if !validLogin(data.Login) {
+		logger.Error(auth.ErrInvalidLogin.Error())
 		return models.User{}, "", "", auth.ErrInvalidLogin
 	}
 
 	user, err := uc.repo.SelectUserByLogin(ctx, data.Login)
 	if err != nil {
+		logger.Error(auth.ErrUserNotFound.Error())
 		return models.User{}, "", "", auth.ErrUserNotFound
 	}
 
 	if !checkPassword(user.PasswordHash, data.Password) {
+		logger.Error(auth.ErrInvalidCredentials.Error())
 		return models.User{}, "", "", auth.ErrInvalidCredentials
 	}
 
-	token, err := generateToken(user.Login)
+	token, err := generateToken(user.Login, user.Id)
 	if err != nil {
+		logger.Error(auth.ErrGeneratingToken.Error())
 		return models.User{}, "", "", auth.ErrGeneratingToken
 	}
 
 	csrfToken := uuid.NewV4().String()
 
+	logger.Info("Successful")
 	return user, token, csrfToken, nil
 }
 
 func (uc *AuthUsecase) SignUp(ctx context.Context, data models.SignUpReq) (models.User, string, string, error) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
 	if !validLogin(data.Login) {
+		logger.Error(auth.ErrInvalidLogin.Error())
 		return models.User{}, "", "", auth.ErrInvalidLogin
 	}
 
 	if !validPassword(data.Password) {
+		logger.Error(auth.ErrInvalidPassword.Error())
 		return models.User{}, "", "", auth.ErrInvalidPassword
 	}
 
 	if !isValidName(data.FirstName) || !isValidName(data.LastName) {
+		logger.Error(auth.ErrInvalidName.Error())
 		return models.User{}, "", "", auth.ErrInvalidName
 	}
 
 	if !isValidPhone(data.PhoneNumber) {
+		logger.Error(auth.ErrInvalidPhone.Error())
 		return models.User{}, "", "", auth.ErrInvalidPhone
 	}
 
@@ -186,22 +202,28 @@ func (uc *AuthUsecase) SignUp(ctx context.Context, data models.SignUpReq) (model
 
 	err := uc.repo.InsertUser(ctx, newUser)
 	if err != nil {
+		logger.Error(err.Error())
 		return models.User{}, "", "", auth.ErrCreatingUser
 	}
 
-	token, err := generateToken(newUser.Login)
+	token, err := generateToken(newUser.Login, newUser.Id)
 	if err != nil {
+		logger.Error(err.Error())
 		return models.User{}, "", "", auth.ErrGeneratingToken
 	}
 
 	csrfToken := uuid.NewV4().String()
 
+	logger.Info("Successful")
 	return newUser, token, csrfToken, nil
 }
 
 func (uc *AuthUsecase) Check(ctx context.Context, login string) (models.User, error) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
 	user, err := uc.repo.SelectUserByLogin(ctx, login)
 	if err != nil {
+		logger.Error(err.Error())
 		return models.User{}, auth.ErrUserNotFound
 	}
 
@@ -209,20 +231,26 @@ func (uc *AuthUsecase) Check(ctx context.Context, login string) (models.User, er
 }
 
 func (uc *AuthUsecase) UpdateUser(ctx context.Context, login string, updateData models.UpdateUserReq) (models.User, error) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
 	if updateData.Password != "" && !validPassword(updateData.Password) {
+		logger.Error(auth.ErrInvalidPassword.Error())
 		return models.User{}, auth.ErrInvalidPassword
 	}
 
 	if (updateData.FirstName != "" && !isValidName(updateData.FirstName)) || (updateData.LastName != "" && !isValidName(updateData.LastName)) {
+		logger.Error(auth.ErrInvalidName.Error())
 		return models.User{}, auth.ErrInvalidName
 	}
 
 	if updateData.PhoneNumber != "" && !isValidPhone(updateData.PhoneNumber) {
+		logger.Error(auth.ErrInvalidPhone.Error())
 		return models.User{}, auth.ErrInvalidPhone
 	}
 
 	user, err := uc.repo.SelectUserByLogin(ctx, login)
 	if err != nil {
+		logger.Error(err.Error())
 		return models.User{}, auth.ErrUserNotFound
 	}
 
@@ -241,18 +269,21 @@ func (uc *AuthUsecase) UpdateUser(ctx context.Context, login string, updateData 
 	if updateData.FirstName != "" && updateData.FirstName != user.FirstName {
 		user.FirstName = updateData.FirstName
 	} else if updateData.FirstName == user.FirstName {
+		logger.Error(auth.ErrSameName.Error())
 		return models.User{}, auth.ErrSameName
 	}
 
 	if updateData.LastName != "" && updateData.LastName != user.LastName {
 		user.LastName = updateData.LastName
 	} else if updateData.LastName == user.LastName {
+		logger.Error(auth.ErrSameName.Error())
 		return models.User{}, auth.ErrSameName
 	}
 
 	if updateData.PhoneNumber != "" && updateData.PhoneNumber != user.PhoneNumber {
 		user.PhoneNumber = updateData.PhoneNumber
 	} else if updateData.PhoneNumber == user.PhoneNumber {
+		logger.Error(auth.ErrSamePhone.Error())
 		return models.User{}, auth.ErrSamePhone
 	}
 
@@ -260,20 +291,26 @@ func (uc *AuthUsecase) UpdateUser(ctx context.Context, login string, updateData 
 
 	err = uc.repo.UpdateUser(ctx, user)
 	if err != nil {
+		logger.Error(err.Error())
 		return models.User{}, err
 	}
 
+	logger.Info("Successful")
 	return user, nil
 }
 
 func (uc *AuthUsecase) UpdateUserPic(ctx context.Context, login string, picture io.ReadSeeker, extension string) (models.User, error) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
 	user, err := uc.repo.SelectUserByLogin(ctx, login)
 	if err != nil {
+		logger.Error(err.Error())
 		return models.User{}, auth.ErrUserNotFound
 	}
 
 	pictureBasePath := os.Getenv("PICTURE_BASE_PATH")
 	if pictureBasePath == "" {
+		logger.Error(auth.ErrBasePath.Error())
 		return models.User{}, auth.ErrBasePath
 	}
 
@@ -282,26 +319,71 @@ func (uc *AuthUsecase) UpdateUserPic(ctx context.Context, login string, picture 
 
 	dst, err := os.Create(newImagePath)
 	if err != nil {
+		logger.Error(err.Error())
 		return models.User{}, auth.ErrFileCreation
 	}
 	defer dst.Close()
 
 	if _, err := io.Copy(dst, picture); err != nil {
+		logger.Error(err.Error())
 		return models.User{}, auth.ErrFileSaving
 	}
 
 	if err := uc.repo.UpdateUserPic(ctx, login, imageName+extension); err != nil {
+		logger.Error(err.Error())
 		return models.User{}, err
 	}
 
 	if user.UserPic != "default.png" {
 		oldImagePath := path.Join(pictureBasePath, user.UserPic)
 		if err := os.Remove(oldImagePath); err != nil && !os.IsNotExist(err) {
+			logger.Error(err.Error())
 			return models.User{}, auth.ErrFileDeletion
 		}
 	}
 
 	user.UserPic = imageName + extension
 
+	logger.Info("Successful")
 	return user, nil
+}
+
+func (uc *AuthUsecase) GetUserAddresses(ctx context.Context, login string) ([]models.Address, error) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	addresses, err := uc.repo.SelectUserAddresses(ctx, login)
+	if err != nil {
+		logger.Error(err.Error())
+		return []models.Address{}, err
+	}
+
+	logger.Info("Successful")
+	return addresses, nil
+}
+
+func (uc *AuthUsecase) DeleteAddress(ctx context.Context, addressId uuid.UUID) error {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	err := uc.repo.DeleteAddress(ctx, addressId)
+	if err != nil {
+		logger.Error(err.Error())
+		return err
+	}
+
+	logger.Info("Successful")
+	return nil
+}
+
+func (uc *AuthUsecase) AddAddress(ctx context.Context, address models.Address) error {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	address.Id = uuid.NewV4()
+	err := uc.repo.InsertAddress(ctx, address)
+	if err != nil {
+		logger.Error(err.Error())
+		return err
+	}
+
+	logger.Info("Successful")
+	return nil
 }
