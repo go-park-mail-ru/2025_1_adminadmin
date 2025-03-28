@@ -8,9 +8,9 @@ import (
 
 // easyjson:json
 type Address struct {
-	Id           uuid.UUID `json:"id"`
+	Id      uuid.UUID `json:"id"`
 	Address string    `json:"address"`
-	UserId       uuid.UUID `json:"user_id"`
+	UserId  uuid.UUID `json:"user_id"`
 }
 
 func (a *Address) Sanitize() {
