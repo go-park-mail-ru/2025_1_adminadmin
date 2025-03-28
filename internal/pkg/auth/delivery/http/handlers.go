@@ -442,7 +442,7 @@ func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) {
 	log.LogHandlerInfo(logger, "Successful", http.StatusOK)
 }
 
-func (h *AuthHandler) GetUserAddresses(w http.ResponseWriter, r http.Request) {
+func (h *AuthHandler) GetUserAddresses(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
 	cookie, err := r.Cookie("AdminJWT")
@@ -482,7 +482,7 @@ func (h *AuthHandler) GetUserAddresses(w http.ResponseWriter, r http.Request) {
 	log.LogHandlerInfo(logger, "Successful", http.StatusOK)
 }
 
-func (h *AuthHandler) DeleteAddress(w http.ResponseWriter, r http.Request) {
+func (h *AuthHandler) DeleteAddress(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
 	var address models.Address
@@ -504,7 +504,7 @@ func (h *AuthHandler) DeleteAddress(w http.ResponseWriter, r http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-func (h *AuthHandler) AddAddress(w http.ResponseWriter, r http.Request) {
+func (h *AuthHandler) AddAddress(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
 	cookie, err := r.Cookie("AdminJWT")

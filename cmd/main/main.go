@@ -82,6 +82,9 @@ func main() {
 		auth.HandleFunc("/logout", authHandler.LogOut).Methods(http.MethodGet, http.MethodOptions)
 		auth.HandleFunc("/update_user", authHandler.UpdateUser).Methods(http.MethodPost, http.MethodOptions)
 		auth.HandleFunc("/update_userpic", authHandler.UpdateUserPic).Methods(http.MethodPost, http.MethodOptions)
+		auth.HandleFunc("/get_addresses", authHandler.GetUserAddresses).Methods(http.MethodGet, http.MethodOptions)
+		auth.HandleFunc("/delete_address", authHandler.DeleteAddress).Methods(http.MethodPost, http.MethodOptions)
+		auth.HandleFunc("/add_address", authHandler.AddAddress).Methods(http.MethodPost, http.MethodOptions)
 	}
 	restaurants := r.PathPrefix("/restaurants").Subrouter()
 	{

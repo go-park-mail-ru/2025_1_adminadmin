@@ -2,10 +2,14 @@ package http
 
 import (
 	"encoding/json"
+	"errors"
+	"fmt"
+	"log/slog"
 	"net/http"
 	"strconv"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/usecase"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/utils/log"
 	utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/utils/send_error"
 	"github.com/gorilla/mux"
 	"github.com/satori/uuid"
@@ -20,10 +24,13 @@ func NewRestaurantHandler(ru usecase.RestaurantUsecase) *RestaurantHandler {
 }
 
 func (h *RestaurantHandler) GetProductsByRestaurant(w http.ResponseWriter, r *http.Request) {
+	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
 	vars := mux.Vars(r)
 	restaurantIDStr := vars["id"]
 	restaurantID := uuid.FromStringOrNil(restaurantIDStr)
 	if restaurantID == uuid.Nil {
+		log.LogHandlerError(logger, errors.New("Неверный формат id ресторана"), http.StatusBadRequest)
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -43,20 +50,25 @@ func (h *RestaurantHandler) GetProductsByRestaurant(w http.ResponseWriter, r *ht
 
 	products, err := h.restaurantUsecase.GetProductsByRestaurant(r.Context(), restaurantID, count, offset)
 	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("Ошибка уровнем ниже (usecase): %w", err), http.StatusInternalServerError)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
 	data, err := json.Marshal(products)
 	if err != nil {
-		utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)
+		log.LogHandlerError(logger, fmt.Errorf("Не удалось сериализовать данные: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "Не удалось сериализовать данные", http.StatusInternalServerError)
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(data)
+	log.LogHandlerInfo(logger, "Success", http.StatusOK)
 }
 
 func (h *RestaurantHandler) RestaurantList(w http.ResponseWriter, r *http.Request) {
+	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
 	countStr := r.URL.Query().Get("count")
 	offsetStr := r.URL.Query().Get("offset")
 
@@ -72,40 +84,48 @@ func (h *RestaurantHandler) RestaurantList(w http.ResponseWriter, r *http.Reques
 
 	restaurants, err := h.restaurantUsecase.GetAll(r.Context(), count, offset)
 	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("Ошибка уровнем ниже (usecase): %w", err), http.StatusInternalServerError)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
 	data, err := json.Marshal(restaurants)
 	if err != nil {
-		utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)
+		log.LogHandlerError(logger, fmt.Errorf("Не удалось сериализовать данные: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "Не удалось сериализовать данные", http.StatusInternalServerError)
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(data)
-
+	log.LogHandlerInfo(logger, "Success", http.StatusOK)
 }
 
 func (h *RestaurantHandler) RestaurantById(w http.ResponseWriter, r *http.Request) {
+	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
 	vars := mux.Vars(r)
 	idStr := vars["id"]
 
 	id := uuid.FromStringOrNil(idStr)
 	if id == uuid.Nil {
+		log.LogHandlerError(logger, errors.New("Неверный формат id ресторана"), http.StatusBadRequest)
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 	restaurant, err := h.restaurantUsecase.GetById(r.Context(), id)
 	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("Ошибка уровнем ниже (usecase): %w", err), http.StatusInternalServerError)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
 	data, err := json.Marshal(restaurant)
 	if err != nil {
-		utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)
+		log.LogHandlerError(logger, fmt.Errorf("Не удалось сериализовать данные: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "Не удалось сериализовать данные", http.StatusInternalServerError)
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(data)
+	log.LogHandlerInfo(logger, "Success", http.StatusOK)
 }
