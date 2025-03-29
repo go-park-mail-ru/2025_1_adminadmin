@@ -20,7 +20,7 @@ import (
 	"golang.org/x/crypto/argon2"
 )
 
-func hashPassword(salt []byte, plainPassword string) []byte {
+func HashPassword(salt []byte, plainPassword string) []byte {
 	hashedPass := argon2.IDKey([]byte(plainPassword), salt, 1, 64*1024, 4, 32)
 	return append(salt, hashedPass...)
 }
@@ -28,7 +28,7 @@ func hashPassword(salt []byte, plainPassword string) []byte {
 func checkPassword(passHash []byte, plainPassword string) bool {
 	salt := make([]byte, 8)
 	copy(salt, passHash[:8])
-	userPassHash := hashPassword(salt, plainPassword)
+	userPassHash := HashPassword(salt, plainPassword)
 	return bytes.Equal(userPassHash, passHash)
 }
 
@@ -187,7 +187,7 @@ func (uc *AuthUsecase) SignUp(ctx context.Context, data models.SignUpReq) (model
 
 	salt := make([]byte, 8)
 	rand.Read(salt)
-	hashedPassword := hashPassword(salt, data.Password)
+	hashedPassword := HashPassword(salt, data.Password)
 
 	newUser := models.User{
 		Login:        data.Login,
@@ -257,7 +257,7 @@ func (uc *AuthUsecase) UpdateUser(ctx context.Context, login string, updateData 
 	if updateData.Password != "" {
 		salt := make([]byte, 8)
 		rand.Read(salt)
-		hashedPassword := hashPassword(salt, updateData.Password)
+		hashedPassword := HashPassword(salt, updateData.Password)
 
 		if bytes.Equal(hashedPassword, user.PasswordHash) {
 			return models.User{}, auth.ErrSamePassword
