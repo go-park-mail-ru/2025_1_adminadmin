@@ -95,8 +95,8 @@ func main() {
 	cart := r.PathPrefix("/cart").Subrouter()
 	{
 		cart.HandleFunc("", cartHandler.GetCart).Methods(http.MethodGet)
-		cart.HandleFunc("/add/{productID}", cartHandler.AddToCart).Methods(http.MethodPost)
-		cart.HandleFunc("/remove/{productID}", cartHandler.RemoveFromCart).Methods(http.MethodPost)
+		cart.HandleFunc("/add/{productID}", cartHandler.AddToCart).Methods(http.MethodGet)
+		cart.HandleFunc("/remove/{productID}", cartHandler.RemoveFromCart).Methods(http.MethodGet)
 	}
 
 	http.Handle("/", r)
