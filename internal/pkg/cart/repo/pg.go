@@ -34,19 +34,8 @@ func (r *CartRepository) GetCart(ctx context.Context, userID string) (map[string
 
 func (r *CartRepository) AddItem(ctx context.Context, userID, productID string) error {
 	key := "cart:" + userID
-    quantity, err := r.redisClient.HGet(ctx, key, productID).Int()
-    if err == redis.Nil {
-        err := r.redisClient.HSet(ctx, key, productID, 1).Err()
-        if err != nil {
-            return err
-        }
-        return nil
-    }
-
-    if err != nil {
-        return err
-    }
-    return r.redisClient.HIncrBy(ctx, key, productID, int64(quantity) + 1).Err()
+    
+    return r.redisClient.HIncrBy(ctx, key, productID, 1).Err()
 }
 
 func (r *CartRepository) RemoveItem(ctx context.Context, userID, productID string) error {
