@@ -5,17 +5,17 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/usecase"
+	interfaces "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants"
 	utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/utils/send_error"
 	"github.com/gorilla/mux"
 	"github.com/satori/uuid"
 )
 
 type RestaurantHandler struct {
-	restaurantUsecase usecase.RestaurantUsecase
+	restaurantUsecase interfaces.RestaurantUsecase
 }
 
-func NewRestaurantHandler(ru usecase.RestaurantUsecase) *RestaurantHandler {
+func NewRestaurantHandler(ru interfaces.RestaurantUsecase) *RestaurantHandler {
 	return &RestaurantHandler{restaurantUsecase: ru}
 }
 

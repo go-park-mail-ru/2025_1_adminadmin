@@ -18,7 +18,17 @@ import (
 	restaurantUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/usecase"
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/redis/go-redis/v9"
 )
+
+func initRedis() *redis.Client {
+	client := redis.NewClient(&redis.Options{
+		Addr:     os.Getenv("REDIS_ADDR"),
+		Password: "",
+		DB:       0,
+	})
+	return client
+}
 
 func initDB() (*pgxpool.Pool, error) {
 	connStr := os.Getenv("POSTGRES_CONN")
@@ -49,8 +59,9 @@ func main() {
 	authHandler := authHandler.CreateAuthHandler(authUsecase)
 
 	RestaurantRepo := restaurantRepo.NewRestaurantRepository(pool)
-	RestaurantUsecase := restaurantUsecase.NewRestaurantsUsecase(*RestaurantRepo)
-	RestaurantDelivery := restaurantDelivery.NewRestaurantHandler(*RestaurantUsecase)
+	RestaurantUsecase := restaurantUsecase.NewRestaurantsUsecase(RestaurantRepo)
+	RestaurantDelivery := restaurantDelivery.NewRestaurantHandler(RestaurantUsecase)
+	
 	r := mux.NewRouter().PathPrefix("/api").Subrouter()
 	r.NotFoundHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Not Found", http.StatusTeapot)

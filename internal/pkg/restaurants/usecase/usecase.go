@@ -4,15 +4,15 @@ import (
 	"context"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
-	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/repo"
+	interfaces "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants"
 	"github.com/satori/uuid"
 )
 
 type RestaurantUsecase struct {
-	repo repo.RestaurantRepository
+	repo interfaces.RestaurantRepo
 }
 
-func NewRestaurantsUsecase(r repo.RestaurantRepository) *RestaurantUsecase {
+func NewRestaurantsUsecase(r interfaces.RestaurantRepo) *RestaurantUsecase {
 	return &RestaurantUsecase{repo: r}
 }
 
