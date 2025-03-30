@@ -53,7 +53,7 @@ func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
 	cart, err := h.cartUsecase.GetCart(ctx, login)
 	if err != nil {
 		utils.SendError(w, err.Error(), http.StatusNotFound)
-		utils.SendError(w, "Failed to get cart", http.StatusInternalServerError)
+		utils.SendError(w, "Не удалось получить корзину", http.StatusInternalServerError)
 		return
 	}
 	w.WriteHeader(http.StatusOK)
@@ -74,7 +74,7 @@ func (h *CartHandler) AddToCart(w http.ResponseWriter, r *http.Request) {
 	ctx := context.Background()
 	err = h.cartUsecase.AddItem(ctx, login, productID)
 	if err != nil {
-		utils.SendError(w, "Failed to add item to cart "+ err.Error(), http.StatusInternalServerError)
+		utils.SendError(w, "Не удалось добавить товар в корзину", http.StatusInternalServerError)
 		return
 	}
 
@@ -93,7 +93,7 @@ func (h *CartHandler) RemoveFromCart(w http.ResponseWriter, r *http.Request) {
 	ctx := context.Background()
 	err = h.cartUsecase.RemoveItem(ctx, login, productID)
 	if err != nil {
-		utils.SendError(w, "Failed to remove item from cart", http.StatusInternalServerError)
+		utils.SendError(w, "Не удалось удалить товар из корзины", http.StatusInternalServerError)
 		return
 	}
 

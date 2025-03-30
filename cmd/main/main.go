@@ -72,7 +72,7 @@ func main() {
 
 	r := mux.NewRouter().PathPrefix("/api").Subrouter()
 	r.NotFoundHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		http.Error(w, "Not Found", http.StatusTeapot)
+		http.Error(w, "Не найдено", http.StatusTeapot)
 	})
 
 	r.Use(middleware.CorsMiddleware)
