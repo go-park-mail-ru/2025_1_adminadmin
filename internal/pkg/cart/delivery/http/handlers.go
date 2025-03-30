@@ -4,10 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"net/http"
+	"os"
 
+	authHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/http"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/usecase"
 	utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/utils/send_error"
-	authHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/http"
 	"github.com/golang-jwt/jwt"
 	"github.com/gorilla/mux"
 )
@@ -18,7 +19,7 @@ type CartHandler struct {
 }
 
 func NewCartHandler(cartUsecase *usecase.CartUsecase) *CartHandler {
-	return &CartHandler{cartUsecase: cartUsecase}
+	return &CartHandler{cartUsecase: cartUsecase, secret: os.Getenv("JWT_SECRET")}
 }
 
 func (h *CartHandler) getLoginFromCookie(w http.ResponseWriter, r *http.Request) (string, error) {
