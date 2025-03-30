@@ -16,7 +16,7 @@ func NewCartRepository(redisClient *redis.Client) *CartRepository {
 }
 
 func (r *CartRepository) GetCart(ctx context.Context, userID string) (map[string]int, error) {
-	key := fmt.Sprintf("cart:%s", userID)
+	key := "cart:" + userID
 	items, err := r.redisClient.HGetAll(ctx, key).Result()
 	if err != nil {
 		return nil, err
@@ -33,7 +33,7 @@ func (r *CartRepository) GetCart(ctx context.Context, userID string) (map[string
 }
 
 func (r *CartRepository) AddItem(ctx context.Context, userID, productID string) error {
-	key := fmt.Sprintf("cart:%s", userID)
+	key := "cart:" + userID
 	quantity, err := r.redisClient.HGet(ctx, key, productID).Int()
 	if err != nil {
 		return err
@@ -46,7 +46,7 @@ func (r *CartRepository) AddItem(ctx context.Context, userID, productID string) 
 }
 
 func (r *CartRepository) RemoveItem(ctx context.Context, userID, productID string) error {
-	key := fmt.Sprintf("cart:%s", userID)
+	key := "cart:" + userID
 	quantity, err := r.redisClient.HGet(ctx, key, productID).Int()
 	if err != nil {
 		return err
