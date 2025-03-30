@@ -74,7 +74,7 @@ func (h *CartHandler) AddToCart(w http.ResponseWriter, r *http.Request) {
 	ctx := context.Background()
 	err = h.cartUsecase.AddItem(ctx, login, productID)
 	if err != nil {
-		utils.SendError(w, "Failed to add item to cart", http.StatusInternalServerError)
+		utils.SendError(w, "Failed to add item to cart "+ err.Error(), http.StatusInternalServerError)
 		return
 	}
 
