@@ -16,6 +16,9 @@ import (
 	restaurantDelivery "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/delivery/http"
 	restaurantRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/repo"
 	restaurantUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/usecase"
+	cartRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo"
+	cartHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/http"
+	cartUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/usecase"
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/redis/go-redis/v9"
@@ -54,14 +57,19 @@ func main() {
 	}
 	defer pool.Close()
 
+	redisClient := initRedis()
+	cartRepo := cartRepo.NewCartRepository(redisClient)
+	cartUsecase := cartUsecase.NewCartUsecase(cartRepo)
+	cartHandler := cartHandler.NewCartHandler(cartUsecase)
+
 	authRepo := authRepo.CreateAuthRepo(pool)
 	authUsecase := authUsecase.CreateAuthUsecase(authRepo)
 	authHandler := authHandler.CreateAuthHandler(authUsecase)
 
-	RestaurantRepo := restaurantRepo.NewRestaurantRepository(pool)
-	RestaurantUsecase := restaurantUsecase.NewRestaurantsUsecase(RestaurantRepo)
-	RestaurantDelivery := restaurantDelivery.NewRestaurantHandler(RestaurantUsecase)
-	
+	restaurantRepo := restaurantRepo.NewRestaurantRepository(pool)
+	restaurantUsecase := restaurantUsecase.NewRestaurantsUsecase(restaurantRepo)
+	restaurantDelivery := restaurantDelivery.NewRestaurantHandler(restaurantUsecase)
+
 	r := mux.NewRouter().PathPrefix("/api").Subrouter()
 	r.NotFoundHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Not Found", http.StatusTeapot)
@@ -80,9 +88,15 @@ func main() {
 	}
 	restaurants := r.PathPrefix("/restaurants").Subrouter()
 	{
-		restaurants.HandleFunc("/list", RestaurantDelivery.RestaurantList).Methods(http.MethodGet, http.MethodOptions)
-		restaurants.HandleFunc("/{id}", RestaurantDelivery.RestaurantById).Methods(http.MethodGet, http.MethodOptions)
-		restaurants.HandleFunc("/{id}/products", RestaurantDelivery.GetProductsByRestaurant).Methods(http.MethodGet, http.MethodOptions)
+		restaurants.HandleFunc("/list", restaurantDelivery.RestaurantList).Methods(http.MethodGet, http.MethodOptions)
+		restaurants.HandleFunc("/{id}", restaurantDelivery.RestaurantById).Methods(http.MethodGet, http.MethodOptions)
+		restaurants.HandleFunc("/{id}/products", restaurantDelivery.GetProductsByRestaurant).Methods(http.MethodGet, http.MethodOptions)
+	}
+	cart := r.PathPrefix("/cart").Subrouter()
+	{
+		cart.HandleFunc("", cartHandler.GetCart).Methods(http.MethodGet)
+		cart.HandleFunc("/add/{productID}", cartHandler.AddToCart).Methods(http.MethodPost)
+		cart.HandleFunc("/remove/{productID}", cartHandler.RemoveFromCart).Methods(http.MethodPost)
 	}
 
 	http.Handle("/", r)
