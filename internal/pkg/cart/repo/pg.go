@@ -34,6 +34,14 @@ func (r *CartRepository) GetCart(ctx context.Context, userID string) (map[string
 
 func (r *CartRepository) AddItem(ctx context.Context, userID, productID string) error {
 	key := fmt.Sprintf("cart:%s", userID)
+	quantity, err := r.redisClient.HGet(ctx, key, productID).Int()
+	if err != nil {
+		return err
+	}
+
+	if quantity >= 1 {
+		return r.redisClient.HIncrBy(ctx, key, productID, int64(quantity)+1).Err()
+	}
 	return r.redisClient.HIncrBy(ctx, key, productID, 1).Err()
 }
 
