@@ -39,7 +39,7 @@ func CreateAuthRepo(db pgxtype.Querier) *AuthRepo {
 func (repo *AuthRepo) InsertUser(ctx context.Context, user models.User) error {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 
-	_, err := repo.db.Exec(ctx, insertUser, user.Id, user.FirstName, user.LastName, user.PhoneNumber, user.Description, user.UserPic, user.PasswordHash)
+	_, err := repo.db.Exec(ctx, insertUser, user.Id, user.Login, user.FirstName, user.LastName, user.PhoneNumber, user.Description, user.UserPic, user.PasswordHash)
 	if err != nil {
 		logger.Error(err.Error())
 		return err
@@ -66,7 +66,6 @@ func (repo *AuthRepo) SelectUserByLogin(ctx context.Context, login string) (mode
 		logger.Error(err.Error())
 		return models.User{}, err
 	}
-	resultUser.Login = login
 
 	logger.Info("Successful")
 	return resultUser, nil
