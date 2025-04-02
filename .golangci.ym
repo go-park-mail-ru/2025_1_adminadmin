@@ -1,0 +1,29 @@
+run:
+  timeout: 2m
+
+linters:
+  enable:
+    - errcheck        
+    - govet           
+    - staticcheck     
+    - ineffassign     
+    - typecheck       
+    - unused          
+    - gofmt           
+    - gosec           
+    - goconst         
+    - unconvert       
+    - exportloopref   
+    - rowserrcheck
+
+linters-settings:
+  gocyclo:
+    min-complexity: 20 
+
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - gosec
+  max-issues-per-linter: 0
+  max-same-issues: 0
