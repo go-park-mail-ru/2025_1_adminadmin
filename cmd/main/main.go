@@ -55,6 +55,7 @@ func initDB(logger *slog.Logger) (*pgxpool.Pool, error) {
 
 func main() {
 	fmt.Println("Log file path:", os.Getenv("MAIN_LOG_FILE"))
+	fmt.Println("POSTGRES_CONN:", os.Getenv("POSTGRES_CONN"))
 	logFile, err := os.OpenFile(os.Getenv("MAIN_LOG_FILE"), os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {
 		fmt.Println("error opening log file: " + err.Error())
