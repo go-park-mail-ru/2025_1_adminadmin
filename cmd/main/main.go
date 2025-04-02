@@ -11,8 +11,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/middleware/cors"
-	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/middleware/log"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/middleware/cors"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/middleware/log"
 	authHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/http"
 	authRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/repo"
 	authUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/usecase"

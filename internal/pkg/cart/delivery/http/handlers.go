@@ -8,7 +8,7 @@ import (
 
 	authHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/http"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/usecase"
-	utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/utils/send_error"
+	utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/send_error"
 	"github.com/golang-jwt/jwt"
 	"github.com/gorilla/mux"
 )

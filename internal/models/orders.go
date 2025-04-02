@@ -1,0 +1,10 @@
+package models
+
+import "github.com/satori/uuid"
+
+type Orders struct {
+	Id            uuid.UUID `json:"id"`
+	Status        string    `json:"status"`
+	AddressId     uuid.UUID `json:"address_id"`
+	OrderProducts string    `json:"order_products"`
+}

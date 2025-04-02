@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS restaurants (
 );
 
 CREATE TABLE IF NOT EXISTS addresses (
-    id UUID PRIMARY KEY,  
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),  
     address TEXT NOT NULL,                                                           
     user_id UUID,                                   
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL                                  
@@ -34,6 +34,13 @@ CREATE TABLE IF NOT EXISTS products (
     image_url TEXT DEFAULT 'default_prod.jpg',
     weight INT NOT NULL,
     amount INT NOT NULL DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS orders (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    status TEXT NOT NULL,
+    address_id UUID NOT NULL REFERENCES address(id) ON DELETE CASCADE,
+    order_products TEXT NOT NULL
 );
 
 INSERT INTO restaurants (id, name, description, type, rating) VALUES

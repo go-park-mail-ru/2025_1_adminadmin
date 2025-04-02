@@ -14,7 +14,7 @@ import (
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth"
-	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/utils/log"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	"github.com/golang-jwt/jwt"
 	"github.com/satori/uuid"
 	"golang.org/x/crypto/argon2"

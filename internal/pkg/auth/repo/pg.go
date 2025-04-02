@@ -6,7 +6,7 @@ import (
 	"log/slog"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
-	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/utils/log"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	"github.com/satori/uuid"
 	"github.com/jackc/pgtype/pgxtype"
 )

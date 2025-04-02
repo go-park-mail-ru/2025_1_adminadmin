@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 	"unicode"
-	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/utils/send_error"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/send_error"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	"github.com/golang-jwt/jwt"
