@@ -73,7 +73,7 @@ func main() {
 	defer pool.Close()
 
 	redisClient := initRedis()
-	cartRepo := cartRepo.NewCartRepository(redisClient)
+	cartRepo := cartRepo.NewCartRepository(redisClient, pool)
 	cartUsecase := cartUsecase.NewCartUsecase(cartRepo)
 	cartHandler := cartHandler.NewCartHandler(cartUsecase)
 
