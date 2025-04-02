@@ -54,8 +54,16 @@ func initDB(logger *slog.Logger) (*pgxpool.Pool, error) {
 }
 
 func main() {
+	postgresConn := os.Getenv("MAIN_LOG_FILE")
 	fmt.Println("Log file path:", os.Getenv("MAIN_LOG_FILE"))
 	fmt.Println("POSTGRES_CONN:", os.Getenv("POSTGRES_CONN"))
+	if _, err := os.Stat(postgresConn); err == nil {
+        fmt.Println("Путь существует:", postgresConn)
+    } else if os.IsNotExist(err) {
+        fmt.Println("Путь не существует:", postgresConn)
+    } else {
+        fmt.Println("Ошибка при проверке пути:", err)
+    }
 	logFile, err := os.OpenFile(os.Getenv("MAIN_LOG_FILE"), os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {
 		fmt.Println("error opening log file: " + err.Error())
