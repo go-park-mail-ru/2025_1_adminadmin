@@ -12,7 +12,7 @@ import (
 
 const (
 	getUserOrders = "SELECT id, status, address_id, order_products FROM orders WHERE user_id = $1"
-	insertUserOrder = "INSERT in orders (id, user_id, status, address_id, order_products) VALUES ($1, $2, $3, $4, $5)"
+	insertUserOrder = "INSERT INTO orders (id, user_id, status, address_id, order_products) VALUES ($1, $2, $3, $4, $5)"
 )
 
 type OrderRepo struct {
@@ -23,7 +23,7 @@ func CreateOrderRepo(db pgxtype.Querier) *OrderRepo {
 	return &OrderRepo{db: db}
 }
 
-func (repo *OrderRepo) GetUserOrders(ctx context.Context, user_id uuid.UUID) ([]models.Orders, error) {
+func (repo *OrderRepo) GetUserOrders(ctx context.Context, user_id uuid.UUID) ([]models.Order, error) {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 
 	rows, err := repo.db.Query(ctx, getUserOrders, user_id)
@@ -33,9 +33,9 @@ func (repo *OrderRepo) GetUserOrders(ctx context.Context, user_id uuid.UUID) ([]
 	}
 	defer rows.Close()
 
-	var orders []models.Orders
+	var orders []models.Order
 	for rows.Next() {
-		var order models.Orders
+		var order models.Order
 		if err := rows.Scan(&order.Id, &order.Status, &order.AddressId, &order.OrderProducts); err != nil {
 			logger.Error(err.Error())
 			return nil, err
@@ -48,7 +48,7 @@ func (repo *OrderRepo) GetUserOrders(ctx context.Context, user_id uuid.UUID) ([]
 	return orders, rows.Err()
 }
 
-func (repo *OrderRepo) InsertUserOrder(ctx context.Context, order models.Orders) error {
+func (repo *OrderRepo) InsertUserOrder(ctx context.Context, order models.Order) error {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 
 	_, err := repo.db.Exec(ctx, insertUserOrder, order.Id, order.UserId, order.Status, order.AddressId, order.OrderProducts)
