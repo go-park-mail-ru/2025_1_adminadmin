@@ -12,6 +12,7 @@ import (
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth"
+	jwtUtils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/jwt"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/send_error"
 	"github.com/golang-jwt/jwt"
@@ -33,42 +34,6 @@ type AuthHandler struct {
 
 func CreateAuthHandler(uc auth.AuthUsecase) *AuthHandler {
 	return &AuthHandler{uc: uc, secret: os.Getenv("JWT_SECRET")}
-}
-
-func GetLoginFromJWT(JWTStr string, claims jwt.MapClaims, secret string) (string, bool) {
-	token, err := jwt.ParseWithClaims(JWTStr, claims, func(token *jwt.Token) (interface{}, error) {
-		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
-		}
-		if secret == "" {
-			return nil, fmt.Errorf("JWT_SECRET не установлен")
-		}
-		return []byte(secret), nil
-	})
-	if err != nil || !token.Valid {
-		return "", false
-	}
-
-	login, ok := claims["login"].(string)
-	return login, ok
-}
-
-func GetIdFromJWT(JWTStr string, claims jwt.MapClaims, secret string) (string, bool) {
-	token, err := jwt.ParseWithClaims(JWTStr, claims, func(token *jwt.Token) (interface{}, error) {
-		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
-		}
-		if secret == "" {
-			return nil, fmt.Errorf("JWT_SECRET не установлен")
-		}
-		return []byte(secret), nil
-	})
-	if err != nil || !token.Valid {
-		return "", false
-	}
-
-	id, ok := claims["id"].(string)
-	return id, ok
 }
 
 func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) {
@@ -225,7 +190,7 @@ func (h *AuthHandler) Check(w http.ResponseWriter, r *http.Request) {
 
 	claims := jwt.MapClaims{}
 
-	login, ok := GetLoginFromJWT(JWTStr, claims, h.secret)
+	login, ok := jwtUtils.GetLoginFromJWT(JWTStr, claims, h.secret)
 	if !ok || login == "" {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
@@ -295,7 +260,7 @@ func (h *AuthHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 	claims := jwt.MapClaims{}
 
-	login, ok := GetLoginFromJWT(JWTStr, claims, h.secret)
+	login, ok := jwtUtils.GetLoginFromJWT(JWTStr, claims, h.secret)
 	if !ok || login == "" {
 		log.LogHandlerError(logger, errors.New("Недействительный токен: login отсутствует"), http.StatusUnauthorized)
 		utils.SendError(w, "Недействительный токен: login отсутствует", http.StatusUnauthorized)
@@ -364,7 +329,7 @@ func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) {
 
 	claims := jwt.MapClaims{}
 
-	login, ok := GetLoginFromJWT(JWTStr, claims, h.secret)
+	login, ok := jwtUtils.GetLoginFromJWT(JWTStr, claims, h.secret)
 	if !ok || login == "" {
 		log.LogHandlerError(logger, errors.New("Недействительный токен: login отсутствует"), http.StatusUnauthorized)
 		utils.SendError(w, "Недействительный токен: login отсутствует", http.StatusUnauthorized)
@@ -378,7 +343,7 @@ func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) {
 			log.LogHandlerError(logger, fmt.Errorf("Превышен допустимый размер файла: %w", err), http.StatusRequestEntityTooLarge)
 			utils.SendError(w, "Превышен допустимый размер файла", http.StatusRequestEntityTooLarge)
 		} else {
-			log.LogHandlerError(logger, fmt.Errorf("Невозможно обработать файл: %w", err),  http.StatusBadRequest)
+			log.LogHandlerError(logger, fmt.Errorf("Невозможно обработать файл: %w", err), http.StatusBadRequest)
 			utils.SendError(w, "Невозможно обработать файл", http.StatusBadRequest)
 		}
 		return
@@ -460,7 +425,7 @@ func (h *AuthHandler) GetUserAddresses(w http.ResponseWriter, r *http.Request) {
 
 	claims := jwt.MapClaims{}
 
-	login, ok := GetLoginFromJWT(JWTStr, claims, h.secret)
+	login, ok := jwtUtils.GetLoginFromJWT(JWTStr, claims, h.secret)
 	if !ok || login == "" {
 		log.LogHandlerError(logger, errors.New("Недействительный токен: login отсутствует"), http.StatusUnauthorized)
 		utils.SendError(w, "Недействительный токен: login отсутствует", http.StatusUnauthorized)
@@ -486,7 +451,7 @@ func (h *AuthHandler) DeleteAddress(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
 	var address models.Address
-	err := json.NewDecoder(r.Body).Decode(&address);
+	err := json.NewDecoder(r.Body).Decode(&address)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("Ошибка парсинга JSON: %w", err), http.StatusBadRequest)
 		utils.SendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
@@ -522,7 +487,7 @@ func (h *AuthHandler) AddAddress(w http.ResponseWriter, r *http.Request) {
 
 	claims := jwt.MapClaims{}
 
-	idStr, ok := GetIdFromJWT(JWTStr, claims, h.secret)
+	idStr, ok := jwtUtils.GetIdFromJWT(JWTStr, claims, h.secret)
 	if !ok || idStr == "" {
 		log.LogHandlerError(logger, errors.New("Недействительный токен: id отсутствует"), http.StatusUnauthorized)
 		utils.SendError(w, "Недействительный токен: id отсутствует", http.StatusUnauthorized)
@@ -536,7 +501,7 @@ func (h *AuthHandler) AddAddress(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	var address models.Address
-	err = json.NewDecoder(r.Body).Decode(&address);
+	err = json.NewDecoder(r.Body).Decode(&address)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("Ошибка парсинга JSON: %w", err), http.StatusBadRequest)
 		utils.SendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
