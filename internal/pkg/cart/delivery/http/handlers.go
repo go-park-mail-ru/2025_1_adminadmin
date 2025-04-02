@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"os"
 
-	authHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/http"
+	jwtUtils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/jwt"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/usecase"
 	utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/send_error"
 	"github.com/golang-jwt/jwt"
@@ -35,7 +35,7 @@ func (h *CartHandler) getLoginFromCookie(w http.ResponseWriter, r *http.Request)
 
 	JWTStr := cookieJWT.Value
 	claims := jwt.MapClaims{}
-	login, ok := authHandler.GetLoginFromJWT(JWTStr, claims, h.secret)
+	login, ok := jwtUtils.GetLoginFromJWT(JWTStr, claims, h.secret)
 	if !ok || login == "" {
 		w.WriteHeader(http.StatusUnauthorized)
 		return "", nil
