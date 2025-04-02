@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	getUserOrders = "SELECT id, status, address_id, order_products FROM orders WHERE id = $1"
+	getUserOrders = "SELECT id, status, address_id, order_products FROM orders WHERE user_id = $1"
 	insertUserOrder = "INSERT in orders (id, user_id, status, address_id, order_products) VALUES ($1, $2, $3, $4, $5)"
 )
 
@@ -23,10 +23,10 @@ func CreateOrderRepo(db pgxtype.Querier) *OrderRepo {
 	return &OrderRepo{db: db}
 }
 
-func (repo *OrderRepo) GettUserOrders(ctx context.Context, order_id uuid.UUID) ([]models.Orders, error) {
+func (repo *OrderRepo) GetUserOrders(ctx context.Context, user_id uuid.UUID) ([]models.Orders, error) {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 
-	rows, err := repo.db.Query(ctx, getUserOrders, order_id)
+	rows, err := repo.db.Query(ctx, getUserOrders, user_id)
 	if err != nil {
 		logger.Error(err.Error())
 		return nil, err
@@ -40,7 +40,7 @@ func (repo *OrderRepo) GettUserOrders(ctx context.Context, order_id uuid.UUID) (
 			logger.Error(err.Error())
 			return nil, err
 		}
-		order.Id = order_id
+		order.UserId = user_id
 		orders = append(orders, order)
 	}
 
