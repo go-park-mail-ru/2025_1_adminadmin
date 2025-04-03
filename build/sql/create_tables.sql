@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS orders (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     status TEXT NOT NULL,
-    address_id UUID NOT NULL REFERENCES address(id) ON DELETE CASCADE,
+    address_id UUID NOT NULL REFERENCES addresses(id) ON DELETE CASCADE,
     order_products TEXT NOT NULL
 );
 
