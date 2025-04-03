@@ -319,6 +319,7 @@ func (uc *AuthUsecase) UpdateUserPic(ctx context.Context, login string, picture 
 
 	dst, err := os.Create(newImagePath)
 	if err != nil {
+		logger.Info("Trying to create file at: " + newImagePath)
 		logger.Error(err.Error())
 		return models.User{}, auth.ErrFileCreation
 	}
