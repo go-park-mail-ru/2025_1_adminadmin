@@ -325,6 +325,7 @@ func (uc *AuthUsecase) UpdateUserPic(ctx context.Context, login string, picture 
 	defer dst.Close()
 
 	if _, err := io.Copy(dst, picture); err != nil {
+		logger.Info("Trying to save file at: " + newImagePath)
 		logger.Error(err.Error())
 		return models.User{}, auth.ErrFileSaving
 	}
