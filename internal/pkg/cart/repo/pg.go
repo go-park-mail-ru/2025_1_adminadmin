@@ -4,21 +4,15 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/jackc/pgtype/pgxtype"
 	"github.com/redis/go-redis/v9"
-)
-
-const (
-	insertUser = "INSERT INTO users (id, login, first_name, last_name, phone_number, description, user_pic, password_hash) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)"
 )
 
 type CartRepository struct {
 	redisClient *redis.Client
-	db          pgxtype.Querier
 }
 
-func NewCartRepository(redisClient *redis.Client, db pgxtype.Querier) *CartRepository {
-	return &CartRepository{redisClient: redisClient, db: db}
+func NewCartRepository(redisClient *redis.Client) *CartRepository {
+	return &CartRepository{redisClient: redisClient}
 }
 
 func (r *CartRepository) GetCart(ctx context.Context, userID string) (map[string]int, error) {
