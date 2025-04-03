@@ -12,7 +12,6 @@ import (
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/send_error"
 	"github.com/gorilla/mux"
-	"github.com/mailru/easyjson"
 	"github.com/satori/uuid"
 )
 
