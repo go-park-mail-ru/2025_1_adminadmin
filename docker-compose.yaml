@@ -12,6 +12,8 @@ services:
       JWT_SECRET: ${JWT_SECRET}
       REDIS_ADDR: ${REDIS_ADDR}
       MAIN_LOG_FILE: ${MAIN_LOG_FILE}
+    volumes:
+      - /var/log/:/var/log/
     depends_on:
       - postgres
       - redis
