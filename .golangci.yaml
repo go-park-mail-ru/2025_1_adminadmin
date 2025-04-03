@@ -12,8 +12,7 @@ linters:
     - gofmt           
     - gosec           
     - goconst         
-    - unconvert       
-    - exportloopref   
+    - unconvert        
     - rowserrcheck
 
 linters-settings:
