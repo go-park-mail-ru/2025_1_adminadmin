@@ -57,6 +57,7 @@ func main() {
 	
 	fmt.Println("Log file path:", os.Getenv("MAIN_LOG_FILE"))
 	fmt.Println("POSTGRES_CONN:", os.Getenv("POSTGRES_CONN"))
+	fmt.Println("PICTURE_BASE_PATH:", os.Getenv("PICTURE_BASE_PATH"))
 	logFile, err := os.OpenFile(os.Getenv("MAIN_LOG_FILE"), os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {
 		fmt.Println("error opening log file: " + err.Error())
