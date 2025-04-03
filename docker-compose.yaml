@@ -13,7 +13,7 @@ services:
       REDIS_ADDR: ${REDIS_ADDR}
       MAIN_LOG_FILE: ${MAIN_LOG_FILE}
     volumes:
-      - /var/log/:/home/deploy_user/tp_code/
+      - /home/deploy_user/tp_code/:/var/log/
     depends_on:
       - postgres
       - redis
