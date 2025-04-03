@@ -12,6 +12,7 @@ services:
       JWT_SECRET: ${JWT_SECRET}
       REDIS_ADDR: ${REDIS_ADDR}
       MAIN_LOG_FILE: ${MAIN_LOG_FILE}
+      PICTURE_BASE_PATH: ${PICTURE_BASE_PATH}
     volumes:
       - /home/deploy_user/tp_code/:/var/log/
       - /home/deploy_user/tp_code/:/var/user_pics/
