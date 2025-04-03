@@ -1,6 +1,7 @@
 package http
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"log/slog"
@@ -55,24 +56,14 @@ func (h *RestaurantHandler) GetProductsByRestaurant(w http.ResponseWriter, r *ht
 		return
 	}
 
-	var result []byte
-	for _, product := range products {
-		productData, err := easyjson.Marshal(product)
-		if err != nil {
-			log.LogHandlerError(logger, fmt.Errorf("Ошибка маршалинга продуктов: %w", err), http.StatusInternalServerError)
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
-		result = append(result, productData...)
-	}
-
+	data, err := json.Marshal(products)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("Не удалось сериализовать данные: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "Не удалось сериализовать данные", http.StatusInternalServerError)
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
-	w.Write(result)
+	w.Write(data)
 	log.LogHandlerInfo(logger, "Success", http.StatusOK)
 }
 
@@ -99,24 +90,15 @@ func (h *RestaurantHandler) RestaurantList(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	var result []byte
-	for _, restaurant := range restaurants {
-		restaurantData, err := easyjson.Marshal(restaurant)
-		if err != nil {
-			log.LogHandlerError(logger, fmt.Errorf("Ошибка маршалинга ресторана: %w", err), http.StatusInternalServerError)
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
-		result = append(result, restaurantData...)
-	}
-
+	data, err := json.Marshal(restaurants)
 	if err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("Не удалось сериализовать данные: %w", err), http.StatusInternalServerError)
+		log.LogHandlerError(logger, fmt.Errorf("Ошибка маршалинга: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "Не удалось сериализовать данные", http.StatusInternalServerError)
 		return
 	}
+
 	w.Header().Set("Content-Type", "application/json")
-	w.Write(result)
+	w.Write(data)
 	log.LogHandlerInfo(logger, "Success", http.StatusOK)
 }
 
@@ -139,7 +121,7 @@ func (h *RestaurantHandler) RestaurantById(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	data, err := easyjson.Marshal(restaurant)
+	data, err := json.Marshal(restaurant)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("Не удалось сериализовать данные: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "Не удалось сериализовать данные", http.StatusInternalServerError)
