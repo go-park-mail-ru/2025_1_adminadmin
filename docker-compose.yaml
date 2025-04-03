@@ -14,6 +14,7 @@ services:
       MAIN_LOG_FILE: ${MAIN_LOG_FILE}
     volumes:
       - /home/deploy_user/tp_code/:/var/log/
+      - /home/deploy_user/tp_code/:/var/user_pics/
     depends_on:
       - postgres
       - redis
