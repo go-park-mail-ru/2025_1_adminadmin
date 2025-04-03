@@ -18,7 +18,6 @@ func TestSignIn(t *testing.T) {
 		w *httptest.ResponseRecorder
 		r *http.Request
 	}
-
 	testUser := models.User{
 		Login:        "test123",
 		FirstName:    "Иван",
