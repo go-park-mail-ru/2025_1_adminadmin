@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS restaurant_categories (
 CREATE TABLE IF NOT EXISTS restaurants (
     id UUID PRIMARY KEY,  
     name TEXT NOT NULL, 
-    banner_url TEXT DEFAULT 'default_rest.jpg',                           
+    banner_url TEXT DEFAULT 'default_restaurant.jpg',                           
     address TEXT DEFAULT '',
     rating FLOAT CHECK (rating >= 0 AND rating <= 5), 
     rating_count FLOAT CHECK (rating_count >= 0),
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS products (
     restaurant_id UUID NOT NULL REFERENCES restaurants(id) ON DELETE CASCADE,
     name TEXT NOT NULL,
     price NUMERIC(10, 2) NOT NULL,
-    image_url TEXT DEFAULT 'default_prod.jpg',
+    image_url TEXT DEFAULT 'default_product.jpg',
     weight INT NOT NULL
 );
 
@@ -284,42 +284,42 @@ VALUES
         (SELECT id FROM restaurants WHERE name = 'Green Grill' AND description = 'Японский рамен и суши' AND type = 'Японский'),
         'Рамен с курицей', 
         15.99, 
-        'ramen_chicken.jpg', 
+        'default_product.jpg', 
         350
     ),
     (
         (SELECT id FROM restaurants WHERE name = 'Green Grill' AND description = 'Японский рамен и суши' AND type = 'Японский'),
         'Рамен с говядиной', 
         17.50, 
-        'ramen_beef.jpg', 
+        'default_product.jpg', 
         400
     ),
     (
         (SELECT id FROM restaurants WHERE name = 'Green Grill' AND description = 'Японский рамен и суши' AND type = 'Японский'),
         'Суши ассорти', 
         22.99, 
-        'sushi_assortment.jpg', 
+        'default_product.jpg', 
         250
     ),
     (
         (SELECT id FROM restaurants WHERE name = 'Green Grill' AND description = 'Японский рамен и суши' AND type = 'Японский'),
         'Тамаго суши', 
         9.99, 
-        'tamago_sushi.jpg', 
+        'default_product.jpg', 
         150
     ),
     (
         (SELECT id FROM restaurants WHERE name = 'Green Grill' AND description = 'Японский рамен и суши' AND type = 'Японский'),
         'Ролл с лососем', 
         18.50, 
-        'salmon_roll.jpg', 
+        'default_product.jpg', 
         200
     ),
     (
         (SELECT id FROM restaurants WHERE name = 'Green Grill' AND description = 'Японский рамен и суши' AND type = 'Японский'),
         'Гёдза', 
         8.99, 
-        'default_prod.jpg', 
+        'default_product.jpg', 
         180
     );
 
@@ -332,7 +332,7 @@ VALUES (
     'Nagiev', 
     '88005553535', 
     '',
-    'default.jpg',
+    'default_user.jpg',
     decode('a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6', 'hex')
 );
 

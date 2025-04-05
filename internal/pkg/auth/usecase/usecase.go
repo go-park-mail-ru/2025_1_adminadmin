@@ -308,7 +308,7 @@ func (uc *AuthUsecase) UpdateUserPic(ctx context.Context, login string, picture 
 		return models.User{}, auth.ErrUserNotFound
 	}
 
-	pictureBasePath := os.Getenv("PICTURE_BASE_PATH")
+	pictureBasePath := os.Getenv("USER_IMAGE_BASE_PATH")
 	if pictureBasePath == "" {
 		logger.Error(auth.ErrBasePath.Error())
 		return models.User{}, auth.ErrBasePath
