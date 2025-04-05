@@ -1,83 +1,19 @@
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
-CREATE TABLE IF NOT EXISTS users (
-    id UUID PRIMARY KEY,
-    login TEXT NOT NULL UNIQUE,                     
-    phone_number TEXT,                              
-    first_name TEXT NOT NULL,  
-    last_name TEXT NOT NULL,   
-    description TEXT DEFAULT '',  
-    user_pic TEXT DEFAULT 'default_user.jpg', 
-    password_hash BYTEA NOT NULL                   
-);
-
-CREATE TABLE IF NOT EXISTS restaurant_tags (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),  
-    name TEXT NOT NULL UNIQUE                        
-);
-
-CREATE TABLE IF NOT EXISTS restaurants (
-    id UUID PRIMARY KEY,  
-    name TEXT NOT NULL, 
-    banner_url TEXT DEFAULT 'default_restaurant.jpg',                           
-    address TEXT DEFAULT '',
-    rating FLOAT CHECK (rating >= 0 AND rating <= 5), 
-    rating_count FLOAT CHECK (rating_count >= 0),
-    description TEXT DEFAULT '',                              
-    working_mode_from INT DEFAULT 8,  
-    working_mode_to INT DEFAULT 23,   
-    delivery_time_from INT DEFAULT 50,  
-    delivery_time_to INT DEFAULT 60                                       
-);
-
-CREATE TABLE IF NOT EXISTS restaurant_tags_relations (
-    restaurant_id UUID REFERENCES restaurants(id) ON DELETE CASCADE,
-    tag_id UUID REFERENCES restaurant_tags(id) ON DELETE CASCADE,   
-    PRIMARY KEY (restaurant_id, tag_id)
-);
-
-CREATE TABLE IF NOT EXISTS addresses (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),  
-    address TEXT NOT NULL,                                                           
-    user_id UUID,                                   
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL                                  
-);
-
-CREATE TABLE IF NOT EXISTS products (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    restaurant_id UUID NOT NULL REFERENCES restaurants(id) ON DELETE CASCADE,
-    name TEXT NOT NULL,
-    price NUMERIC(10, 2) NOT NULL,
-    image_url TEXT DEFAULT 'default_product.jpg',
-    weight INT NOT NULL,
-    category TEXT NOT NULL
-);
-
-
-CREATE TABLE IF NOT EXISTS orders (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    status TEXT NOT NULL,
-    address_id UUID NOT NULL REFERENCES addresses(id) ON DELETE CASCADE,
-    order_products TEXT NOT NULL
-);
-
 INSERT INTO restaurant_tags (id, name)
-VALUES 
-  (gen_random_uuid(), 'Итальянский'),
-  (gen_random_uuid(), 'Японский'),
-  (gen_random_uuid(), 'Фастфуд'),
-  (gen_random_uuid(), 'Турецкий'),
-  (gen_random_uuid(), 'Вегетарианский'),
-  (gen_random_uuid(), 'Американский'),
-  (gen_random_uuid(), 'Европейский'),
-  (gen_random_uuid(), 'Индийский'),
-  (gen_random_uuid(), 'Средиземноморский'),
-  (gen_random_uuid(), 'Веганский'),
-  (gen_random_uuid(), 'Французский'),
-  (gen_random_uuid(), 'Мексиканский'),
-  (gen_random_uuid(), 'Китайский'),
-  (gen_random_uuid(), 'Немецкий');
+VALUES
+uuid_generate_v4(), 'Итальянский',
+uuid_generate_v4(), 'Японский',
+uuid_generate_v4(), 'Фастфуд',
+uuid_generate_v4(), 'Турецкий',
+uuid_generate_v4(), 'Вегетарианский',
+uuid_generate_v4(), 'Американский',
+uuid_generate_v4(), 'Европейский',
+uuid_generate_v4(), 'Индийский',
+uuid_generate_v4(), 'Средиземноморский',
+uuid_generate_v4(), 'Веганский',
+uuid_generate_v4(), 'Французский',
+uuid_generate_v4(), 'Мексиканский',
+uuid_generate_v4(), 'Китайский',
+uuid_generate_v4(), 'Немецкий';
 
 INSERT INTO restaurants (id, name, banner_url, address, rating, rating_count, description, working_mode_from, working_mode_to, delivery_time_from, delivery_time_to)
 VALUES
@@ -234,69 +170,3 @@ VALUES
 (uuid_generate_v4(), (SELECT id FROM restaurants WHERE name = 'Восточный салат'), (SELECT id FROM restaurant_tags WHERE name = 'Турецкий')),
 (uuid_generate_v4(), (SELECT id FROM restaurants WHERE name = 'Индийские специи'), (SELECT id FROM restaurant_tags WHERE name = 'Средиземноморский')),
 (uuid_generate_v4(), (SELECT id FROM restaurants WHERE name = 'Мексиканская пекарня'), (SELECT id FROM restaurant_tags WHERE name = 'Японский'));
-
-
-INSERT INTO products (restaurant_id, name, price, image_url, weight, category)
-VALUES 
-    (
-        (SELECT id FROM restaurants WHERE name = 'Красное море' AND description = 'Японский рамен и суши' AND type = 'Японский'),
-        'Рамен с курицей', 
-        740, 
-        'default_product.jpg', 
-        350,
-        'Закуски'
-    ),
-    (
-        (SELECT id FROM restaurants WHERE name = 'Красное море' AND description = 'Японский рамен и суши' AND type = 'Японский'),
-        'Рамен с говядиной', 
-        650, 
-        'default_product.jpg', 
-        400,
-        'Закуски'
-    ),
-    (
-        (SELECT id FROM restaurants WHERE name = 'Красное море' AND description = 'Японский рамен и суши' AND type = 'Японский'),
-        'Суши ассорти', 
-        490, 
-        'default_product.jpg', 
-        250,
-        'Суши'
-    ),
-    (
-        (SELECT id FROM restaurants WHERE name = 'Красное море' AND description = 'Японский рамен и суши' AND type = 'Японский'),
-        'Тамаго суши', 
-        400, 
-        'default_product.jpg', 
-        150,
-        'Суши'
-    ),
-    (
-        (SELECT id FROM restaurants WHERE name = 'Красное море' AND description = 'Японский рамен и суши' AND type = 'Японский'),
-        'Ролл с лососем', 
-        300, 
-        'default_product.jpg', 
-        200,
-        'Суши'
-    ),
-    (
-        (SELECT id FROM restaurants WHERE name = 'Красное море' AND description = 'Японский рамен и суши' AND type = 'Японский'),
-        'Гёдза', 
-        200, 
-        'default_product.jpg', 
-        180,
-        'Закуски'
-    );
-
-
-INSERT INTO users (id, login, first_name, last_name, phone_number, description, user_pic, password_hash)
-VALUES (
-    uuid_generate_v4(), 
-    'testuser', 
-    'Dmitriy',  
-    'Nagiev', 
-    '88005553535', 
-    '',
-    'default_user.jpg',
-    decode('a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6', 'hex')
-);
-
