@@ -17,3 +17,7 @@ type CartUsecase interface {
 	AddItem(ctx context.Context, userID, productID string) error
 	RemoveItem(ctx context.Context, userID, productID string) error
 }
+
+type RestaurantRepo interface {
+	GetCartItem(ctx context.Context, userID string) (models.CartItem, error)
+}

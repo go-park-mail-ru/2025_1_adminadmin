@@ -19,7 +19,7 @@ import (
 	restaurantDelivery "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/delivery/http"
 	restaurantRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/repo"
 	restaurantUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/usecase"
-	cartRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo"
+	cartRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/redis"
 	cartHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/http"
 	cartUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/usecase"
 	"github.com/gorilla/mux"
@@ -54,10 +54,6 @@ func initDB(logger *slog.Logger) (*pgxpool.Pool, error) {
 }
 
 func main() {
-	
-	fmt.Println("Log file path:", os.Getenv("MAIN_LOG_FILE"))
-	fmt.Println("POSTGRES_CONN:", os.Getenv("POSTGRES_CONN"))
-	fmt.Println("PICTURE_BASE_PATH:", os.Getenv("PICTURE_BASE_PATH"))
 	logFile, err := os.OpenFile(os.Getenv("MAIN_LOG_FILE"), os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {
 		fmt.Println("error opening log file: " + err.Error())

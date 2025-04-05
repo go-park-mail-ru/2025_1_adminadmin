@@ -20,3 +20,4 @@ type Product struct {
 func (p *Product) Sanitize() {
 	p.Name = html.EscapeString(p.Name)
 }
+			
