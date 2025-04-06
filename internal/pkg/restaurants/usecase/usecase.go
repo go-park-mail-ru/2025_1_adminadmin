@@ -16,7 +16,7 @@ func NewRestaurantsUsecase(r interfaces.RestaurantRepo) *RestaurantUsecase {
 	return &RestaurantUsecase{repo: r}
 }
 
-func (u *RestaurantUsecase) GetProductsByRestaurant(ctx context.Context, restaurantID uuid.UUID, count, offset int) ([]models.Product, error) {
+func (u *RestaurantUsecase) GetProductsByRestaurant(ctx context.Context, restaurantID uuid.UUID, count, offset int) (*models.RestaurantFull, error) {
 	return u.repo.GetProductsByRestaurant(ctx, restaurantID, count, offset)
 }
 
