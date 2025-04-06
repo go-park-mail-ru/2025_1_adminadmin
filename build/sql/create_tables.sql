@@ -132,7 +132,7 @@ VALUES
 (uuid_generate_v4(), 'Вегетарианская кухня', 'default_restaurant.jpg', 'Вегетарианская кухня на улице Мира', 3.1, 478, 'Ресторан Вегетарианская кухня, уютная атмосфера и вкусная еда.', 12, 21, 43, 83),
 (uuid_generate_v4(), 'Ресторан Адель', 'default_restaurant.jpg', 'Ресторан Адель на улице Мира', 4.2, 793, 'Ресторан Ресторан Адель, уютная атмосфера и вкусная еда.', 11, 20, 42, 65);
 
-INSERT INTO restaurant_tags_relations (id, restaurant_id, tag_id)
+INSERT INTO restaurant_tags_relations (restaurant_id, tag_id)
 VALUES
 ((SELECT id FROM restaurants WHERE name = 'Шашлыки по-кавказски'), (SELECT id FROM restaurant_tags WHERE name = 'Веганский')),
 ((SELECT id FROM restaurants WHERE name = 'Американская пекарня'), (SELECT id FROM restaurant_tags WHERE name = 'Индийский')),
