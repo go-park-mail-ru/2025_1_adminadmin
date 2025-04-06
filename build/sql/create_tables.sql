@@ -261,7 +261,7 @@ VALUES
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category)
 VALUES 
     (
-        (SELECT id FROM restaurants WHERE name = 'Красное море' AND description = 'Японский рамен и суши' AND type = 'Японский'),
+        (SELECT id FROM restaurants WHERE name = 'Красное море' AND description = 'Японский рамен и суши'  ),
         'Рамен с курицей', 
         740, 
         'default_product.jpg', 
@@ -269,7 +269,7 @@ VALUES
         'Закуски'
     ),
     (
-        (SELECT id FROM restaurants WHERE name = 'Красное море' AND description = 'Японский рамен и суши' AND type = 'Японский'),
+        (SELECT id FROM restaurants WHERE name = 'Красное море' AND description = 'Японский рамен и суши'  ),
         'Рамен с говядиной', 
         650, 
         'default_product.jpg', 
@@ -277,7 +277,7 @@ VALUES
         'Закуски'
     ),
     (
-        (SELECT id FROM restaurants WHERE name = 'Красное море' AND description = 'Японский рамен и суши' AND type = 'Японский'),
+        (SELECT id FROM restaurants WHERE name = 'Красное море' AND description = 'Японский рамен и суши'  ),
         'Суши ассорти', 
         490, 
         'default_product.jpg', 
@@ -285,7 +285,7 @@ VALUES
         'Суши'
     ),
     (
-        (SELECT id FROM restaurants WHERE name = 'Красное море' AND description = 'Японский рамен и суши' AND type = 'Японский'),
+        (SELECT id FROM restaurants WHERE name = 'Красное море' AND description = 'Японский рамен и суши'  ),
         'Тамаго суши', 
         400, 
         'default_product.jpg', 
@@ -293,7 +293,7 @@ VALUES
         'Суши'
     ),
     (
-        (SELECT id FROM restaurants WHERE name = 'Красное море' AND description = 'Японский рамен и суши' AND type = 'Японский'),
+        (SELECT id FROM restaurants WHERE name = 'Красное море' AND description = 'Японский рамен и суши'  ),
         'Ролл с лососем', 
         300, 
         'default_product.jpg', 
@@ -301,7 +301,7 @@ VALUES
         'Суши'
     ),
     (
-        (SELECT id FROM restaurants WHERE name = 'Красное море' AND description = 'Японский рамен и суши' AND type = 'Японский'),
+        (SELECT id FROM restaurants WHERE name = 'Красное море' AND description = 'Японский рамен и суши'  ),
         'Гёдза', 
         200, 
         'default_product.jpg', 
