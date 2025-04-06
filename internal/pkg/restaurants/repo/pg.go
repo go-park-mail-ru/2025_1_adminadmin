@@ -11,8 +11,8 @@ import (
 )
 
 const (
-	getAllRestaurant        = "SELECT id, name, description, type, rating FROM restaurants LIMIT $1 OFFSET $2;"
-	getRestaurantByid       = "SELECT id, name, description, type, rating FROM restaurants WHERE id=$1;"
+	getAllRestaurant        = "SELECT id, name, description, rating FROM restaurants LIMIT $1 OFFSET $2;"
+	getRestaurantByid       = "SELECT id, name, description, rating FROM restaurants WHERE id=$1;"
 	getProductsByRestaurant = "SELECT id, name, price, image_url, weight, amount FROM products WHERE restaurant_id = $1 LIMIT $2 OFFSET $3;"
 )
 
@@ -117,7 +117,7 @@ func (r *RestaurantRepository) GetAll(ctx context.Context, count, offset int) ([
 	var restaurants []models.Restaurant
 	for rows.Next() {
 		var restaurant models.Restaurant
-		if err := rows.Scan(&restaurant.Id, &restaurant.Name, &restaurant.Description, &restaurant.Type, &restaurant.Rating); err != nil {
+		if err := rows.Scan(&restaurant.Id, &restaurant.Name, &restaurant.Description, &restaurant.Rating); err != nil {
 			logger.Error(err.Error())
 			return nil, err
 		}
@@ -133,7 +133,7 @@ func (r *RestaurantRepository) GetById(ctx context.Context, id uuid.UUID) (*mode
 
 	var restaurant models.Restaurant
 	err := r.db.QueryRow(ctx, getRestaurantByid, id).
-		Scan(&restaurant.Id, &restaurant.Name, &restaurant.Description, &restaurant.Type, &restaurant.Rating)
+		Scan(&restaurant.Id, &restaurant.Name, &restaurant.Description, &restaurant.Rating)
 	if err != nil {
 		logger.Error(err.Error())
 		return nil, err

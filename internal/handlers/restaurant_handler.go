@@ -53,7 +53,7 @@ func (h *Handler) RestaurantList(w http.ResponseWriter, r *http.Request) {
 
 	for rows.Next() {
 		var restaurant models.Restaurant
-		err = rows.Scan(&restaurant.Id, &restaurant.Name, &restaurant.Description, &restaurant.Type, &restaurant.Rating)
+		err = rows.Scan(&restaurant.Id, &restaurant.Name, &restaurant.Description, &restaurant.Rating)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
@@ -93,7 +93,7 @@ func (h *Handler) RestaurantByID(w http.ResponseWriter, r *http.Request) {
 
 	var restaurant models.Restaurant
 	if rows.Next() {
-		err = rows.Scan(&restaurant.Id, &restaurant.Name, &restaurant.Description, &restaurant.Type, &restaurant.Rating)
+		err = rows.Scan(&restaurant.Id, &restaurant.Name, &restaurant.Description, &restaurant.Rating)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return

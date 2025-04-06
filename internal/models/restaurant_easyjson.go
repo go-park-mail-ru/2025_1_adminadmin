@@ -44,8 +44,6 @@ func easyjson16134a91DecodeGithubComGoParkMailRu20251AdminadminInternalModels(in
 			out.Name = string(in.String())
 		case "description":
 			out.Description = string(in.String())
-		case "type":
-			out.Type = string(in.String())
 		case "rating":
 			out.Rating = float64(in.Float64())
 		default:
@@ -76,11 +74,6 @@ func easyjson16134a91EncodeGithubComGoParkMailRu20251AdminadminInternalModels(ou
 		const prefix string = ",\"description\":"
 		out.RawString(prefix)
 		out.String(string(in.Description))
-	}
-	{
-		const prefix string = ",\"type\":"
-		out.RawString(prefix)
-		out.String(string(in.Type))
 	}
 	{
 		const prefix string = ",\"rating\":"
