@@ -44,17 +44,16 @@ func (r *CartRepository) AddItem(ctx context.Context, userID, productID string) 
 
 func (r *CartRepository) UpdateItemQuantity(ctx context.Context, userID, productID string, quantity int) error {
     key := "cart:" + userID
-    currentQuantity, err := r.redisClient.HGet(ctx, key, productID).Int()
+    _, err := r.redisClient.HGet(ctx, key, productID).Int()
     if err != nil {
         return fmt.Errorf("товар не найден в корзине")
     }
 
-    newQuantity := currentQuantity + quantity
-    if newQuantity <= 0 {
+    if quantity <= 0 {
         return r.redisClient.HDel(ctx, key, productID).Err()
     }
 
-    return r.redisClient.HSet(ctx, key, productID, newQuantity).Err()
+    return r.redisClient.HSet(ctx, key, productID, quantity).Err()
 }
 
 
