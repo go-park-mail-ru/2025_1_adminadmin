@@ -60,12 +60,8 @@ func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resp := map[string]interface{}{
-		"cart": items,
-	}
-
 	w.WriteHeader(http.StatusOK)
-	data, err := json.Marshal(resp)
+	data, err := json.Marshal(items)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "Не удалось сериализовать данные", http.StatusInternalServerError)
