@@ -255,9 +255,7 @@ VALUES
 ((SELECT id FROM restaurants WHERE name = 'Пельмени на углях'), (SELECT id FROM restaurant_tags WHERE name = 'Вегетарианский')),
 ((SELECT id FROM restaurants WHERE name = 'Ресторан на воде'), (SELECT id FROM restaurant_tags WHERE name = 'Турецкий')),
 ((SELECT id FROM restaurants WHERE name = 'Мексиканская кухня для всех'), (SELECT id FROM restaurant_tags WHERE name = 'Веганский')),
-((SELECT id FROM restaurants WHERE name = 'Индийская сказка'), (SELECT id FROM restaurant_tags WHERE name = 'Итальянский')),
-((SELECT id FROM restaurants WHERE name = 'Средиземноморский ресторан'), (SELECT id FROM restaurant_tags WHERE name = 'Веганский'));
-
+((SELECT id FROM restaurants WHERE name = 'Индийская сказка'), (SELECT id FROM restaurant_tags WHERE name = 'Итальянский'));
 
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category)
 VALUES 
