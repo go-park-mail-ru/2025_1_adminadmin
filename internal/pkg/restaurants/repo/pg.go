@@ -24,7 +24,7 @@ func NewRestaurantRepository(db pgxtype.Querier) *RestaurantRepository {
 	return &RestaurantRepository{db: db}
 }
 
-func (r *RestaurantRepository) GetProductsByRestaurant(ctx context.Context, restaurantID uuid.UUID) (*models.RestaurantFull, error) {
+func (r *RestaurantRepository) GetProductsByRestaurant(ctx context.Context, restaurantID uuid.UUID, count, offset int) (*models.RestaurantFull, error) {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 
 	row := r.db.QueryRow(ctx, `
@@ -65,11 +65,14 @@ func (r *RestaurantRepository) GetProductsByRestaurant(ctx context.Context, rest
 		}
 		rest.Tags = append(rest.Tags, tag)
 	}
+
 	prodRows, err := r.db.Query(ctx, `
 		SELECT name, price, image_url, weight, amount, category
 		FROM products
 		WHERE restaurant_id = $1
-	`, restaurantID)
+		ORDER BY category
+		LIMIT $2 OFFSET $3
+	`, restaurantID, count, offset)
 	if err != nil {
 		logger.Error("failed to query products: " + err.Error())
 		return nil, err
@@ -86,7 +89,6 @@ func (r *RestaurantRepository) GetProductsByRestaurant(ctx context.Context, rest
 			logger.Error("failed to scan product: " + err.Error())
 			return nil, err
 		}
-
 		p.Sanitize()
 		categoryMap[category] = append(categoryMap[category], p)
 	}
@@ -101,8 +103,6 @@ func (r *RestaurantRepository) GetProductsByRestaurant(ctx context.Context, rest
 	logger.Info("Successfully built RestaurantFull model")
 	return &rest, nil
 }
-
-
 
 func (r *RestaurantRepository) GetAll(ctx context.Context, count, offset int) ([]models.Restaurant, error) {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
