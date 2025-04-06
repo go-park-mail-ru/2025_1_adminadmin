@@ -13,7 +13,7 @@ import (
 const (
 	getAllRestaurant        = "SELECT id, name, description, rating FROM restaurants LIMIT $1 OFFSET $2;"
 	getRestaurantByid       = "SELECT id, name, description, rating FROM restaurants WHERE id=$1;"
-	getProductsByRestaurant = "SELECT id, name, price, image_url, weight, amount FROM products WHERE restaurant_id = $1 LIMIT $2 OFFSET $3;"
+	getProductsByRestaurant = "SELECT id, name, price, image_url, weight FROM products WHERE restaurant_id = $1 LIMIT $2 OFFSET $3;"
 )
 
 type RestaurantRepository struct {
@@ -67,7 +67,7 @@ func (r *RestaurantRepository) GetProductsByRestaurant(ctx context.Context, rest
 	}
 
 	prodRows, err := r.db.Query(ctx, `
-		SELECT name, price, image_url, weight, amount, category
+		SELECT name, price, image_url, weight, category
 		FROM products
 		WHERE restaurant_id = $1
 		ORDER BY category
