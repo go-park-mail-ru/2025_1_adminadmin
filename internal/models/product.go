@@ -12,24 +12,27 @@ type WorkingMode struct {
 	To   int `json:"to"`
 }
 
+// easyjson:json
 type DeliveryTime struct {
 	From int `json:"from"`
 	To   int `json:"to"`
 }
 
+// easyjson:json
 type Product struct {
 	Name     string  `json:"name"`
 	Price    float64 `json:"price"`
 	ImageURL string  `json:"image_url"`
 	Weight   int     `json:"weight"`
-	Amount   int     `json:"amount"`
 }
 
+// easyjson:json
 type Category struct {
 	Name     string    `json:"name"`
 	Products []Product `json:"products"`
 }
 
+// easyjson:json
 type RestaurantFull struct {
 	Id              uuid.UUID      `json:"id"`
 	Name            string         `json:"name"`

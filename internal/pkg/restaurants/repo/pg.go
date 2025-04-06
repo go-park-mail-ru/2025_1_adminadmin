@@ -24,29 +24,85 @@ func NewRestaurantRepository(db pgxtype.Querier) *RestaurantRepository {
 	return &RestaurantRepository{db: db}
 }
 
-func (r *RestaurantRepository) GetProductsByRestaurant(ctx context.Context, restaurantID uuid.UUID, count, offset int) ([]models.Product, error) {
+func (r *RestaurantRepository) GetProductsByRestaurant(ctx context.Context, restaurantID uuid.UUID) (*models.RestaurantFull, error) {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 
-	rows, err := r.db.Query(ctx, getProductsByRestaurant, restaurantID, count, offset)
+	row := r.db.QueryRow(ctx, `
+		SELECT id, name, banner_url, address, rating, rating_count,
+		       working_mode_from, working_mode_to, delivery_time_from, delivery_time_to
+		FROM restaurants
+		WHERE id = $1
+	`, restaurantID)
+
+	var rest models.RestaurantFull
+	err := row.Scan(
+		&rest.Id, &rest.Name, &rest.BannerURL, &rest.Address, &rest.Rating, &rest.RatingCount,
+		&rest.WorkingMode.From, &rest.WorkingMode.To,
+		&rest.DeliveryTime.From, &rest.DeliveryTime.To,
+	)
 	if err != nil {
-		logger.Error(err.Error())
+		logger.Error("failed to scan restaurant: " + err.Error())
 		return nil, err
 	}
-	defer rows.Close()
 
-	var products []models.Product
-	for rows.Next() {
-		var product models.Product
-		if err := rows.Scan(&product.Id, &product.Name, &product.Price, &product.ImageURL, &product.Weight, &product.Amount); err != nil {
-			logger.Error(err.Error())
+	tagRows, err := r.db.Query(ctx, `
+		SELECT rt.name
+		FROM restaurant_tags rt
+		JOIN restaurant_tags_relations rtr ON rtr.tag_id = rt.id
+		WHERE rtr.restaurant_id = $1
+	`, restaurantID)
+	if err != nil {
+		logger.Error("failed to query tags: " + err.Error())
+		return nil, err
+	}
+	defer tagRows.Close()
+
+	for tagRows.Next() {
+		var tag string
+		if err := tagRows.Scan(&tag); err != nil {
+			logger.Error("failed to scan tag: " + err.Error())
 			return nil, err
 		}
-		products = append(products, product)
+		rest.Tags = append(rest.Tags, tag)
+	}
+	prodRows, err := r.db.Query(ctx, `
+		SELECT name, price, image_url, weight, amount, category
+		FROM products
+		WHERE restaurant_id = $1
+	`, restaurantID)
+	if err != nil {
+		logger.Error("failed to query products: " + err.Error())
+		return nil, err
+	}
+	defer prodRows.Close()
+
+	categoryMap := make(map[string][]models.Product)
+
+	for prodRows.Next() {
+		var p models.Product
+		var category string
+		err := prodRows.Scan(&p.Name, &p.Price, &p.ImageURL, &p.Weight, &category)
+		if err != nil {
+			logger.Error("failed to scan product: " + err.Error())
+			return nil, err
+		}
+
+		p.Sanitize()
+		categoryMap[category] = append(categoryMap[category], p)
 	}
 
-	logger.Info("Successful")
-	return products, rows.Err()
+	for categoryName, products := range categoryMap {
+		rest.Categories = append(rest.Categories, models.Category{
+			Name:     categoryName,
+			Products: products,
+		})
+	}
+
+	logger.Info("Successfully built RestaurantFull model")
+	return &rest, nil
 }
+
+
 
 func (r *RestaurantRepository) GetAll(ctx context.Context, count, offset int) ([]models.Restaurant, error) {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
