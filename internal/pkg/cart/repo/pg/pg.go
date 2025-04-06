@@ -7,6 +7,10 @@ import (
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
+const (
+	getFieldProduct = "SELECT id, name, price, image_url, weight FROM products WHERE id = ANY($1)"
+)
+
 type RestaurantRepository struct {
 	db *pgxpool.Pool
 }
@@ -16,13 +20,7 @@ func NewRestaurantRepository(db *pgxpool.Pool) *RestaurantRepository {
 }
 
 func (r *RestaurantRepository) GetCartItem(ctx context.Context, productIDs []string, productAmounts map[string]int) ([]models.CartItem, error) {
-	query := `
-	SELECT id, name, price, image_url, weight
-	FROM products
-	WHERE id = ANY($1)
-	`
-
-	rows, err := r.db.Query(ctx, query, productIDs)
+	rows, err := r.db.Query(ctx, getFieldProduct, productIDs)
 	if err != nil {
 		return nil, err
 	}
