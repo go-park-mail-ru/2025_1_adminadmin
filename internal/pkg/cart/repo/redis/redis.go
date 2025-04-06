@@ -34,10 +34,29 @@ func (r *CartRepository) GetCart(ctx context.Context, userID string) (map[string
 }
 
 func (r *CartRepository) AddItem(ctx context.Context, userID, productID string) error {
-	key := "cart:" + userID
-
-	return r.redisClient.HIncrBy(ctx, key, productID, 1).Err()
+    key := "cart:" + userID
+    quantity, err := r.redisClient.HGet(ctx, key, productID).Int()
+    if err == nil && quantity > 0 {
+        return fmt.Errorf("товар уже в корзине")
+    }
+    return r.redisClient.HSet(ctx, key, productID, 1).Err()
 }
+
+func (r *CartRepository) UpdateItemQuantity(ctx context.Context, userID, productID string, quantity int) error {
+    key := "cart:" + userID
+    currentQuantity, err := r.redisClient.HGet(ctx, key, productID).Int()
+    if err != nil {
+        return fmt.Errorf("товар не найден в корзине")
+    }
+
+    newQuantity := currentQuantity + quantity
+    if newQuantity <= 0 {
+        return r.redisClient.HDel(ctx, key, productID).Err()
+    }
+
+    return r.redisClient.HSet(ctx, key, productID, newQuantity).Err()
+}
+
 
 func (r *CartRepository) RemoveItem(ctx context.Context, userID, productID string) error {
 	key := "cart:" + userID

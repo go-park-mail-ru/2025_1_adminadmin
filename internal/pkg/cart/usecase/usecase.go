@@ -40,9 +40,12 @@ func (uc *CartUsecase) GetCart(ctx context.Context, userID string) ([]models.Car
 }
 
 func (uc *CartUsecase) AddItem(ctx context.Context, userID, productID string) error {
-	return uc.cartRepo.AddItem(ctx, userID, productID)
+    return uc.cartRepo.AddItem(ctx, userID, productID)
 }
 
+func (uc *CartUsecase) UpdateItemQuantity(ctx context.Context, userID, productID string, quantity int) error {
+    return uc.cartRepo.UpdateItemQuantity(ctx, userID, productID, quantity)
+}
 func (uc *CartUsecase) RemoveItem(ctx context.Context, userID, productID string) error {
 	return uc.cartRepo.RemoveItem(ctx, userID, productID)
 }
