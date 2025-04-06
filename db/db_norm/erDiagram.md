@@ -81,7 +81,7 @@ erDiagram
     PRODUCTS {
         UUID id PK
         TEXT name
-        FLOAT price
+        NUMERIC(2) price
         TEXT image_url
         INT weight
         UUID category_id FK
@@ -101,7 +101,7 @@ erDiagram
         UUID restaurant_id FK
         UUID address_id FK
         TEXT status
-        FLOAT total_price
+        NUMERIC(2) total_price
         TIMESTAMP created_at
         TIMESTAMP updated_at
     }
@@ -110,7 +110,7 @@ erDiagram
         UUID order_id PK, FK
         UUID product_id PK, FK
         INT quantity
-        FLOAT price_at_time
+        NUMERIC(2) price_at_time
     }
 
     REVIEWS {

@@ -24,9 +24,9 @@
 
 **Ограничения:**
 ```sql
-CREATE TABLE address (
+CREATE TABLE addresses (
   id UUID PRIMARY KEY,
-  user_id UUID NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
+  user_id UUID NOT NULL REFERENCES user_table(id) ON DELETE CASCADE,
   address TEXT NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
@@ -210,7 +210,7 @@ erDiagram
     PRODUCT_CATEGORIES ||--o{ PRODUCT_CATEGORY_RELATIONS : "category_id"
 ```
 
-### 6. **Таблица `orders`**
+### 6. **Таблица `order_table`**
 
 Хранит информацию о заказах пользователей.
 
@@ -236,13 +236,13 @@ erDiagram
 
 **Ограничения:**
 ```sql
-CREATE TABLE "order" (
+CREATE TABLE order_table (
   id UUID PRIMARY KEY,
-  user_id UUID NOT NULL REFERENCES "user"(id),
+  user_id UUID NOT NULL REFERENCES user_table(id),
   restaurant_id UUID NOT NULL REFERENCES restaurant(id),
   address_id UUID NOT NULL REFERENCES address(id),
   status TEXT NOT NULL CHECK (status IN ('new', 'preparing', 'delivering', 'delivered', 'canceled')),
-  total_price FLOAT NOT NULL CHECK (total_price > 0),
+  total_price NUMERIC(2) NOT NULL CHECK (total_price > 0),
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
@@ -256,7 +256,7 @@ erDiagram
         UUID restaurant_id FK "Идентификатор ресторана"
         UUID address_id FK "Идентификатор адреса"
         TEXT status "Статус заказа"
-        FLOAT total_price "Общая цена"
+        NUMERIC(2) total_price "Общая цена"
         TIMESTAMP created_at "Дата создания"
         TIMESTAMP updated_at "Дата обновления"
     }
@@ -292,10 +292,10 @@ erDiagram
 **Ограничения:**
 ```sql
 CREATE TABLE order_item (
-  order_id UUID NOT NULL REFERENCES "order"(id) ON DELETE CASCADE,
+  order_id UUID NOT NULL REFERENCES order_table(id) ON DELETE CASCADE,
   product_id UUID NOT NULL REFERENCES product(id),
   quantity INT NOT NULL CHECK (quantity > 0),
-  price_at_time FLOAT NOT NULL CHECK (price_at_time > 0),
+  price_at_time NUMERIC(2) NOT NULL CHECK (price_at_time > 0),
   PRIMARY KEY (order_id, product_id)
 );
 ```
@@ -306,7 +306,7 @@ erDiagram
         UUID order_id FK "Идентификатор заказа"
         UUID product_id FK "Идентификатор продукта"
         INT quantity "Количество"
-        FLOAT price_at_time "Цена на момент заказа"
+        NUMERIC(2) price_at_time "Цена на момент заказа"
     }
     ORDERS ||--o{ ORDER_ITEMS : "order_id"
     PRODUCTS ||--o{ ORDER_ITEMS : "product_id"
@@ -340,7 +340,7 @@ erDiagram
 ```sql
 CREATE TABLE review (
   id UUID PRIMARY KEY,
-  user_id UUID NOT NULL REFERENCES "user"(id),
+  user_id UUID NOT NULL REFERENCES user_table(id),
   restaurant_id UUID NOT NULL REFERENCES restaurant(id),
   rating INT NOT NULL CHECK (rating BETWEEN 1 AND 5),
   comment TEXT,
@@ -436,7 +436,7 @@ erDiagram
 ```sql
 CREATE TABLE recommendation (
   id UUID PRIMARY KEY,
-  user_id UUID NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
+  user_id UUID NOT NULL REFERENCES user_table(id) ON DELETE CASCADE,
   product_id UUID NOT NULL REFERENCES product(id) ON DELETE CASCADE,
   created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
@@ -456,7 +456,7 @@ erDiagram
 
 Продолжаем анализ нормальных форм для оставшихся таблиц.
 
-### 11. **Таблица `users`** 
+### 11. **Таблица `user_table`** 
 
 Содержит данные пользователей.
 
@@ -482,7 +482,7 @@ erDiagram
 
 **Ограничения:**
 ```sql
-CREATE TABLE "user" (
+CREATE TABLE user_table (
   id UUID PRIMARY KEY,
   username TEXT NOT NULL UNIQUE,
   email TEXT NOT NULL UNIQUE,
@@ -600,7 +600,7 @@ erDiagram
 CREATE TABLE product (
   id UUID PRIMARY KEY,
   name TEXT NOT NULL,
-  price FLOAT NOT NULL CHECK (price > 0),
+  price NUMERIC(2) NOT NULL CHECK (price > 0),
   image_url TEXT,
   weight INT CHECK (weight > 0),
   category_id UUID NOT NULL REFERENCES product_category(id),
@@ -616,7 +616,7 @@ erDiagram
         UUID id PK "Идентификатор продукта"
         TEXT name "Название продукта"
         TEXT image_url "Путь до изображения"
-        FLOAT price "Цена"
+        NUMERIC(2) price "Цена"
         INT weight "Вес"
         UUID category_id FK "Категория продукта"
     }

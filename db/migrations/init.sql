@@ -1,5 +1,5 @@
 -- Создание таблицы пользователей
-CREATE TABLE "user" (
+CREATE TABLE user_table (
   id UUID PRIMARY KEY,
   username TEXT NOT NULL UNIQUE,
   email TEXT NOT NULL UNIQUE,
@@ -13,9 +13,9 @@ CREATE TABLE "user" (
 );
 
 -- Создание таблицы адресов
-CREATE TABLE address (
+CREATE TABLE addresses (
   id UUID PRIMARY KEY,
-  user_id UUID NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
+  user_id UUID NOT NULL REFERENCES user_table(id) ON DELETE CASCADE,
   address TEXT NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
@@ -63,7 +63,7 @@ CREATE TABLE restaurant_category_relation (
 CREATE TABLE product (
   id UUID PRIMARY KEY,
   name TEXT NOT NULL,
-  price FLOAT NOT NULL CHECK (price > 0),
+  price NUMERIC(2) NOT NULL CHECK (price > 0),
   image_url TEXT,
   weight INT CHECK (weight > 0),
   category_id UUID NOT NULL REFERENCES product_category(id),
@@ -80,30 +80,30 @@ CREATE TABLE product_category_relation (
 );
 
 -- Создание таблицы заказов
-CREATE TABLE "order" (
+CREATE TABLE order_table (
   id UUID PRIMARY KEY,
-  user_id UUID NOT NULL REFERENCES "user"(id),
+  user_id UUID NOT NULL REFERENCES user_table(id),
   restaurant_id UUID NOT NULL REFERENCES restaurant(id),
   address_id UUID NOT NULL REFERENCES address(id),
   status TEXT NOT NULL CHECK (status IN ('new', 'preparing', 'delivering', 'delivered', 'canceled')),
-  total_price FLOAT NOT NULL CHECK (total_price > 0),
+  total_price NUMERIC(2) NOT NULL CHECK (total_price > 0),
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 -- Создание таблицы элементов заказа
 CREATE TABLE order_item (
-  order_id UUID NOT NULL REFERENCES "order"(id) ON DELETE CASCADE,
+  order_id UUID NOT NULL REFERENCES order_table(id) ON DELETE CASCADE,
   product_id UUID NOT NULL REFERENCES product(id),
   quantity INT NOT NULL CHECK (quantity > 0),
-  price_at_time FLOAT NOT NULL CHECK (price_at_time > 0),
+  price_at_time NUMERIC(2) NOT NULL CHECK (price_at_time > 0),
   PRIMARY KEY (order_id, product_id)
 );
 
 -- Создание таблицы отзывов
 CREATE TABLE review (
   id UUID PRIMARY KEY,
-  user_id UUID NOT NULL REFERENCES "user"(id),
+  user_id UUID NOT NULL REFERENCES user_table(id),
   restaurant_id UUID NOT NULL REFERENCES restaurant(id),
   rating INT NOT NULL CHECK (rating BETWEEN 1 AND 5),
   comment TEXT,
@@ -123,7 +123,7 @@ CREATE TABLE promo_code (
 -- Создание таблицы рекомендаций
 CREATE TABLE recommendation (
   id UUID PRIMARY KEY,
-  user_id UUID NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
+  user_id UUID NOT NULL REFERENCES user_table(id) ON DELETE CASCADE,
   product_id UUID NOT NULL REFERENCES product(id) ON DELETE CASCADE,
   created_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
@@ -139,7 +139,7 @@ $$ LANGUAGE plpgsql;
 
 -- Добавление триггеров для автоматического обновления updated_at
 CREATE TRIGGER update_user_timestamp
-BEFORE UPDATE ON "user"
+BEFORE UPDATE ON user_table
 FOR EACH ROW EXECUTE FUNCTION update_timestamp();
 
 CREATE TRIGGER update_restaurant_timestamp
@@ -151,15 +151,15 @@ BEFORE UPDATE ON product
 FOR EACH ROW EXECUTE FUNCTION update_timestamp();
 
 CREATE TRIGGER update_order_timestamp
-BEFORE UPDATE ON "order"
+BEFORE UPDATE ON order_table
 FOR EACH ROW EXECUTE FUNCTION update_timestamp();
 
 -- Создание индексов для ускорения запросов
 CREATE INDEX idx_address_user ON address(user_id);
 CREATE INDEX idx_product_restaurant ON product(restaurant_id);
 CREATE INDEX idx_product_category ON product(category_id);
-CREATE INDEX idx_order_user ON "order"(user_id);
-CREATE INDEX idx_order_restaurant ON "order"(restaurant_id);
-CREATE INDEX idx_order_status ON "order"(status);
+CREATE INDEX idx_order_user ON order_table(user_id);
+CREATE INDEX idx_order_restaurant ON order_table(restaurant_id);
+CREATE INDEX idx_order_status ON order_table(status);
 CREATE INDEX idx_review_restaurant ON review(restaurant_id);
 CREATE INDEX idx_review_user ON review(user_id);
