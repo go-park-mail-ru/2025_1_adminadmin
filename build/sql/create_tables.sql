@@ -309,6 +309,106 @@ VALUES
         'Закуски'
     );
 
+INSERT INTO products (restaurant_id, name, price, image_url, weight, category)
+VALUES 
+    (
+        (SELECT id FROM restaurants WHERE name = 'Паста и Вино' ),
+        'Рамен с курицей', 
+        740, 
+        'default_product.jpg', 
+        350,
+        'Закуски'
+    ),
+    (
+        (SELECT id FROM restaurants WHERE name = 'Паста и Вино' ),
+        'Рамен с говядиной', 
+        650, 
+        'default_product.jpg', 
+        400,
+        'Закуски'
+    ),
+    (
+        (SELECT id FROM restaurants WHERE name = 'Паста и Вино' ),
+        'Суши ассорти', 
+        490, 
+        'default_product.jpg', 
+        250,
+        'Суши'
+    ),
+    (
+        (SELECT id FROM restaurants WHERE name = 'Паста и Вино' ),
+        'Тамаго суши', 
+        400, 
+        'default_product.jpg', 
+        150,
+        'Суши'
+    ),
+    (
+        (SELECT id FROM restaurants WHERE name = 'Паста и Вино' ),
+        'Ролл с лососем', 
+        300, 
+        'default_product.jpg', 
+        200,
+        'Суши'
+    ),
+    (
+        (SELECT id FROM restaurants WHERE name = 'Паста и Вино' ),
+        'Гёдза', 
+        200, 
+        'default_product.jpg', 
+        180,
+        'Закуски'
+    );
+    INSERT INTO products (restaurant_id, name, price, image_url, weight, category)
+VALUES 
+    (
+        (SELECT id FROM restaurants WHERE name = 'Суши Дрим' ),
+        'Рамен с курицей', 
+        740, 
+        'default_product.jpg', 
+        350,
+        'Закуски'
+    ),
+    (
+        (SELECT id FROM restaurants WHERE name = 'Суши Дрим' ),
+        'Рамен с говядиной', 
+        650, 
+        'default_product.jpg', 
+        400,
+        'Закуски'
+    ),
+    (
+        (SELECT id FROM restaurants WHERE name = 'Суши Дрим' ),
+        'Суши ассорти', 
+        490, 
+        'default_product.jpg', 
+        250,
+        'Суши'
+    ),
+    (
+        (SELECT id FROM restaurants WHERE name = 'Суши Дрим' ),
+        'Тамаго суши', 
+        400, 
+        'default_product.jpg', 
+        150,
+        'Суши'
+    ),
+    (
+        (SELECT id FROM restaurants WHERE name = 'Суши Дрим' ),
+        'Ролл с лососем', 
+        300, 
+        'default_product.jpg', 
+        200,
+        'Суши'
+    ),
+    (
+        (SELECT id FROM restaurants WHERE name = 'Суши Дрим' ),
+        'Гёдза', 
+        200, 
+        'default_product.jpg', 
+        180,
+        'Закуски'
+    );
 
 INSERT INTO users (id, login, first_name, last_name, phone_number, description, user_pic, password_hash)
 VALUES (

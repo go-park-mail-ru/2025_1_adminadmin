@@ -3,19 +3,40 @@ package usecase
 import (
 	"context"
 
-	repo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/redis"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
+	redisRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/redis"
+	pgRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/pg"
 )
 
 type CartUsecase struct {
-	cartRepo *repo.CartRepository
+	cartRepo       *redisRepo.CartRepository
+	restaurantRepo *pgRepo.RestaurantRepository
 }
 
-func NewCartUsecase(cartRepo *repo.CartRepository) *CartUsecase {
-	return &CartUsecase{cartRepo: cartRepo}
+func NewCartUsecase(cartRepo *redisRepo.CartRepository, restaurantRepo *pgRepo.RestaurantRepository) *CartUsecase {
+	return &CartUsecase{
+		cartRepo:       cartRepo,
+		restaurantRepo: restaurantRepo,
+	}
 }
 
-func (uc *CartUsecase) GetCart(ctx context.Context, userID string) (map[string]int, error) {
-	return uc.cartRepo.GetCart(ctx, userID)
+func (uc *CartUsecase) GetCart(ctx context.Context, userID string) ([]models.CartItem, error) {
+	cartRaw, err := uc.cartRepo.GetCart(ctx, userID)
+	if err != nil {
+		return nil, err
+	}
+
+	productIDs := make([]string, 0, len(cartRaw))
+	for id := range cartRaw {
+		productIDs = append(productIDs, id)
+	}
+
+	items, err := uc.restaurantRepo.GetCartItem(ctx, productIDs, cartRaw)
+	if err != nil {
+		return nil, err
+	}
+
+	return items, nil
 }
 
 func (uc *CartUsecase) AddItem(ctx context.Context, userID, productID string) error {
