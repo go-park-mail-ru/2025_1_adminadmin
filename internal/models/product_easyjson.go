@@ -119,6 +119,8 @@ func easyjsonCf3f67efDecodeGithubComGoParkMailRu20251AdminadminInternalModels1(i
 			out.BannerURL = string(in.String())
 		case "address":
 			out.Address = string(in.String())
+		case "description":
+			out.Description = string(in.String())
 		case "rating":
 			out.Rating = float64(in.Float64())
 		case "rating_count":
@@ -206,6 +208,11 @@ func easyjsonCf3f67efEncodeGithubComGoParkMailRu20251AdminadminInternalModels1(o
 		const prefix string = ",\"address\":"
 		out.RawString(prefix)
 		out.String(string(in.Address))
+	}
+	{
+		const prefix string = ",\"description\":"
+		out.RawString(prefix)
+		out.String(string(in.Description))
 	}
 	{
 		const prefix string = ",\"rating\":"
@@ -304,6 +311,10 @@ func easyjsonCf3f67efDecodeGithubComGoParkMailRu20251AdminadminInternalModels2(i
 			continue
 		}
 		switch key {
+		case "id":
+			if data := in.UnsafeBytes(); in.Ok() {
+				in.AddError((out.Id).UnmarshalText(data))
+			}
 		case "name":
 			out.Name = string(in.String())
 		case "price":
@@ -327,8 +338,13 @@ func easyjsonCf3f67efEncodeGithubComGoParkMailRu20251AdminadminInternalModels2(o
 	first := true
 	_ = first
 	{
-		const prefix string = ",\"name\":"
+		const prefix string = ",\"id\":"
 		out.RawString(prefix[1:])
+		out.RawText((in.Id).MarshalText())
+	}
+	{
+		const prefix string = ",\"name\":"
+		out.RawString(prefix)
 		out.String(string(in.Name))
 	}
 	{
