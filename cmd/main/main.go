@@ -109,7 +109,7 @@ func main() {
 	{
 		restaurants.HandleFunc("/list", restaurantDelivery.RestaurantList).Methods(http.MethodGet, http.MethodOptions)
 		restaurants.HandleFunc("/{id}", restaurantDelivery.RestaurantById).Methods(http.MethodGet, http.MethodOptions)
-		restaurants.HandleFunc("/{id}/products", restaurantDelivery.GetProductsByRestaurant).Methods(http.MethodGet, http.MethodOptions)
+		restaurants.HandleFunc("", restaurantDelivery.GetProductsByRestaurant).Methods(http.MethodGet, http.MethodOptions)
 	}
 	cart := r.PathPrefix("/cart").Subrouter()
 	{
