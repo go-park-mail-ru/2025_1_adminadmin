@@ -26,15 +26,6 @@ func (r *CartRepository) GetCart(ctx context.Context, userID string) (map[string
 		return nil, "", err
 	}
 
-	if len(items) == 0 {
-		log.Printf("[GetCart] Корзина пуста для пользователя: %s", userID)
-	}
-
-	if len(items) == 0 {
-		log.Printf("[GetCart] Корзина пуста для пользователя: %s", userID)
-		return map[string]int{}, "", nil 
-	}
-
 	cart := make(map[string]int)
 	var restaurantID string
 

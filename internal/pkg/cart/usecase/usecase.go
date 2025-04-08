@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"log"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	pgRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/pg"
@@ -22,6 +23,7 @@ func NewCartUsecase(cartRepo *redisRepo.CartRepository, restaurantRepo *pgRepo.R
 
 func (uc *CartUsecase) GetCart(ctx context.Context, userID string) (models.Cart, error) {
 	cartRaw, restaurantID, err := uc.cartRepo.GetCart(ctx, userID)
+	log.Printf("[GetCart] usecase1 %v", err)
 	if err != nil {
 		return models.Cart{}, err
 	}
@@ -32,6 +34,7 @@ func (uc *CartUsecase) GetCart(ctx context.Context, userID string) (models.Cart,
 	}
 
 	items, err := uc.restaurantRepo.GetCartItem(ctx, productIDs, cartRaw, restaurantID)
+	log.Printf("[GetCart] usecase2 %v", err)
 	if err != nil {
 		return models.Cart{}, err
 	}
