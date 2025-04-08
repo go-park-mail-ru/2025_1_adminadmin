@@ -28,6 +28,10 @@ func (uc *CartUsecase) GetCart(ctx context.Context, userID string) (models.Cart,
 		return models.Cart{}, err
 	}
 
+	if restaurantID == "" {
+		return models.Cart{}, nil  
+	}
+
 	productIDs := make([]string, 0, len(cartRaw))
 	for id := range cartRaw {
 		productIDs = append(productIDs, id)
