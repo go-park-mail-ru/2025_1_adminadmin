@@ -49,7 +49,7 @@ func TestSignIn(t *testing.T) {
 		{
 			name:           "Fail",
 			requestBody:    `{"login":"testuser2","password":"12345678a"`,
-			login:       "testuser2",
+			login:          "testuser2",
 			password:       "12345678a",
 			usecaseErr:     nil,
 			expectedStatus: http.StatusBadRequest,

@@ -50,14 +50,11 @@ func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		switch err {
-		case auth.ErrInvalidLogin:
-			log.LogHandlerError(logger, err, http.StatusBadRequest)
-			utils.SendError(w, err.Error(), http.StatusBadRequest)
-		case auth.ErrUserNotFound:
+		case auth.ErrInvalidLogin, auth.ErrUserNotFound:
 			log.LogHandlerError(logger, err, http.StatusBadRequest)
 			utils.SendError(w, err.Error(), http.StatusBadRequest)
 		case auth.ErrInvalidCredentials:
-			log.LogHandlerError(logger, err, http.StatusBadRequest)
+			log.LogHandlerError(logger, err, http.StatusUnauthorized)
 			utils.SendError(w, err.Error(), http.StatusUnauthorized)
 		default:
 			log.LogHandlerError(logger, fmt.Errorf("Неизвестная ошибка: %w", err), http.StatusInternalServerError)
@@ -113,13 +110,7 @@ func (h *AuthHandler) SignUp(w http.ResponseWriter, r *http.Request) {
 		case auth.ErrInvalidLogin, auth.ErrInvalidPassword:
 			log.LogHandlerError(logger, fmt.Errorf("Неправильный логин или пароль: %w", err), http.StatusBadRequest)
 			utils.SendError(w, "Неправильный логин или пароль", http.StatusBadRequest)
-		case auth.ErrInvalidName:
-			log.LogHandlerError(logger, err, http.StatusBadRequest)
-			utils.SendError(w, err.Error(), http.StatusBadRequest)
-		case auth.ErrInvalidPhone:
-			log.LogHandlerError(logger, err, http.StatusBadRequest)
-			utils.SendError(w, err.Error(), http.StatusBadRequest)
-		case auth.ErrCreatingUser:
+		case auth.ErrInvalidName, auth.ErrInvalidPhone, auth.ErrCreatingUser:
 			log.LogHandlerError(logger, err, http.StatusBadRequest)
 			utils.SendError(w, err.Error(), http.StatusBadRequest)
 		default:
@@ -277,22 +268,7 @@ func (h *AuthHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	updatedUser, err := h.uc.UpdateUser(r.Context(), login, updateData)
 	if err != nil {
 		switch err {
-		case auth.ErrInvalidPassword:
-			log.LogHandlerError(logger, err, http.StatusBadRequest)
-			utils.SendError(w, err.Error(), http.StatusBadRequest)
-		case auth.ErrInvalidName:
-			log.LogHandlerError(logger, err, http.StatusBadRequest)
-			utils.SendError(w, err.Error(), http.StatusBadRequest)
-		case auth.ErrInvalidPhone:
-			log.LogHandlerError(logger, err, http.StatusBadRequest)
-			utils.SendError(w, err.Error(), http.StatusBadRequest)
-		case auth.ErrSamePassword:
-			log.LogHandlerError(logger, err, http.StatusBadRequest)
-			utils.SendError(w, err.Error(), http.StatusBadRequest)
-		case auth.ErrSameName:
-			log.LogHandlerError(logger, err, http.StatusBadRequest)
-			utils.SendError(w, err.Error(), http.StatusBadRequest)
-		case auth.ErrSamePhone:
+		case auth.ErrInvalidPassword, auth.ErrInvalidName, auth.ErrInvalidPhone, auth.ErrSamePassword, auth.ErrSameName, auth.ErrSamePhone:
 			log.LogHandlerError(logger, err, http.StatusBadRequest)
 			utils.SendError(w, err.Error(), http.StatusBadRequest)
 		default:
