@@ -36,14 +36,14 @@ func TestInsertUser(t *testing.T) {
 	}
 
 	tests := []struct {
-		name               string
-		expectedRepoAction func(*pgxpoolmock.MockPgxPool)
-		expectedLogger     string
-		err                error
+		name           string
+		repoMocker     func(*pgxpoolmock.MockPgxPool)
+		expectedLogger string
+		err            error
 	}{
 		{
 			name: "Success",
-			expectedRepoAction: func(mockPool *pgxpoolmock.MockPgxPool) {
+			repoMocker: func(mockPool *pgxpoolmock.MockPgxPool) {
 				mockPool.EXPECT().Exec(gomock.Any(), insertUser,
 					testUser.Id,
 					testUser.Login,
@@ -66,7 +66,7 @@ func TestInsertUser(t *testing.T) {
 			mockPool := pgxpoolmock.NewMockPgxPool(ctrl)
 			defer ctrl.Finish()
 
-			test.expectedRepoAction(mockPool)
+			test.repoMocker(mockPool)
 
 			repo := CreateAuthRepo(mockPool)
 			err := repo.InsertUser(context.Background(), models.User{
@@ -88,7 +88,7 @@ func TestInsertUser(t *testing.T) {
 
 func TestSelectUserByLogin(t *testing.T) {
 	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
-    ctx := context.WithValue(context.Background(), "logger", logger)
+	ctx := context.WithValue(context.Background(), "logger", logger)
 	columns := []string{"id", "first_name", "last_name", "phone_number", "description", "user_pic", "password_hash"}
 
 	salt := make([]byte, 8)
@@ -105,15 +105,15 @@ func TestSelectUserByLogin(t *testing.T) {
 	}
 
 	tests := []struct {
-		name               string
-		expectedRepoAction func(*pgxpoolmock.MockPgxPool, pgx.Rows, string)
-		login              string
-		expectedUser       models.User
-		expectedErr        error
+		name         string
+		repoMocker   func(*pgxpoolmock.MockPgxPool, pgx.Rows, string)
+		login        string
+		expectedUser models.User
+		expectedErr  error
 	}{
 		{
 			name: "Success",
-			expectedRepoAction: func(mockPool *pgxpoolmock.MockPgxPool, pgxRows pgx.Rows, login string) {
+			repoMocker: func(mockPool *pgxpoolmock.MockPgxPool, pgxRows pgx.Rows, login string) {
 				mockPool.EXPECT().QueryRow(gomock.Any(), selectUserByLogin, login).Return(pgxRows)
 			},
 			login:        testUser.Login,
@@ -139,13 +139,13 @@ func TestSelectUserByLogin(t *testing.T) {
 					testUser.PasswordHash,
 				).ToPgxRows()
 
-			test.expectedRepoAction(mockPool, pgxRows, test.login)
+			test.repoMocker(mockPool, pgxRows, test.login)
 
 			repo := CreateAuthRepo(mockPool)
 			_, err := repo.SelectUserByLogin(ctx, test.login)
 
 			assert.Equal(t, test.expectedErr, err)
-			
+
 		})
 	}
 }

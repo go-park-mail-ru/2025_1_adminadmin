@@ -26,6 +26,8 @@ var (
 	ErrFileCreation       = errors.New("Ошибка при создании файла")
 	ErrFileSaving         = errors.New("Ошибка при сохранении файла")
 	ErrFileDeletion       = errors.New("Ошибка при удалении файла")
+	ErrDBError            = errors.New("Ошибка БД")
+	ErrAddressNotFound    = errors.New("Ошибка поиска адреса")
 )
 
 type AuthRepo interface {

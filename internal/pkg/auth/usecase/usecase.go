@@ -111,12 +111,12 @@ func validPassword(password string) bool {
 func generateToken(login string, id uuid.UUID) (string, error) {
 	secret := os.Getenv("JWT_SECRET")
 	if secret == "" {
-		return "", nil
+		return "", auth.ErrGeneratingToken
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"login": login,
-		"id": id,
+		"id":    id,
 		"exp":   time.Now().Add(24 * time.Hour).Unix(),
 	})
 
