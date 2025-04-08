@@ -58,14 +58,6 @@ func (r *CartRepository) GetCart(ctx context.Context, userID string) (map[string
 	return cart, restaurantID, nil
 }
 
-import (
-	"context"
-	"fmt"
-	"log"
-
-	"github.com/redis/go-redis/v9"
-)
-
 func (r *CartRepository) UpdateItemQuantity(ctx context.Context, userID, productID, restaurantID string, quantity int) error {
 	key := "cart:" + userID
 	log.Printf("[UpdateItemQuantity] Обновление товара %s для пользователя %s, ресторан: %s, количество: %d", productID, userID, restaurantID, quantity)
