@@ -18,8 +18,8 @@ type CartItem struct {
 
 // easyjson:json
 type Cart struct {
-	Id       uuid.UUID  `json:"id"`
-	Name     string     `json:"name"`
+	Id       uuid.UUID  `json:"restaurant_id"`
+	Name     string     `json:"restaurant_name"`
 	CartItems []CartItem `json:"products"`
 }
 
