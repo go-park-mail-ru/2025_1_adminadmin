@@ -1,17 +1,42 @@
-package repo
+package pg
 
-import "github.com/jackc/pgtype/pgxtype"
+import (
+	"context"
+
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
+	"github.com/jackc/pgx/v4/pgxpool"
+)
 
 const (
-	getAllRestaurant        = "SELECT id, name, description, type, rating FROM restaurants LIMIT $1 OFFSET $2;"
-	getRestaurantByid       = "SELECT id, name, description, type, rating FROM restaurants WHERE id=$1;"
-	getProductsByRestaurant = "SELECT id, name, price, image_url, weight, amount FROM products WHERE restaurant_id = $1 LIMIT $2 OFFSET $3;"
+	getFieldProduct = "SELECT id, name, price, image_url, weight FROM products WHERE id = ANY($1)"
 )
 
 type RestaurantRepository struct {
-	db pgxtype.Querier
+	db *pgxpool.Pool
 }
 
-func NewRestaurantRepository(db pgxtype.Querier) *RestaurantRepository {
+func NewRestaurantRepository(db *pgxpool.Pool) *RestaurantRepository {
 	return &RestaurantRepository{db: db}
+}
+
+func (r *RestaurantRepository) GetCartItem(ctx context.Context, productIDs []string, productAmounts map[string]int) ([]models.CartItem, error) {
+	rows, err := r.db.Query(ctx, getFieldProduct, productIDs)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var items []models.CartItem
+
+	for rows.Next() {
+		var item models.CartItem
+		err := rows.Scan(&item.ID, &item.Name, &item.Price, &item.ImageURL, &item.Weight)
+		if err != nil {
+			return nil, err
+		}
+		item.Amount = productAmounts[item.ID]
+		items = append(items, item)
+	}
+
+	return items, nil
 }

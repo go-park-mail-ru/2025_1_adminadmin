@@ -3,11 +3,14 @@ package http
 import (
 	"context"
 	"encoding/json"
+	"fmt"
+	"log/slog"
 	"net/http"
 	"os"
 
-	jwtUtils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/jwt"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/usecase"
+	jwtUtils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/jwt"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/send_error"
 	"github.com/golang-jwt/jwt"
 	"github.com/gorilla/mux"
@@ -44,41 +47,76 @@ func (h *CartHandler) getLoginFromCookie(w http.ResponseWriter, r *http.Request)
 }
 
 func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
+	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 	login, err := h.getLoginFromCookie(w, r)
 	if err != nil || login == "" {
 		return
 	}
 
 	ctx := context.Background()
-	cart, err := h.cartUsecase.GetCart(ctx, login)
+	items, err := h.cartUsecase.GetCart(ctx, login)
 	if err != nil {
-		utils.SendError(w, err.Error(), http.StatusNotFound)
 		utils.SendError(w, "Не удалось получить корзину", http.StatusInternalServerError)
 		return
 	}
+
 	w.WriteHeader(http.StatusOK)
-	if err := json.NewEncoder(w).Encode(cart); err != nil {
-		utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
+	data, err := json.Marshal(items)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "Не удалось сериализовать данные", http.StatusInternalServerError)
+		return
 	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(data)
+	log.LogHandlerInfo(logger, "Success", http.StatusOK)
 }
 
 func (h *CartHandler) AddToCart(w http.ResponseWriter, r *http.Request) {
-	login, err := h.getLoginFromCookie(w, r)
-	if err != nil || login == "" {
-		return
-	}
+    login, err := h.getLoginFromCookie(w, r)
+    if err != nil || login == "" {
+        return
+    }
 
-	vars := mux.Vars(r)
-	productID := vars["productID"]
+    vars := mux.Vars(r)
+    productID := vars["productID"]
 
-	ctx := context.Background()
-	err = h.cartUsecase.AddItem(ctx, login, productID)
-	if err != nil {
-		utils.SendError(w, "Не удалось добавить товар в корзину", http.StatusInternalServerError)
-		return
-	}
+    ctx := context.Background()
+    err = h.cartUsecase.AddItem(ctx, login, productID)
+    if err != nil {
+        utils.SendError(w, "Не удалось добавить товар в корзину", http.StatusInternalServerError)
+        return
+    }
 
-	w.WriteHeader(http.StatusOK)
+    w.WriteHeader(http.StatusOK)
+}
+
+func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Request) {
+    login, err := h.getLoginFromCookie(w, r)
+    if err != nil || login == "" {
+        return
+    }
+
+    vars := mux.Vars(r)
+    productID := vars["productID"]
+
+    var requestBody struct {
+        Quantity int `json:"quantity"`
+    }
+
+    if err := json.NewDecoder(r.Body).Decode(&requestBody); err != nil {
+        utils.SendError(w, "Некорректный формат данных", http.StatusBadRequest)
+        return
+    }
+
+    ctx := context.Background()
+    err = h.cartUsecase.UpdateItemQuantity(ctx, login, productID, requestBody.Quantity)
+    if err != nil {
+        utils.SendError(w, "Не удалось обновить количество товара в корзине", http.StatusInternalServerError)
+        return
+    }
+
+    w.WriteHeader(http.StatusOK)
 }
 
 func (h *CartHandler) RemoveFromCart(w http.ResponseWriter, r *http.Request) {

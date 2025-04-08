@@ -19,7 +19,8 @@ import (
 	restaurantDelivery "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/delivery/http"
 	restaurantRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/repo"
 	restaurantUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/usecase"
-	cartRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/redis"
+	cartRedisRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/redis"
+	cartPgRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/pg"	
 	cartHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/http"
 	cartUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/usecase"
 	"github.com/gorilla/mux"
@@ -70,8 +71,9 @@ func main() {
 	defer pool.Close()
 
 	redisClient := initRedis()
-	cartRepo := cartRepo.NewCartRepository(redisClient)
-	cartUsecase := cartUsecase.NewCartUsecase(cartRepo)
+	cartRepoPg := cartPgRepo.NewRestaurantRepository(pool)
+	cartRepoRedis := cartRedisRepo.NewCartRepository(redisClient)
+	cartUsecase := cartUsecase.NewCartUsecase(cartRepoRedis, cartRepoPg)
 	cartHandler := cartHandler.NewCartHandler(cartUsecase)
 
 	logMW := log.CreateLoggerMiddleware(logger)
@@ -113,8 +115,8 @@ func main() {
 	cart := r.PathPrefix("/cart").Subrouter()
 	{
 		cart.HandleFunc("", cartHandler.GetCart).Methods(http.MethodGet, http.MethodOptions)
-		cart.HandleFunc("/add/{productID}", cartHandler.AddToCart).Methods(http.MethodGet, http.MethodOptions)
-		cart.HandleFunc("/remove/{productID}", cartHandler.RemoveFromCart).Methods(http.MethodGet, http.MethodOptions)
+    	cart.HandleFunc("/add/{productID}", cartHandler.AddToCart).Methods(http.MethodPost, http.MethodOptions)
+    	cart.HandleFunc("/update/{productID}", cartHandler.UpdateQuantityInCart).Methods(http.MethodPost, http.MethodOptions)
 	}
 
 	http.Handle("/", r)
