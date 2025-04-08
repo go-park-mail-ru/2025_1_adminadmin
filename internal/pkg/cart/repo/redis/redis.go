@@ -3,6 +3,7 @@ package repo
 import (
 	"context"
 	"fmt"
+	"log"
 
 	"github.com/redis/go-redis/v9"
 )
@@ -17,9 +18,16 @@ func NewCartRepository(redisClient *redis.Client) *CartRepository {
 
 func (r *CartRepository) GetCart(ctx context.Context, userID string) (map[string]int, string, error) {
 	key := "cart:" + userID
+	log.Printf("[GetCart] Получение корзины для ключа: %s", key)
+
 	items, err := r.redisClient.HGetAll(ctx, key).Result()
 	if err != nil {
+		log.Printf("[GetCart] Ошибка при HGetAll Redis: %v", err)
 		return nil, "", err
+	}
+
+	if len(items) == 0 {
+		log.Printf("[GetCart] Корзина пуста для пользователя: %s", userID)
 	}
 
 	cart := make(map[string]int)
@@ -32,23 +40,17 @@ func (r *CartRepository) GetCart(ctx context.Context, userID string) (map[string
 		}
 
 		var qty int
-		if _, err := fmt.Sscanf(quantity, "%d", &qty); err == nil {
-			cart[productID] = qty
+		if _, err := fmt.Sscanf(quantity, "%d", &qty); err != nil {
+			log.Printf("[GetCart] Ошибка при конвертации количества товара (productID: %s, value: %s): %v", productID, quantity, err)
+			continue
 		}
+
+		cart[productID] = qty
 	}
 
+	log.Printf("[GetCart] Итоговая корзина: %+v, restaurantID: %s", cart, restaurantID)
+
 	return cart, restaurantID, nil
-}
-
-
-
-func (r *CartRepository) AddItem(ctx context.Context, userID, productID string) error {
-    key := "cart:" + userID
-    quantity, err := r.redisClient.HGet(ctx, key, productID).Int()
-    if err == nil && quantity > 0 {
-        return fmt.Errorf("товар уже в корзине")
-    }
-    return r.redisClient.HSet(ctx, key, productID, 1).Err()
 }
 
 func (r *CartRepository) UpdateItemQuantity(ctx context.Context, userID, productID, restaurantID string, quantity int) error {
@@ -94,7 +96,14 @@ func (r *CartRepository) UpdateItemQuantity(ctx context.Context, userID, product
 	return err
 }
 
-
+func (r *CartRepository) AddItem(ctx context.Context, userID, productID string) error {
+	key := "cart:" + userID
+	quantity, err := r.redisClient.HGet(ctx, key, productID).Int()
+	if err == nil && quantity > 0 {
+		return fmt.Errorf("товар уже в корзине")
+	}
+	return r.redisClient.HSet(ctx, key, productID, 1).Err()
+}
 
 func (r *CartRepository) RemoveItem(ctx context.Context, userID, productID string) error {
 	key := "cart:" + userID
