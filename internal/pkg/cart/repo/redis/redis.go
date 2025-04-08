@@ -41,6 +41,7 @@ func (r *CartRepository) GetCart(ctx context.Context, userID string) (map[string
 }
 
 
+
 func (r *CartRepository) AddItem(ctx context.Context, userID, productID string) error {
     key := "cart:" + userID
     quantity, err := r.redisClient.HGet(ctx, key, productID).Int()

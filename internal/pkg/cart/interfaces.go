@@ -21,5 +21,5 @@ type CartUsecase interface {
 }
 
 type RestaurantRepo interface {
-	GetCartItem(ctx context.Context, productIDs []string, productAmounts map[string]int) (models.Cart, error)
+	GetCartItem(ctx context.Context, productIDs []string, productAmounts map[string]int, restaurantID string) (models.Cart, error)
 }

@@ -52,11 +52,10 @@ func (r *RestaurantRepository) GetCartItem(ctx context.Context, productIDs []str
 		return models.Cart{}, err
 	}
 
-	cart := models.Cart{
+	return models.Cart{
 		Id:        uid,
 		Name:      restaurantName,
 		CartItems: items,
-	}
-
-	return cart, nil
+	}, nil
 }
+
