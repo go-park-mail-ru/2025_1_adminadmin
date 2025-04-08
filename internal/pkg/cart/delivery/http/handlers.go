@@ -102,7 +102,7 @@ func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Reques
 
     var requestBody struct {
         Quantity int `json:"quantity"`
-		RestaurantId string `json:"restaurantId"`
+		RestaurantId string `json:"restaurant_id"`
     }
 
     if err := json.NewDecoder(r.Body).Decode(&requestBody); err != nil {

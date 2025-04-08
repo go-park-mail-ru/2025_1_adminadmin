@@ -139,11 +139,11 @@ func easyjsonE590a42aDecodeGithubComGoParkMailRu20251AdminadminInternalModels1(i
 			continue
 		}
 		switch key {
-		case "id":
+		case "restaurant_id":
 			if data := in.UnsafeBytes(); in.Ok() {
 				in.AddError((out.Id).UnmarshalText(data))
 			}
-		case "name":
+		case "restaurant_name":
 			out.Name = string(in.String())
 		case "products":
 			if in.IsNull() {
@@ -183,12 +183,12 @@ func easyjsonE590a42aEncodeGithubComGoParkMailRu20251AdminadminInternalModels1(o
 	first := true
 	_ = first
 	{
-		const prefix string = ",\"id\":"
+		const prefix string = ",\"restaurant_id\":"
 		out.RawString(prefix[1:])
 		out.RawText((in.Id).MarshalText())
 	}
 	{
-		const prefix string = ",\"name\":"
+		const prefix string = ",\"restaurant_name\":"
 		out.RawString(prefix)
 		out.String(string(in.Name))
 	}
