@@ -115,7 +115,7 @@ func main() {
 	cart := r.PathPrefix("/cart").Subrouter()
 	{
 		cart.HandleFunc("", cartHandler.GetCart).Methods(http.MethodGet, http.MethodOptions)
-    	cart.HandleFunc("/add/{productID}", cartHandler.AddToCart).Methods(http.MethodPost, http.MethodOptions)
+    	cart.HandleFunc("/add/{productID}", cartHandler.AddToCart).Methods(http.MethodGet, http.MethodOptions)
     	cart.HandleFunc("/update/{productID}", cartHandler.UpdateQuantityInCart).Methods(http.MethodPost, http.MethodOptions)
 	}
 

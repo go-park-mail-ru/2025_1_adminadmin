@@ -37,7 +37,9 @@ func easyjsonE590a42aDecodeGithubComGoParkMailRu20251AdminadminInternalModels(in
 		}
 		switch key {
 		case "id":
-			out.ID = string(in.String())
+			if data := in.UnsafeBytes(); in.Ok() {
+				in.AddError((out.Id).UnmarshalText(data))
+			}
 		case "name":
 			out.Name = string(in.String())
 		case "price":
@@ -65,7 +67,7 @@ func easyjsonE590a42aEncodeGithubComGoParkMailRu20251AdminadminInternalModels(ou
 	{
 		const prefix string = ",\"id\":"
 		out.RawString(prefix[1:])
-		out.String(string(in.ID))
+		out.RawText((in.Id).MarshalText())
 	}
 	{
 		const prefix string = ",\"name\":"
@@ -117,4 +119,118 @@ func (v *CartItem) UnmarshalJSON(data []byte) error {
 // UnmarshalEasyJSON supports easyjson.Unmarshaler interface
 func (v *CartItem) UnmarshalEasyJSON(l *jlexer.Lexer) {
 	easyjsonE590a42aDecodeGithubComGoParkMailRu20251AdminadminInternalModels(l, v)
+}
+func easyjsonE590a42aDecodeGithubComGoParkMailRu20251AdminadminInternalModels1(in *jlexer.Lexer, out *Cart) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "id":
+			if data := in.UnsafeBytes(); in.Ok() {
+				in.AddError((out.Id).UnmarshalText(data))
+			}
+		case "name":
+			out.Name = string(in.String())
+		case "products":
+			if in.IsNull() {
+				in.Skip()
+				out.CartItems = nil
+			} else {
+				in.Delim('[')
+				if out.CartItems == nil {
+					if !in.IsDelim(']') {
+						out.CartItems = make([]CartItem, 0, 0)
+					} else {
+						out.CartItems = []CartItem{}
+					}
+				} else {
+					out.CartItems = (out.CartItems)[:0]
+				}
+				for !in.IsDelim(']') {
+					var v1 CartItem
+					(v1).UnmarshalEasyJSON(in)
+					out.CartItems = append(out.CartItems, v1)
+					in.WantComma()
+				}
+				in.Delim(']')
+			}
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjsonE590a42aEncodeGithubComGoParkMailRu20251AdminadminInternalModels1(out *jwriter.Writer, in Cart) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	{
+		const prefix string = ",\"id\":"
+		out.RawString(prefix[1:])
+		out.RawText((in.Id).MarshalText())
+	}
+	{
+		const prefix string = ",\"name\":"
+		out.RawString(prefix)
+		out.String(string(in.Name))
+	}
+	{
+		const prefix string = ",\"products\":"
+		out.RawString(prefix)
+		if in.CartItems == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+			out.RawString("null")
+		} else {
+			out.RawByte('[')
+			for v2, v3 := range in.CartItems {
+				if v2 > 0 {
+					out.RawByte(',')
+				}
+				(v3).MarshalEasyJSON(out)
+			}
+			out.RawByte(']')
+		}
+	}
+	out.RawByte('}')
+}
+
+// MarshalJSON supports json.Marshaler interface
+func (v Cart) MarshalJSON() ([]byte, error) {
+	w := jwriter.Writer{}
+	easyjsonE590a42aEncodeGithubComGoParkMailRu20251AdminadminInternalModels1(&w, v)
+	return w.Buffer.BuildBytes(), w.Error
+}
+
+// MarshalEasyJSON supports easyjson.Marshaler interface
+func (v Cart) MarshalEasyJSON(w *jwriter.Writer) {
+	easyjsonE590a42aEncodeGithubComGoParkMailRu20251AdminadminInternalModels1(w, v)
+}
+
+// UnmarshalJSON supports json.Unmarshaler interface
+func (v *Cart) UnmarshalJSON(data []byte) error {
+	r := jlexer.Lexer{Data: data}
+	easyjsonE590a42aDecodeGithubComGoParkMailRu20251AdminadminInternalModels1(&r, v)
+	return r.Error()
+}
+
+// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
+func (v *Cart) UnmarshalEasyJSON(l *jlexer.Lexer) {
+	easyjsonE590a42aDecodeGithubComGoParkMailRu20251AdminadminInternalModels1(l, v)
 }

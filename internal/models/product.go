@@ -51,3 +51,14 @@ type RestaurantFull struct {
 func (p *Product) Sanitize() {
 	p.Name = html.EscapeString(p.Name)
 }
+
+func (p *Category) Sanitize() {
+	p.Name = html.EscapeString(p.Name)
+}
+
+func (p *RestaurantFull) Sanitize() {
+	p.Name = html.EscapeString(p.Name)
+	p.BannerURL = html.EscapeString(p.BannerURL)
+	p.Address = html.EscapeString(p.Address)
+	p.Description = html.EscapeString(p.Description)
+}

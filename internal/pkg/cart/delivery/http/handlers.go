@@ -102,6 +102,7 @@ func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Reques
 
     var requestBody struct {
         Quantity int `json:"quantity"`
+		RestaurantId string `json:"restaurantId"`
     }
 
     if err := json.NewDecoder(r.Body).Decode(&requestBody); err != nil {
@@ -110,7 +111,7 @@ func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Reques
     }
 
     ctx := context.Background()
-    err = h.cartUsecase.UpdateItemQuantity(ctx, login, productID, requestBody.Quantity)
+    err = h.cartUsecase.UpdateItemQuantity(ctx, login, productID, requestBody.RestaurantId, requestBody.Quantity)
     if err != nil {
         utils.SendError(w, "Не удалось обновить количество товара в корзине", http.StatusInternalServerError)
         return
