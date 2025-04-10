@@ -13,12 +13,29 @@ import (
 func GetFuncName() string {
 	pc := make([]uintptr, 15)
 	n := runtime.Callers(2, pc)
-	frames := runtime.CallersFrames(pc[:n])
-	frame, _ := frames.Next()
-	values := strings.Split(frame.Function, "/")
+	if n == 0 {
+		return "unknown"  
+	}
 
-	return values[len(values)-1]
+	frames := runtime.CallersFrames(pc[:n])
+	frame, more := frames.Next()
+	if !more {
+		return "unknown"  
+	}
+
+	values := strings.Split(frame.Function, "/")
+	if len(values) == 0 {
+		return "unknown"
+	}
+
+	funcName := values[len(values)-1]
+	if dotIndex := strings.LastIndex(funcName, "."); dotIndex != -1 {
+		funcName = funcName[dotIndex+1:] 
+	}
+
+	return funcName
 }
+
 
 func LogHandlerInfo(logger *slog.Logger, msg string, statusCode int) {
 	logger = logger.With(slog.String("status", strconv.Itoa(statusCode)))
