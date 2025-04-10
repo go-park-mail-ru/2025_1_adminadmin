@@ -19,6 +19,10 @@ import (
 	"github.com/satori/uuid"
 )
 
+type DeleteAddressReq struct {
+    Id string `json:"id"`
+}
+
 const maxRequestBodySize = 10 << 20
 
 var allowedMimeTypes = map[string]string{
@@ -36,6 +40,18 @@ func CreateAuthHandler(uc auth.AuthUsecase) *AuthHandler {
 	return &AuthHandler{uc: uc, secret: os.Getenv("JWT_SECRET")}
 }
 
+// SignIn godoc
+// @Summary Авторизация пользователя
+// @Description Вход пользователя по логину и паролю
+// @Tags auth
+// @ID sign-in
+// @Accept json
+// @Produce json
+// @Param input body models.SignInReq true "Данные для входа"
+// @Success 200 {object} models.User "Успешный ответ с данными пользователя"
+// @Failure 400 {object} utils.ErrorResponse "Ошибка парсинга или неправильные данные"
+// @Failure 500 {object} utils.ErrorResponse "Внутренняя ошибка сервера"
+// @Router /auth/signin [post]
 func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
@@ -92,6 +108,18 @@ func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// SignUp godoc
+// @Summary Регистрация пользователя
+// @Description Регистрация пользователя (логин, пароль, имя, фамилия, номер телефона)
+// @Tags auth
+// @ID sign-up
+// @Accept json
+// @Produce json
+// @Param input body models.SignUpReq true "Данные для входа"
+// @Success 200 {object} models.User "Успешный ответ с данными пользователя"
+// @Failure 400 {object} utils.ErrorResponse "Ошибка парсинга или неправильные данные"
+// @Failure 500 {object} utils.ErrorResponse "Внутренняя ошибка сервера"
+// @Router /auth/signup [post]
 func (h *AuthHandler) SignUp(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
@@ -149,6 +177,19 @@ func (h *AuthHandler) SignUp(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// Check godoc
+// @Summary Проверка авторизации пользовател
+// @Description Проверка JWT, а также проверка CSRF в Cookie и заголовке
+// @Tags auth
+// @ID check
+// @Accept json
+// @Produce json
+// @Success 200 {object} models.User "Успешный ответ с данными пользователя"
+// @Failure 400 {object} utils.ErrorResponse  "Некорректный запрос"
+// @Failure 401 {object} utils.ErrorResponse  "Ошибка авторизации (необходима авторизация)"
+// @Failure 403 {object} utils.ErrorResponse  "Ошибка авторизации (некорректный CSRF токен)"
+// @Failure 500 {object} utils.ErrorResponse "Внутренняя ошибка сервера"
+// @Router /auth/check [get]
 func (h *AuthHandler) Check(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
@@ -203,6 +244,16 @@ func (h *AuthHandler) Check(w http.ResponseWriter, r *http.Request) {
 	log.LogHandlerInfo(logger, "Successful", http.StatusOK)
 }
 
+// LogOut godoc
+// @Summary Выход из аккаунта
+// @Description Выход из аккаунта путем обнуления куков
+// @Tags auth
+// @ID logout
+// @Accept json
+// @Produce json
+// @Success 200
+// @Failure 400 {object} utils.ErrorResponse "Пользователь уже разлогинен"
+// @Router /auth/logout [get]
 func (h *AuthHandler) LogOut(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
@@ -233,6 +284,20 @@ func (h *AuthHandler) LogOut(w http.ResponseWriter, r *http.Request) {
 	log.LogHandlerInfo(logger, "Successful", http.StatusOK)
 }
 
+// UpdateUser godoc
+// @Summary Обновление информации пользователя
+// @Description Обновление полей пользователя (description, first_name, last_name, phone_number, password)
+// @Tags auth
+// @ID update_user
+// @Accept json
+// @Produce json
+// @Param input body models.UpdateUserReq false "Параметры для редактирования"
+// @Success 200 {object} models.User "Успешный ответ с обновленными данными пользователя"
+// @Failure 400 {object} utils.ErrorResponse "Ошибка при чтении куки"
+// @Failure 400 {object} utils.ErrorResponse "Ошибка парсинга или формирования JSON"
+// @Failure 401 {object} utils.ErrorResponse  "Токен не найден или недействителен"
+// @Failure 500 {object} utils.ErrorResponse  "Ошибка на сервере при обработке запроса"
+// @Router /auth/update_user [post]
 func (h *AuthHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
@@ -243,7 +308,7 @@ func (h *AuthHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 			utils.SendError(w, "Токен отсутствует", http.StatusUnauthorized)
 			return
 		}
-		log.LogHandlerError(logger, fmt.Errorf("ТОшибка при чтении куки: %w", err), http.StatusBadRequest)
+		log.LogHandlerError(logger, fmt.Errorf("Ошибка при чтении куки: %w", err), http.StatusBadRequest)
 		utils.SendError(w, "Ошибка при чтении куки", http.StatusBadRequest)
 		return
 	}
@@ -287,6 +352,20 @@ func (h *AuthHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	log.LogHandlerInfo(logger, "Successful", http.StatusOK)
 }
 
+// UpdateUserPic godoc
+// @Summary Обновление аватарки пользователя
+// @Description Загружает новый файл аватарки пользователя. Поддерживаемые форматы: JPEG, PNG, WEBP.
+// @Tags auth
+// @ID update_userpic
+// @Accept multipart/form-data
+// @Produce json
+// @Param user_pic formData file true "Файл изображения"
+// @Success 200 {object} models.User "Успешное обновление аватарки у пользователя"
+// @Failure 400 {object} utils.ErrorResponse "Ошибка парсинга файла или формат не поддерживается"
+// @Failure 401 {object} utils.ErrorResponse "Проблемы с авторизацией, отсутствует токен"
+// @Failure 413 {object} utils.ErrorResponse "Файл слишком большой"
+// @Failure 500 {object} utils.ErrorResponse "Ошибка при работе с файлом или сервером"
+// @Router /auth/update_userpic [post]
 func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
@@ -297,7 +376,7 @@ func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) {
 			utils.SendError(w, "Токен отсутствует", http.StatusUnauthorized)
 			return
 		}
-		log.LogHandlerError(logger, fmt.Errorf("ТОшибка при чтении куки: %w", err), http.StatusBadRequest)
+		log.LogHandlerError(logger, fmt.Errorf("Ошибка при чтении куки: %w", err), http.StatusBadRequest)
 		utils.SendError(w, "Ошибка при чтении куки", http.StatusBadRequest)
 		return
 	}
@@ -383,6 +462,17 @@ func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) {
 	log.LogHandlerInfo(logger, "Successful", http.StatusOK)
 }
 
+// GetUserAddresses godoc
+// @Summary Получение адресов пользователя
+// @Description Возвращает список адресов, привязанных к пользователю. 
+// @Tags auth
+// @ID get_addresses
+// @Produce json
+// @Success 200 {array} models.Address
+// @Failure 400 {object} utils.ErrorResponse "Ошибка чтения cookie"
+// @Failure 401 {object} utils.ErrorResponse "Проблемы с авторизацией"
+// @Failure 500 {object} utils.ErrorResponse "Ошибка на сервере при обработке запроса"
+// @Router /auth/get_addresses [get]
 func (h *AuthHandler) GetUserAddresses(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
@@ -412,6 +502,7 @@ func (h *AuthHandler) GetUserAddresses(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("Ошибка на уровне ниже (usecase): %w", err), http.StatusInternalServerError)
 		utils.SendError(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
@@ -423,6 +514,18 @@ func (h *AuthHandler) GetUserAddresses(w http.ResponseWriter, r *http.Request) {
 	log.LogHandlerInfo(logger, "Successful", http.StatusOK)
 }
 
+// DeleteAddress godoc
+// @Summary Удаление адреса пользователя
+// @Description Удаляет адрес по его ID. Тело запроса должно содержать JSON с полем id.
+// @Tags auth
+// @ID delete_address
+// @Accept json
+// @Produce json
+// @Param input body DeleteAddressReq true "ID адреса для удаления"
+// @Success 200 
+// @Failure 400 {object} utils.ErrorResponse "Ошибка парсинга JSON"
+// @Failure 500 {object} utils.ErrorResponse "Ошибка на сервере при обработке запроса"
+// @Router /auth/delete_address [post]
 func (h *AuthHandler) DeleteAddress(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
@@ -445,6 +548,19 @@ func (h *AuthHandler) DeleteAddress(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+// AddAddress godoc
+// @Summary Добавление адреса пользователю
+// @Description Привязывание адреса к аккаунту пользователя (аккаунт может быть связан с несколькими адресами)
+// @Tags auth
+// @ID add_address
+// @Accept json
+// @Produce json
+// @Param address body models.Address true "Адрес для добавления (поле UserId будет установлено автоматически из токена)"
+// @Success 200 
+// @Failure 400 {object} utils.ErrorResponse "Ошибка парсинга JSON или отсутствует токен"
+// @Failure 401 {object} utils.ErrorResponse "Недействительный или отсутствующий токен"
+// @Failure 500 {object} utils.ErrorResponse "Внутренняя ошибка при добавлении адреса"
+// @Router /auth/add_address [post]
 func (h *AuthHandler) AddAddress(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 

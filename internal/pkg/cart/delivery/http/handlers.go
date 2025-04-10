@@ -16,6 +16,11 @@ import (
 	"github.com/gorilla/mux"
 )
 
+type CartUpdateBody struct {
+	Quantity int `json:"quantity"`
+	RestaurantId string `json:"restaurant_id"`
+}
+
 type CartHandler struct {
 	cartUsecase *usecase.CartUsecase
 	secret      string
@@ -46,6 +51,15 @@ func (h *CartHandler) getLoginFromCookie(w http.ResponseWriter, r *http.Request)
 	return login, nil
 }
 
+// GetCart godoc
+// @Summary Получить корзину
+// @Description Возвращает список товаров в корзине текущего пользователя
+// @Tags cart
+// @Produce json
+// @Success 200 {array} models.CartItem "Успешное получение корзины"
+// @Failure 401 {object} utils.ErrorResponse "Ошибка авторизации (проблемы с куки или JWT)"
+// @Failure 500 {object} utils.ErrorResponse "Внутренняя ошибка сервера"
+// @Router /cart [get]
 func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 	login, err := h.getLoginFromCookie(w, r)
@@ -91,6 +105,19 @@ func (h *CartHandler) AddToCart(w http.ResponseWriter, r *http.Request) {
     w.WriteHeader(http.StatusOK)
 }
 
+// UpdateQuantityInCart godoc
+// @Summary Обновление количества продуктов в корзине
+// @Description Обновляет количество товара в корзине для текущего пользователя.
+// @Tags cart
+// @Accept json
+// @Produce json
+// @Param productID path string true "ID продукта"
+// @Param input body CartUpdateBody true "Параметры для изменения количества товара"
+// @Success 200 "Успешное обновление количества товара в корзине"
+// @Failure 400 {object} utils.ErrorResponse "Некорректный формат данных"
+// @Failure 401 {object} utils.ErrorResponse "Неавторизован (проблемы с куки или JWT)"
+// @Failure 500 {object} utils.ErrorResponse "Ошибка сервера при обновлении корзины"
+// @Router /cart/update/{productID} [post]
 func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Request) {
     login, err := h.getLoginFromCookie(w, r)
     if err != nil || login == "" {

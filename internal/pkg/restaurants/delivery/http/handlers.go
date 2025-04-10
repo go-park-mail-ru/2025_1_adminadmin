@@ -23,6 +23,18 @@ func NewRestaurantHandler(ru interfaces.RestaurantUsecase) *RestaurantHandler {
 	return &RestaurantHandler{restaurantUsecase: ru}
 }
 
+// GetProductsByRestaurant godoc
+// @Summary Получить продукты ресторана
+// @Description Получение списка продуктов ресторана с пагинацией
+// @Tags restaurants
+// @Param id path string true "ID ресторана"
+// @Param count query int false "Количество элементов (по умолчанию 100)"
+// @Param offset query int false "Смещение (по умолчанию 0)"
+// @Produce json
+// @Success 200 {array} models.Product "Успешное получение продуктов ресторана"
+// @Failure 400 {object} utils.ErrorResponse "Неверный формат ID ресторана"
+// @Failure 500 {object} utils.ErrorResponse "Внутренняя ошибка сервера"
+// @Router /restaurants/{id} [get]
 func (h *RestaurantHandler) GetProductsByRestaurant(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
@@ -66,6 +78,16 @@ func (h *RestaurantHandler) GetProductsByRestaurant(w http.ResponseWriter, r *ht
 	log.LogHandlerInfo(logger, "Success", http.StatusOK)
 }
 
+// RestaurantList godoc
+// @Summary Список ресторанов
+// @Description Получение списка ресторанов с пагинацией
+// @Tags restaurants
+// @Param count query int false "Количество элементов"
+// @Param offset query int false "Смещение"
+// @Produce json
+// @Success 200 {array} models.Restaurant "Успешное получение списка ресторанов"
+// @Failure 500 {object} utils.ErrorResponse "Внутренняя ошибка сервера"
+// @Router /restaurants/list [get]
 func (h *RestaurantHandler) RestaurantList(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
