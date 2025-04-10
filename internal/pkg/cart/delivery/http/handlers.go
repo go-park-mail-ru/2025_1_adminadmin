@@ -86,25 +86,6 @@ func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
 	log.LogHandlerInfo(logger, "Success", http.StatusOK)
 }
 
-func (h *CartHandler) AddToCart(w http.ResponseWriter, r *http.Request) {
-    login, err := h.getLoginFromCookie(w, r)
-    if err != nil || login == "" {
-        return
-    }
-
-    vars := mux.Vars(r)
-    productID := vars["productID"]
-
-    ctx := context.Background()
-    err = h.cartUsecase.AddItem(ctx, login, productID)
-    if err != nil {
-        utils.SendError(w, "Не удалось добавить товар в корзину", http.StatusInternalServerError)
-        return
-    }
-
-    w.WriteHeader(http.StatusOK)
-}
-
 // UpdateQuantityInCart godoc
 // @Summary Обновление количества продуктов в корзине
 // @Description Обновляет количество товара в корзине для текущего пользователя.
@@ -147,21 +128,3 @@ func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Reques
     w.WriteHeader(http.StatusOK)
 }
 
-func (h *CartHandler) RemoveFromCart(w http.ResponseWriter, r *http.Request) {
-	login, err := h.getLoginFromCookie(w, r)
-	if err != nil || login == "" {
-		return
-	}
-
-	vars := mux.Vars(r)
-	productID := vars["productID"]
-
-	ctx := context.Background()
-	err = h.cartUsecase.RemoveItem(ctx, login, productID)
-	if err != nil {
-		utils.SendError(w, "Не удалось удалить товар из корзины", http.StatusInternalServerError)
-		return
-	}
-
-	w.WriteHeader(http.StatusOK)
-}

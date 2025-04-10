@@ -106,26 +106,3 @@ func (r *CartRepository) UpdateItemQuantity(ctx context.Context, userID, product
 	}
 	return err
 }
-
-
-func (r *CartRepository) AddItem(ctx context.Context, userID, productID string) error {
-	key := "cart:" + userID
-	quantity, err := r.redisClient.HGet(ctx, key, productID).Int()
-	if err == nil && quantity > 0 {
-		return fmt.Errorf("товар уже в корзине")
-	}
-	return r.redisClient.HSet(ctx, key, productID, 1).Err()
-}
-
-func (r *CartRepository) RemoveItem(ctx context.Context, userID, productID string) error {
-	key := "cart:" + userID
-	quantity, err := r.redisClient.HGet(ctx, key, productID).Int()
-	if err != nil {
-		return err
-	}
-
-	if quantity > 1 {
-		return r.redisClient.HIncrBy(ctx, key, productID, -1).Err()
-	}
-	return r.redisClient.HDel(ctx, key, productID).Err()
-}

@@ -8,16 +8,12 @@ import (
 
 type CartRepo interface {
 	GetCart(ctx context.Context, userID string) (map[string]int, error)
-	AddItem(ctx context.Context, userID, productID string) error
 	UpdateItemQuantity(ctx context.Context, userID, productID string, restaurantId string, quantity int) error
-	RemoveItem(ctx context.Context, userID, productID string) error
 }
 
 type CartUsecase interface {
 	GetCart(ctx context.Context, userID string) (models.Cart, error)
-	AddItem(ctx context.Context, userID, productID string) error
 	UpdateItemQuantity(ctx context.Context, userID, productID string, restaurantId string, quantity int) error
-	RemoveItem(ctx context.Context, userID, productID string) error
 }
 
 type RestaurantRepo interface {
