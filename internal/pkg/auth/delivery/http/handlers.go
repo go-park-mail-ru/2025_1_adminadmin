@@ -94,7 +94,7 @@ func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) {
 		Expires:  time.Now().Add(24 * time.Hour),
 		HttpOnly: false,
 		Secure:   true,
-		SameSite: http.SameSiteStrictMode,
+		SameSite: http.SameSiteNoneMode,
 		Path:     "/",
 	})
 
