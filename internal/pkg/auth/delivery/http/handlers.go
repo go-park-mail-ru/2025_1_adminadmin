@@ -80,7 +80,6 @@ func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) {
 	}
 
 	http.SetCookie(w, &http.Cookie{
-		Domain:   "localhost",
 		Name:     "AdminJWT",
 		Value:    token,
 		HttpOnly: true,
@@ -90,13 +89,12 @@ func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) {
 	})
 
 	http.SetCookie(w, &http.Cookie{
-		Domain:   "localhost",
 		Name:     "CSRF-Token",
 		Value:    csrfToken,
 		Expires:  time.Now().Add(24 * time.Hour),
 		HttpOnly: false,
 		Secure:   false,
-		SameSite: http.SameSiteNoneMode,
+		SameSite: http.SameSiteStrictMode,
 		Path:     "/",
 	})
 
