@@ -15,9 +15,9 @@ services:
       USER_IMAGE_BASE_PATH: ${USER_IMAGE_BASE_PATH}
       RESTAURANT_IMAGE_BASE_PATH: ${RESTAURANT_IMAGE_BASE_PATH}
     volumes:
-      - /home/deploy_user/tp_code/:/var/log/
-      - /home/deploy_user/tp_code/images_user/:${USER_IMAGE_BASE_PATH}
-      - /home/deploy_user/tp_code/images_restaurant/:${RESTAURANT_IMAGE_BASE_PATH}
+      - /home/ubuntu/deploy_user/tp_code/:/var/log/
+      - /home/ubuntu/deploy_user/tp_code/images_user/:${USER_IMAGE_BASE_PATH}
+      - /home/ubuntu/deploy_user/tp_code/images_restaurant/:${RESTAURANT_IMAGE_BASE_PATH}
     depends_on:
       postgres:
         condition: service_started
@@ -61,10 +61,10 @@ services:
       - "443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
-      - /home/deploy_user/tp_code/frontend:/usr/share/nginx/html 
+      - /home/ubuntu/deploy_user/tp_code/frontend:/usr/share/nginx/html 
       - /etc/letsencrypt:/etc/letsencrypt:ro
-      - /home/deploy_user/tp_code/images_user/:${USER_IMAGE_BASE_PATH}
-      - /home/deploy_user/tp_code/images_restaurant/:${RESTAURANT_IMAGE_BASE_PATH}
+      - /home/ubuntu/deploy_user/tp_code/images_user/:${USER_IMAGE_BASE_PATH}
+      - /home/ubuntu/deploy_user/tp_code/images_restaurant/:${RESTAURANT_IMAGE_BASE_PATH}
     depends_on:
       main:
         condition: service_started
