@@ -20,7 +20,7 @@ import (
 )
 
 type DeleteAddressReq struct {
-    Id string `json:"id"`
+	Id string `json:"id"`
 }
 
 const maxRequestBodySize = 10 << 20
@@ -80,6 +80,7 @@ func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) {
 	}
 
 	http.SetCookie(w, &http.Cookie{
+		Domain:   "localhost",
 		Name:     "AdminJWT",
 		Value:    token,
 		HttpOnly: true,
@@ -89,6 +90,7 @@ func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) {
 	})
 
 	http.SetCookie(w, &http.Cookie{
+		Domain:   "localhost",
 		Name:     "CSRF-Token",
 		Value:    csrfToken,
 		Expires:  time.Now().Add(24 * time.Hour),
@@ -464,7 +466,7 @@ func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) {
 
 // GetUserAddresses godoc
 // @Summary Получение адресов пользователя
-// @Description Возвращает список адресов, привязанных к пользователю. 
+// @Description Возвращает список адресов, привязанных к пользователю.
 // @Tags auth
 // @ID get_addresses
 // @Produce json
@@ -522,7 +524,7 @@ func (h *AuthHandler) GetUserAddresses(w http.ResponseWriter, r *http.Request) {
 // @Accept json
 // @Produce json
 // @Param input body DeleteAddressReq true "ID адреса для удаления"
-// @Success 200 
+// @Success 200
 // @Failure 400 {object} utils.ErrorResponse "Ошибка парсинга JSON"
 // @Failure 500 {object} utils.ErrorResponse "Ошибка на сервере при обработке запроса"
 // @Router /auth/delete_address [post]
@@ -556,7 +558,7 @@ func (h *AuthHandler) DeleteAddress(w http.ResponseWriter, r *http.Request) {
 // @Accept json
 // @Produce json
 // @Param address body models.Address true "Адрес для добавления (поле UserId будет установлено автоматически из токена)"
-// @Success 200 
+// @Success 200
 // @Failure 400 {object} utils.ErrorResponse "Ошибка парсинга JSON или отсутствует токен"
 // @Failure 401 {object} utils.ErrorResponse "Недействительный или отсутствующий токен"
 // @Failure 500 {object} utils.ErrorResponse "Внутренняя ошибка при добавлении адреса"
