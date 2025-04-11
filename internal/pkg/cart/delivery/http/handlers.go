@@ -123,5 +123,5 @@ func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
+	h.GetCart(w, r)
 }
