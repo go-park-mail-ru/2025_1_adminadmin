@@ -75,7 +75,7 @@ func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
 		utils.SendError(w, "Не удалось получить корзину", http.StatusInternalServerError)
 		return
 	}
-
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	data, err := json.Marshal(items)
 	if err != nil {
@@ -83,7 +83,7 @@ func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
 		utils.SendError(w, "Не удалось сериализовать данные", http.StatusInternalServerError)
 		return
 	}
-	w.Header().Set("Content-Type", "application/json")
+
 	w.Write(data)
 	log.LogHandlerInfo(logger, "Success", http.StatusOK)
 }
