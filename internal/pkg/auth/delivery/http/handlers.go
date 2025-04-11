@@ -236,6 +236,7 @@ func (h *AuthHandler) Check(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	if err := json.NewEncoder(w).Encode(user); err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("Ошибка формирования JSON: %w", err), http.StatusInternalServerError)
