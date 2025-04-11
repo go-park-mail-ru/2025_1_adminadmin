@@ -8,16 +8,18 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/usecase"
 	jwtUtils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/jwt"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/send_error"
 	"github.com/golang-jwt/jwt"
 	"github.com/gorilla/mux"
+	"github.com/mailru/easyjson"
 )
 
 type CartUpdateBody struct {
-	Quantity int `json:"quantity"`
+	Quantity     int    `json:"quantity"`
 	RestaurantId string `json:"restaurant_id"`
 }
 
@@ -100,31 +102,26 @@ func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
 // @Failure 500 {object} utils.ErrorResponse "Ошибка сервера при обновлении корзины"
 // @Router /cart/update/{productID} [post]
 func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Request) {
-    login, err := h.getLoginFromCookie(w, r)
-    if err != nil || login == "" {
-        return
-    }
+	login, err := h.getLoginFromCookie(w, r)
+	if err != nil || login == "" {
+		return
+	}
 
-    vars := mux.Vars(r)
-    productID := vars["productID"]
+	vars := mux.Vars(r)
+	productID := vars["productID"]
 
-    var requestBody struct {
-        Quantity int `json:"quantity"`
-		RestaurantId string `json:"restaurant_id"`
-    }
+	var requestBody models.CartInReq
+	if err := easyjson.UnmarshalFromReader(r.Body, &requestBody); err != nil {
+		utils.SendError(w, "Некорректный формат данных", http.StatusBadRequest)
+		return
+	}
 
-    if err := json.NewDecoder(r.Body).Decode(&requestBody); err != nil {
-        utils.SendError(w, "Некорректный формат данных", http.StatusBadRequest)
-        return
-    }
+	ctx := context.Background()
+	err = h.cartUsecase.UpdateItemQuantity(ctx, login, productID, requestBody.RestaurantId, requestBody.Quantity)
+	if err != nil {
+		utils.SendError(w, "Не удалось обновить количество товара в корзине", http.StatusInternalServerError)
+		return
+	}
 
-    ctx := context.Background()
-    err = h.cartUsecase.UpdateItemQuantity(ctx, login, productID, requestBody.RestaurantId, requestBody.Quantity)
-    if err != nil {
-        utils.SendError(w, "Не удалось обновить количество товара в корзине", http.StatusInternalServerError)
-        return
-    }
-
-    w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusOK)
 }
-

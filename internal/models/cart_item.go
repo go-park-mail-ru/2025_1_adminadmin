@@ -18,9 +18,15 @@ type CartItem struct {
 
 // easyjson:json
 type Cart struct {
-	Id       uuid.UUID  `json:"restaurant_id"`
-	Name     string     `json:"restaurant_name"`
+	Id        uuid.UUID  `json:"restaurant_id"`
+	Name      string     `json:"restaurant_name"`
 	CartItems []CartItem `json:"products"`
+}
+
+// easyjson:json
+type CartInReq struct {
+	Quantity     int    `json:"quantity"`
+	RestaurantId string `json:"restaurant_id"`
 }
 
 func (a *CartItem) Sanitize() {
@@ -30,4 +36,8 @@ func (a *CartItem) Sanitize() {
 
 func (a *Cart) Sanitize() {
 	a.Name = html.EscapeString(a.Name)
+}
+
+func (a *CartInReq) Sanitize() {
+	a.RestaurantId = html.EscapeString(a.RestaurantId)
 }
