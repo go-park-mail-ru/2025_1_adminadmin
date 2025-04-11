@@ -137,12 +137,7 @@ func (h *CartHandler) ClearCart(w http.ResponseWriter, r *http.Request) {
 	claims := jwt.MapClaims{}
 
 	login, _ := jwtUtils.GetLoginFromJWT(JWTStr, claims, h.secret)
-	userID := r.URL.Query().Get("user_id")
-	if userID == "" {
-		http.Error(w, "user_id is required", http.StatusBadRequest)
-		return
-	}
-
+	
 	err = h.cartUsecase.ClearCart(r.Context(), login)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Ошибка при очистке корзины: %v", err), http.StatusInternalServerError)
