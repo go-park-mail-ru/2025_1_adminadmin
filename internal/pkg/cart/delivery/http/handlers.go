@@ -121,3 +121,34 @@ func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Reques
 	w.Write(data)
 }
 
+func (h *CartHandler) ClearCart(w http.ResponseWriter, r *http.Request) {
+	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+	cookie, err := r.Cookie("AdminJWT")
+	if err != nil {
+		if errors.Is(err, http.ErrNoCookie) {
+			log.LogHandlerError(logger, fmt.Errorf("токен отсутствует: %w", err), http.StatusUnauthorized)
+			return
+		}
+		log.LogHandlerError(logger, fmt.Errorf("ошибка при чтении куки: %w", err), http.StatusBadRequest)
+		return
+	}
+
+	JWTStr := cookie.Value
+	claims := jwt.MapClaims{}
+
+	login, _ := jwtUtils.GetLoginFromJWT(JWTStr, claims, h.secret)
+	userID := r.URL.Query().Get("user_id")
+	if userID == "" {
+		http.Error(w, "user_id is required", http.StatusBadRequest)
+		return
+	}
+
+	err = h.cartUsecase.ClearCart(r.Context(), login)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Ошибка при очистке корзины: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+}

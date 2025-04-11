@@ -49,3 +49,7 @@ func (uc *CartUsecase) GetCart(ctx context.Context, userID string) (models.Cart,
 func (uc *CartUsecase) UpdateItemQuantity(ctx context.Context, userID, productID string, restaurantId string, quantity int) error {
 	return uc.cartRepo.UpdateItemQuantity(ctx, userID, productID, restaurantId, quantity)
 }
+
+func (uc *CartUsecase) ClearCart(ctx context.Context, userID string) error {
+	return uc.cartRepo.ClearCart(ctx, userID)
+}

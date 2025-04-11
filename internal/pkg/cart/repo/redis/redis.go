@@ -106,3 +106,17 @@ func (r *CartRepository) UpdateItemQuantity(ctx context.Context, userID, product
 	}
 	return err
 }
+
+func (r *CartRepository) ClearCart(ctx context.Context, userID string) error {
+	key := "cart:" + userID
+	log.Printf("[ClearCart] Очистка корзины для пользователя %s", userID)
+
+	err := r.redisClient.Del(ctx, key).Err()
+	if err != nil {
+		log.Printf("[ClearCart] Ошибка при удалении корзины из Redis: %v", err)
+		return err
+	}
+
+	log.Printf("[ClearCart] Корзина для пользователя %s успешно очищена", userID)
+	return nil
+}

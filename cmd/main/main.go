@@ -121,6 +121,7 @@ func main() {
 	{
 		cart.HandleFunc("", cartHandler.GetCart).Methods(http.MethodGet, http.MethodOptions)
 		cart.HandleFunc("/update/{productID}", cartHandler.UpdateQuantityInCart).Methods(http.MethodPost, http.MethodOptions)
+		cart.HandleFunc("/clear", cartHandler.ClearCart).Methods(http.MethodGet, http.MethodOptions)
 	}
 
 	http.Handle("/", r)
