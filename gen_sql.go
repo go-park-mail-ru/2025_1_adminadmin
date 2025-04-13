@@ -119,7 +119,7 @@ func generateSQL() string {
 	((SELECT id FROM restaurants WHERE name = '%s' ), 'Сырная тарелка', 790, 'default_product.jpg', 250, 'Суши'),
 	((SELECT id FROM restaurants WHERE name = '%s' ), 'Вареники с грибами', 800, 'default_product.jpg', 150, 'Суши'),
 	((SELECT id FROM restaurants WHERE name = '%s' ), 'Ролл с лососем', 300, 'default_product.jpg', 200, 'Суши'),
-	((SELECT id FROM restaurants WHERE name = '%s' ), 'Гёдза', 200, 'default_product.jpg', 180, 'Закуски');\n`,
+	((SELECT id FROM restaurants WHERE name = '%s' ), 'Гёдза', 200, 'default_product.jpg', 180, 'Закуски');`,
 			restaurantName, restaurantName, restaurantName, restaurantName, restaurantName, restaurantName, restaurantName, restaurantName, restaurantName, restaurantName)
 			
 			sb.WriteString("\n")
