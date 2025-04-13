@@ -1,4 +1,4 @@
-package utils
+package options
 
 var defaultRestaurantOptions = restaurantOptions{
 	count:  10,
