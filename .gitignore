@@ -25,4 +25,5 @@ go.work.sum
 .env
 .cert
 .vscode
+.DS_Store
 
