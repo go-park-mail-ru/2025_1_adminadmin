@@ -33,7 +33,7 @@ type CartInReq struct {
 // easyjson:json
 type Order struct {
 	ID            uuid.UUID `json:"id"`
-	UserID        string `json:"user"`
+	UserID        string    `json:"user"`
 	Status        string    `json:"status"`
 	Address       string    `json:"address"`
 	OrderProducts Cart      `json:"order_products"`
@@ -45,6 +45,7 @@ type Order struct {
 	CourierComment    string    `json:"courier_comment"`
 	LeaveAtDoor       bool      `json:"leave_at_door"`
 	CreatedAt         time.Time `json:"created_at"`
+	FinalPrice        float64   `json:"final_price"`
 }
 
 // easyjson:json
@@ -52,12 +53,13 @@ type OrderInReq struct {
 	Status  string `json:"status"`
 	Address string `json:"address"`
 
-	ApartmentOrOffice string `json:"apartment_or_office"`
-	Intercom          string `json:"intercom"`
-	Entrance          string `json:"entrance"`
-	Floor             string `json:"floor"`
-	CourierComment    string `json:"courier_comment"`
-	LeaveAtDoor       bool   `json:"leave_at_door"`
+	ApartmentOrOffice string  `json:"apartment_or_office"`
+	Intercom          string  `json:"intercom"`
+	Entrance          string  `json:"entrance"`
+	Floor             string  `json:"floor"`
+	CourierComment    string  `json:"courier_comment"`
+	LeaveAtDoor       bool    `json:"leave_at_door"`
+	FinalPrice        float64 `json:"final_price"`
 }
 
 func (a *CartItem) Sanitize() {

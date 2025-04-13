@@ -70,6 +70,7 @@ func (u *CartUsecase) CreateOrder(ctx context.Context, userID string, req models
 		CourierComment:    req.CourierComment,
 		LeaveAtDoor:       req.LeaveAtDoor,
 		CreatedAt:         time.Now(),
+		FinalPrice:        req.FinalPrice,
 	}
 
 	if err := u.restaurantRepo.Save(ctx, order, userID); err != nil {

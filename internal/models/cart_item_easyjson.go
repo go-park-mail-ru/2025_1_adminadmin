@@ -52,6 +52,8 @@ func easyjsonE590a42aDecodeGithubComGoParkMailRu20251AdminadminInternalModels(in
 			out.CourierComment = string(in.String())
 		case "leave_at_door":
 			out.LeaveAtDoor = bool(in.Bool())
+		case "final_price":
+			out.FinalPrice = float64(in.Float64())
 		default:
 			in.SkipRecursive()
 		}
@@ -105,6 +107,11 @@ func easyjsonE590a42aEncodeGithubComGoParkMailRu20251AdminadminInternalModels(ou
 		const prefix string = ",\"leave_at_door\":"
 		out.RawString(prefix)
 		out.Bool(bool(in.LeaveAtDoor))
+	}
+	{
+		const prefix string = ",\"final_price\":"
+		out.RawString(prefix)
+		out.Float64(float64(in.FinalPrice))
 	}
 	out.RawByte('}')
 }
@@ -179,6 +186,8 @@ func easyjsonE590a42aDecodeGithubComGoParkMailRu20251AdminadminInternalModels1(i
 			if data := in.Raw(); in.Ok() {
 				in.AddError((out.CreatedAt).UnmarshalJSON(data))
 			}
+		case "final_price":
+			out.FinalPrice = float64(in.Float64())
 		default:
 			in.SkipRecursive()
 		}
@@ -252,6 +261,11 @@ func easyjsonE590a42aEncodeGithubComGoParkMailRu20251AdminadminInternalModels1(o
 		const prefix string = ",\"created_at\":"
 		out.RawString(prefix)
 		out.Raw((in.CreatedAt).MarshalJSON())
+	}
+	{
+		const prefix string = ",\"final_price\":"
+		out.RawString(prefix)
+		out.Float64(float64(in.FinalPrice))
 	}
 	out.RawByte('}')
 }
