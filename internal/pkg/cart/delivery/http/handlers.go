@@ -191,10 +191,6 @@ func (h *CartHandler) CreateOrder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
-		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
-		return
-	}
 
 	userUUID, err := uuid.FromString(userID)
 	if err != nil {
