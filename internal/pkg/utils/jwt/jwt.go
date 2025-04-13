@@ -2,6 +2,7 @@ package utils
 
 import (
 	"fmt"
+	"net/http"
 
 	"github.com/golang-jwt/jwt"
 )
@@ -22,6 +23,26 @@ func GetLoginFromJWT(JWTStr string, claims jwt.MapClaims, secret string) (string
 
 	login, ok := claims["login"].(string)
 	return login, ok
+}
+
+func CheckDoubleSubmitCookie(w http.ResponseWriter, r *http.Request) bool {
+	cookieCSRF, err := r.Cookie("CSRF-Token")
+	if err != nil {
+		if err == http.ErrNoCookie {
+			w.WriteHeader(http.StatusUnauthorized)
+			return false
+		}
+		w.WriteHeader(http.StatusBadRequest)
+		return false
+	}
+
+	headerCSRF := r.Header.Get("X-CSRF-Token")
+	if cookieCSRF.Value == "" || headerCSRF == "" || cookieCSRF.Value != headerCSRF {
+		w.WriteHeader(http.StatusForbidden)
+		return false
+	}
+
+	return true
 }
 
 func GetIdFromJWT(JWTStr string, claims jwt.MapClaims, secret string) (string, bool) {
