@@ -266,27 +266,9 @@ func (uc *AuthUsecase) UpdateUser(ctx context.Context, login string, updateData 
 		user.PasswordHash = hashedPassword
 	}
 
-	if updateData.FirstName != "" && updateData.FirstName != user.FirstName {
-		user.FirstName = updateData.FirstName
-	} else if updateData.FirstName == user.FirstName {
-		logger.Error(auth.ErrSameName.Error())
-		return models.User{}, auth.ErrSameName
-	}
-
-	if updateData.LastName != "" && updateData.LastName != user.LastName {
-		user.LastName = updateData.LastName
-	} else if updateData.LastName == user.LastName {
-		logger.Error(auth.ErrSameName.Error())
-		return models.User{}, auth.ErrSameName
-	}
-
-	if updateData.PhoneNumber != "" && updateData.PhoneNumber != user.PhoneNumber {
-		user.PhoneNumber = updateData.PhoneNumber
-	} else if updateData.PhoneNumber == user.PhoneNumber {
-		logger.Error(auth.ErrSamePhone.Error())
-		return models.User{}, auth.ErrSamePhone
-	}
-
+	user.FirstName = updateData.FirstName
+	user.LastName = updateData.LastName
+	user.PhoneNumber = updateData.PhoneNumber
 	user.Description = updateData.Description
 
 	err = uc.repo.UpdateUser(ctx, user)
