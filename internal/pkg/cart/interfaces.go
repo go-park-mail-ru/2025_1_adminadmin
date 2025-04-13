@@ -23,7 +23,7 @@ type CartUsecase interface {
 	UpdateItemQuantity(ctx context.Context, userID, productID string, restaurantId string, quantity int) error
 	ClearCart(ctx context.Context, userID string) error
 
-	CreateOrder(ctx context.Context, userID uuid.UUID, addressID uuid.UUID, cart models.Cart, details models.Order) error
+	CreateOrder(ctx context.Context, userID string, addressID uuid.UUID, cart models.Cart, details models.Order) error
 	GetOrderByID(ctx context.Context, id uuid.UUID) (models.Order, error)
 	GetAllOrdersByUser(ctx context.Context, userID uuid.UUID) ([]models.Order, error)
 	UpdateOrderStatus(ctx context.Context, id uuid.UUID, status string) error

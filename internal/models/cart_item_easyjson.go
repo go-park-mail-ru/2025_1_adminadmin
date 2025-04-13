@@ -155,10 +155,8 @@ func easyjsonE590a42aDecodeGithubComGoParkMailRu20251AdminadminInternalModels1(i
 			if data := in.UnsafeBytes(); in.Ok() {
 				in.AddError((out.ID).UnmarshalText(data))
 			}
-		case "user_id":
-			if data := in.UnsafeBytes(); in.Ok() {
-				in.AddError((out.UserID).UnmarshalText(data))
-			}
+		case "user":
+			out.UserID = string(in.String())
 		case "status":
 			out.Status = string(in.String())
 		case "address":
@@ -201,9 +199,9 @@ func easyjsonE590a42aEncodeGithubComGoParkMailRu20251AdminadminInternalModels1(o
 		out.RawText((in.ID).MarshalText())
 	}
 	{
-		const prefix string = ",\"user_id\":"
+		const prefix string = ",\"user\":"
 		out.RawString(prefix)
-		out.RawText((in.UserID).MarshalText())
+		out.String(string(in.UserID))
 	}
 	{
 		const prefix string = ",\"status\":"

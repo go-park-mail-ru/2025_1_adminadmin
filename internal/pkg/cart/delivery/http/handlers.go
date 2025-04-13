@@ -17,7 +17,6 @@ import (
 	"github.com/golang-jwt/jwt"
 	"github.com/gorilla/mux"
 	"github.com/mailru/easyjson"
-	"github.com/satori/uuid"
 )
 
 type CartHandler struct {
@@ -191,14 +190,6 @@ func (h *CartHandler) CreateOrder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-
-	userUUID, err := uuid.FromString(userID)
-	if err != nil {
-    	log.LogHandlerError(logger, fmt.Errorf("невалидный UUID пользователя: %w", err), http.StatusBadRequest)
-    	utils.SendError(w, "Некорректный формат userID", http.StatusBadRequest)
-    	return
-	}	
-
 	var req models.OrderInReq
 	if err := easyjson.UnmarshalFromReader(r.Body, &req); err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка чтения тела запроса: %w", err), http.StatusBadRequest)
@@ -208,7 +199,7 @@ func (h *CartHandler) CreateOrder(w http.ResponseWriter, r *http.Request) {
 
 	ctx := r.Context()
 
-	order, err := h.cartUsecase.CreateOrder(ctx, userUUID, req, cart)
+	order, err := h.cartUsecase.CreateOrder(ctx, userID, req, cart)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("не удалось создать заказ: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "Ошибка при создании заказа", http.StatusInternalServerError)

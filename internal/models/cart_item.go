@@ -33,7 +33,7 @@ type CartInReq struct {
 // easyjson:json
 type Order struct {
 	ID            uuid.UUID `json:"id"`
-	UserID        uuid.UUID `json:"user_id"`
+	UserID        string `json:"user"`
 	Status        string    `json:"status"`
 	Address       string    `json:"address"`
 	OrderProducts Cart      `json:"order_products"`

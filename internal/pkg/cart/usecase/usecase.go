@@ -56,7 +56,7 @@ func (uc *CartUsecase) ClearCart(ctx context.Context, userID string) error {
 	return uc.cartRepo.ClearCart(ctx, userID)
 }
 
-func (u *CartUsecase) CreateOrder(ctx context.Context, userID uuid.UUID, req models.OrderInReq, cart models.Cart) (*models.Order, error) {
+func (u *CartUsecase) CreateOrder(ctx context.Context, userID string, req models.OrderInReq, cart models.Cart) (*models.Order, error) {
 	order := &models.Order{
 		ID:                uuid.NewV4(),
 		UserID:            userID,
