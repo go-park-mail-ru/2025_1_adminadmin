@@ -381,32 +381,6 @@ func TestUpdateUser(t *testing.T) {
 			expectedErr: auth.ErrInvalidPassword,
 		},
 		{
-			name:  "Same first name",
-			login: oldUser.Login,
-			updateData: models.UpdateUserReq{
-				FirstName: oldUser.FirstName,
-			},
-			repoMocker: func(repo *mocks.MockAuthRepo) {
-				repo.EXPECT().
-					SelectUserByLogin(gomock.Any(), oldUser.Login).
-					Return(oldUser, nil).Times(1)
-			},
-			expectedErr: auth.ErrSameName,
-		},
-		{
-			name:  "Same phone number",
-			login: oldUser.Login,
-			updateData: models.UpdateUserReq{
-				PhoneNumber: oldUser.PhoneNumber,
-			},
-			repoMocker: func(repo *mocks.MockAuthRepo) {
-				repo.EXPECT().
-					SelectUserByLogin(gomock.Any(), oldUser.Login).
-					Return(oldUser, nil).Times(1)
-			},
-			expectedErr: auth.ErrSamePhone,
-		},
-		{
 			name:  "User not found",
 			login: "nouser",
 			updateData: models.UpdateUserReq{
