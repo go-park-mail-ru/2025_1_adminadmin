@@ -34,6 +34,10 @@ func (uc *CartUsecase) GetCart(ctx context.Context, userID string) (models.Cart,
 		return models.Cart{}, nil, false
 	}
 
+	if cartRaw == nil {
+		return models.Cart{}, nil, false
+	}
+
 	productIDs := make([]string, 0, len(cartRaw))
 	for id := range cartRaw {
 		productIDs = append(productIDs, id)
