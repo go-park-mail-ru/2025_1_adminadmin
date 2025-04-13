@@ -46,7 +46,6 @@ type Order struct {
 	LeaveAtDoor       bool      `json:"leave_at_door"`
 	CreatedAt         time.Time `json:"created_at"`
 	FinalPrice        float64   `json:"final_price"`
-	CardNumber        string    `json:"card_number"`
 }
 
 // easyjson:json
@@ -61,7 +60,6 @@ type OrderInReq struct {
 	CourierComment    string  `json:"courier_comment"`
 	LeaveAtDoor       bool    `json:"leave_at_door"`
 	FinalPrice        float64 `json:"final_price"`
-	CardNumber        string    `json:"card_number"`
 }
 
 func (a *CartItem) Sanitize() {
