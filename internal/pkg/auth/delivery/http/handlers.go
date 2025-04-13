@@ -325,6 +325,11 @@ func (h *AuthHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
+		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
+		return
+	}
+
 	var updateData models.UpdateUserReq
 	if err := json.NewDecoder(r.Body).Decode(&updateData); err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("Ошибка парсинга JSON: %w", err), http.StatusBadRequest)
@@ -390,6 +395,11 @@ func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) {
 	if !ok || login == "" {
 		log.LogHandlerError(logger, errors.New("Недействительный токен: login отсутствует"), http.StatusUnauthorized)
 		utils.SendError(w, "Недействительный токен: login отсутствует", http.StatusUnauthorized)
+		return
+	}
+
+	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
+		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
 		return
 	}
 
@@ -500,6 +510,11 @@ func (h *AuthHandler) GetUserAddresses(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
+		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
+		return
+	}
+
 	addresses, err := h.uc.GetUserAddresses(r.Context(), login)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("Ошибка на уровне ниже (usecase): %w", err), http.StatusInternalServerError)
@@ -530,6 +545,11 @@ func (h *AuthHandler) GetUserAddresses(w http.ResponseWriter, r *http.Request) {
 // @Router /auth/delete_address [post]
 func (h *AuthHandler) DeleteAddress(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
+		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
+		return
+	}
 
 	var address models.Address
 	err := json.NewDecoder(r.Body).Decode(&address)
@@ -585,6 +605,11 @@ func (h *AuthHandler) AddAddress(w http.ResponseWriter, r *http.Request) {
 	if !ok || idStr == "" {
 		log.LogHandlerError(logger, errors.New("Недействительный токен: id отсутствует"), http.StatusUnauthorized)
 		utils.SendError(w, "Недействительный токен: id отсутствует", http.StatusUnauthorized)
+		return
+	}
+
+	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
+		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
 		return
 	}
 
