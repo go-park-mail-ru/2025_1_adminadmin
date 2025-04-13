@@ -59,8 +59,16 @@ CREATE TABLE IF NOT EXISTS orders (
     user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     status TEXT NOT NULL,
     address_id UUID NOT NULL REFERENCES addresses(id) ON DELETE CASCADE,
-    order_products TEXT NOT NULL
+    order_products TEXT NOT NULL,
+
+    apartment_or_office TEXT,
+    intercom TEXT,
+    entrance TEXT,
+    floor TEXT,
+    courier_comment TEXT,
+    leave_at_door BOOLEAN DEFAULT FALSE
 );
+
 
 INSERT INTO restaurant_tags (id, name)
 VALUES 
@@ -278,6 +286,22 @@ VALUES
     ),
     (
         (SELECT id FROM restaurants WHERE name = 'Красное море' ),
+        'Рамен с ананасом', 
+        640, 
+        'default_product.jpg', 
+        350,
+        'Закуски'
+    ),
+    (
+        (SELECT id FROM restaurants WHERE name = 'Красное море' ),
+        'Пельмени с сыром', 
+        550, 
+        'default_product.jpg', 
+        400,
+        'Закуски'
+    ),
+    (
+        (SELECT id FROM restaurants WHERE name = 'Красное море' ),
         'Суши ассорти', 
         490, 
         'default_product.jpg', 
@@ -288,6 +312,22 @@ VALUES
         (SELECT id FROM restaurants WHERE name = 'Красное море' ),
         'Тамаго суши', 
         400, 
+        'default_product.jpg', 
+        150,
+        'Суши'
+    ),
+    (
+        (SELECT id FROM restaurants WHERE name = 'Красное море' ),
+        'Сырная тарелка', 
+        790, 
+        'default_product.jpg', 
+        250,
+        'Суши'
+    ),
+    (
+        (SELECT id FROM restaurants WHERE name = 'Красное море' ),
+        'Вареники с грибами', 
+        800, 
         'default_product.jpg', 
         150,
         'Суши'
@@ -312,7 +352,7 @@ VALUES
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category)
 VALUES 
     (
-        (SELECT id FROM restaurants WHERE name = 'Паста и Вино' ),
+        (SELECT id FROM restaurants WHERE name = 'Красное море' ),
         'Рамен с курицей', 
         740, 
         'default_product.jpg', 
@@ -320,7 +360,7 @@ VALUES
         'Закуски'
     ),
     (
-        (SELECT id FROM restaurants WHERE name = 'Паста и Вино' ),
+        (SELECT id FROM restaurants WHERE name = 'Красное море' ),
         'Рамен с говядиной', 
         650, 
         'default_product.jpg', 
@@ -328,7 +368,23 @@ VALUES
         'Закуски'
     ),
     (
-        (SELECT id FROM restaurants WHERE name = 'Паста и Вино' ),
+        (SELECT id FROM restaurants WHERE name = 'Красное море' ),
+        'Рамен с ананасом', 
+        640, 
+        'default_product.jpg', 
+        350,
+        'Закуски'
+    ),
+    (
+        (SELECT id FROM restaurants WHERE name = 'Красное море' ),
+        'Пельмени с сыром', 
+        550, 
+        'default_product.jpg', 
+        400,
+        'Закуски'
+    ),
+    (
+        (SELECT id FROM restaurants WHERE name = 'Красное море' ),
         'Суши ассорти', 
         490, 
         'default_product.jpg', 
@@ -336,7 +392,7 @@ VALUES
         'Суши'
     ),
     (
-        (SELECT id FROM restaurants WHERE name = 'Паста и Вино' ),
+        (SELECT id FROM restaurants WHERE name = 'Красное море' ),
         'Тамаго суши', 
         400, 
         'default_product.jpg', 
@@ -344,7 +400,23 @@ VALUES
         'Суши'
     ),
     (
-        (SELECT id FROM restaurants WHERE name = 'Паста и Вино' ),
+        (SELECT id FROM restaurants WHERE name = 'Красное море' ),
+        'Сырная тарелка', 
+        790, 
+        'default_product.jpg', 
+        250,
+        'Суши'
+    ),
+    (
+        (SELECT id FROM restaurants WHERE name = 'Красное море' ),
+        'Вареники с грибами', 
+        800, 
+        'default_product.jpg', 
+        150,
+        'Суши'
+    ),
+    (
+        (SELECT id FROM restaurants WHERE name = 'Красное море' ),
         'Ролл с лососем', 
         300, 
         'default_product.jpg', 
@@ -352,17 +424,18 @@ VALUES
         'Суши'
     ),
     (
-        (SELECT id FROM restaurants WHERE name = 'Паста и Вино' ),
+        (SELECT id FROM restaurants WHERE name = 'Красное море' ),
         'Гёдза', 
         200, 
         'default_product.jpg', 
         180,
         'Закуски'
     );
-    INSERT INTO products (restaurant_id, name, price, image_url, weight, category)
+    
+INSERT INTO products (restaurant_id, name, price, image_url, weight, category)
 VALUES 
     (
-        (SELECT id FROM restaurants WHERE name = 'Суши Дрим' ),
+        (SELECT id FROM restaurants WHERE name = 'Красное море' ),
         'Рамен с курицей', 
         740, 
         'default_product.jpg', 
@@ -370,7 +443,7 @@ VALUES
         'Закуски'
     ),
     (
-        (SELECT id FROM restaurants WHERE name = 'Суши Дрим' ),
+        (SELECT id FROM restaurants WHERE name = 'Красное море' ),
         'Рамен с говядиной', 
         650, 
         'default_product.jpg', 
@@ -378,7 +451,23 @@ VALUES
         'Закуски'
     ),
     (
-        (SELECT id FROM restaurants WHERE name = 'Суши Дрим' ),
+        (SELECT id FROM restaurants WHERE name = 'Красное море' ),
+        'Рамен с ананасом', 
+        640, 
+        'default_product.jpg', 
+        350,
+        'Закуски'
+    ),
+    (
+        (SELECT id FROM restaurants WHERE name = 'Красное море' ),
+        'Пельмени с сыром', 
+        550, 
+        'default_product.jpg', 
+        400,
+        'Закуски'
+    ),
+    (
+        (SELECT id FROM restaurants WHERE name = 'Красное море' ),
         'Суши ассорти', 
         490, 
         'default_product.jpg', 
@@ -386,7 +475,7 @@ VALUES
         'Суши'
     ),
     (
-        (SELECT id FROM restaurants WHERE name = 'Суши Дрим' ),
+        (SELECT id FROM restaurants WHERE name = 'Красное море' ),
         'Тамаго суши', 
         400, 
         'default_product.jpg', 
@@ -394,7 +483,23 @@ VALUES
         'Суши'
     ),
     (
-        (SELECT id FROM restaurants WHERE name = 'Суши Дрим' ),
+        (SELECT id FROM restaurants WHERE name = 'Красное море' ),
+        'Сырная тарелка', 
+        790, 
+        'default_product.jpg', 
+        250,
+        'Суши'
+    ),
+    (
+        (SELECT id FROM restaurants WHERE name = 'Красное море' ),
+        'Вареники с грибами', 
+        800, 
+        'default_product.jpg', 
+        150,
+        'Суши'
+    ),
+    (
+        (SELECT id FROM restaurants WHERE name = 'Красное море' ),
         'Ролл с лососем', 
         300, 
         'default_product.jpg', 
@@ -402,13 +507,14 @@ VALUES
         'Суши'
     ),
     (
-        (SELECT id FROM restaurants WHERE name = 'Суши Дрим' ),
+        (SELECT id FROM restaurants WHERE name = 'Красное море' ),
         'Гёдза', 
         200, 
         'default_product.jpg', 
         180,
         'Закуски'
     );
+
 
 INSERT INTO users (id, login, first_name, last_name, phone_number, description, user_pic, password_hash)
 VALUES (

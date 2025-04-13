@@ -61,8 +61,11 @@ func (h *CartHandler) getCartData(r *http.Request) (models.Cart, string, error) 
 }
 
 func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
+	logger := log.GetLoggerFromContext(r.Context())
+
 	cart, _, err := h.getCartData(r)
 	if err != nil {
+		log.LogHandlerError(logger, err, http.StatusUnauthorized)
 		utils.SendError(w, err.Error(), http.StatusUnauthorized)
 		return
 	}
@@ -72,7 +75,7 @@ func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
 
 	data, err := json.Marshal(cart)
 	if err != nil {
-		log.LogHandlerError(log.GetLoggerFromContext(r.Context()), fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
+		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "Не удалось сериализовать корзину", http.StatusInternalServerError)
 		return
 	}
@@ -81,9 +84,23 @@ func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Request) {
+	logger := log.GetLoggerFromContext(r.Context())
+
 	_, login, err := h.getCartData(r)
 	if err != nil {
+		log.LogHandlerError(logger, err, http.StatusUnauthorized)
 		utils.SendError(w, err.Error(), http.StatusUnauthorized)
+		return
+	}
+
+	if login == "" {
+		log.LogHandlerError(logger, errors.New("невалидный токен"), http.StatusUnauthorized)
+		utils.SendError(w, "невалидный токен", http.StatusUnauthorized)
+		return
+	}
+
+	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
+		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
 		return
 	}
 
@@ -92,6 +109,7 @@ func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Reques
 
 	var requestBody models.CartInReq
 	if err := easyjson.UnmarshalFromReader(r.Body, &requestBody); err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка чтения тела запроса: %w", err), http.StatusBadRequest)
 		utils.SendError(w, "Некорректный формат данных", http.StatusBadRequest)
 		return
 	}
@@ -99,12 +117,14 @@ func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Reques
 	ctx := context.Background()
 	err = h.cartUsecase.UpdateItemQuantity(ctx, login, productID, requestBody.RestaurantId, requestBody.Quantity)
 	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("не удалось обновить количество: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "Не удалось обновить количество товара в корзине", http.StatusInternalServerError)
 		return
 	}
 
 	cart, _, err := h.getCartData(r)
 	if err != nil {
+		log.LogHandlerError(logger, err, http.StatusInternalServerError)
 		utils.SendError(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
@@ -114,6 +134,7 @@ func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Reques
 
 	data, err := json.Marshal(cart)
 	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка сериализации корзины: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "Ошибка сериализации корзины", http.StatusInternalServerError)
 		return
 	}
@@ -137,7 +158,18 @@ func (h *CartHandler) ClearCart(w http.ResponseWriter, r *http.Request) {
 	claims := jwt.MapClaims{}
 
 	login, _ := jwtUtils.GetLoginFromJWT(JWTStr, claims, h.secret)
-	
+
+	if login == "" {
+		log.LogHandlerError(logger, errors.New("пустой login из токена"), http.StatusUnauthorized)
+		http.Error(w, "невалидный токен", http.StatusUnauthorized)
+		return
+	}
+
+	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
+		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
+		return
+	}
+
 	err = h.cartUsecase.ClearCart(r.Context(), login)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Ошибка при очистке корзины: %v", err), http.StatusInternalServerError)
