@@ -72,8 +72,8 @@ func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
 
 	if !full_cart {
 		msg := "корзина пуста"
-		log.LogHandlerError(logger, fmt.Errorf(msg), http.StatusOK)
-		utils.SendError(w, msg, http.StatusOK)
+		log.LogHandlerError(logger, fmt.Errorf(msg), http.StatusNotFound)
+		utils.SendError(w, msg, http.StatusNotFound)
 		return
 	}
 
@@ -138,8 +138,8 @@ func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Reques
 
 	if !full_cart {
 		msg := "корзина пуста"
-		log.LogHandlerError(logger, fmt.Errorf(msg), http.StatusNotFound)
-		utils.SendError(w, msg, http.StatusNotFound)
+		log.LogHandlerError(logger, fmt.Errorf(msg), http.StatusOK)
+		utils.SendError(w, msg, http.StatusOK)
 		return
 	}
 
