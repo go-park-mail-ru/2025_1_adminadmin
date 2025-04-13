@@ -203,6 +203,7 @@ func (h *AuthHandler) Check(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	
 	headerCSRF := r.Header.Get("X-CSRF-Token")
 	if cookieCSRF.Value == "" || headerCSRF == "" || cookieCSRF.Value != headerCSRF {
 		w.WriteHeader(http.StatusForbidden)
