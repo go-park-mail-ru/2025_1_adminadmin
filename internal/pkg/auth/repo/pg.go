@@ -23,7 +23,7 @@ const (
 		WHERE u.login = $1
 	`
 	deleteAddress = "DELETE FROM addresses WHERE id = $1;"
-	insertAddress = "INSERT INTO addresses (id, address_value, user_id) VALUES ($1, $2, $3)"
+	insertAddress = "INSERT INTO addresses (id, address, user_id) VALUES ($1, $2, $3)"
 )
 
 type AuthRepo struct {
