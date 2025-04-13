@@ -24,6 +24,7 @@ const (
 	`
 	deleteAddress = "DELETE FROM addresses WHERE id = $1;"
 	insertAddress = "INSERT INTO addresses (id, address, user_id) VALUES ($1, $2, $3)"
+	addressExists = "SELECT EXISTS(SELECT 1 FROM addresses WHERE address = $1 AND user_id = $2)"
 )
 
 type AuthRepo struct {
@@ -152,4 +153,17 @@ func (repo *AuthRepo) InsertAddress(ctx context.Context, address models.Address)
 
 	logger.Info("Successful")
 	return nil
+}
+
+func (repo *AuthRepo) AddressExists(ctx context.Context, address string, userID uuid.UUID) (bool, error) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	var exists bool
+	err := repo.db.QueryRow(ctx, addressExists, address, userID).Scan(&exists)
+	if err != nil {
+		logger.Error(err.Error())
+		return false, err
+	}
+
+	return exists, nil
 }

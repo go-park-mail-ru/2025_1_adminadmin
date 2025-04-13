@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"crypto/rand"
+	"errors"
 	"io"
 	"log/slog"
 	"os"
@@ -361,8 +362,19 @@ func (uc *AuthUsecase) DeleteAddress(ctx context.Context, addressId uuid.UUID) e
 func (uc *AuthUsecase) AddAddress(ctx context.Context, address models.Address) error {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 
+	exists, err := uc.repo.AddressExists(ctx, address.Address, address.UserId)
+	if err != nil {
+		logger.Error(err.Error())
+		return err
+	}
+	if exists {
+		err := errors.New("адрес уже добавлен")
+		logger.Info(err.Error())
+		return err
+	}
+
 	address.Id = uuid.NewV4()
-	err := uc.repo.InsertAddress(ctx, address)
+	err = uc.repo.InsertAddress(ctx, address)
 	if err != nil {
 		logger.Error(err.Error())
 		return err
