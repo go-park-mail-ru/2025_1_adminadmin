@@ -54,6 +54,8 @@ func easyjsonE590a42aDecodeGithubComGoParkMailRu20251AdminadminInternalModels(in
 			out.LeaveAtDoor = bool(in.Bool())
 		case "final_price":
 			out.FinalPrice = float64(in.Float64())
+		case "card_number":
+			out.CardNumber = string(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -112,6 +114,11 @@ func easyjsonE590a42aEncodeGithubComGoParkMailRu20251AdminadminInternalModels(ou
 		const prefix string = ",\"final_price\":"
 		out.RawString(prefix)
 		out.Float64(float64(in.FinalPrice))
+	}
+	{
+		const prefix string = ",\"card_number\":"
+		out.RawString(prefix)
+		out.String(string(in.CardNumber))
 	}
 	out.RawByte('}')
 }
@@ -188,6 +195,8 @@ func easyjsonE590a42aDecodeGithubComGoParkMailRu20251AdminadminInternalModels1(i
 			}
 		case "final_price":
 			out.FinalPrice = float64(in.Float64())
+		case "card_number":
+			out.CardNumber = string(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -266,6 +275,11 @@ func easyjsonE590a42aEncodeGithubComGoParkMailRu20251AdminadminInternalModels1(o
 		const prefix string = ",\"final_price\":"
 		out.RawString(prefix)
 		out.Float64(float64(in.FinalPrice))
+	}
+	{
+		const prefix string = ",\"card_number\":"
+		out.RawString(prefix)
+		out.String(string(in.CardNumber))
 	}
 	out.RawByte('}')
 }

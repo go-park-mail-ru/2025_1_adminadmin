@@ -75,8 +75,8 @@ func (r *RestaurantRepository) Save(ctx context.Context, order *models.Order, us
 	query := `INSERT INTO orders (
 		id, user_id, status, address_id, order_products,
 		apartment_or_office, intercom, entrance, floor,
-		courier_comment, leave_at_door, created_at, final_price
-	) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`
+		courier_comment, leave_at_door, created_at, final_price, card_number
+	) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)`
 
 	orderProductsStr, err := order.OrderProducts.MarshalJSON()
 	if err != nil {
@@ -89,7 +89,7 @@ func (r *RestaurantRepository) Save(ctx context.Context, order *models.Order, us
 	_, err = r.db.Exec(ctx, query,
 		order.ID, userID, order.Status, order.Address, string(orderProductsStr),
 		order.ApartmentOrOffice, order.Intercom, order.Entrance, order.Floor,
-		order.CourierComment, order.LeaveAtDoor, order.CreatedAt, order.FinalPrice)
+		order.CourierComment, order.LeaveAtDoor, order.CreatedAt, order.FinalPrice, order.CardNumber)
 
 	if err != nil {
 		log.Printf("Ошибка при вставке заказа в базу данных: %v", err)

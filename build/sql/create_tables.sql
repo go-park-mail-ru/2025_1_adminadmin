@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS orders (
     courier_comment TEXT,
     leave_at_door BOOLEAN DEFAULT FALSE,
     final_price NUMERIC(10, 2) NOT NULL,
+    card_number TEXT NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
