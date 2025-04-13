@@ -59,6 +59,10 @@ func (a *CartInReq) Sanitize() {
 }
 
 func (a *Order) Sanitize() {
-	a.Name = html.EscapeString(a.Name)
-	a.ImageURL = html.EscapeString(a.ImageURL)
+	a.Status = html.EscapeString(a.Status)
+	a.ApartmentOrOffice = html.EscapeString(a.ApartmentOrOffice)
+	a.Intercom = html.EscapeString(a.Intercom)
+	a.Entrance = html.EscapeString(a.Entrance)
+	a.Floor = html.EscapeString(a.Floor)
+	a.CourierComment = html.EscapeString(a.CourierComment)
 }
