@@ -59,8 +59,16 @@ CREATE TABLE IF NOT EXISTS orders (
     user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     status TEXT NOT NULL,
     address_id UUID NOT NULL REFERENCES addresses(id) ON DELETE CASCADE,
-    order_products TEXT NOT NULL
+    order_products TEXT NOT NULL,
+
+    apartment_or_office TEXT,
+    intercom TEXT,
+    entrance TEXT,
+    floor TEXT,
+    courier_comment TEXT,
+    leave_at_door BOOLEAN DEFAULT FALSE
 );
+
 
 INSERT INTO restaurant_tags (id, name)
 VALUES 

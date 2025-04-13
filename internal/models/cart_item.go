@@ -29,6 +29,22 @@ type CartInReq struct {
 	RestaurantId string `json:"restaurant_id"`
 }
 
+// easyjson:json
+type Order struct {
+    ID                uuid.UUID `json:"id"`
+    UserID            uuid.UUID `json:"user_id"`
+    Status            string    `json:"status"`
+    AddressID         uuid.UUID `json:"address_id"`
+    OrderProducts     Cart      `json:"order_products"` 
+
+    ApartmentOrOffice string    `json:"apartment_or_office"`
+    Intercom          string    `json:"intercom"`
+    Entrance          string    `json:"entrance"`
+    Floor             string    `json:"floor"`
+    CourierComment    string    `json:"courier_comment"`
+    LeaveAtDoor       bool      `json:"leave_at_door"`
+}
+
 func (a *CartItem) Sanitize() {
 	a.Name = html.EscapeString(a.Name)
 	a.ImageURL = html.EscapeString(a.ImageURL)
@@ -40,4 +56,9 @@ func (a *Cart) Sanitize() {
 
 func (a *CartInReq) Sanitize() {
 	a.RestaurantId = html.EscapeString(a.RestaurantId)
+}
+
+func (a *Order) Sanitize() {
+	a.Name = html.EscapeString(a.Name)
+	a.ImageURL = html.EscapeString(a.ImageURL)
 }
