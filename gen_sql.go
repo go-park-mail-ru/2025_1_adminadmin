@@ -1,14 +1,9 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"math/rand"
 	"os"
 	"strings"
-	"time"
-
-	"github.com/satori/uuid"
 )
 
 const (
@@ -17,25 +12,6 @@ const (
 	productsPerRestaurant = 10
 	numOrders             = 200
 )
-
-type Product struct {
-	ID         string
-	Restaurant string
-	Name       string
-	Price      float64
-	Weight     int
-	ImageURL   string
-	Category   string
-}
-
-type OrderProduct struct {
-	ID       string  `json:"id"`
-	Name     string  `json:"name"`
-	Price    float64 `json:"price"`
-	ImageURL string  `json:"image_url"`
-	Weight   int     `json:"weight"`
-	Amount   int     `json:"amount"`
-}
 
 var firstNames = []string{"Иван", "Мария", "Алексей", "Дарья", "Николай", "Татьяна", "Сергей", "Ярослав", "Иван", "Алексей", "Владислав", "Никита"}
 var lastNames = []string{"Иванов", "Петрова", "Сидоров", "Кузнецова", "Попов", "Смирнова", "Пермякова", "Торетто", "Шипулина", "Ламар"}
@@ -50,167 +26,110 @@ var categories = []string{
 	"Горячее", "Супы",
 }
 
-func randChoice(r *rand.Rand, list []string) string {
-	return list[r.Intn(len(list))]
+var restaurants = []string{
+	"Паста и Вино",
+	"Суши Дрим",
+	"Бургерная Ривьера",
+	"Турецкий базар",
+	"Зеленая вилка",
+	"Гриль Бар",
+	"Американская кухня",
+	"Ресторан Средиземноморья",
+	"Индийские специи",
+	"Веганское счастье",
+	"Французский уголок",
+	"Мексиканская пекарня",
+	"Китайская империя",
+	"Баварский пивной сад",
+	"Морская звезда",
+	"Шашлыки от Бабая",
+	"Скоро будет",
+	"Восточный базар",
+	"Греческий дворик",
+	"Тосканский огонь",
+	"Итальянская ривьера",
+	"Суши Мания",
+	"Пельмени на углях",
+	"Бургеры по-американски",
+	"Китайская звезда",
+	"Мексиканская закуска",
+	"Французский бистро",
+	"Греческий остров",
+	"Турецкая радость",
+	"Индийская сказка",
+	"Американская пекарня",
+	"Восточный салат",
+	"Вегетарианский рай",
+	"Ресторан на воде",
+	"Баварская пивоварня",
+	"Морская лагуна",
+	"Тосканские вечера",
+	"Суши и роллы",
+	"Вкус Индии",
+	"Мексиканская площадь",
+	"Греческая таверна",
+	"Пивной бар Баварии",
+	"Итальянский дворик",
+	"Ресторан Печка",
+	"Золотая рыба",
+	"Красное море",
+	"Ресторан Томат",
+	"Турецкая кухня",
+	"Вегетарианская кухня",
+	"Ресторан Адель",
+	"Гриль и мясо",
+	"Том Ям",
+	"Пельмени по-русски",
+	"Китайская кухня",
+	"Французская кухня",
+	"Средиземноморский ресторан",
+	"Ресторан Вкуса",
+	"Шашлык-Бар",
+	"Паста на ужин",
+	"Веганский уголок",
+	"Бургерная Сити",
+	"Ресторан Эдем",
+	"Ресторан Лаванда",
+	"Ресторан Капрезе",
+	"Греческий зал",
+	"Пицца и Суши",
+	"Турецкий Султан",
+	"Мексиканский уголок",
+	"Ресторан Мозаика",
+	"Шашлыки по-кавказски",
+	"Французская кухня на ужин",
+	"Мексиканская кухня для всех",
+	"Томаты и Паста",
 }
 
-func randomPhone(r *rand.Rand) string {
-	return fmt.Sprintf("+7-%03d-%03d-%04d", r.Intn(900)+100, r.Intn(900)+100, r.Intn(10000))
-}
-
-func randomPasswordHash(r *rand.Rand) string {
-	b := make([]byte, 32)
-	r.Read(b)
-	return fmt.Sprintf("%x", b)
-}
-
-func generateSQL(r *rand.Rand) string {
+func generateSQL() string {
 	var sb strings.Builder
 
-	// USERS
-	var userIDs []string
-	for i := 0; i < numUsers; i++ {
-		id := uuid.NewV4().String()
-		login := fmt.Sprintf("user%d", i)
-		first := randChoice(r, firstNames)
-		last := randChoice(r, lastNames)
-		phone := randomPhone(r)
-		pass := randomPasswordHash(r)
-		userIDs = append(userIDs, id)
-
+	// Генерация строк для каждого ресторана
+	for _, restaurantName := range restaurants {
+		// Для каждого ресторана генерируем нужные строки
 		fmt.Fprintf(&sb,
-			"INSERT INTO users (id, login, phone_number, first_name, last_name, description, user_pic, password_hash) "+
-				"VALUES ('%s', '%s', '%s', '%s', '%s', '', 'default_user.jpg', decode('%s', 'hex'));\n",
-			id, login, phone, first, last, pass)
-
-	}
-
-	// TAGS
-	var tagIDs []string
-	for _, tag := range tags {
-		id := uuid.NewV4().String()
-		tagIDs = append(tagIDs, id)
-		fmt.Fprintf(&sb, "INSERT INTO restaurant_tags (id, name) VALUES ('%s', '%s');\n", id, tag)
-	}
-
-	// RESTAURANTS
-	var restaurantIDs []string
-	for i := 0; i < numRestaurants; i++ {
-		id := uuid.NewV4().String()
-		restaurantIDs = append(restaurantIDs, id)
-		name := fmt.Sprintf("Ресторан %d", i+1)
-		rating := fmt.Sprintf("%.1f", 3+r.Float64()*2)
-		ratingCount := fmt.Sprintf("%.0f", 50+r.Float64()*100)
-
-		fmt.Fprintf(&sb,
-			"INSERT INTO restaurants (id, name, rating, rating_count) VALUES ('%s', '%s', %s, %s);\n",
-			id, name, rating, ratingCount)
-	}
-
-	// TAG RELATIONS
-	for _, restID := range restaurantIDs {
-		tagID := tagIDs[r.Intn(len(tagIDs))]
-		fmt.Fprintf(&sb, "INSERT INTO restaurant_tags_relations (restaurant_id, tag_id) VALUES ('%s', '%s');\n", restID, tagID)
-	}
-
-	// ADDRESSES
-	var addressIDs []string
-	userAddressMap := make(map[string]string)
-	for _, uid := range userIDs {
-		id := uuid.NewV4().String()
-		addr := fmt.Sprintf("Улица %d, дом %d", r.Intn(100), r.Intn(50))
-		userAddressMap[id] = addr
-		addressIDs = append(addressIDs, id)
-		fmt.Fprintf(&sb, "INSERT INTO addresses (id, address, user_id) VALUES ('%s', '%s', '%s');\n", id, addr, uid)
-	}
-
-	// PRODUCTS
-	restaurantProducts := make(map[string][]Product)
-	for _, restID := range restaurantIDs {
-		for i := 0; i < productsPerRestaurant; i++ {
-			id := uuid.NewV4().String()
-			name := fmt.Sprintf("Блюдо %d", i+1)
-			price := 100 + r.Float64()*500
-			weight := 100 + r.Intn(400)
-			category := randChoice(r, categories)
-			imageURL := "default_product.jpg"
-
-			p := Product{
-				ID:         id,
-				Restaurant: restID,
-				Name:       name,
-				Price:      price,
-				Weight:     weight,
-				ImageURL:   imageURL,
-				Category:   category,
-			}
-			restaurantProducts[restID] = append(restaurantProducts[restID], p)
-
-			fmt.Fprintf(&sb,
-				"INSERT INTO products (id, restaurant_id, name, price, weight, category) VALUES ('%s', '%s', '%s', %.2f, %d, '%s');\n",
-				id, restID, name, price, weight, category)
-		}
-	}
-
-	// ORDERS
-	for i := 0; i < 10; i++ {
-		id := uuid.NewV4()
-		userID := userIDs[r.Intn(len(userIDs))]
-		addressID := addressIDs[r.Intn(len(addressIDs))]
-		addressText := userAddressMap[addressID]
-		status := "created"
-
-		restID := restaurantIDs[r.Intn(len(restaurantIDs))]
-		availableProducts := restaurantProducts[restID]
-
-		used := map[string]bool{}
-		numProducts := r.Intn(4) + 1
-		var orderProducts []OrderProduct
-		for len(orderProducts) < numProducts {
-			p := availableProducts[r.Intn(len(availableProducts))]
-			if used[p.ID] {
-				continue
-			}
-			used[p.ID] = true
-			amount := r.Intn(3) + 1
-			orderProducts = append(orderProducts, OrderProduct{
-				ID:       p.ID,
-				Name:     p.Name,
-				Price:    p.Price,
-				ImageURL: p.ImageURL,
-				Weight:   p.Weight,
-				Amount:   amount,
-			})
-		}
-
-		productsJSONBytes, _ := json.Marshal(orderProducts)
-		escapedProducts := strings.ReplaceAll(string(productsJSONBytes), "'", "''")
-
-		apartment := fmt.Sprintf("кв. %d", r.Intn(200)+1)
-		intercom := fmt.Sprintf("%d%d%d", r.Intn(9)+1, r.Intn(9)+1, r.Intn(9)+1)
-		entrance := fmt.Sprintf("%d", r.Intn(5)+1)
-		floor := fmt.Sprintf("%d", r.Intn(25)+1)
-		comment := "Не забудьте вилки"
-		leave := r.Intn(2) == 0
-		finalPrice := 0.0
-		for _, op := range orderProducts {
-			finalPrice += op.Price * float64(op.Amount)
-		}
-
-
-		fmt.Fprintf(&sb,
-			"INSERT INTO orders (id, user_id, status, address_id, order_products, apartment_or_office, intercom, entrance, floor, courier_comment, leave_at_door) "+
-				"VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %t, '%.2f');\n",
-			id, userID, status, addressText, escapedProducts,
-			apartment, intercom, entrance, floor, comment, leave, finalPrice)
+`INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
+	((SELECT id FROM restaurants WHERE name = '%s' ), 'Рамен с курицей', 740, 'default_product.jpg', 350, 'Закуски'),
+	((SELECT id FROM restaurants WHERE name = '%s' ), 'Рамен с говядиной', 650, 'default_product.jpg', 400, 'Закуски'),
+	((SELECT id FROM restaurants WHERE name = '%s' ), 'Рамен с ананасом', 640, 'default_product.jpg', 350, 'Закуски'),
+	((SELECT id FROM restaurants WHERE name = '%s' ), 'Пельмени с сыром', 550, 'default_product.jpg', 400, 'Закуски'),
+	((SELECT id FROM restaurants WHERE name = '%s' ), 'Суши ассорти', 490, 'default_product.jpg', 250, 'Суши'),
+	((SELECT id FROM restaurants WHERE name = '%s' ), 'Тамаго суши', 400, 'default_product.jpg', 150, 'Суши'),
+	((SELECT id FROM restaurants WHERE name = '%s' ), 'Сырная тарелка', 790, 'default_product.jpg', 250, 'Суши'),
+	((SELECT id FROM restaurants WHERE name = '%s' ), 'Вареники с грибами', 800, 'default_product.jpg', 150, 'Суши'),
+	((SELECT id FROM restaurants WHERE name = '%s' ), 'Ролл с лососем', 300, 'default_product.jpg', 200, 'Суши'),
+	((SELECT id FROM restaurants WHERE name = '%s' ), 'Гёдза', 200, 'default_product.jpg', 180, 'Закуски');\n`,
+			restaurantName, restaurantName, restaurantName, restaurantName, restaurantName, restaurantName, restaurantName, restaurantName, restaurantName, restaurantName)
+			
+			sb.WriteString("\n")
 	}
 
 	return sb.String()
 }
 
 func main() {
-	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-	sql := generateSQL(r)
+	sql := generateSQL()
 
 	filePath := "build/sql/create_tables.sql"
 
