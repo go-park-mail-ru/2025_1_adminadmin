@@ -5,8 +5,8 @@ import (
 	"fmt"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
-	"github.com/satori/uuid"
 	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/satori/uuid"
 )
 
 const (
@@ -59,3 +59,22 @@ func (r *RestaurantRepository) GetCartItem(ctx context.Context, productIDs []str
 	}, nil
 }
 
+func (r *RestaurantRepository) Save(ctx context.Context, order *models.Order) error {
+	query := `INSERT INTO orders (
+		id, user_id, status, address_id, order_products,
+		apartment_or_office, intercom, entrance, floor,
+		courier_comment, leave_at_door, created_at
+	) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)`
+
+	orderProductsStr, err := order.OrderProducts.MarshalJSON()
+	if err != nil {
+		return err
+	}
+
+	_, err = r.db.Exec(ctx, query,
+		order.ID, order.UserID, order.Status, order.Address, string(orderProductsStr),
+		order.ApartmentOrOffice, order.Intercom, order.Entrance, order.Floor,
+		order.CourierComment, order.LeaveAtDoor, order.CreatedAt)
+
+	return err
+}

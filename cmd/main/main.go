@@ -124,6 +124,11 @@ func main() {
 		cart.HandleFunc("/clear", cartHandler.ClearCart).Methods(http.MethodPost, http.MethodOptions)
 	}
 
+	order := r.PathPrefix("/order").Subrouter()
+	{
+		order.HandleFunc("create", cartHandler.CreateOrder).Methods(http.MethodPost, http.MethodOptions)
+	}
+
 	http.Handle("/", r)
 	srv := http.Server{
 		Handler:           r,

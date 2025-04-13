@@ -3,10 +3,12 @@ package usecase
 import (
 	"context"
 	"log"
+	"time"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	pgRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/pg"
 	redisRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/redis"
+	"github.com/satori/uuid"
 )
 
 type CartUsecase struct {
@@ -29,7 +31,7 @@ func (uc *CartUsecase) GetCart(ctx context.Context, userID string) (models.Cart,
 	}
 
 	if restaurantID == "" {
-		return models.Cart{}, nil  
+		return models.Cart{}, nil
 	}
 
 	productIDs := make([]string, 0, len(cartRaw))
@@ -52,4 +54,27 @@ func (uc *CartUsecase) UpdateItemQuantity(ctx context.Context, userID, productID
 
 func (uc *CartUsecase) ClearCart(ctx context.Context, userID string) error {
 	return uc.cartRepo.ClearCart(ctx, userID)
+}
+
+func (u *CartUsecase) CreateOrder(ctx context.Context, userID uuid.UUID, req models.OrderInReq, cart models.Cart) (*models.Order, error) {
+	order := &models.Order{
+		ID:                uuid.NewV4(),
+		UserID:            userID,
+		Status:            req.Status,
+		Address:           req.Address,
+		OrderProducts:     cart,
+		ApartmentOrOffice: req.ApartmentOrOffice,
+		Intercom:          req.Intercom,
+		Entrance:          req.Entrance,
+		Floor:             req.Floor,
+		CourierComment:    req.CourierComment,
+		LeaveAtDoor:       req.LeaveAtDoor,
+		CreatedAt:         time.Now(),
+	}
+
+	if err := u.restaurantRepo.Save(ctx, order); err != nil {
+		return nil, err
+	}
+
+	return order, nil
 }

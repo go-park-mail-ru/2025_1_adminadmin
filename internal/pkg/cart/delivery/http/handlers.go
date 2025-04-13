@@ -17,6 +17,7 @@ import (
 	"github.com/golang-jwt/jwt"
 	"github.com/gorilla/mux"
 	"github.com/mailru/easyjson"
+	"github.com/satori/uuid"
 )
 
 type CartHandler struct {
@@ -178,4 +179,61 @@ func (h *CartHandler) ClearCart(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
+}
+
+func (h *CartHandler) CreateOrder(w http.ResponseWriter, r *http.Request) {
+	logger := log.GetLoggerFromContext(r.Context())
+
+	cart, userID, err := h.getCartData(r)
+	if err != nil {
+		log.LogHandlerError(logger, err, http.StatusUnauthorized)
+		utils.SendError(w, err.Error(), http.StatusUnauthorized)
+		return
+	}
+
+	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
+		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
+		return
+	}
+
+	userUUID, err := uuid.FromString(userID)
+	if err != nil {
+    	log.LogHandlerError(logger, fmt.Errorf("невалидный UUID пользователя: %w", err), http.StatusBadRequest)
+    	utils.SendError(w, "Некорректный формат userID", http.StatusBadRequest)
+    	return
+	}	
+
+	var req models.OrderInReq
+	if err := easyjson.UnmarshalFromReader(r.Body, &req); err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка чтения тела запроса: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "Некорректный формат данных", http.StatusBadRequest)
+		return
+	}
+
+	ctx := r.Context()
+
+	order, err := h.cartUsecase.CreateOrder(ctx, userUUID, req, cart)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("не удалось создать заказ: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "Ошибка при создании заказа", http.StatusInternalServerError)
+		return
+	}
+
+	err = h.cartUsecase.ClearCart(r.Context(), userID)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Ошибка при очистке корзины: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+
+	data, err := json.Marshal(order)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "Не удалось сериализовать корзину", http.StatusInternalServerError)
+		return
+	}
+
+	w.Write(data)
 }

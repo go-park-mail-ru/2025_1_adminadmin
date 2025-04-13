@@ -2,6 +2,7 @@ package models
 
 import (
 	"html"
+	"time"
 
 	"github.com/satori/uuid"
 )
@@ -31,18 +32,32 @@ type CartInReq struct {
 
 // easyjson:json
 type Order struct {
-    ID                uuid.UUID `json:"id"`
-    UserID            uuid.UUID `json:"user_id"`
-    Status            string    `json:"status"`
-    AddressID         uuid.UUID `json:"address_id"`
-    OrderProducts     Cart      `json:"order_products"` 
+	ID            uuid.UUID `json:"id"`
+	UserID        uuid.UUID `json:"user_id"`
+	Status        string    `json:"status"`
+	Address       string    `json:"address"`
+	OrderProducts Cart      `json:"order_products"`
 
-    ApartmentOrOffice string    `json:"apartment_or_office"`
-    Intercom          string    `json:"intercom"`
-    Entrance          string    `json:"entrance"`
-    Floor             string    `json:"floor"`
-    CourierComment    string    `json:"courier_comment"`
-    LeaveAtDoor       bool      `json:"leave_at_door"`
+	ApartmentOrOffice string    `json:"apartment_or_office"`
+	Intercom          string    `json:"intercom"`
+	Entrance          string    `json:"entrance"`
+	Floor             string    `json:"floor"`
+	CourierComment    string    `json:"courier_comment"`
+	LeaveAtDoor       bool      `json:"leave_at_door"`
+	CreatedAt         time.Time `json:"created_at"`
+}
+
+// easyjson:json
+type OrderInReq struct {
+	Status  string `json:"status"`
+	Address string `json:"address"`
+
+	ApartmentOrOffice string `json:"apartment_or_office"`
+	Intercom          string `json:"intercom"`
+	Entrance          string `json:"entrance"`
+	Floor             string `json:"floor"`
+	CourierComment    string `json:"courier_comment"`
+	LeaveAtDoor       bool   `json:"leave_at_door"`
 }
 
 func (a *CartItem) Sanitize() {
@@ -59,6 +74,15 @@ func (a *CartInReq) Sanitize() {
 }
 
 func (a *Order) Sanitize() {
+	a.Status = html.EscapeString(a.Status)
+	a.ApartmentOrOffice = html.EscapeString(a.ApartmentOrOffice)
+	a.Intercom = html.EscapeString(a.Intercom)
+	a.Entrance = html.EscapeString(a.Entrance)
+	a.Floor = html.EscapeString(a.Floor)
+	a.CourierComment = html.EscapeString(a.CourierComment)
+}
+
+func (a *OrderInReq) Sanitize() {
 	a.Status = html.EscapeString(a.Status)
 	a.ApartmentOrOffice = html.EscapeString(a.ApartmentOrOffice)
 	a.Intercom = html.EscapeString(a.Intercom)
