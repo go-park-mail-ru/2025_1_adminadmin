@@ -28,17 +28,17 @@ func NewCartHandler(cartUsecase *usecase.CartUsecase) *CartHandler {
 	return &CartHandler{cartUsecase: cartUsecase, secret: os.Getenv("JWT_SECRET")}
 }
 
-func (h *CartHandler) getCartData(r *http.Request) (models.Cart, string, error) {
+func (h *CartHandler) getCartData(r *http.Request) (models.Cart, string, error, bool) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
 	cookie, err := r.Cookie("AdminJWT")
 	if err != nil {
 		if errors.Is(err, http.ErrNoCookie) {
 			log.LogHandlerError(logger, fmt.Errorf("токен отсутствует: %w", err), http.StatusUnauthorized)
-			return models.Cart{}, "", fmt.Errorf("токен отсутствует")
+			return models.Cart{}, "", fmt.Errorf("токен отсутствует"), false
 		}
 		log.LogHandlerError(logger, fmt.Errorf("ошибка при чтении куки: %w", err), http.StatusBadRequest)
-		return models.Cart{}, "", fmt.Errorf("ошибка при чтении куки")
+		return models.Cart{}, "", fmt.Errorf("ошибка при чтении куки"), false
 	}
 
 	JWTStr := cookie.Value
@@ -47,26 +47,32 @@ func (h *CartHandler) getCartData(r *http.Request) (models.Cart, string, error) 
 	login, ok := jwtUtils.GetLoginFromJWT(JWTStr, claims, h.secret)
 	if !ok || login == "" {
 		log.LogHandlerError(logger, fmt.Errorf("невалидный токен"), http.StatusUnauthorized)
-		return models.Cart{}, "", fmt.Errorf("невалидный токен")
+		return models.Cart{}, "", fmt.Errorf("невалидный токен"), false
 	}
 
 	ctx := context.Background()
-	cart, err := h.cartUsecase.GetCart(ctx, login)
+	cart, err, full_cart := h.cartUsecase.GetCart(ctx, login)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка получения корзины: %w", err), http.StatusInternalServerError)
-		return models.Cart{}, "", fmt.Errorf("ошибка получения корзины")
+		return models.Cart{}, "", fmt.Errorf("ошибка получения корзины"), false
 	}
 
-	return cart, login, nil
+	return cart, login, nil, full_cart
 }
 
 func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context())
 
-	cart, _, err := h.getCartData(r)
+	cart, _, err, full_cart := h.getCartData(r)
 	if err != nil {
 		log.LogHandlerError(logger, err, http.StatusUnauthorized)
 		utils.SendError(w, err.Error(), http.StatusUnauthorized)
+		return
+	}
+
+	if full_cart == false {
+		log.LogHandlerError(logger, err, http.StatusNotFound)
+		utils.SendError(w, err.Error(), http.StatusNotFound)
 		return
 	}
 
@@ -86,7 +92,7 @@ func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
 func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context())
 
-	_, login, err := h.getCartData(r)
+	_, login, err, _ := h.getCartData(r)
 	if err != nil {
 		log.LogHandlerError(logger, err, http.StatusUnauthorized)
 		utils.SendError(w, err.Error(), http.StatusUnauthorized)
@@ -122,10 +128,16 @@ func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	cart, _, err := h.getCartData(r)
+	cart, _, err, full_cart := h.getCartData(r)
 	if err != nil {
 		log.LogHandlerError(logger, err, http.StatusInternalServerError)
 		utils.SendError(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if full_cart == false {
+		log.LogHandlerError(logger, err, http.StatusNotFound)
+		utils.SendError(w, err.Error(), http.StatusNotFound)
 		return
 	}
 
@@ -183,10 +195,16 @@ func (h *CartHandler) ClearCart(w http.ResponseWriter, r *http.Request) {
 func (h *CartHandler) CreateOrder(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context())
 
-	cart, userID, err := h.getCartData(r)
+	cart, userID, err, full_cart := h.getCartData(r)
 	if err != nil {
 		log.LogHandlerError(logger, err, http.StatusUnauthorized)
 		utils.SendError(w, err.Error(), http.StatusUnauthorized)
+		return
+	}
+
+	if full_cart == false {
+		log.LogHandlerError(logger, err, http.StatusNotFound)
+		utils.SendError(w, err.Error(), http.StatusNotFound)
 		return
 	}
 

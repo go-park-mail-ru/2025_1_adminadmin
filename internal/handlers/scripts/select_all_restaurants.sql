@@ -1,1 +1,0 @@
-SELECT id, name, description, type, rating FROM restaurants LIMIT $1 OFFSET $2

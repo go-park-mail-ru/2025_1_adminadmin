@@ -23,15 +23,15 @@ func NewCartUsecase(cartRepo *redisRepo.CartRepository, restaurantRepo *pgRepo.R
 	}
 }
 
-func (uc *CartUsecase) GetCart(ctx context.Context, userID string) (models.Cart, error) {
+func (uc *CartUsecase) GetCart(ctx context.Context, userID string) (models.Cart, error, bool) {
 	cartRaw, restaurantID, err := uc.cartRepo.GetCart(ctx, userID)
 	log.Printf("[GetCart] usecase1 %v", err)
 	if err != nil {
-		return models.Cart{}, err
+		return models.Cart{}, err, false
 	}
 
 	if restaurantID == "" {
-		return models.Cart{}, nil
+		return models.Cart{}, nil, false
 	}
 
 	productIDs := make([]string, 0, len(cartRaw))
@@ -42,10 +42,10 @@ func (uc *CartUsecase) GetCart(ctx context.Context, userID string) (models.Cart,
 	items, err := uc.restaurantRepo.GetCartItem(ctx, productIDs, cartRaw, restaurantID)
 	log.Printf("[GetCart] usecase2 %v", err)
 	if err != nil {
-		return models.Cart{}, err
+		return models.Cart{}, err, false
 	}
 
-	return items, nil
+	return items, nil, true
 }
 
 func (uc *CartUsecase) UpdateItemQuantity(ctx context.Context, userID, productID string, restaurantId string, quantity int) error {

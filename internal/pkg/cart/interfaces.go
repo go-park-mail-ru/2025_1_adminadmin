@@ -19,7 +19,7 @@ type CartRepo interface {
 }
 
 type CartUsecase interface {
-	GetCart(ctx context.Context, userID string) (models.Cart, error)
+	GetCart(ctx context.Context, userID string) (models.Cart, error, bool)
 	UpdateItemQuantity(ctx context.Context, userID, productID string, restaurantId string, quantity int) error
 	ClearCart(ctx context.Context, userID string) error
 
