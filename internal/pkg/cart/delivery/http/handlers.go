@@ -165,6 +165,11 @@ func (h *CartHandler) ClearCart(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
+		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
+		return
+	}
+
 	err = h.cartUsecase.ClearCart(r.Context(), login)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Ошибка при очистке корзины: %v", err), http.StatusInternalServerError)
