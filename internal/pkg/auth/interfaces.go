@@ -20,8 +20,6 @@ var (
 	ErrInvalidPhone       = errors.New("Некорректный номер телефона")
 	ErrUUID               = errors.New("Ошибка создания UUID")
 	ErrSamePassword       = errors.New("Новый пароль совпадает со старым")
-	ErrSameName           = errors.New("Новые имя и фамилия совпадают со старыми")
-	ErrSamePhone          = errors.New("Новый телефон совпадает со старым")
 	ErrBasePath           = errors.New("Базовый путь для картинок не установлен")
 	ErrFileCreation       = errors.New("Ошибка при создании файла")
 	ErrFileSaving         = errors.New("Ошибка при сохранении файла")
