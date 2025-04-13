@@ -38,6 +38,7 @@ type AuthRepo interface {
 	InsertAddress(ctx context.Context, address models.Address) error
 	DeleteAddress(ctx context.Context, addressId uuid.UUID) error
 	SelectUserAddresses(ctx context.Context, login string) ([]models.Address, error)
+	AddressExists(ctx context.Context, address string, userID uuid.UUID) (bool, error)
 }
 
 type AuthUsecase interface {
