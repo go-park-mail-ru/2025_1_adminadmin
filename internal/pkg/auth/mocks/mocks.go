@@ -37,6 +37,21 @@ func (m *MockAuthRepo) EXPECT() *MockAuthRepoMockRecorder {
 	return m.recorder
 }
 
+// AddressExists mocks base method.
+func (m *MockAuthRepo) AddressExists(ctx context.Context, address string, userID uuid.UUID) (bool, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AddressExists", ctx, address, userID)
+	ret0, _ := ret[0].(bool)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AddressExists indicates an expected call of AddressExists.
+func (mr *MockAuthRepoMockRecorder) AddressExists(ctx, address, userID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddressExists", reflect.TypeOf((*MockAuthRepo)(nil).AddressExists), ctx, address, userID)
+}
+
 // DeleteAddress mocks base method.
 func (m *MockAuthRepo) DeleteAddress(ctx context.Context, addressId uuid.UUID) error {
 	m.ctrl.T.Helper()
