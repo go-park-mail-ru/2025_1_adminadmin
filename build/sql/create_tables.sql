@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS orders (
     entrance TEXT,
     floor TEXT,
     courier_comment TEXT,
-    leave_at_door BOOLEAN DEFAULT FALSE
+    leave_at_door BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
