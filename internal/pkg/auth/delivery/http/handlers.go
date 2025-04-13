@@ -340,7 +340,7 @@ func (h *AuthHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	updatedUser, err := h.uc.UpdateUser(r.Context(), login, updateData)
 	if err != nil {
 		switch err {
-		case auth.ErrInvalidPassword, auth.ErrInvalidName, auth.ErrInvalidPhone, auth.ErrSamePassword, auth.ErrSameName, auth.ErrSamePhone:
+		case auth.ErrInvalidPassword, auth.ErrInvalidName, auth.ErrInvalidPhone, auth.ErrSamePassword:
 			log.LogHandlerError(logger, err, http.StatusBadRequest)
 			utils.SendError(w, err.Error(), http.StatusBadRequest)
 		default:
