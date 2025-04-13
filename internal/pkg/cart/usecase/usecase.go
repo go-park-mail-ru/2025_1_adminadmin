@@ -72,7 +72,7 @@ func (u *CartUsecase) CreateOrder(ctx context.Context, userID string, req models
 		CreatedAt:         time.Now(),
 	}
 
-	if err := u.restaurantRepo.Save(ctx, order); err != nil {
+	if err := u.restaurantRepo.Save(ctx, order, userID); err != nil {
 		return nil, err
 	}
 

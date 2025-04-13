@@ -59,7 +59,12 @@ func (r *RestaurantRepository) GetCartItem(ctx context.Context, productIDs []str
 	}, nil
 }
 
-func (r *RestaurantRepository) Save(ctx context.Context, order *models.Order) error {
+func (r *RestaurantRepository) Save(ctx context.Context, order *models.Order, userLogin string) error {
+	var userID uuid.UUID
+	err := r.db.QueryRow(ctx, `SELECT id FROM users WHERE login = $1`, userLogin).Scan(&userID)
+	if err != nil {
+		return fmt.Errorf("не удалось найти пользователя по логину %s: %w", userLogin, err)
+	}
 	query := `INSERT INTO orders (
 		id, user_id, status, address_id, order_products,
 		apartment_or_office, intercom, entrance, floor,
@@ -72,7 +77,7 @@ func (r *RestaurantRepository) Save(ctx context.Context, order *models.Order) er
 	}
 
 	_, err = r.db.Exec(ctx, query,
-		order.ID, order.UserID, order.Status, order.Address, string(orderProductsStr),
+		order.ID, userID, order.Status, order.Address, string(orderProductsStr),
 		order.ApartmentOrOffice, order.Intercom, order.Entrance, order.Floor,
 		order.CourierComment, order.LeaveAtDoor, order.CreatedAt)
 
