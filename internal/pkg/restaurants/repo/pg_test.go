@@ -53,7 +53,7 @@ func TestGetProductsByRestaurant(t *testing.T) {
 		wantErr    bool
 	}{
 		{
-			name: "Successful",
+			name: "Success",
 			repoMocker: func(mockPool *pgxpoolmock.MockPgxPool) {
 				restaurantRow := pgxpoolmock.NewRows(columns).
 					AddRow(
@@ -144,7 +144,7 @@ func TestGetAll(t *testing.T) {
 		wantErr    bool
 	}{
 		{
-			name: "Successful",
+			name: "Success",
 			args: args{count: 10, offset: 0},
 			repoMocker: func(mock *pgxpoolmock.MockPgxPool) {
 				pgxRows := pgxpoolmock.NewRows(columns).
@@ -216,7 +216,7 @@ func TestGetById(t *testing.T) {
 		wantErr     bool
 	}{
 		{
-			name:    "Successful",
+			name:    "Success",
 			inputID: restaurantID,
 			mockSetup: func(mock *pgxpoolmock.MockPgxPool) {
 				row := pgxpoolmock.NewRows(columns).
