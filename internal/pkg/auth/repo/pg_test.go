@@ -15,14 +15,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-type mockCommandTag struct {
-	count int64
-}
-
-func (m mockCommandTag) RowsAffected() int64 {
-	return m.count
-}
-
 func TestInsertUser(t *testing.T) {
 	salt := make([]byte, 8)
 	userId := uuid.NewV4()
