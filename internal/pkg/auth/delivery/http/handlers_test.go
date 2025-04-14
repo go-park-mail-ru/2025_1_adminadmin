@@ -3,10 +3,9 @@ package http
 import (
 	"bytes"
 	"errors"
-	"log"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
-	"strings"
 	"testing"
 	"time"
 
@@ -18,7 +17,19 @@ import (
 	"github.com/golang/mock/gomock"
 	"github.com/satori/uuid"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
+
+func generateJWT(t *testing.T, login, secret string, id uuid.UUID) string {
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"login": login,
+		"exp":   time.Now().Add(time.Hour).Unix(),
+		"id": id,
+	})
+	tokenStr, err := token.SignedString([]byte(secret))
+	require.NoError(t, err)
+	return tokenStr
+}
 
 func TestSignIn(t *testing.T) {
 	salt := make([]byte, 8)
@@ -238,6 +249,110 @@ func TestSignUp(t *testing.T) {
 	}
 }
 
+func TestCheck(t *testing.T) {
+	secret := "secret-value"
+	login := "testuser"
+	csrf_token := "test-csrf"
+	userId := uuid.NewV4()
+	tests := []struct {
+		name           string
+		cookieSetup    func(r *http.Request)
+		mockerUsecase  func(mockUsecase *mocks.MockAuthUsecase)
+		expectedStatus int
+		expectedError  string
+	}{
+		{
+			name: "Missing CSRF Cookie",
+			cookieSetup: func(r *http.Request) {
+				tokenStr := generateJWT(t, login, secret, userId)
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
+				r.Header.Set("X-CSRF-Token", csrf_token)
+			},
+			expectedStatus: http.StatusUnauthorized,
+		},
+		{
+			name: "CSRF Mismatch",
+			cookieSetup: func(r *http.Request) {
+				tokenStr := generateJWT(t, login, secret, userId)
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
+				r.Header.Set("X-CSRF-Token", "blablabla")
+			},
+			expectedStatus: http.StatusForbidden,
+		},
+		{
+			name: "Missing AdminJWT Cookie",
+			cookieSetup: func(r *http.Request) {
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
+				r.Header.Set("X-CSRF-Token", csrf_token)
+			},
+			expectedStatus: http.StatusUnauthorized,
+		},
+		{
+			name: "Invalid JWT Token",
+			cookieSetup: func(r *http.Request) {
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
+				r.Header.Set("X-CSRF-Token", csrf_token)
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: "invalid-token"})
+			},
+			expectedStatus: http.StatusUnauthorized,
+		},
+		{
+			name: "User Not Found",
+			cookieSetup: func(r *http.Request) {
+				tokenStr := generateJWT(t, "unknown-user", secret, userId)
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
+				r.Header.Set("X-CSRF-Token", csrf_token)
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
+			},
+			mockerUsecase: func(mockUsecase *mocks.MockAuthUsecase) {
+				mockUsecase.EXPECT().Check(gomock.Any(), "unknown-user").
+					Return(models.User{}, auth.ErrUserNotFound)
+			},
+			expectedStatus: http.StatusBadRequest,
+			expectedError:  auth.ErrUserNotFound.Error(),
+		},
+		{
+			name: "Successful",
+			cookieSetup: func(r *http.Request) {
+				tokenStr := generateJWT(t, login, secret, userId)
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
+				r.Header.Set("X-CSRF-Token", csrf_token)
+			},
+			mockerUsecase: func(mockUsecase *mocks.MockAuthUsecase) {
+				mockUsecase.EXPECT().Check(gomock.Any(), login).
+					Return(models.User{Login: login}, nil)
+			},
+			expectedStatus: http.StatusOK,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			ctrl := gomock.NewController(t)
+			mockUsecase := mocks.NewMockAuthUsecase(ctrl)
+			defer ctrl.Finish()
+
+			r := httptest.NewRequest("GET", "/api/auth/check", nil)
+			w := httptest.NewRecorder()
+			tt.cookieSetup(r)
+
+			if tt.mockerUsecase != nil {
+				tt.mockerUsecase(mockUsecase)
+			}
+
+			handler := AuthHandler{uc: mockUsecase, secret: secret}
+			handler.Check(w, r)
+
+			assert.Equal(t, tt.expectedStatus, w.Code)
+			if tt.expectedError != "" {
+				assert.Contains(t, w.Body.String(), tt.expectedError)
+			}
+		})
+	}
+}
+
 func TestLogOut(t *testing.T) {
 	tests := []struct {
 		name           string
@@ -280,28 +395,29 @@ func TestLogOut(t *testing.T) {
 
 			assert.Equal(t, tt.expectedStatus, w.Code)
 
-			body := w.Body.String()
-			if tt.expectedError != "" && !strings.Contains(body, tt.expectedError) {
-				t.Errorf("expected error message to contain %s, got %s", tt.expectedError, body)
+			if tt.expectedError != "" {
+				assert.Contains(t, w.Body.String(), tt.expectedError)
 			}
 		})
 	}
 }
 
 func TestUpdateUser(t *testing.T) {
-	secret := "some secret"
+	secret := "secret-value"
+	login := "testuser"
+	csrf_token := "test-csrf"
+	userId := uuid.NewV4()
 	tests := []struct {
 		name           string
 		cookieSetup    func(r *http.Request)
 		requestBody    string
-		mockUsecase    func(mockUsecase *mocks.MockAuthUsecase)
+		mockerUsecase  func(mockUsecase *mocks.MockAuthUsecase)
 		expectedStatus int
 		expectedError  string
 	}{
 		{
 			name: "Missing AdminJWT Cookie",
 			cookieSetup: func(r *http.Request) {
-				// Не добавляем AdminJWT cookie, чтобы симулировать ошибку
 			},
 			expectedStatus: http.StatusUnauthorized,
 			expectedError:  "Токен отсутствует",
@@ -309,54 +425,63 @@ func TestUpdateUser(t *testing.T) {
 		{
 			name: "Invalid AdminJWT Token",
 			cookieSetup: func(r *http.Request) {
-				// Добавляем невалидный токен
-				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: "invalid-token"})
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: "blablabla"})
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
+				r.Header.Set("X-CSRF-Token", csrf_token)
 			},
 			expectedStatus: http.StatusUnauthorized,
 			expectedError:  "Недействительный токен: login отсутствует",
 		},
 		{
+			name: "CSRF Token Mismatch",
+			cookieSetup: func(r *http.Request) {
+				tokenStr := generateJWT(t, login, secret, userId)
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
+				r.Header.Set("X-CSRF-Token", "blablabla")
+			},
+			expectedStatus: http.StatusForbidden,
+		},
+		{
 			name: "Error Parsing JSON Body",
 			cookieSetup: func(r *http.Request) {
-				// Добавляем валидный токен
-				token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-					"login": "test123",
-					"id":    uuid.NewV4(),
-					"exp":   time.Now().Add(24 * time.Hour).Unix(),
-				})
-				tokenStr, _ := token.SignedString([]byte(secret))
+				tokenStr := generateJWT(t, login, secret, userId)
 				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
+				r.Header.Set("X-CSRF-Token", csrf_token)
 			},
-			requestBody:    `{"password": "newpassword"}`, // Невалидный JSON
+			requestBody:    `invalid json`,
 			expectedStatus: http.StatusBadRequest,
 			expectedError:  "Ошибка парсинга JSON",
 		},
 		{
 			name: "Invalid Update User Data (Password)",
 			cookieSetup: func(r *http.Request) {
-				// Добавляем валидный токен
-				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: "valid-token"})
+				tokenStr := generateJWT(t, login, secret, userId)
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
+				r.Header.Set("X-CSRF-Token", csrf_token)
 			},
-			requestBody: `{"password": "newpassword"}`,
-			mockUsecase: func(mockUsecase *mocks.MockAuthUsecase) {
-				// Симулируем ошибку неверного пароля
-				mockUsecase.EXPECT().UpdateUser(gomock.Any(), "valid-login", gomock.Any()).Return(models.User{}, auth.ErrInvalidPassword)
+			requestBody: `{"password": "p"}`,
+			mockerUsecase: func(mockUsecase *mocks.MockAuthUsecase) {
+				mockUsecase.EXPECT().UpdateUser(gomock.Any(), login, gomock.Any()).
+					Return(models.User{}, auth.ErrInvalidPassword)
 			},
 			expectedStatus: http.StatusBadRequest,
-			expectedError:  "Неверный пароль",
+			expectedError:  auth.ErrInvalidPassword.Error(),
 		},
 		{
 			name: "Successful Update User",
 			cookieSetup: func(r *http.Request) {
-				// Добавляем валидный токен
-				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: "valid-token"})
+				tokenStr := generateJWT(t, login, secret, userId)
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
+				r.Header.Set("X-CSRF-Token", csrf_token)
 			},
-			requestBody: `{"password": "newpassword", "name": "newname"}`,
-			mockUsecase: func(mockUsecase *mocks.MockAuthUsecase) {
-				// Симулируем успешное обновление пользователя
-				mockUsecase.EXPECT().UpdateUser(gomock.Any(), "valid-login", gomock.Any()).Return(models.User{
-					Login: "valid-login",
-				}, nil)
+			requestBody: `{"password": "newPass@123", "first_name": "Доминик"}`,
+			mockerUsecase: func(mockUsecase *mocks.MockAuthUsecase) {
+				mockUsecase.EXPECT().UpdateUser(gomock.Any(), login, gomock.Any()).
+					Return(models.User{Login: login}, nil)
 			},
 			expectedStatus: http.StatusOK,
 		},
@@ -368,33 +493,328 @@ func TestUpdateUser(t *testing.T) {
 			mockUsecase := mocks.NewMockAuthUsecase(ctrl)
 			defer ctrl.Finish()
 
-			r := httptest.NewRequest("POST", "/api/auth/update-user", bytes.NewBufferString(tt.requestBody))
+			r := httptest.NewRequest("POST", "/api/auth/update_user", bytes.NewBufferString(tt.requestBody))
 			w := httptest.NewRecorder()
 
-			// Устанавливаем куки, если необходимо
 			tt.cookieSetup(r)
 
-			// Логирование куки перед обработчиком
-			log.Println("Cookies in request:", r.Cookies())
+			if tt.mockerUsecase != nil {
+				tt.mockerUsecase(mockUsecase)
+			}
 
-			// Настроим моки для каждого теста
+			handler := AuthHandler{mockUsecase, secret}
+			handler.UpdateUser(w, r)
+
+			assert.Equal(t, tt.expectedStatus, w.Code)
+			if tt.expectedError != "" {
+				assert.Contains(t, w.Body.String(), tt.expectedError)
+			}
+		})
+	}
+}
+
+func TestGetUserAddresses(t *testing.T) {
+	secret := "secret-value"
+	login := "testuser"
+	csrf_token := "test-csrf"
+	userId := uuid.NewV4()
+	tests := []struct {
+		name           string
+		cookieSetup    func(r *http.Request)
+		mockUsecase    func(mockUsecase *mocks.MockAuthUsecase)
+		expectedStatus int
+		expectedError  string
+	}{
+		{
+			name: "Missing AdminJWT Cookie",
+			cookieSetup: func(r *http.Request) {
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
+				r.Header.Set("X-CSRF-Token", csrf_token)
+			},
+			expectedStatus: http.StatusUnauthorized,
+			expectedError:  "Токен отсутствует",
+		},
+		{
+			name: "Invalid AdminJWT Token",
+			cookieSetup: func(r *http.Request) {
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: "blablabla"})
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
+				r.Header.Set("X-CSRF-Token", csrf_token)
+			},
+			expectedStatus: http.StatusUnauthorized,
+			expectedError:  "Недействительный токен: login отсутствует",
+		},
+		{
+			name: "CSRF Token Mismatch",
+			cookieSetup: func(r *http.Request) {
+				tokenStr := generateJWT(t, login, secret, userId)
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
+				r.Header.Set("X-CSRF-Token", "blablabla")
+			},
+			expectedStatus: http.StatusForbidden,
+		},
+		{
+			name: "Usecase Error",
+			cookieSetup: func(r *http.Request) {
+				tokenStr := generateJWT(t, login, secret, userId)
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
+				r.Header.Set("X-CSRF-Token", csrf_token)
+			},
+			mockUsecase: func(mockUsecase *mocks.MockAuthUsecase) {
+				mockUsecase.EXPECT().GetUserAddresses(gomock.Any(), login).
+					Return(nil, errors.New("usecase error"))
+			},
+			expectedStatus: http.StatusInternalServerError,
+			expectedError:  "usecase error",
+		},
+		{
+			name: "Successful Response",
+			cookieSetup: func(r *http.Request) {
+				tokenStr := generateJWT(t, login, secret, userId)
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
+				r.Header.Set("X-CSRF-Token", csrf_token)
+			},
+			mockUsecase: func(mockUsecase *mocks.MockAuthUsecase) {
+				mockUsecase.EXPECT().GetUserAddresses(gomock.Any(), login).
+					Return([]models.Address{
+						{Id: uuid.NewV4(), Address: "г. Москва, Кремль", UserId: uuid.NewV4()},
+					}, nil)
+			},
+			expectedStatus: http.StatusOK,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			ctrl := gomock.NewController(t)
+			mockUsecase := mocks.NewMockAuthUsecase(ctrl)
+			defer ctrl.Finish()
+
 			if tt.mockUsecase != nil {
 				tt.mockUsecase(mockUsecase)
 			}
 
-			handler := CreateAuthHandler(mockUsecase)
+			r := httptest.NewRequest("GET", "/api/auth/address", nil)
+			w := httptest.NewRecorder()
+			tt.cookieSetup(r)
 
-			handler.UpdateUser(w, r)
+			handler := AuthHandler{uc: mockUsecase, secret: secret}
+			handler.GetUserAddresses(w, r)
 
-			// Проверка статуса
 			assert.Equal(t, tt.expectedStatus, w.Code)
-
-			// Проверка сообщения об ошибке
 			if tt.expectedError != "" {
-				body := w.Body.String()
-				if !strings.Contains(body, tt.expectedError) {
-					t.Errorf("expected error message to contain %s, got %s", tt.expectedError, body)
-				}
+				assert.Contains(t, w.Body.String(), tt.expectedError)
+			}
+		})
+	}
+}
+
+func TestDeleteAddress(t *testing.T) {
+	secret := "secret-value"
+	login := "testuser"
+	csrf_token := "test-csrf"
+	userId := uuid.NewV4()
+	addressId := uuid.NewV4()
+	tests := []struct {
+		name           string
+		cookieSetup    func(r *http.Request)
+		mockUsecase    func(mockUsecase *mocks.MockAuthUsecase)
+		requestBody    string
+		expectedStatus int
+		expectedError  string
+	}{
+		{
+			name: "CSRF Token Mismatch",
+			cookieSetup: func(r *http.Request) {
+				tokenStr := generateJWT(t, login, secret, userId)
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
+				r.Header.Set("X-CSRF-Token", "blablabla")
+			},
+			expectedStatus: http.StatusForbidden,
+		},
+		{
+			name: "Error Parsing JSON Body",
+			cookieSetup: func(r *http.Request) {
+				tokenStr := generateJWT(t, login, secret, userId)
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
+				r.Header.Set("X-CSRF-Token", csrf_token)
+			},
+			requestBody:    `invalid json`,
+			expectedStatus: http.StatusBadRequest,
+			expectedError:  "Ошибка парсинга JSON",
+		},
+		{
+			name: "Usecase Error",
+			cookieSetup: func(r *http.Request) {
+				tokenStr := generateJWT(t, login, secret, userId)
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
+				r.Header.Set("X-CSRF-Token", csrf_token)
+			},
+			requestBody: fmt.Sprintf(`{"id":"%s"}`, addressId),
+			mockUsecase: func(mockUsecase *mocks.MockAuthUsecase) {
+				mockUsecase.EXPECT().DeleteAddress(gomock.Any(), addressId).
+					Return(errors.New("usecase error"))
+			},
+			expectedStatus: http.StatusInternalServerError,
+			expectedError:  "usecase error",
+		},
+		{
+			name: "Successful Delete",
+			cookieSetup: func(r *http.Request) {
+				tokenStr := generateJWT(t, login, secret, userId)
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
+				r.Header.Set("X-CSRF-Token", csrf_token)
+			},
+			requestBody: fmt.Sprintf(`{"id":"%s"}`, addressId),
+			mockUsecase: func(mockUsecase *mocks.MockAuthUsecase) {
+				mockUsecase.EXPECT().DeleteAddress(gomock.Any(), addressId).
+					Return(nil)
+			},
+			expectedStatus: http.StatusOK,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			ctrl := gomock.NewController(t)
+			mockUsecase := mocks.NewMockAuthUsecase(ctrl)
+			defer ctrl.Finish()
+
+			if tt.mockUsecase != nil {
+				tt.mockUsecase(mockUsecase)
+			}
+
+			r := httptest.NewRequest("DELETE", "/api/auth/address", bytes.NewBufferString(tt.requestBody))
+			w := httptest.NewRecorder()
+			tt.cookieSetup(r)
+
+			handler := AuthHandler{uc: mockUsecase, secret: secret}
+			handler.DeleteAddress(w, r)
+
+			assert.Equal(t, tt.expectedStatus, w.Code)
+			if tt.expectedError != "" {
+				assert.Contains(t, w.Body.String(), tt.expectedError)
+			}
+		})
+	}
+}
+
+func TestAddAddress(t *testing.T) {
+	secret := "secret-value"
+	login := "testuser"
+	csrf_token := "test-csrf"
+	userId := uuid.NewV4()
+	address := models.Address{
+		Address: "г. Москва, Кремль",
+		UserId:  userId,
+	}
+	tests := []struct {
+		name           string
+		cookieSetup    func(r *http.Request)
+		mockUsecase    func(mockUsecase *mocks.MockAuthUsecase)
+		requestBody    string
+		expectedStatus int
+		expectedError  string
+	}{
+		{
+			name: "Missing AdminJWT Cookie",
+			cookieSetup: func(r *http.Request) {
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
+				r.Header.Set("X-CSRF-Token", csrf_token)
+			},
+			expectedStatus: http.StatusUnauthorized,
+			expectedError:  "Токен отсутствует",
+		},
+		{
+			name: "Invalid AdminJWT Token",
+			cookieSetup: func(r *http.Request) {
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: "blablabla"})
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
+				r.Header.Set("X-CSRF-Token", csrf_token)
+			},
+			expectedStatus: http.StatusUnauthorized,
+			expectedError:  "Недействительный токен: id отсутствует",
+		},
+		{
+			name: "CSRF Token Mismatch",
+			cookieSetup: func(r *http.Request) {
+				tokenStr := generateJWT(t, login, secret, userId)
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
+				r.Header.Set("X-CSRF-Token", "blablabla")
+			},
+			expectedStatus: http.StatusForbidden,
+		},
+		{
+			name: "Error Parsing JSON Body",
+			cookieSetup: func(r *http.Request) {
+				tokenStr := generateJWT(t, login, secret, userId)
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
+				r.Header.Set("X-CSRF-Token", csrf_token)
+			},
+			requestBody:    `invalid json`,
+			expectedStatus: http.StatusBadRequest,
+			expectedError:  "Ошибка парсинга JSON",
+		},
+		{
+			name: "Usecase Error",
+			cookieSetup: func(r *http.Request) {
+				tokenStr := generateJWT(t, login, secret, userId)
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
+				r.Header.Set("X-CSRF-Token", csrf_token)
+			},
+			requestBody: fmt.Sprintf(`{"address":"%s"}`, address.Address),
+			mockUsecase: func(mockUsecase *mocks.MockAuthUsecase) {
+				mockUsecase.EXPECT().AddAddress(gomock.Any(), address).
+					Return(errors.New("usecase error"))
+			},
+			expectedStatus: http.StatusInternalServerError,
+			expectedError:  "usecase error",
+		},
+		{
+			name: "Successful Add",
+			cookieSetup: func(r *http.Request) {
+				tokenStr := generateJWT(t, login, secret, userId)
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
+				r.Header.Set("X-CSRF-Token", csrf_token)
+			},
+			requestBody: fmt.Sprintf(`{"address":"%s"}`, address.Address),
+			mockUsecase: func(mockUsecase *mocks.MockAuthUsecase) {
+				mockUsecase.EXPECT().AddAddress(gomock.Any(), address).
+					Return(nil)
+			},
+			expectedStatus: http.StatusOK,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			ctrl := gomock.NewController(t)
+			mockUsecase := mocks.NewMockAuthUsecase(ctrl)
+			defer ctrl.Finish()
+
+			if tt.mockUsecase != nil {
+				tt.mockUsecase(mockUsecase)
+			}
+
+			r := httptest.NewRequest("POST", "/api/auth/address", bytes.NewBufferString(tt.requestBody))
+			w := httptest.NewRecorder()
+			tt.cookieSetup(r)
+
+			handler := AuthHandler{uc: mockUsecase, secret: secret}
+			handler.AddAddress(w, r)
+
+			assert.Equal(t, tt.expectedStatus, w.Code)
+			if tt.expectedError != "" {
+				assert.Contains(t, w.Body.String(), tt.expectedError)
 			}
 		})
 	}
