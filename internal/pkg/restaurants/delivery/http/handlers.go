@@ -111,6 +111,12 @@ func (h *RestaurantHandler) RestaurantList(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
+	if restaurants == nil {
+		log.LogHandlerError(logger, fmt.Errorf("рестораны не найдены: %w", err), http.StatusNotFound)
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
 	data, err := json.Marshal(restaurants)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("Ошибка маршалинга: %w", err), http.StatusInternalServerError)
