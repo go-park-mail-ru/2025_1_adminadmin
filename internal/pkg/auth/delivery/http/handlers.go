@@ -61,6 +61,7 @@ func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) {
 		utils.SendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
 		return
 	}
+	req.Sanitize()
 
 	user, token, csrfToken, err := h.uc.SignIn(r.Context(), req)
 
@@ -130,6 +131,7 @@ func (h *AuthHandler) SignUp(w http.ResponseWriter, r *http.Request) {
 		utils.SendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
 		return
 	}
+	req.Sanitize()
 
 	user, token, csrfToken, err := h.uc.SignUp(r.Context(), req)
 
@@ -336,6 +338,7 @@ func (h *AuthHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 		utils.SendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
 		return
 	}
+	updateData.Sanitize()
 
 	updatedUser, err := h.uc.UpdateUser(r.Context(), login, updateData)
 	if err != nil {
@@ -560,6 +563,7 @@ func (h *AuthHandler) DeleteAddress(w http.ResponseWriter, r *http.Request) {
 		utils.SendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
 		return
 	}
+	address.Sanitize()
 
 	err = h.uc.DeleteAddress(r.Context(), address.Id)
 	if err != nil {
@@ -630,6 +634,7 @@ func (h *AuthHandler) AddAddress(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	address.UserId = id
+	address.Sanitize()
 
 	err = h.uc.AddAddress(r.Context(), address)
 	if err != nil {

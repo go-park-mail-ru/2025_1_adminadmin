@@ -48,17 +48,30 @@ type RestaurantFull struct {
 	Categories   []Category   `json:"categories"`
 }
 
+// Санитайзинг для Product
 func (p *Product) Sanitize() {
 	p.Name = html.EscapeString(p.Name)
+	p.ImageURL = html.EscapeString(p.ImageURL)
 }
 
-func (p *Category) Sanitize() {
-	p.Name = html.EscapeString(p.Name)
+// Санитайзинг для Category
+func (c *Category) Sanitize() {
+	c.Name = html.EscapeString(c.Name)
+	for i := range c.Products {
+		c.Products[i].Sanitize() // Санитайзим все продукты в категории
+	}
 }
 
-func (p *RestaurantFull) Sanitize() {
-	p.Name = html.EscapeString(p.Name)
-	p.BannerURL = html.EscapeString(p.BannerURL)
-	p.Address = html.EscapeString(p.Address)
-	p.Description = html.EscapeString(p.Description)
+// Санитайзинг для RestaurantFull
+func (r *RestaurantFull) Sanitize() {
+	r.Name = html.EscapeString(r.Name)
+	r.BannerURL = html.EscapeString(r.BannerURL)
+	r.Address = html.EscapeString(r.Address)
+	r.Description = html.EscapeString(r.Description)
+	for i := range r.Tags {
+		r.Tags[i] = html.EscapeString(r.Tags[i]) 
+	}
+	for i := range r.Categories {
+		r.Categories[i].Sanitize() 
+	}
 }

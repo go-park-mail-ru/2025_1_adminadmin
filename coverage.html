@@ -366,37 +366,42 @@ type OrderInReq struct {
         FinalPrice        float64 `json:"final_price"`
 }
 
-func (a *CartItem) Sanitize() <span class="cov0" title="0">{
-        a.Name = html.EscapeString(a.Name)
-        a.ImageURL = html.EscapeString(a.ImageURL)
+func (c *CartItem) Sanitize() <span class="cov0" title="0">{
+        c.Name = html.EscapeString(c.Name)
+        c.ImageURL = html.EscapeString(c.ImageURL)
 }</span>
 
-func (a *Cart) Sanitize() <span class="cov0" title="0">{
-        a.Name = html.EscapeString(a.Name)
+func (c *Cart) Sanitize() <span class="cov0" title="0">{
+        c.Name = html.EscapeString(c.Name)
+        for i := range c.CartItems </span><span class="cov0" title="0">{
+                c.CartItems[i].Sanitize()
+        }</span>
+}
+
+func (c *CartInReq) Sanitize() <span class="cov0" title="0">{
+        c.RestaurantId = html.EscapeString(c.RestaurantId)
 }</span>
 
-func (a *CartInReq) Sanitize() <span class="cov0" title="0">{
-        a.RestaurantId = html.EscapeString(a.RestaurantId)
+func (o *Order) Sanitize() <span class="cov0" title="0">{
+        o.Status = html.EscapeString(o.Status)
+        o.Address = html.EscapeString(o.Address)
+        o.ApartmentOrOffice = html.EscapeString(o.ApartmentOrOffice)
+        o.Intercom = html.EscapeString(o.Intercom)
+        o.Entrance = html.EscapeString(o.Entrance)
+        o.Floor = html.EscapeString(o.Floor)
+        o.CourierComment = html.EscapeString(o.CourierComment)
+        o.OrderProducts.Sanitize()
 }</span>
 
-func (a *Order) Sanitize() <span class="cov0" title="0">{
-        a.Status = html.EscapeString(a.Status)
-        a.ApartmentOrOffice = html.EscapeString(a.ApartmentOrOffice)
-        a.Intercom = html.EscapeString(a.Intercom)
-        a.Entrance = html.EscapeString(a.Entrance)
-        a.Floor = html.EscapeString(a.Floor)
-        a.CourierComment = html.EscapeString(a.CourierComment)
-}</span>
-
-func (a *OrderInReq) Sanitize() <span class="cov0" title="0">{
-        a.Status = html.EscapeString(a.Status)
-        a.ApartmentOrOffice = html.EscapeString(a.ApartmentOrOffice)
-        a.Intercom = html.EscapeString(a.Intercom)
-        a.Entrance = html.EscapeString(a.Entrance)
-        a.Floor = html.EscapeString(a.Floor)
-        a.CourierComment = html.EscapeString(a.CourierComment)
-}</span>
-</pre>
+func (o *OrderInReq) Sanitize() <span class="cov0" title="0">{
+        o.Status = html.EscapeString(o.Status)
+        o.Address = html.EscapeString(o.Address)
+        o.ApartmentOrOffice = html.EscapeString(o.ApartmentOrOffice)
+        o.Intercom = html.EscapeString(o.Intercom)
+        o.Entrance = html.EscapeString(o.Entrance)
+        o.Floor = html.EscapeString(o.Floor)
+        o.CourierComment = html.EscapeString(o.CourierComment)
+}</pre>
 		
 		<pre class="file" id="file3" style="display: none">package models
 
@@ -1826,8 +1831,9 @@ func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) <span clas
                 utils.SendError(w, "некорректный JWT-токен", http.StatusUnauthorized)
                 return
         }</span>
+        <span class="cov0" title="0">cart.Sanitize()
 
-        <span class="cov0" title="0">if !jwtUtils.CheckDoubleSubmitCookie(w, r) </span><span class="cov0" title="0">{
+        if !jwtUtils.CheckDoubleSubmitCookie(w, r) </span><span class="cov0" title="0">{
                 log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
                 utils.SendError(w, "некорректный CSRF-токен", http.StatusForbidden)
                 return
@@ -1884,7 +1890,9 @@ func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Reques
                 return
         }</span>
 
-        <span class="cov0" title="0">ctx := context.Background()
+        <span class="cov0" title="0">requestBody.Sanitize()
+
+        ctx := context.Background()
         err = h.cartUsecase.UpdateItemQuantity(ctx, login, productID, requestBody.RestaurantId, requestBody.Quantity)
         if err != nil </span><span class="cov0" title="0">{
                 log.LogHandlerError(logger, fmt.Errorf("не удалось обновить количество: %w", err), http.StatusInternalServerError)
@@ -1985,8 +1993,10 @@ func (h *CartHandler) CreateOrder(w http.ResponseWriter, r *http.Request) <span 
                 utils.SendError(w, "Некорректный формат данных", http.StatusBadRequest)
                 return
         }</span>
+        <span class="cov0" title="0">req.Sanitize()
+        cart.Sanitize()
 
-        <span class="cov0" title="0">if err := validation.ValidateOrderInput(&amp;req); err != nil </span><span class="cov0" title="0">{
+        if err := validation.ValidateOrderInput(&amp;req); err != nil </span><span class="cov0" title="0">{
                 log.LogHandlerError(logger, fmt.Errorf("валидация заказа: %w", err), http.StatusBadRequest)
                 utils.SendError(w, err.Error(), http.StatusBadRequest)
                 return

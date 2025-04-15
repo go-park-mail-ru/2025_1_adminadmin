@@ -57,11 +57,13 @@ func (r *RestaurantRepository) GetCartItem(ctx context.Context, productIDs []str
 		return models.Cart{}, err
 	}
 
-	return models.Cart{
+	cart := models.Cart{
 		Id:        uid,
 		Name:      restaurantName,
 		CartItems: items,
-	}, nil
+	}
+	cart.Sanitize()
+	return cart, nil
 }
 
 func (r *RestaurantRepository) Save(ctx context.Context, order *models.Order, userLogin string) error {
@@ -81,6 +83,7 @@ func (r *RestaurantRepository) Save(ctx context.Context, order *models.Order, us
 		log.Printf("Ошибка при маршалинге заказанных товаров: %v", err)
 		return err
 	}
+	order.Sanitize()
 
 	log.Printf("Данные заказа: ID: %s, Статус: %s, Адрес: %s", order.ID, order.Status, order.Address)
 

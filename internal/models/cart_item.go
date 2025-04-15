@@ -62,11 +62,6 @@ type OrderInReq struct {
 	FinalPrice        float64 `json:"final_price"`
 }
 
-func (a *CartItem) Sanitize() {
-	a.Name = html.EscapeString(a.Name)
-	a.ImageURL = html.EscapeString(a.ImageURL)
-}
-
 func (c *CartItem) Sanitize() {
 	c.Name = html.EscapeString(c.Name)
 	c.ImageURL = html.EscapeString(c.ImageURL)
