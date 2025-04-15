@@ -41,6 +41,7 @@ func (r *RestaurantRepository) GetProductsByRestaurant(ctx context.Context, rest
 		logger.Error("failed to scan restaurant: " + err.Error())
 		return nil, err
 	}
+	rest.Sanitize()
 
 	tagRows, err := r.db.Query(ctx, getRestaurantTag, restaurantID)
 	if err != nil {
@@ -108,6 +109,7 @@ func (r *RestaurantRepository) GetAll(ctx context.Context, count, offset int) ([
 			return nil, err
 		}
 		restaurants = append(restaurants, restaurant)
+		restaurant.Sanitize()
 	}
 
 	logger.Info("Successful")
