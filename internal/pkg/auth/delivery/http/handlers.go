@@ -19,10 +19,6 @@ import (
 	"github.com/satori/uuid"
 )
 
-type DeleteAddressReq struct {
-	Id string `json:"id"`
-}
-
 const maxRequestBodySize = 10 << 20
 
 var allowedMimeTypes = map[string]string{
@@ -102,7 +98,6 @@ func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("X-CSRF-Token", csrfToken)
 	w.Header().Set("Content-Type", "application/json")
 
-	w.WriteHeader(http.StatusOK)
 	if err := json.NewEncoder(w).Encode(user); err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("Ошибка формирования JSON: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
@@ -172,7 +167,6 @@ func (h *AuthHandler) SignUp(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("X-CSRF-Token", csrfToken)
 	w.Header().Set("Content-Type", "application/json")
 
-	w.WriteHeader(http.StatusOK)
 	if err := json.NewEncoder(w).Encode(user); err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("Ошибка формирования JSON: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
@@ -239,7 +233,6 @@ func (h *AuthHandler) Check(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
 	if err := json.NewEncoder(w).Encode(user); err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("Ошибка формирования JSON: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
@@ -283,7 +276,6 @@ func (h *AuthHandler) LogOut(w http.ResponseWriter, r *http.Request) {
 		Path:     "/",
 	})
 
-	w.WriteHeader(http.StatusOK)
 	log.LogHandlerInfo(logger, "Successful", http.StatusOK)
 }
 
@@ -354,7 +346,6 @@ func (h *AuthHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
 	if err := json.NewEncoder(w).Encode(updatedUser); err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("Ошибка формирования JSON: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
@@ -470,7 +461,6 @@ func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
 	if err := json.NewEncoder(w).Encode(updatedUser); err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("Ошибка формирования JSON: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
@@ -528,7 +518,6 @@ func (h *AuthHandler) GetUserAddresses(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
 	if err := json.NewEncoder(w).Encode(addresses); err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("Ошибка формирования JSON: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
@@ -543,7 +532,7 @@ func (h *AuthHandler) GetUserAddresses(w http.ResponseWriter, r *http.Request) {
 // @ID delete_address
 // @Accept json
 // @Produce json
-// @Param input body DeleteAddressReq true "ID адреса для удаления"
+// @Param input body models.DeleteAddressReq true "ID адреса для удаления"
 // @Success 200
 // @Failure 400 {object} utils.ErrorResponse "Ошибка парсинга JSON"
 // @Failure 500 {object} utils.ErrorResponse "Ошибка на сервере при обработке запроса"
@@ -573,7 +562,6 @@ func (h *AuthHandler) DeleteAddress(w http.ResponseWriter, r *http.Request) {
 
 	logger.Info("Successful")
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
 }
 
 // AddAddress godoc
@@ -643,6 +631,5 @@ func (h *AuthHandler) AddAddress(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
 	log.LogHandlerInfo(logger, "Successful", http.StatusOK)
 }

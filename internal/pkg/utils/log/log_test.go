@@ -14,7 +14,7 @@ import (
 func TestGetFuncName(t *testing.T) {
 	funcName := GetFuncName()
 	assert.NotEmpty(t, funcName)
-	assert.Equal(t, "TestGetFuncName", funcName) 
+	assert.Equal(t, "log.TestGetFuncName", funcName) 
 }
 
 func TestLogHandlerInfo(t *testing.T) {

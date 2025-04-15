@@ -13,6 +13,10 @@ type Address struct {
 	UserId  uuid.UUID `json:"user_id"`
 }
 
+type DeleteAddressReq struct {
+	Id string `json:"id"`
+}
+
 func (a *Address) Sanitize() {
 	a.Address = html.EscapeString(a.Address)
 }
