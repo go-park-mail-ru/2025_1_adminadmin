@@ -109,6 +109,7 @@ func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Reques
 
 	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
 		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
+		utils.SendError(w, err.Error(), http.StatusForbidden)
 		return
 	}
 
@@ -182,6 +183,7 @@ func (h *CartHandler) ClearCart(w http.ResponseWriter, r *http.Request) {
 
 	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
 		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
+		utils.SendError(w, err.Error(), http.StatusForbidden)
 		return
 	}
 
@@ -202,6 +204,12 @@ func (h *CartHandler) CreateOrder(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.LogHandlerError(logger, err, http.StatusUnauthorized)
 		utils.SendError(w, err.Error(), http.StatusUnauthorized)
+		return
+	}
+
+	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
+		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
+		utils.SendError(w, err.Error(), http.StatusForbidden)
 		return
 	}
 
