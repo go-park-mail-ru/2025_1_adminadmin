@@ -203,7 +203,6 @@ func (h *AuthHandler) Check(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	
 	headerCSRF := r.Header.Get("X-CSRF-Token")
 	if cookieCSRF.Value == "" || headerCSRF == "" || cookieCSRF.Value != headerCSRF {
 		w.WriteHeader(http.StatusForbidden)
@@ -326,6 +325,7 @@ func (h *AuthHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
+		utils.SendError(w, "некорректный CSRF-токен", http.StatusForbidden)
 		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
 		return
 	}
@@ -399,6 +399,7 @@ func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
+		utils.SendError(w, "некорректный CSRF-токен", http.StatusForbidden)
 		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
 		return
 	}
@@ -511,6 +512,7 @@ func (h *AuthHandler) GetUserAddresses(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
+		utils.SendError(w, "некорректный CSRF-токен", http.StatusForbidden)
 		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
 		return
 	}
@@ -609,6 +611,7 @@ func (h *AuthHandler) AddAddress(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
+		utils.SendError(w, "некорректный CSRF-токен", http.StatusForbidden)
 		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
 		return
 	}

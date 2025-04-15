@@ -24,7 +24,7 @@ func generateJWT(t *testing.T, login, secret string, id uuid.UUID) string {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"login": login,
 		"exp":   time.Now().Add(time.Hour).Unix(),
-		"id": id,
+		"id":    id,
 	})
 	tokenStr, err := token.SignedString([]byte(secret))
 	require.NoError(t, err)
