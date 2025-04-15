@@ -23,11 +23,6 @@ services:
         condition: service_healthy
     networks:
       - adminadmin-network
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5458/api/restaurants/list"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   postgres:
     env_file:
@@ -79,7 +74,7 @@ services:
       - /home/ubuntu/deploy_user/tp_code/images_restaurant/:${RESTAURANT_IMAGE_BASE_PATH}
     depends_on:
       main:
-        condition: service_healthy
+        condition: service_started
     networks:
       - adminadmin-network
 
