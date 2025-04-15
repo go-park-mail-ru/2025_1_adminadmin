@@ -77,7 +77,7 @@ func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !full_cart {
-		log.LogHandlerError(logger, fmt.Errorf(msg), http.StatusNotFound)
+		log.LogHandlerError(logger, fmt.Errorf("корзина пуста"), http.StatusNotFound)
 		utils.SendError(w, "корзина пуста", http.StatusNotFound)
 		return
 	}
