@@ -129,32 +129,3 @@ func (h *RestaurantHandler) RestaurantList(w http.ResponseWriter, r *http.Reques
 	log.LogHandlerInfo(logger, "Success", http.StatusOK)
 }
 
-func (h *RestaurantHandler) RestaurantById(w http.ResponseWriter, r *http.Request) {
-	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
-
-	vars := mux.Vars(r)
-	idStr := vars["id"]
-
-	id := uuid.FromStringOrNil(idStr)
-	if id == uuid.Nil {
-		log.LogHandlerError(logger, errors.New("Неверный формат id ресторана"), http.StatusBadRequest)
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
-	restaurant, err := h.restaurantUsecase.GetById(r.Context(), id)
-	if err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка уровнем ниже (usecase): %w", err), http.StatusInternalServerError)
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
-
-	data, err := json.Marshal(restaurant)
-	if err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("Не удалось сериализовать данные: %w", err), http.StatusInternalServerError)
-		utils.SendError(w, "Не удалось сериализовать данные", http.StatusInternalServerError)
-		return
-	}
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(data)
-	log.LogHandlerInfo(logger, "Success", http.StatusOK)
-}

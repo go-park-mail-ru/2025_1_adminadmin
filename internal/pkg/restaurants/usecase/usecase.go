@@ -23,7 +23,3 @@ func (u *RestaurantUsecase) GetProductsByRestaurant(ctx context.Context, restaur
 func (u *RestaurantUsecase) GetAll(ctx context.Context, count, offset int) ([]models.Restaurant, error) {
 	return u.repo.GetAll(ctx, count, offset)
 }
-
-func (u *RestaurantUsecase) GetById(ctx context.Context, id uuid.UUID) (*models.Restaurant, error) {
-	return u.repo.GetById(ctx, id)
-}

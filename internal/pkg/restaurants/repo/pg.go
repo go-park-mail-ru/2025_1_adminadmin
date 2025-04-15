@@ -113,18 +113,3 @@ func (r *RestaurantRepository) GetAll(ctx context.Context, count, offset int) ([
 	logger.Info("Successful")
 	return restaurants, rows.Err()
 }
-
-func (r *RestaurantRepository) GetById(ctx context.Context, id uuid.UUID) (*models.Restaurant, error) {
-	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
-
-	var restaurant models.Restaurant
-	err := r.db.QueryRow(ctx, getRestaurantByid, id).
-		Scan(&restaurant.Id, &restaurant.Name, &restaurant.Description, &restaurant.Rating)
-	if err != nil {
-		logger.Error(err.Error())
-		return nil, err
-	}
-
-	logger.Info("Successful")
-	return &restaurant, nil
-}
