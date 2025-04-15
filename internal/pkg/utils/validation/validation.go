@@ -14,7 +14,6 @@ const (
 	minFieldLength      = 1
 )
 
-// Общий набор допустимых символов
 const allowedSymbols = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя" +
 	"АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" +
 	"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -_#*,."

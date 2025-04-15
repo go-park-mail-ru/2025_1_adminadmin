@@ -1,0 +1,3000 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>main: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">github.com/go-park-mail-ru/2025_1_adminadmin/cmd/main/main.go (0.0%)</option>
+				
+				<option value="file1">github.com/go-park-mail-ru/2025_1_adminadmin/internal/models/address.go (0.0%)</option>
+				
+				<option value="file2">github.com/go-park-mail-ru/2025_1_adminadmin/internal/models/cart_item.go (0.0%)</option>
+				
+				<option value="file3">github.com/go-park-mail-ru/2025_1_adminadmin/internal/models/product.go (16.7%)</option>
+				
+				<option value="file4">github.com/go-park-mail-ru/2025_1_adminadmin/internal/models/restaurant.go (0.0%)</option>
+				
+				<option value="file5">github.com/go-park-mail-ru/2025_1_adminadmin/internal/models/signin.go (0.0%)</option>
+				
+				<option value="file6">github.com/go-park-mail-ru/2025_1_adminadmin/internal/models/signup.go (0.0%)</option>
+				
+				<option value="file7">github.com/go-park-mail-ru/2025_1_adminadmin/internal/models/user.go (0.0%)</option>
+				
+				<option value="file8">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/http/handlers.go (67.4%)</option>
+				
+				<option value="file9">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/repo/pg.go (78.6%)</option>
+				
+				<option value="file10">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/usecase/usecase.go (68.3%)</option>
+				
+				<option value="file11">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/http/handlers.go (0.0%)</option>
+				
+				<option value="file12">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/pg/pg.go (0.0%)</option>
+				
+				<option value="file13">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/redis/redis.go (0.0%)</option>
+				
+				<option value="file14">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/usecase/usecase.go (0.0%)</option>
+				
+				<option value="file15">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/middleware/cors/cors.go (100.0%)</option>
+				
+				<option value="file16">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/middleware/log/log.go (0.0%)</option>
+				
+				<option value="file17">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/delivery/http/handlers.go (80.4%)</option>
+				
+				<option value="file18">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/repo/pg.go (77.4%)</option>
+				
+				<option value="file19">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/usecase/usecase.go (100.0%)</option>
+				
+				<option value="file20">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/jwt/jwt.go (71.9%)</option>
+				
+				<option value="file21">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log/log.go (88.9%)</option>
+				
+				<option value="file22">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/options/options.go (100.0%)</option>
+				
+				<option value="file23">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/send_error/send_error.go (100.0%)</option>
+				
+				<option value="file24">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/validation/validation.go (85.7%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">not covered</span>
+				<span class="cov8">covered</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package main
+
+import (
+        "context"
+        "fmt"
+        "io"
+        "log/slog"
+        "net/http"
+        "os"
+        "os/signal"
+        "syscall"
+        "time"
+
+        authHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/http"
+        authRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/repo"
+        authUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/usecase"
+        cartHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/http"
+        cartPgRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/pg"
+        cartRedisRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/redis"
+        cartUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/usecase"
+        "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/middleware/cors"
+        "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/middleware/log"
+        restaurantDelivery "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/delivery/http"
+        restaurantRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/repo"
+        restaurantUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/usecase"
+        "github.com/gorilla/mux"
+        "github.com/jackc/pgx/v4/pgxpool"
+        "github.com/redis/go-redis/v9"
+)
+
+func initRedis() *redis.Client <span class="cov0" title="0">{
+        client := redis.NewClient(&amp;redis.Options{
+                Addr:     os.Getenv("REDIS_ADDR"),
+                Password: "",
+                DB:       0,
+        })
+        return client
+}</span>
+
+func initDB(logger *slog.Logger) (*pgxpool.Pool, error) <span class="cov0" title="0">{
+        connStr := os.Getenv("POSTGRES_CONN")
+
+        pool, err := pgxpool.Connect(context.Background(), connStr)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">err = pool.Ping(context.Background())
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">logger.Info("Успешное подключение к PostgreSQL")
+        return pool, nil</span>
+}
+
+// @title AdminAdmin API
+// @version 1.0
+// @description API для проекта DoorDashers.
+// @host localhost:5458
+// @BasePath /api
+func main() <span class="cov0" title="0">{
+        logFile, err := os.OpenFile(os.Getenv("MAIN_LOG_FILE"), os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
+        if err != nil </span><span class="cov0" title="0">{
+                fmt.Println("error opening log file: " + err.Error())
+                return
+        }</span>
+        <span class="cov0" title="0">defer logFile.Close()
+
+        logger := slog.New(slog.NewJSONHandler(io.MultiWriter(logFile, os.Stdout), &amp;slog.HandlerOptions{Level: slog.LevelInfo}))
+
+        pool, err := initDB(logger)
+        if err != nil </span><span class="cov0" title="0">{
+                logger.Error("Ошибка при подключении к PostgreSQL: " + err.Error())
+        }</span>
+        <span class="cov0" title="0">defer pool.Close()
+
+        redisClient := initRedis()
+        cartRepoPg := cartPgRepo.NewRestaurantRepository(pool)
+        cartRepoRedis := cartRedisRepo.NewCartRepository(redisClient)
+        cartUsecase := cartUsecase.NewCartUsecase(cartRepoRedis, cartRepoPg)
+        cartHandler := cartHandler.NewCartHandler(cartUsecase)
+
+        logMW := log.CreateLoggerMiddleware(logger)
+
+        authRepo := authRepo.CreateAuthRepo(pool)
+        authUsecase := authUsecase.CreateAuthUsecase(authRepo)
+        authHandler := authHandler.CreateAuthHandler(authUsecase)
+
+        restaurantRepo := restaurantRepo.NewRestaurantRepository(pool)
+        restaurantUsecase := restaurantUsecase.NewRestaurantsUsecase(restaurantRepo)
+        restaurantDelivery := restaurantDelivery.NewRestaurantHandler(restaurantUsecase)
+
+        r := mux.NewRouter().PathPrefix("/api").Subrouter()
+        r.NotFoundHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) </span><span class="cov0" title="0">{
+                http.Error(w, "Не найдено", http.StatusTeapot)
+        }</span>)
+
+        <span class="cov0" title="0">r.Use(
+                logMW,
+                cors.CorsMiddleware)
+
+        auth := r.PathPrefix("/auth").Subrouter()
+        </span><span class="cov0" title="0">{
+                auth.HandleFunc("/signup", authHandler.SignUp).Methods(http.MethodPost, http.MethodOptions)
+                auth.HandleFunc("/signin", authHandler.SignIn).Methods(http.MethodPost, http.MethodOptions)
+                auth.HandleFunc("/check", authHandler.Check).Methods(http.MethodGet, http.MethodOptions)
+                auth.HandleFunc("/logout", authHandler.LogOut).Methods(http.MethodGet, http.MethodOptions)
+                auth.HandleFunc("/update_user", authHandler.UpdateUser).Methods(http.MethodPost, http.MethodOptions)
+                auth.HandleFunc("/update_userpic", authHandler.UpdateUserPic).Methods(http.MethodPost, http.MethodOptions)
+                auth.HandleFunc("/address", authHandler.GetUserAddresses).Methods(http.MethodGet, http.MethodOptions)
+                auth.HandleFunc("/address", authHandler.DeleteAddress).Methods(http.MethodDelete, http.MethodOptions)
+                auth.HandleFunc("/address", authHandler.AddAddress).Methods(http.MethodPost, http.MethodOptions)
+        }</span>
+        <span class="cov0" title="0">restaurants := r.PathPrefix("/restaurants").Subrouter()
+        </span><span class="cov0" title="0">{
+                restaurants.HandleFunc("/list", restaurantDelivery.RestaurantList).Methods(http.MethodGet, http.MethodOptions)
+                restaurants.HandleFunc("/{id}", restaurantDelivery.GetProductsByRestaurant).Methods(http.MethodGet, http.MethodOptions)
+        }</span>
+        <span class="cov0" title="0">cart := r.PathPrefix("/cart").Subrouter()
+        </span><span class="cov0" title="0">{
+                cart.HandleFunc("", cartHandler.GetCart).Methods(http.MethodGet, http.MethodOptions)
+                cart.HandleFunc("/update/{productID}", cartHandler.UpdateQuantityInCart).Methods(http.MethodPost, http.MethodOptions)
+                cart.HandleFunc("/clear", cartHandler.ClearCart).Methods(http.MethodPost, http.MethodOptions)
+        }</span>
+
+        <span class="cov0" title="0">order := r.PathPrefix("/order").Subrouter()
+        </span><span class="cov0" title="0">{
+                order.HandleFunc("/create", cartHandler.CreateOrder).Methods(http.MethodPost, http.MethodOptions)
+        }</span>
+
+        <span class="cov0" title="0">http.Handle("/", r)
+        srv := http.Server{
+                Handler:           r,
+                Addr:              ":5458",
+                ReadTimeout:       10 * time.Second,
+                WriteTimeout:      10 * time.Second,
+                ReadHeaderTimeout: 10 * time.Second,
+        }
+
+        go func() </span><span class="cov0" title="0">{
+                err := srv.ListenAndServe()
+                if err != nil &amp;&amp; err != http.ErrServerClosed </span><span class="cov0" title="0">{
+                        logger.Error("Ошибка при запуске сервера: " + err.Error())
+                }</span>
+        }()
+
+        <span class="cov0" title="0">stop := make(chan os.Signal, 1)
+        signal.Notify(stop, os.Interrupt, syscall.SIGTERM)
+
+        &lt;-stop
+        logger.Info("Получен сигнал остановки")
+
+        ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+        defer cancel()
+
+        err = srv.Shutdown(ctx)
+        if err != nil </span><span class="cov0" title="0">{
+                logger.Error("Ошибка при остановке сервера: " + err.Error())
+        }</span> else<span class="cov0" title="0"> {
+                logger.Info("Сервер успешно остановлен")
+        }</span>
+}
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">package models
+
+import (
+        "html"
+
+        "github.com/satori/uuid"
+)
+
+// easyjson:json
+type Address struct {
+        Id      uuid.UUID `json:"id"`
+        Address string    `json:"address"`
+        UserId  uuid.UUID `json:"user_id"`
+}
+
+func (a *Address) Sanitize() <span class="cov0" title="0">{
+        a.Address = html.EscapeString(a.Address)
+}</span>
+</pre>
+		
+		<pre class="file" id="file2" style="display: none">package models
+
+import (
+        "html"
+        "time"
+
+        "github.com/satori/uuid"
+)
+
+// easyjson:json
+type CartItem struct {
+        Id       uuid.UUID `json:"id"`
+        Name     string    `json:"name"`
+        Price    float64   `json:"price"`
+        ImageURL string    `json:"image_url"`
+        Weight   int       `json:"weight"`
+        Amount   int       `json:"amount"`
+}
+
+// easyjson:json
+type Cart struct {
+        Id        uuid.UUID  `json:"restaurant_id"`
+        Name      string     `json:"restaurant_name"`
+        CartItems []CartItem `json:"products"`
+}
+
+// easyjson:json
+type CartInReq struct {
+        Quantity     int    `json:"quantity"`
+        RestaurantId string `json:"restaurant_id"`
+}
+
+// easyjson:json
+type Order struct {
+        ID            uuid.UUID `json:"id"`
+        UserID        string    `json:"user"`
+        Status        string    `json:"status"`
+        Address       string    `json:"address"`
+        OrderProducts Cart      `json:"order_products"`
+
+        ApartmentOrOffice string    `json:"apartment_or_office"`
+        Intercom          string    `json:"intercom"`
+        Entrance          string    `json:"entrance"`
+        Floor             string    `json:"floor"`
+        CourierComment    string    `json:"courier_comment"`
+        LeaveAtDoor       bool      `json:"leave_at_door"`
+        CreatedAt         time.Time `json:"created_at"`
+        FinalPrice        float64   `json:"final_price"`
+}
+
+// easyjson:json
+type OrderInReq struct {
+        Status  string `json:"status"`
+        Address string `json:"address"`
+
+        ApartmentOrOffice string  `json:"apartment_or_office"`
+        Intercom          string  `json:"intercom"`
+        Entrance          string  `json:"entrance"`
+        Floor             string  `json:"floor"`
+        CourierComment    string  `json:"courier_comment"`
+        LeaveAtDoor       bool    `json:"leave_at_door"`
+        FinalPrice        float64 `json:"final_price"`
+}
+
+func (a *CartItem) Sanitize() <span class="cov0" title="0">{
+        a.Name = html.EscapeString(a.Name)
+        a.ImageURL = html.EscapeString(a.ImageURL)
+}</span>
+
+func (a *Cart) Sanitize() <span class="cov0" title="0">{
+        a.Name = html.EscapeString(a.Name)
+}</span>
+
+func (a *CartInReq) Sanitize() <span class="cov0" title="0">{
+        a.RestaurantId = html.EscapeString(a.RestaurantId)
+}</span>
+
+func (a *Order) Sanitize() <span class="cov0" title="0">{
+        a.Status = html.EscapeString(a.Status)
+        a.ApartmentOrOffice = html.EscapeString(a.ApartmentOrOffice)
+        a.Intercom = html.EscapeString(a.Intercom)
+        a.Entrance = html.EscapeString(a.Entrance)
+        a.Floor = html.EscapeString(a.Floor)
+        a.CourierComment = html.EscapeString(a.CourierComment)
+}</span>
+
+func (a *OrderInReq) Sanitize() <span class="cov0" title="0">{
+        a.Status = html.EscapeString(a.Status)
+        a.ApartmentOrOffice = html.EscapeString(a.ApartmentOrOffice)
+        a.Intercom = html.EscapeString(a.Intercom)
+        a.Entrance = html.EscapeString(a.Entrance)
+        a.Floor = html.EscapeString(a.Floor)
+        a.CourierComment = html.EscapeString(a.CourierComment)
+}</span>
+</pre>
+		
+		<pre class="file" id="file3" style="display: none">package models
+
+import (
+        "html"
+
+        "github.com/satori/uuid"
+)
+
+// easyjson:json
+type WorkingMode struct {
+        From int `json:"from"`
+        To   int `json:"to"`
+}
+
+// easyjson:json
+type DeliveryTime struct {
+        From int `json:"from"`
+        To   int `json:"to"`
+}
+
+// easyjson:json
+type Product struct {
+        Id       uuid.UUID `json:"id"`
+        Name     string    `json:"name"`
+        Price    float64   `json:"price"`
+        ImageURL string    `json:"image_url"`
+        Weight   int       `json:"weight"`
+}
+
+// easyjson:json
+type Category struct {
+        Name     string    `json:"name"`
+        Products []Product `json:"products"`
+}
+
+// easyjson:json
+type RestaurantFull struct {
+        Id           uuid.UUID    `json:"id"`
+        Name         string       `json:"name"`
+        BannerURL    string       `json:"banner_url"`
+        Address      string       `json:"address"`
+        Description  string       `json:"description"`
+        Rating       float64      `json:"rating"`
+        RatingCount  int          `json:"rating_count"`
+        WorkingMode  WorkingMode  `json:"working_mode"`
+        DeliveryTime DeliveryTime `json:"delivery_time"`
+        Tags         []string     `json:"tags"`
+        Categories   []Category   `json:"categories"`
+}
+
+func (p *Product) Sanitize() <span class="cov8" title="1">{
+        p.Name = html.EscapeString(p.Name)
+}</span>
+
+func (p *Category) Sanitize() <span class="cov0" title="0">{
+        p.Name = html.EscapeString(p.Name)
+}</span>
+
+func (p *RestaurantFull) Sanitize() <span class="cov0" title="0">{
+        p.Name = html.EscapeString(p.Name)
+        p.BannerURL = html.EscapeString(p.BannerURL)
+        p.Address = html.EscapeString(p.Address)
+        p.Description = html.EscapeString(p.Description)
+}</pre>
+		
+		<pre class="file" id="file4" style="display: none">package models
+
+import (
+        "html"
+
+        uuid "github.com/satori/uuid"
+)
+
+// easyjson:json
+type Restaurant struct {
+        Id          uuid.UUID `json:"id"`
+        Name        string    `json:"name"`
+        Description string    `json:"description"`
+        Rating      float64   `json:"rating"`
+}
+
+func (r *Restaurant) Sanitize() <span class="cov0" title="0">{
+        r.Name = html.EscapeString(r.Name)
+        r.Description = html.EscapeString(r.Description)
+}</span>
+</pre>
+		
+		<pre class="file" id="file5" style="display: none">package models
+
+import "html"
+
+// easyjson:json
+type SignInReq struct {
+        Login    string `json:"login"`
+        Password string `json:"password"`
+}
+
+func (s *SignInReq) Sanitize() <span class="cov0" title="0">{
+        s.Login = html.EscapeString(s.Login)
+        s.Password = html.EscapeString(s.Password)
+}</span>
+</pre>
+		
+		<pre class="file" id="file6" style="display: none">package models
+
+import "html"
+
+// easyjson:json
+type SignUpReq struct {
+        Login       string `json:"login"`
+        FirstName   string `json:"first_name"`
+        LastName    string `json:"last_name"`
+        PhoneNumber string `json:"phone_number"`
+        Password    string `json:"password"`
+}
+
+func (s *SignUpReq) Sanitize() <span class="cov0" title="0">{
+        s.Login = html.EscapeString(s.Login)
+        s.FirstName = html.EscapeString(s.FirstName)
+        s.LastName = html.EscapeString(s.LastName)
+        s.PhoneNumber = html.EscapeString(s.PhoneNumber)
+        s.Password = html.EscapeString(s.Password)
+}</span>
+</pre>
+		
+		<pre class="file" id="file7" style="display: none">package models
+
+import (
+        "html"
+
+        uuid "github.com/satori/uuid"
+)
+
+// easyjson:json
+type User struct {
+        Login        string    `json:"login"`
+        PhoneNumber  string    `json:"phone_number"`
+        Id           uuid.UUID `json:"id"`
+        FirstName    string    `json:"first_name"`
+        LastName     string    `json:"last_name"`
+        Description  string    `json:"description"`
+        UserPic      string    `json:"path"`
+        PasswordHash []byte    `json:"-"`
+}
+
+func (u *User) Sanitize() <span class="cov0" title="0">{
+        u.Login = html.EscapeString(u.Login)
+        u.PhoneNumber = html.EscapeString(u.PhoneNumber)
+        u.FirstName = html.EscapeString(u.FirstName)
+        u.LastName = html.EscapeString(u.LastName)
+        u.Description = html.EscapeString(u.Description)
+}</span>
+</pre>
+		
+		<pre class="file" id="file8" style="display: none">package http
+
+import (
+        "encoding/json"
+        "errors"
+        "fmt"
+        "io"
+        "log/slog"
+        "net/http"
+        "os"
+        "time"
+
+        "github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
+        "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth"
+        jwtUtils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/jwt"
+        "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
+        utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/send_error"
+        "github.com/golang-jwt/jwt"
+        "github.com/satori/uuid"
+)
+
+type DeleteAddressReq struct {
+        Id string `json:"id"`
+}
+
+const maxRequestBodySize = 10 &lt;&lt; 20
+
+var allowedMimeTypes = map[string]string{
+        "image/jpeg": ".jpg",
+        "image/png":  ".png",
+        "image/webp": ".webp",
+}
+
+type AuthHandler struct {
+        uc     auth.AuthUsecase
+        secret string
+}
+
+func CreateAuthHandler(uc auth.AuthUsecase) *AuthHandler <span class="cov8" title="1">{
+        return &amp;AuthHandler{uc: uc, secret: os.Getenv("JWT_SECRET")}
+}</span>
+
+// SignIn godoc
+// @Summary Авторизация пользователя
+// @Description Вход пользователя по логину и паролю
+// @Tags auth
+// @ID sign-in
+// @Accept json
+// @Produce json
+// @Param input body models.SignInReq true "Данные для входа"
+// @Success 200 {object} models.User "Успешный ответ с данными пользователя"
+// @Failure 400 {object} utils.ErrorResponse "Ошибка парсинга или неправильные данные"
+// @Failure 500 {object} utils.ErrorResponse "Внутренняя ошибка сервера"
+// @Router /auth/signin [post]
+func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+        var req models.SignInReq
+        if err := json.NewDecoder(r.Body).Decode(&amp;req); err != nil </span><span class="cov8" title="1">{
+                log.LogHandlerError(logger, fmt.Errorf("Ошибка парсинга JSON: %w", err), http.StatusBadRequest)
+                utils.SendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov8" title="1">user, token, csrfToken, err := h.uc.SignIn(r.Context(), req)
+
+        if err != nil </span><span class="cov8" title="1">{
+                switch err </span>{
+                case auth.ErrInvalidLogin, auth.ErrUserNotFound:<span class="cov8" title="1">
+                        log.LogHandlerError(logger, err, http.StatusBadRequest)
+                        utils.SendError(w, err.Error(), http.StatusBadRequest)</span>
+                case auth.ErrInvalidCredentials:<span class="cov8" title="1">
+                        log.LogHandlerError(logger, err, http.StatusUnauthorized)
+                        utils.SendError(w, err.Error(), http.StatusUnauthorized)</span>
+                default:<span class="cov8" title="1">
+                        log.LogHandlerError(logger, fmt.Errorf("Неизвестная ошибка: %w", err), http.StatusInternalServerError)
+                        utils.SendError(w, "Неизвестная ошибка", http.StatusInternalServerError)</span>
+                }
+                <span class="cov8" title="1">return</span>
+        }
+
+        <span class="cov8" title="1">http.SetCookie(w, &amp;http.Cookie{
+                Name:     "AdminJWT",
+                Value:    token,
+                HttpOnly: true,
+                Secure:   false,
+                Expires:  time.Now().Add(24 * time.Hour),
+                Path:     "/",
+        })
+
+        http.SetCookie(w, &amp;http.Cookie{
+                Name:     "CSRF-Token",
+                Value:    csrfToken,
+                Expires:  time.Now().Add(24 * time.Hour),
+                HttpOnly: false,
+                Secure:   false,
+                SameSite: http.SameSiteStrictMode,
+                Path:     "/",
+        })
+
+        w.Header().Set("X-CSRF-Token", csrfToken)
+        w.Header().Set("Content-Type", "application/json")
+
+        w.WriteHeader(http.StatusOK)
+        if err := json.NewEncoder(w).Encode(user); err != nil </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, fmt.Errorf("Ошибка формирования JSON: %w", err), http.StatusInternalServerError)
+                utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
+        }</span>
+}
+
+// SignUp godoc
+// @Summary Регистрация пользователя
+// @Description Регистрация пользователя (логин, пароль, имя, фамилия, номер телефона)
+// @Tags auth
+// @ID sign-up
+// @Accept json
+// @Produce json
+// @Param input body models.SignUpReq true "Данные для входа"
+// @Success 200 {object} models.User "Успешный ответ с данными пользователя"
+// @Failure 400 {object} utils.ErrorResponse "Ошибка парсинга или неправильные данные"
+// @Failure 500 {object} utils.ErrorResponse "Внутренняя ошибка сервера"
+// @Router /auth/signup [post]
+func (h *AuthHandler) SignUp(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+        var req models.SignUpReq
+        err := json.NewDecoder(r.Body).Decode(&amp;req)
+        if err != nil </span><span class="cov8" title="1">{
+                log.LogHandlerError(logger, fmt.Errorf("Ошибка парсинга JSON: %w", err), http.StatusBadRequest)
+                utils.SendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov8" title="1">user, token, csrfToken, err := h.uc.SignUp(r.Context(), req)
+
+        if err != nil </span><span class="cov8" title="1">{
+                switch err </span>{
+                case auth.ErrInvalidLogin, auth.ErrInvalidPassword:<span class="cov8" title="1">
+                        log.LogHandlerError(logger, fmt.Errorf("Неправильный логин или пароль: %w", err), http.StatusBadRequest)
+                        utils.SendError(w, "Неправильный логин или пароль", http.StatusBadRequest)</span>
+                case auth.ErrInvalidName, auth.ErrInvalidPhone, auth.ErrCreatingUser:<span class="cov8" title="1">
+                        log.LogHandlerError(logger, err, http.StatusBadRequest)
+                        utils.SendError(w, err.Error(), http.StatusBadRequest)</span>
+                default:<span class="cov8" title="1">
+                        log.LogHandlerError(logger, fmt.Errorf("Неизвестная ошибка: %w", err), http.StatusInternalServerError)
+                        utils.SendError(w, "Неизвестная ошибка", http.StatusInternalServerError)</span>
+                }
+                <span class="cov8" title="1">return</span>
+        }
+
+        <span class="cov8" title="1">http.SetCookie(w, &amp;http.Cookie{
+                Name:     "AdminJWT",
+                Value:    token,
+                Expires:  time.Now().Add(24 * time.Hour),
+                HttpOnly: true,
+                Secure:   true,
+                Path:     "/",
+        })
+
+        http.SetCookie(w, &amp;http.Cookie{
+                Name:     "CSRF-Token",
+                Value:    csrfToken,
+                Expires:  time.Now().Add(24 * time.Hour),
+                HttpOnly: false,
+                Secure:   true,
+                SameSite: http.SameSiteStrictMode,
+                Path:     "/",
+        })
+
+        w.Header().Set("X-CSRF-Token", csrfToken)
+        w.Header().Set("Content-Type", "application/json")
+
+        w.WriteHeader(http.StatusOK)
+        if err := json.NewEncoder(w).Encode(user); err != nil </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, fmt.Errorf("Ошибка формирования JSON: %w", err), http.StatusInternalServerError)
+                utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
+        }</span>
+}
+
+// Check godoc
+// @Summary Проверка авторизации пользовател
+// @Description Проверка JWT, а также проверка CSRF в Cookie и заголовке
+// @Tags auth
+// @ID check
+// @Accept json
+// @Produce json
+// @Success 200 {object} models.User "Успешный ответ с данными пользователя"
+// @Failure 400 {object} utils.ErrorResponse  "Некорректный запрос"
+// @Failure 401 {object} utils.ErrorResponse  "Ошибка авторизации (необходима авторизация)"
+// @Failure 403 {object} utils.ErrorResponse  "Ошибка авторизации (некорректный CSRF токен)"
+// @Failure 500 {object} utils.ErrorResponse "Внутренняя ошибка сервера"
+// @Router /auth/check [get]
+func (h *AuthHandler) Check(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+        cookieCSRF, err := r.Cookie("CSRF-Token")
+        if err != nil </span><span class="cov8" title="1">{
+                if err == http.ErrNoCookie </span><span class="cov8" title="1">{
+                        w.WriteHeader(http.StatusUnauthorized)
+                        return
+                }</span>
+                <span class="cov0" title="0">w.WriteHeader(http.StatusBadRequest)
+                return</span>
+        }
+
+        <span class="cov8" title="1">headerCSRF := r.Header.Get("X-CSRF-Token")
+        if cookieCSRF.Value == "" || headerCSRF == "" || cookieCSRF.Value != headerCSRF </span><span class="cov8" title="1">{
+                w.WriteHeader(http.StatusForbidden)
+                return
+        }</span>
+
+        <span class="cov8" title="1">cookieJWT, err := r.Cookie("AdminJWT")
+        if err != nil </span><span class="cov8" title="1">{
+                if err == http.ErrNoCookie </span><span class="cov8" title="1">{
+                        w.WriteHeader(http.StatusUnauthorized)
+                        return
+                }</span>
+                <span class="cov0" title="0">w.WriteHeader(http.StatusBadRequest)
+                return</span>
+        }
+        <span class="cov8" title="1">JWTStr := cookieJWT.Value
+
+        claims := jwt.MapClaims{}
+
+        login, ok := jwtUtils.GetLoginFromJWT(JWTStr, claims, h.secret)
+        if !ok || login == "" </span><span class="cov8" title="1">{
+                w.WriteHeader(http.StatusUnauthorized)
+                return
+        }</span>
+
+        <span class="cov8" title="1">user, err := h.uc.Check(r.Context(), login)
+
+        if err != nil </span><span class="cov8" title="1">{
+                if errors.Is(err, auth.ErrUserNotFound) </span><span class="cov8" title="1">{
+                        utils.SendError(w, err.Error(), http.StatusBadRequest)
+                }</span>
+        }
+
+        <span class="cov8" title="1">w.Header().Set("Content-Type", "application/json")
+        w.WriteHeader(http.StatusOK)
+        if err := json.NewEncoder(w).Encode(user); err != nil </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, fmt.Errorf("Ошибка формирования JSON: %w", err), http.StatusInternalServerError)
+                utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
+        }</span>
+        <span class="cov8" title="1">log.LogHandlerInfo(logger, "Successful", http.StatusOK)</span>
+}
+
+// LogOut godoc
+// @Summary Выход из аккаунта
+// @Description Выход из аккаунта путем обнуления куков
+// @Tags auth
+// @ID logout
+// @Accept json
+// @Produce json
+// @Success 200
+// @Failure 400 {object} utils.ErrorResponse "Пользователь уже разлогинен"
+// @Router /auth/logout [get]
+func (h *AuthHandler) LogOut(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+        cookie, err := r.Cookie("AdminJWT")
+        if err != nil || cookie.Value == "" </span><span class="cov8" title="1">{
+                log.LogHandlerError(logger, fmt.Errorf("Пользователь уже разлогинен: %w", err), http.StatusBadRequest)
+                utils.SendError(w, "Пользователь уже разлогинен", http.StatusBadRequest)
+                return
+        }</span>
+        <span class="cov8" title="1">http.SetCookie(w, &amp;http.Cookie{
+                Name:     "AdminJWT",
+                Value:    "",
+                Expires:  time.Unix(0, 0),
+                HttpOnly: true,
+                Path:     "/",
+        })
+
+        http.SetCookie(w, &amp;http.Cookie{
+                Name:     "CSRF-Token",
+                Value:    "",
+                Expires:  time.Unix(0, 0),
+                HttpOnly: false,
+                SameSite: http.SameSiteStrictMode,
+                Path:     "/",
+        })
+
+        w.WriteHeader(http.StatusOK)
+        log.LogHandlerInfo(logger, "Successful", http.StatusOK)</span>
+}
+
+// UpdateUser godoc
+// @Summary Обновление информации пользователя
+// @Description Обновление полей пользователя (description, first_name, last_name, phone_number, password)
+// @Tags auth
+// @ID update_user
+// @Accept json
+// @Produce json
+// @Param input body models.UpdateUserReq false "Параметры для редактирования"
+// @Success 200 {object} models.User "Успешный ответ с обновленными данными пользователя"
+// @Failure 400 {object} utils.ErrorResponse "Ошибка при чтении куки"
+// @Failure 400 {object} utils.ErrorResponse "Ошибка парсинга или формирования JSON"
+// @Failure 401 {object} utils.ErrorResponse  "Токен не найден или недействителен"
+// @Failure 500 {object} utils.ErrorResponse  "Ошибка на сервере при обработке запроса"
+// @Router /auth/update_user [post]
+func (h *AuthHandler) UpdateUser(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+        cookie, err := r.Cookie("AdminJWT")
+        if err != nil </span><span class="cov8" title="1">{
+                if err == http.ErrNoCookie </span><span class="cov8" title="1">{
+                        log.LogHandlerError(logger, fmt.Errorf("Токен отсутствует: %w", err), http.StatusUnauthorized)
+                        utils.SendError(w, "Токен отсутствует", http.StatusUnauthorized)
+                        return
+                }</span>
+                <span class="cov0" title="0">log.LogHandlerError(logger, fmt.Errorf("Ошибка при чтении куки: %w", err), http.StatusBadRequest)
+                utils.SendError(w, "Ошибка при чтении куки", http.StatusBadRequest)
+                return</span>
+        }
+        <span class="cov8" title="1">JWTStr := cookie.Value
+
+        claims := jwt.MapClaims{}
+
+        login, ok := jwtUtils.GetLoginFromJWT(JWTStr, claims, h.secret)
+        if !ok || login == "" </span><span class="cov8" title="1">{
+                log.LogHandlerError(logger, errors.New("Недействительный токен: login отсутствует"), http.StatusUnauthorized)
+                utils.SendError(w, "Недействительный токен: login отсутствует", http.StatusUnauthorized)
+                return
+        }</span>
+
+        <span class="cov8" title="1">if !jwtUtils.CheckDoubleSubmitCookie(w, r) </span><span class="cov8" title="1">{
+                utils.SendError(w, "некорректный CSRF-токен", http.StatusForbidden)
+                log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
+                return
+        }</span>
+
+        <span class="cov8" title="1">var updateData models.UpdateUserReq
+        if err := json.NewDecoder(r.Body).Decode(&amp;updateData); err != nil </span><span class="cov8" title="1">{
+                log.LogHandlerError(logger, fmt.Errorf("Ошибка парсинга JSON: %w", err), http.StatusBadRequest)
+                utils.SendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov8" title="1">updatedUser, err := h.uc.UpdateUser(r.Context(), login, updateData)
+        if err != nil </span><span class="cov8" title="1">{
+                switch err </span>{
+                case auth.ErrInvalidPassword, auth.ErrInvalidName, auth.ErrInvalidPhone, auth.ErrSamePassword:<span class="cov8" title="1">
+                        log.LogHandlerError(logger, err, http.StatusBadRequest)
+                        utils.SendError(w, err.Error(), http.StatusBadRequest)</span>
+                default:<span class="cov0" title="0">
+                        log.LogHandlerError(logger, fmt.Errorf("Ошибка обновления данных пользователя: %w", err), http.StatusInternalServerError)
+                        utils.SendError(w, "Ошибка обновления данных пользователя", http.StatusInternalServerError)</span>
+                }
+                <span class="cov8" title="1">return</span>
+        }
+
+        <span class="cov8" title="1">w.Header().Set("Content-Type", "application/json")
+        w.WriteHeader(http.StatusOK)
+        if err := json.NewEncoder(w).Encode(updatedUser); err != nil </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, fmt.Errorf("Ошибка формирования JSON: %w", err), http.StatusInternalServerError)
+                utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
+        }</span>
+        <span class="cov8" title="1">log.LogHandlerInfo(logger, "Successful", http.StatusOK)</span>
+}
+
+// UpdateUserPic godoc
+// @Summary Обновление аватарки пользователя
+// @Description Загружает новый файл аватарки пользователя. Поддерживаемые форматы: JPEG, PNG, WEBP.
+// @Tags auth
+// @ID update_userpic
+// @Accept multipart/form-data
+// @Produce json
+// @Param user_pic formData file true "Файл изображения"
+// @Success 200 {object} models.User "Успешное обновление аватарки у пользователя"
+// @Failure 400 {object} utils.ErrorResponse "Ошибка парсинга файла или формат не поддерживается"
+// @Failure 401 {object} utils.ErrorResponse "Проблемы с авторизацией, отсутствует токен"
+// @Failure 413 {object} utils.ErrorResponse "Файл слишком большой"
+// @Failure 500 {object} utils.ErrorResponse "Ошибка при работе с файлом или сервером"
+// @Router /auth/update_userpic [post]
+func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) <span class="cov0" title="0">{
+        logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+        cookie, err := r.Cookie("AdminJWT")
+        if err != nil </span><span class="cov0" title="0">{
+                if err == http.ErrNoCookie </span><span class="cov0" title="0">{
+                        log.LogHandlerError(logger, fmt.Errorf("Токен отсутствует: %w", err), http.StatusUnauthorized)
+                        utils.SendError(w, "Токен отсутствует", http.StatusUnauthorized)
+                        return
+                }</span>
+                <span class="cov0" title="0">log.LogHandlerError(logger, fmt.Errorf("Ошибка при чтении куки: %w", err), http.StatusBadRequest)
+                utils.SendError(w, "Ошибка при чтении куки", http.StatusBadRequest)
+                return</span>
+        }
+        <span class="cov0" title="0">JWTStr := cookie.Value
+
+        claims := jwt.MapClaims{}
+
+        login, ok := jwtUtils.GetLoginFromJWT(JWTStr, claims, h.secret)
+        if !ok || login == "" </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, errors.New("Недействительный токен: login отсутствует"), http.StatusUnauthorized)
+                utils.SendError(w, "Недействительный токен: login отсутствует", http.StatusUnauthorized)
+                return
+        }</span>
+
+        <span class="cov0" title="0">if !jwtUtils.CheckDoubleSubmitCookie(w, r) </span><span class="cov0" title="0">{
+                utils.SendError(w, "некорректный CSRF-токен", http.StatusForbidden)
+                log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
+                return
+        }</span>
+
+        <span class="cov0" title="0">r.Body = http.MaxBytesReader(w, r.Body, maxRequestBodySize)
+
+        if err := r.ParseMultipartForm(maxRequestBodySize); err != nil </span><span class="cov0" title="0">{
+                if errors.As(err, new(*http.MaxBytesError)) </span><span class="cov0" title="0">{
+                        log.LogHandlerError(logger, fmt.Errorf("Превышен допустимый размер файла: %w", err), http.StatusRequestEntityTooLarge)
+                        utils.SendError(w, "Превышен допустимый размер файла", http.StatusRequestEntityTooLarge)
+                }</span> else<span class="cov0" title="0"> {
+                        log.LogHandlerError(logger, fmt.Errorf("Невозможно обработать файл: %w", err), http.StatusBadRequest)
+                        utils.SendError(w, "Невозможно обработать файл", http.StatusBadRequest)
+                }</span>
+                <span class="cov0" title="0">return</span>
+        }
+
+        <span class="cov0" title="0">defer func() </span><span class="cov0" title="0">{
+                if r.MultipartForm != nil </span><span class="cov0" title="0">{
+                        r.MultipartForm.RemoveAll()
+                }</span>
+        }()
+
+        <span class="cov0" title="0">file, _, err := r.FormFile("user_pic")
+        if err != nil </span><span class="cov0" title="0">{
+                utils.SendError(w, "Файл не найден в запросе", http.StatusBadRequest)
+                return
+        }</span>
+        <span class="cov0" title="0">defer file.Close()
+
+        buffer := make([]byte, 512)
+        if _, err := file.Read(buffer); err != nil </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, fmt.Errorf("Ошибка при чтении файла: %w", err), http.StatusBadRequest)
+                utils.SendError(w, "Ошибка при чтении файла", http.StatusBadRequest)
+                return
+        }</span>
+        <span class="cov0" title="0">file.Seek(0, io.SeekStart)
+
+        mimeType := http.DetectContentType(buffer)
+        if _, ok := allowedMimeTypes[mimeType]; !ok </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, fmt.Errorf("Недопустимый формат файла: %w", err), http.StatusBadRequest)
+                utils.SendError(w, "Недопустимый формат файла.", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov0" title="0">ext := allowedMimeTypes[mimeType]
+
+        updatedUser, err := h.uc.UpdateUserPic(r.Context(), login, file, ext)
+        if err != nil </span><span class="cov0" title="0">{
+                switch err </span>{
+                case auth.ErrUserNotFound:<span class="cov0" title="0">
+                        log.LogHandlerError(logger, err, http.StatusNotFound)
+                        utils.SendError(w, err.Error(), http.StatusNotFound)</span>
+                case auth.ErrBasePath:<span class="cov0" title="0">
+                        log.LogHandlerError(logger, err, http.StatusInternalServerError)
+                        utils.SendError(w, err.Error(), http.StatusInternalServerError)</span>
+                case auth.ErrFileCreation, auth.ErrFileSaving, auth.ErrFileDeletion:<span class="cov0" title="0">
+                        log.LogHandlerError(logger, fmt.Errorf("Ошибка при работе с файлом: %w", err), http.StatusInternalServerError)
+                        utils.SendError(w, "Ошибка при работе с файлом", http.StatusInternalServerError)</span>
+                default:<span class="cov0" title="0">
+                        log.LogHandlerError(logger, fmt.Errorf("Ошибка при обновлении аватарки: %w", err), http.StatusInternalServerError)
+                        utils.SendError(w, "Ошибка при обновлении аватарки", http.StatusInternalServerError)</span>
+                }
+                <span class="cov0" title="0">return</span>
+        }
+
+        <span class="cov0" title="0">w.Header().Set("Content-Type", "application/json")
+        w.WriteHeader(http.StatusOK)
+        if err := json.NewEncoder(w).Encode(updatedUser); err != nil </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, fmt.Errorf("Ошибка формирования JSON: %w", err), http.StatusInternalServerError)
+                utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
+        }</span>
+        <span class="cov0" title="0">log.LogHandlerInfo(logger, "Successful", http.StatusOK)</span>
+}
+
+// GetUserAddresses godoc
+// @Summary Получение адресов пользователя
+// @Description Возвращает список адресов, привязанных к пользователю.
+// @Tags auth
+// @ID get_addresses
+// @Produce json
+// @Success 200 {array} models.Address
+// @Failure 400 {object} utils.ErrorResponse "Ошибка чтения cookie"
+// @Failure 401 {object} utils.ErrorResponse "Проблемы с авторизацией"
+// @Failure 500 {object} utils.ErrorResponse "Ошибка на сервере при обработке запроса"
+// @Router /auth/get_addresses [get]
+func (h *AuthHandler) GetUserAddresses(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+        cookie, err := r.Cookie("AdminJWT")
+        if err != nil </span><span class="cov8" title="1">{
+                if err == http.ErrNoCookie </span><span class="cov8" title="1">{
+                        log.LogHandlerError(logger, fmt.Errorf("Токен отсутствует: %w", err), http.StatusUnauthorized)
+                        utils.SendError(w, "Токен отсутствует", http.StatusUnauthorized)
+                        return
+                }</span>
+                <span class="cov0" title="0">log.LogHandlerError(logger, fmt.Errorf("Ошибка при чтении куки: %w", err), http.StatusBadRequest)
+                utils.SendError(w, "Ошибка при чтении куки", http.StatusBadRequest)
+                return</span>
+        }
+        <span class="cov8" title="1">JWTStr := cookie.Value
+
+        claims := jwt.MapClaims{}
+
+        login, ok := jwtUtils.GetLoginFromJWT(JWTStr, claims, h.secret)
+        if !ok || login == "" </span><span class="cov8" title="1">{
+                log.LogHandlerError(logger, errors.New("Недействительный токен: login отсутствует"), http.StatusUnauthorized)
+                utils.SendError(w, "Недействительный токен: login отсутствует", http.StatusUnauthorized)
+                return
+        }</span>
+
+        <span class="cov8" title="1">if !jwtUtils.CheckDoubleSubmitCookie(w, r) </span><span class="cov8" title="1">{
+                utils.SendError(w, "некорректный CSRF-токен", http.StatusForbidden)
+                log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
+                return
+        }</span>
+
+        <span class="cov8" title="1">addresses, err := h.uc.GetUserAddresses(r.Context(), login)
+        if err != nil </span><span class="cov8" title="1">{
+                log.LogHandlerError(logger, fmt.Errorf("Ошибка на уровне ниже (usecase): %w", err), http.StatusInternalServerError)
+                utils.SendError(w, err.Error(), http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov8" title="1">w.Header().Set("Content-Type", "application/json")
+        w.WriteHeader(http.StatusOK)
+        if err := json.NewEncoder(w).Encode(addresses); err != nil </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, fmt.Errorf("Ошибка формирования JSON: %w", err), http.StatusInternalServerError)
+                utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
+        }</span>
+        <span class="cov8" title="1">log.LogHandlerInfo(logger, "Successful", http.StatusOK)</span>
+}
+
+// DeleteAddress godoc
+// @Summary Удаление адреса пользователя
+// @Description Удаляет адрес по его ID. Тело запроса должно содержать JSON с полем id.
+// @Tags auth
+// @ID delete_address
+// @Accept json
+// @Produce json
+// @Param input body DeleteAddressReq true "ID адреса для удаления"
+// @Success 200
+// @Failure 400 {object} utils.ErrorResponse "Ошибка парсинга JSON"
+// @Failure 500 {object} utils.ErrorResponse "Ошибка на сервере при обработке запроса"
+// @Router /auth/delete_address [post]
+func (h *AuthHandler) DeleteAddress(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+        if !jwtUtils.CheckDoubleSubmitCookie(w, r) </span><span class="cov8" title="1">{
+                log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
+                return
+        }</span>
+
+        <span class="cov8" title="1">var address models.Address
+        err := json.NewDecoder(r.Body).Decode(&amp;address)
+        if err != nil </span><span class="cov8" title="1">{
+                log.LogHandlerError(logger, fmt.Errorf("Ошибка парсинга JSON: %w", err), http.StatusBadRequest)
+                utils.SendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov8" title="1">err = h.uc.DeleteAddress(r.Context(), address.Id)
+        if err != nil </span><span class="cov8" title="1">{
+                log.LogHandlerError(logger, fmt.Errorf("Ошибка на уровне ниже (usecase): %w", err), http.StatusInternalServerError)
+                utils.SendError(w, err.Error(), http.StatusInternalServerError)
+        }</span>
+
+        <span class="cov8" title="1">logger.Info("Successful")
+        w.Header().Set("Content-Type", "application/json")
+        w.WriteHeader(http.StatusOK)</span>
+}
+
+// AddAddress godoc
+// @Summary Добавление адреса пользователю
+// @Description Привязывание адреса к аккаунту пользователя (аккаунт может быть связан с несколькими адресами)
+// @Tags auth
+// @ID add_address
+// @Accept json
+// @Produce json
+// @Param address body models.Address true "Адрес для добавления (поле UserId будет установлено автоматически из токена)"
+// @Success 200
+// @Failure 400 {object} utils.ErrorResponse "Ошибка парсинга JSON или отсутствует токен"
+// @Failure 401 {object} utils.ErrorResponse "Недействительный или отсутствующий токен"
+// @Failure 500 {object} utils.ErrorResponse "Внутренняя ошибка при добавлении адреса"
+// @Router /auth/add_address [post]
+func (h *AuthHandler) AddAddress(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+        cookie, err := r.Cookie("AdminJWT")
+        if err != nil </span><span class="cov8" title="1">{
+                if err == http.ErrNoCookie </span><span class="cov8" title="1">{
+                        log.LogHandlerError(logger, fmt.Errorf("Токен отсутствует: %w", err), http.StatusUnauthorized)
+                        utils.SendError(w, "Токен отсутствует", http.StatusUnauthorized)
+                        return
+                }</span>
+                <span class="cov0" title="0">log.LogHandlerError(logger, fmt.Errorf("Ошибка при чтении куки: %w", err), http.StatusBadRequest)
+                utils.SendError(w, "Ошибка при чтении куки", http.StatusBadRequest)
+                return</span>
+        }
+        <span class="cov8" title="1">JWTStr := cookie.Value
+
+        claims := jwt.MapClaims{}
+
+        idStr, ok := jwtUtils.GetIdFromJWT(JWTStr, claims, h.secret)
+        if !ok || idStr == "" </span><span class="cov8" title="1">{
+                log.LogHandlerError(logger, errors.New("Недействительный токен: id отсутствует"), http.StatusUnauthorized)
+                utils.SendError(w, "Недействительный токен: id отсутствует", http.StatusUnauthorized)
+                return
+        }</span>
+
+        <span class="cov8" title="1">if !jwtUtils.CheckDoubleSubmitCookie(w, r) </span><span class="cov8" title="1">{
+                utils.SendError(w, "некорректный CSRF-токен", http.StatusForbidden)
+                log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
+                return
+        }</span>
+
+        <span class="cov8" title="1">id, err := uuid.FromString(idStr)
+        if err != nil </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, err, http.StatusInternalServerError)
+                utils.SendError(w, err.Error(), http.StatusInternalServerError)
+                return
+        }</span>
+        <span class="cov8" title="1">var address models.Address
+        err = json.NewDecoder(r.Body).Decode(&amp;address)
+        if err != nil </span><span class="cov8" title="1">{
+                log.LogHandlerError(logger, fmt.Errorf("Ошибка парсинга JSON: %w", err), http.StatusBadRequest)
+                utils.SendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
+                return
+        }</span>
+        <span class="cov8" title="1">address.UserId = id
+
+        err = h.uc.AddAddress(r.Context(), address)
+        if err != nil </span><span class="cov8" title="1">{
+                log.LogHandlerError(logger, fmt.Errorf("Ошибка на уровне ниже (usecase): %w", err), http.StatusInternalServerError)
+                utils.SendError(w, err.Error(), http.StatusInternalServerError)
+        }</span>
+
+        <span class="cov8" title="1">w.Header().Set("Content-Type", "application/json")
+        w.WriteHeader(http.StatusOK)
+        log.LogHandlerInfo(logger, "Successful", http.StatusOK)</span>
+}
+</pre>
+		
+		<pre class="file" id="file9" style="display: none">package repo
+
+import (
+        "context"
+        "errors"
+        "log/slog"
+
+        "github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
+        "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
+        "github.com/satori/uuid"
+        "github.com/jackc/pgtype/pgxtype"
+)
+
+const (
+        insertUser          = "INSERT INTO users (id, login, first_name, last_name, phone_number, description, user_pic, password_hash) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)"
+        selectUserByLogin   = "SELECT id, first_name, last_name, phone_number, description, user_pic, password_hash FROM users WHERE login = $1"
+        updateUser          = "UPDATE users SET phone_number = $1, first_name = $2, last_name = $3, description = $4, password_hash = $5 WHERE id = $6;"
+        updateUserPic       = "UPDATE users SET user_pic = $1 WHERE login = $2"
+        selectUserAddresses = `
+                SELECT a.id, a.address, a.user_id 
+                FROM addresses a
+                JOIN users u ON a.user_id = u.id
+                WHERE u.login = $1
+        `
+        deleteAddress = "DELETE FROM addresses WHERE id = $1;"
+        insertAddress = "INSERT INTO addresses (id, address, user_id) VALUES ($1, $2, $3)"
+        addressExists = "SELECT EXISTS(SELECT 1 FROM addresses WHERE address = $1 AND user_id = $2)"
+)
+
+type AuthRepo struct {
+        db pgxtype.Querier
+}
+
+func CreateAuthRepo(db pgxtype.Querier) *AuthRepo <span class="cov8" title="1">{
+        return &amp;AuthRepo{
+                db: db,
+        }
+}</span>
+
+func (repo *AuthRepo) InsertUser(ctx context.Context, user models.User) error <span class="cov8" title="1">{
+        logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+        _, err := repo.db.Exec(ctx, insertUser, user.Id, user.Login, user.FirstName, user.LastName, user.PhoneNumber, user.Description, user.UserPic, user.PasswordHash)
+        if err != nil </span><span class="cov0" title="0">{
+                logger.Error(err.Error())
+                return err
+        }</span>
+        <span class="cov8" title="1">logger.Info("Successful")
+        return nil</span>
+}
+
+func (repo *AuthRepo) SelectUserByLogin(ctx context.Context, login string) (models.User, error) <span class="cov8" title="1">{
+        logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+        resultUser := models.User{Login: login}
+        err := repo.db.QueryRow(ctx, selectUserByLogin, login).Scan(
+                &amp;resultUser.Id,
+                &amp;resultUser.FirstName,
+                &amp;resultUser.LastName,
+                &amp;resultUser.PhoneNumber,
+                &amp;resultUser.Description,
+                &amp;resultUser.UserPic,
+                &amp;resultUser.PasswordHash,
+        )
+
+        if err != nil </span><span class="cov0" title="0">{
+                logger.Error(err.Error())
+                return models.User{}, err
+        }</span>
+
+        <span class="cov8" title="1">logger.Info("Successful")
+        return resultUser, nil</span>
+}
+
+func (repo *AuthRepo) UpdateUser(ctx context.Context, user models.User) error <span class="cov8" title="1">{
+        logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+        _, err := repo.db.Exec(ctx, updateUser, user.PhoneNumber, user.FirstName, user.LastName, user.Description, user.PasswordHash, user.Id)
+        if err != nil </span><span class="cov8" title="1">{
+                logger.Error(err.Error())
+                return err
+        }</span>
+
+        <span class="cov8" title="1">logger.Info("Successful")
+        return nil</span>
+}
+
+func (repo *AuthRepo) UpdateUserPic(ctx context.Context, login string, userPic string) error <span class="cov8" title="1">{
+        logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+        _, err := repo.db.Exec(ctx, updateUserPic, userPic, login)
+        if err != nil </span><span class="cov8" title="1">{
+                logger.Error(err.Error())
+                return err
+        }</span>
+
+        <span class="cov8" title="1">logger.Info("Successful")
+        return nil</span>
+}
+
+func (repo *AuthRepo) SelectUserAddresses(ctx context.Context, login string) ([]models.Address, error) <span class="cov8" title="1">{
+        logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+        rows, err := repo.db.Query(ctx, selectUserAddresses, login)
+        if err != nil </span><span class="cov8" title="1">{
+                logger.Error(err.Error())
+                return []models.Address{}, err
+        }</span>
+        <span class="cov8" title="1">defer rows.Close()
+
+        var addresses []models.Address
+        for rows.Next() </span><span class="cov8" title="1">{
+                var addr models.Address
+                if err := rows.Scan(&amp;addr.Id, &amp;addr.Address, &amp;addr.UserId); err != nil </span><span class="cov0" title="0">{
+                        logger.Error(err.Error())
+                        return []models.Address{}, err
+                }</span>
+                <span class="cov8" title="1">addresses = append(addresses, addr)</span>
+        }
+
+        <span class="cov8" title="1">logger.Info("Successful")
+        return addresses, nil</span>
+}
+
+func (repo *AuthRepo) DeleteAddress(ctx context.Context, addressId uuid.UUID) error <span class="cov8" title="1">{
+        logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+        result, err := repo.db.Exec(ctx, deleteAddress, addressId)
+        if err != nil </span><span class="cov0" title="0">{
+                logger.Error(err.Error())
+                return err
+        }</span>
+
+        <span class="cov8" title="1">rowsAffected := result.RowsAffected()
+
+        if rowsAffected == 0 </span><span class="cov8" title="1">{
+                logger.Error("Адрес не найден")
+                return errors.New("Адрес не найден")
+        }</span>
+
+        <span class="cov8" title="1">logger.Info("Successful")
+        return nil</span>
+}
+
+func (repo *AuthRepo) InsertAddress(ctx context.Context, address models.Address) error <span class="cov8" title="1">{
+        logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+        _, err := repo.db.Exec(ctx, insertAddress, address.Id, address.Address, address.UserId)
+        if err != nil </span><span class="cov8" title="1">{
+                logger.Error(err.Error())
+                return err
+        }</span>
+
+        <span class="cov8" title="1">logger.Info("Successful")
+        return nil</span>
+}
+
+func (repo *AuthRepo) AddressExists(ctx context.Context, address string, userID uuid.UUID) (bool, error) <span class="cov0" title="0">{
+        logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+        var exists bool
+        err := repo.db.QueryRow(ctx, addressExists, address, userID).Scan(&amp;exists)
+        if err != nil </span><span class="cov0" title="0">{
+                logger.Error(err.Error())
+                return false, err
+        }</span>
+
+        <span class="cov0" title="0">return exists, nil</span>
+}</pre>
+		
+		<pre class="file" id="file10" style="display: none">package usecase
+
+import (
+        "bytes"
+        "context"
+        "crypto/rand"
+        "errors"
+        "io"
+        "log/slog"
+        "os"
+        "path"
+        "strings"
+        "time"
+        "unicode"
+
+        "github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
+        "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth"
+        "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
+        "github.com/golang-jwt/jwt"
+        "github.com/satori/uuid"
+        "golang.org/x/crypto/argon2"
+)
+
+func HashPassword(salt []byte, plainPassword string) []byte <span class="cov8" title="1">{
+        hashedPass := argon2.IDKey([]byte(plainPassword), salt, 1, 64*1024, 4, 32)
+        return append(salt, hashedPass...)
+}</span>
+
+func checkPassword(passHash []byte, plainPassword string) bool <span class="cov8" title="1">{
+        salt := make([]byte, 8)
+        copy(salt, passHash[:8])
+        userPassHash := HashPassword(salt, plainPassword)
+        return bytes.Equal(userPassHash, passHash)
+}</span>
+
+const (
+        minNameLength  = 2
+        maxNameLength  = 25
+        minPhoneLength = 7
+        maxPhoneLength = 15
+        maxLoginLength = 20
+        minLoginLength = 3
+        minPassLength  = 8
+        maxPassLength  = 25
+)
+
+const allowedRunes = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+const allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-"
+
+func isValidName(name string) bool <span class="cov8" title="1">{
+        if len(name) &lt; minNameLength || len(name) &gt; maxNameLength </span><span class="cov0" title="0">{
+                return false
+        }</span>
+        <span class="cov8" title="1">for _, r := range name </span><span class="cov8" title="1">{
+                if !strings.ContainsRune(allowedRunes, r) </span><span class="cov8" title="1">{
+                        return false
+                }</span>
+        }
+        <span class="cov8" title="1">return true</span>
+}
+
+func isValidPhone(phone string) bool <span class="cov8" title="1">{
+        if len(phone) &lt; minPhoneLength || len(phone) &gt; maxPhoneLength </span><span class="cov0" title="0">{
+                return false
+        }</span>
+        <span class="cov8" title="1">for _, r := range phone </span><span class="cov8" title="1">{
+                if r &lt; '0' || r &gt; '9' </span><span class="cov8" title="1">{
+                        return false
+                }</span>
+        }
+        <span class="cov8" title="1">return true</span>
+}
+
+func validLogin(login string) bool <span class="cov8" title="1">{
+        if len(login) &lt; minLoginLength || len(login) &gt; maxLoginLength </span><span class="cov0" title="0">{
+                return false
+        }</span>
+        <span class="cov8" title="1">for _, char := range login </span><span class="cov8" title="1">{
+                if !strings.Contains(allowedChars, string(char)) </span><span class="cov8" title="1">{
+                        return false
+                }</span>
+        }
+        <span class="cov8" title="1">return true</span>
+}
+
+func validPassword(password string) bool <span class="cov8" title="1">{
+        var up, low, digit, special bool
+
+        if len(password) &lt; minPassLength || len(password) &gt; maxPassLength </span><span class="cov8" title="1">{
+                return false
+        }</span>
+
+        <span class="cov8" title="1">for _, char := range password </span><span class="cov8" title="1">{
+
+                switch </span>{
+                case unicode.IsUpper(char):<span class="cov8" title="1">
+                        up = true</span>
+                case unicode.IsLower(char):<span class="cov8" title="1">
+                        low = true</span>
+                case unicode.IsDigit(char):<span class="cov8" title="1">
+                        digit = true</span>
+                case unicode.IsPunct(char) || unicode.IsSymbol(char):<span class="cov8" title="1">
+                        special = true</span>
+                default:<span class="cov0" title="0">
+                        return false</span>
+                }
+        }
+
+        <span class="cov8" title="1">return up &amp;&amp; low &amp;&amp; digit &amp;&amp; special</span>
+}
+
+func generateToken(login string, id uuid.UUID) (string, error) <span class="cov8" title="1">{
+        secret := os.Getenv("JWT_SECRET")
+        if secret == "" </span><span class="cov8" title="1">{
+                return "", auth.ErrGeneratingToken
+        }</span>
+
+        <span class="cov8" title="1">token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+                "login": login,
+                "id":    id,
+                "exp":   time.Now().Add(24 * time.Hour).Unix(),
+        })
+
+        return token.SignedString([]byte(secret))</span>
+}
+
+type AuthUsecase struct {
+        repo auth.AuthRepo
+}
+
+func CreateAuthUsecase(repo auth.AuthRepo) *AuthUsecase <span class="cov8" title="1">{
+        return &amp;AuthUsecase{repo: repo}
+}</span>
+
+func (uc *AuthUsecase) SignIn(ctx context.Context, data models.SignInReq) (models.User, string, string, error) <span class="cov8" title="1">{
+        logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+        if !validLogin(data.Login) </span><span class="cov8" title="1">{
+                logger.Error(auth.ErrInvalidLogin.Error())
+                return models.User{}, "", "", auth.ErrInvalidLogin
+        }</span>
+
+        <span class="cov8" title="1">user, err := uc.repo.SelectUserByLogin(ctx, data.Login)
+        if err != nil </span><span class="cov8" title="1">{
+                logger.Error(auth.ErrUserNotFound.Error())
+                return models.User{}, "", "", auth.ErrUserNotFound
+        }</span>
+
+        <span class="cov8" title="1">if !checkPassword(user.PasswordHash, data.Password) </span><span class="cov8" title="1">{
+                logger.Error(auth.ErrInvalidCredentials.Error())
+                return models.User{}, "", "", auth.ErrInvalidCredentials
+        }</span>
+
+        <span class="cov8" title="1">token, err := generateToken(user.Login, user.Id)
+        if err != nil </span><span class="cov8" title="1">{
+                logger.Error(auth.ErrGeneratingToken.Error())
+                return models.User{}, "", "", auth.ErrGeneratingToken
+        }</span>
+
+        <span class="cov8" title="1">csrfToken := uuid.NewV4().String()
+
+        logger.Info("Successful")
+        return user, token, csrfToken, nil</span>
+}
+
+func (uc *AuthUsecase) SignUp(ctx context.Context, data models.SignUpReq) (models.User, string, string, error) <span class="cov8" title="1">{
+        logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+        if !validLogin(data.Login) </span><span class="cov8" title="1">{
+                logger.Error(auth.ErrInvalidLogin.Error())
+                return models.User{}, "", "", auth.ErrInvalidLogin
+        }</span>
+
+        <span class="cov8" title="1">if !validPassword(data.Password) </span><span class="cov8" title="1">{
+                logger.Error(auth.ErrInvalidPassword.Error())
+                return models.User{}, "", "", auth.ErrInvalidPassword
+        }</span>
+
+        <span class="cov8" title="1">if !isValidName(data.FirstName) || !isValidName(data.LastName) </span><span class="cov8" title="1">{
+                logger.Error(auth.ErrInvalidName.Error())
+                return models.User{}, "", "", auth.ErrInvalidName
+        }</span>
+
+        <span class="cov8" title="1">if !isValidPhone(data.PhoneNumber) </span><span class="cov8" title="1">{
+                logger.Error(auth.ErrInvalidPhone.Error())
+                return models.User{}, "", "", auth.ErrInvalidPhone
+        }</span>
+
+        <span class="cov8" title="1">salt := make([]byte, 8)
+        rand.Read(salt)
+        hashedPassword := HashPassword(salt, data.Password)
+
+        newUser := models.User{
+                Login:        data.Login,
+                PhoneNumber:  data.PhoneNumber,
+                Id:           uuid.NewV4(),
+                FirstName:    data.FirstName,
+                LastName:     data.LastName,
+                Description:  "",
+                UserPic:      "default.png",
+                PasswordHash: hashedPassword,
+        }
+
+        err := uc.repo.InsertUser(ctx, newUser)
+        if err != nil </span><span class="cov8" title="1">{
+                logger.Error(err.Error())
+                return models.User{}, "", "", auth.ErrCreatingUser
+        }</span>
+
+        <span class="cov8" title="1">token, err := generateToken(newUser.Login, newUser.Id)
+        if err != nil </span><span class="cov8" title="1">{
+                logger.Error(err.Error())
+                return models.User{}, "", "", auth.ErrGeneratingToken
+        }</span>
+
+        <span class="cov8" title="1">csrfToken := uuid.NewV4().String()
+
+        logger.Info("Successful")
+        return newUser, token, csrfToken, nil</span>
+}
+
+func (uc *AuthUsecase) Check(ctx context.Context, login string) (models.User, error) <span class="cov8" title="1">{
+        logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+        user, err := uc.repo.SelectUserByLogin(ctx, login)
+        if err != nil </span><span class="cov8" title="1">{
+                logger.Error(err.Error())
+                return models.User{}, auth.ErrUserNotFound
+        }</span>
+
+        <span class="cov8" title="1">return user, nil</span>
+}
+
+func (uc *AuthUsecase) UpdateUser(ctx context.Context, login string, updateData models.UpdateUserReq) (models.User, error) <span class="cov8" title="1">{
+        logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+        if updateData.Password != "" &amp;&amp; !validPassword(updateData.Password) </span><span class="cov8" title="1">{
+                logger.Error(auth.ErrInvalidPassword.Error())
+                return models.User{}, auth.ErrInvalidPassword
+        }</span>
+
+        <span class="cov8" title="1">if (updateData.FirstName != "" &amp;&amp; !isValidName(updateData.FirstName)) || (updateData.LastName != "" &amp;&amp; !isValidName(updateData.LastName)) </span><span class="cov0" title="0">{
+                logger.Error(auth.ErrInvalidName.Error())
+                return models.User{}, auth.ErrInvalidName
+        }</span>
+
+        <span class="cov8" title="1">if updateData.PhoneNumber != "" &amp;&amp; !isValidPhone(updateData.PhoneNumber) </span><span class="cov0" title="0">{
+                logger.Error(auth.ErrInvalidPhone.Error())
+                return models.User{}, auth.ErrInvalidPhone
+        }</span>
+
+        <span class="cov8" title="1">user, err := uc.repo.SelectUserByLogin(ctx, login)
+        if err != nil </span><span class="cov8" title="1">{
+                logger.Error(err.Error())
+                return models.User{}, auth.ErrUserNotFound
+        }</span>
+
+        <span class="cov8" title="1">if updateData.Password != "" </span><span class="cov8" title="1">{
+                salt := make([]byte, 8)
+                rand.Read(salt)
+                hashedPassword := HashPassword(salt, updateData.Password)
+
+                if bytes.Equal(hashedPassword, user.PasswordHash) </span><span class="cov0" title="0">{
+                        return models.User{}, auth.ErrSamePassword
+                }</span>
+
+                <span class="cov8" title="1">user.PasswordHash = hashedPassword</span>
+        }
+
+        <span class="cov8" title="1">user.FirstName = updateData.FirstName
+        user.LastName = updateData.LastName
+        user.PhoneNumber = updateData.PhoneNumber
+        user.Description = updateData.Description
+
+        err = uc.repo.UpdateUser(ctx, user)
+        if err != nil </span><span class="cov0" title="0">{
+                logger.Error(err.Error())
+                return models.User{}, err
+        }</span>
+
+        <span class="cov8" title="1">logger.Info("Successful")
+        return user, nil</span>
+}
+
+func (uc *AuthUsecase) UpdateUserPic(ctx context.Context, login string, picture io.ReadSeeker, extension string) (models.User, error) <span class="cov0" title="0">{
+        logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+        user, err := uc.repo.SelectUserByLogin(ctx, login)
+        if err != nil </span><span class="cov0" title="0">{
+                logger.Error(err.Error())
+                return models.User{}, auth.ErrUserNotFound
+        }</span>
+
+        <span class="cov0" title="0">pictureBasePath := os.Getenv("USER_IMAGE_BASE_PATH")
+        if pictureBasePath == "" </span><span class="cov0" title="0">{
+                logger.Error(auth.ErrBasePath.Error())
+                return models.User{}, auth.ErrBasePath
+        }</span>
+
+        <span class="cov0" title="0">imageName := uuid.NewV4().String()
+        newImagePath := path.Join(pictureBasePath, imageName+extension)
+
+        dst, err := os.Create(newImagePath)
+        if err != nil </span><span class="cov0" title="0">{
+                logger.Info("Trying to create file at: " + newImagePath)
+                logger.Error(err.Error())
+                return models.User{}, auth.ErrFileCreation
+        }</span>
+        <span class="cov0" title="0">defer dst.Close()
+
+        if _, err := io.Copy(dst, picture); err != nil </span><span class="cov0" title="0">{
+                logger.Info("Trying to save file at: " + newImagePath)
+                logger.Error(err.Error())
+                return models.User{}, auth.ErrFileSaving
+        }</span>
+
+        <span class="cov0" title="0">if err := uc.repo.UpdateUserPic(ctx, login, imageName+extension); err != nil </span><span class="cov0" title="0">{
+                logger.Error(err.Error())
+                return models.User{}, err
+        }</span>
+
+        <span class="cov0" title="0">if user.UserPic != "default.png" </span><span class="cov0" title="0">{
+                oldImagePath := path.Join(pictureBasePath, user.UserPic)
+                if err := os.Remove(oldImagePath); err != nil &amp;&amp; !os.IsNotExist(err) </span><span class="cov0" title="0">{
+                        logger.Error(err.Error())
+                        return models.User{}, auth.ErrFileDeletion
+                }</span>
+        }
+
+        <span class="cov0" title="0">user.UserPic = imageName + extension
+
+        logger.Info("Successful")
+        return user, nil</span>
+}
+
+func (uc *AuthUsecase) GetUserAddresses(ctx context.Context, login string) ([]models.Address, error) <span class="cov8" title="1">{
+        logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+        addresses, err := uc.repo.SelectUserAddresses(ctx, login)
+        if err != nil </span><span class="cov8" title="1">{
+                logger.Error(err.Error())
+                return []models.Address{}, err
+        }</span>
+
+        <span class="cov8" title="1">logger.Info("Successful")
+        return addresses, nil</span>
+}
+
+func (uc *AuthUsecase) DeleteAddress(ctx context.Context, addressId uuid.UUID) error <span class="cov8" title="1">{
+        logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+        err := uc.repo.DeleteAddress(ctx, addressId)
+        if err != nil </span><span class="cov8" title="1">{
+                logger.Error(err.Error())
+                return err
+        }</span>
+
+        <span class="cov8" title="1">logger.Info("Successful")
+        return nil</span>
+}
+
+func (uc *AuthUsecase) AddAddress(ctx context.Context, address models.Address) error <span class="cov0" title="0">{
+        logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+        exists, err := uc.repo.AddressExists(ctx, address.Address, address.UserId)
+        if err != nil </span><span class="cov0" title="0">{
+                logger.Error(err.Error())
+                return err
+        }</span>
+        <span class="cov0" title="0">if exists </span><span class="cov0" title="0">{
+                err := errors.New("адрес уже добавлен")
+                logger.Info(err.Error())
+                return err
+        }</span>
+
+        <span class="cov0" title="0">address.Id = uuid.NewV4()
+        err = uc.repo.InsertAddress(ctx, address)
+        if err != nil </span><span class="cov0" title="0">{
+                logger.Error(err.Error())
+                return err
+        }</span>
+
+        <span class="cov0" title="0">logger.Info("Successful")
+        return nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file11" style="display: none">package http
+
+import (
+        "context"
+        "encoding/json"
+        "errors"
+        "fmt"
+        "log/slog"
+        "net/http"
+        "os"
+
+        "github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
+        "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/usecase"
+        jwtUtils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/jwt"
+        "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
+        utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/send_error"
+        validation "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/validation"
+        "github.com/golang-jwt/jwt"
+        "github.com/gorilla/mux"
+        "github.com/mailru/easyjson"
+)
+
+type CartHandler struct {
+        cartUsecase *usecase.CartUsecase
+        secret      string
+}
+
+func NewCartHandler(cartUsecase *usecase.CartUsecase) *CartHandler <span class="cov0" title="0">{
+        return &amp;CartHandler{cartUsecase: cartUsecase, secret: os.Getenv("JWT_SECRET")}
+}</span>
+
+func (h *CartHandler) getCartData(r *http.Request) (models.Cart, string, error, bool) <span class="cov0" title="0">{
+        logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+        cookie, err := r.Cookie("AdminJWT")
+        if err != nil </span><span class="cov0" title="0">{
+                if errors.Is(err, http.ErrNoCookie) </span><span class="cov0" title="0">{
+                        log.LogHandlerError(logger, fmt.Errorf("токен отсутствует: %w", err), http.StatusUnauthorized)
+                        return models.Cart{}, "", fmt.Errorf("токен отсутствует"), false
+                }</span>
+                <span class="cov0" title="0">log.LogHandlerError(logger, fmt.Errorf("ошибка при чтении куки: %w", err), http.StatusBadRequest)
+                return models.Cart{}, "", fmt.Errorf("ошибка при чтении куки"), false</span>
+        }
+
+        <span class="cov0" title="0">JWTStr := cookie.Value
+        claims := jwt.MapClaims{}
+
+        login, ok := jwtUtils.GetLoginFromJWT(JWTStr, claims, h.secret)
+        if !ok || login == "" </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, fmt.Errorf("невалидный токен"), http.StatusUnauthorized)
+                return models.Cart{}, "", fmt.Errorf("невалидный токен"), false
+        }</span>
+
+        <span class="cov0" title="0">ctx := context.Background()
+        cart, err, full_cart := h.cartUsecase.GetCart(ctx, login)
+        if err != nil </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, fmt.Errorf("ошибка получения корзины: %w", err), http.StatusInternalServerError)
+                return models.Cart{}, "", fmt.Errorf("ошибка получения корзины"), false
+        }</span>
+
+        <span class="cov0" title="0">return cart, login, nil, full_cart</span>
+}
+
+func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) <span class="cov0" title="0">{
+        logger := log.GetLoggerFromContext(r.Context())
+
+        cart, _, err, full_cart := h.getCartData(r)
+        if err != nil </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, err, http.StatusUnauthorized)
+                utils.SendError(w, "некорректный JWT-токен", http.StatusUnauthorized)
+                return
+        }</span>
+
+        <span class="cov0" title="0">if !jwtUtils.CheckDoubleSubmitCookie(w, r) </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
+                utils.SendError(w, "некорректный CSRF-токен", http.StatusForbidden)
+                return
+        }</span>
+
+        <span class="cov0" title="0">if !full_cart </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, fmt.Errorf("корзина пуста"), http.StatusNotFound)
+                utils.SendError(w, "корзина пуста", http.StatusNotFound)
+                return
+        }</span>
+
+        <span class="cov0" title="0">w.Header().Set("Content-Type", "application/json")
+        w.WriteHeader(http.StatusOK)
+
+        data, err := json.Marshal(cart)
+        if err != nil </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
+                utils.SendError(w, "Не удалось сериализовать корзину", http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov0" title="0">w.Write(data)</span>
+}
+
+func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Request) <span class="cov0" title="0">{
+        logger := log.GetLoggerFromContext(r.Context())
+
+        _, login, err, _ := h.getCartData(r)
+        if err != nil </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, err, http.StatusUnauthorized)
+                utils.SendError(w, "некорректный JWT-токен", http.StatusUnauthorized)
+                return
+        }</span>
+
+        <span class="cov0" title="0">if login == "" </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, errors.New("невалидный токен"), http.StatusUnauthorized)
+                utils.SendError(w, "невалидный токен", http.StatusUnauthorized)
+                return
+        }</span>
+
+        <span class="cov0" title="0">if !jwtUtils.CheckDoubleSubmitCookie(w, r) </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
+                utils.SendError(w, "некорректный CSRF-токен", http.StatusForbidden)
+                return
+        }</span>
+
+        <span class="cov0" title="0">vars := mux.Vars(r)
+        productID := vars["productID"]
+
+        var requestBody models.CartInReq
+        if err := easyjson.UnmarshalFromReader(r.Body, &amp;requestBody); err != nil </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, fmt.Errorf("ошибка чтения тела запроса: %w", err), http.StatusBadRequest)
+                utils.SendError(w, "Некорректный формат данных", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov0" title="0">ctx := context.Background()
+        err = h.cartUsecase.UpdateItemQuantity(ctx, login, productID, requestBody.RestaurantId, requestBody.Quantity)
+        if err != nil </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, fmt.Errorf("не удалось обновить количество: %w", err), http.StatusInternalServerError)
+                utils.SendError(w, "Не удалось обновить количество товара в корзине", http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov0" title="0">cart, _, err, full_cart := h.getCartData(r)
+        if err != nil </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, err, http.StatusUnauthorized)
+                utils.SendError(w, "некорректный JWT-токен", http.StatusUnauthorized)
+                return
+        }</span>
+
+        <span class="cov0" title="0">if !full_cart </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, fmt.Errorf("корзина пуста"), http.StatusOK)
+                utils.SendError(w, "корзина пуста", http.StatusOK)
+                return
+        }</span>
+
+        <span class="cov0" title="0">w.Header().Set("Content-Type", "application/json")
+        w.WriteHeader(http.StatusOK)
+
+        data, err := json.Marshal(cart)
+        if err != nil </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, fmt.Errorf("ошибка сериализации корзины: %w", err), http.StatusInternalServerError)
+                utils.SendError(w, "Ошибка сериализации корзины", http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov0" title="0">w.Write(data)</span>
+}
+
+func (h *CartHandler) ClearCart(w http.ResponseWriter, r *http.Request) <span class="cov0" title="0">{
+        logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+        cookie, err := r.Cookie("AdminJWT")
+        if err != nil </span><span class="cov0" title="0">{
+                if errors.Is(err, http.ErrNoCookie) </span><span class="cov0" title="0">{
+                        log.LogHandlerError(logger, fmt.Errorf("токен отсутствует: %w", err), http.StatusUnauthorized)
+                        return
+                }</span>
+                <span class="cov0" title="0">log.LogHandlerError(logger, fmt.Errorf("ошибка при чтении куки: %w", err), http.StatusBadRequest)
+                return</span>
+        }
+
+        <span class="cov0" title="0">JWTStr := cookie.Value
+        claims := jwt.MapClaims{}
+
+        login, _ := jwtUtils.GetLoginFromJWT(JWTStr, claims, h.secret)
+
+        if login == "" </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, errors.New("пустой login из токена"), http.StatusUnauthorized)
+                http.Error(w, "невалидный токен", http.StatusUnauthorized)
+                return
+        }</span>
+
+        <span class="cov0" title="0">if !jwtUtils.CheckDoubleSubmitCookie(w, r) </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
+                utils.SendError(w, "некорректный CSRF-токен", http.StatusForbidden)
+                return
+        }</span>
+
+        <span class="cov0" title="0">err = h.cartUsecase.ClearCart(r.Context(), login)
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, fmt.Sprintf("Ошибка при очистке корзины: %v", err), http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov0" title="0">w.Header().Set("Content-Type", "application/json")
+        w.WriteHeader(http.StatusOK)</span>
+}
+
+func (h *CartHandler) CreateOrder(w http.ResponseWriter, r *http.Request) <span class="cov0" title="0">{
+        logger := log.GetLoggerFromContext(r.Context())
+
+        cart, userID, err, full_cart := h.getCartData(r)
+        if err != nil </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, err, http.StatusUnauthorized)
+                utils.SendError(w, "некорректный JWT-токен", http.StatusUnauthorized)
+                return
+        }</span>
+
+        <span class="cov0" title="0">if !jwtUtils.CheckDoubleSubmitCookie(w, r) </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
+                utils.SendError(w, "некорректный CSRF-токен", http.StatusForbidden)
+                return
+        }</span>
+
+        <span class="cov0" title="0">if !full_cart </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, fmt.Errorf("корзина пуста"), http.StatusNotFound)
+                utils.SendError(w, "корзина пуста", http.StatusNotFound)
+                return
+        }</span>
+
+        <span class="cov0" title="0">var req models.OrderInReq
+        if err := easyjson.UnmarshalFromReader(r.Body, &amp;req); err != nil </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, fmt.Errorf("ошибка чтения тела запроса: %w", err), http.StatusBadRequest)
+                utils.SendError(w, "Некорректный формат данных", http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov0" title="0">if err := validation.ValidateOrderInput(&amp;req); err != nil </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, fmt.Errorf("валидация заказа: %w", err), http.StatusBadRequest)
+                utils.SendError(w, err.Error(), http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov0" title="0">ctx := r.Context()
+
+        order, err := h.cartUsecase.CreateOrder(ctx, userID, req, cart)
+        if err != nil </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, fmt.Errorf("не удалось создать заказ: %w", err), http.StatusInternalServerError)
+                utils.SendError(w, "Ошибка при создании заказа", http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov0" title="0">err = h.cartUsecase.ClearCart(r.Context(), userID)
+        if err != nil </span><span class="cov0" title="0">{
+                http.Error(w, fmt.Sprintf("Ошибка при очистке корзины: %v", err), http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov0" title="0">w.Header().Set("Content-Type", "application/json")
+        w.WriteHeader(http.StatusOK)
+
+        data, err := json.Marshal(order)
+        if err != nil </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
+                utils.SendError(w, "Не удалось сериализовать корзину", http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov0" title="0">w.Write(data)</span>
+}
+</pre>
+		
+		<pre class="file" id="file12" style="display: none">package pg
+
+import (
+        "context"
+        "fmt"
+        "log"
+
+        "github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
+        "github.com/jackc/pgx/v4/pgxpool"
+        "github.com/satori/uuid"
+)
+
+const (
+        getFieldProduct   = "SELECT id, name, price, image_url, weight FROM products WHERE id = ANY($1)"
+        getRestaurantName = "SELECT name FROM restaurants WHERE id = $1"
+        insertOrder = `INSERT INTO orders (id, user_id, status, address_id, order_products,
+                apartment_or_office, intercom, entrance, floor,
+                courier_comment, leave_at_door, created_at, final_price) 
+                VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`
+)
+
+type RestaurantRepository struct {
+        db *pgxpool.Pool
+}
+
+func NewRestaurantRepository(db *pgxpool.Pool) *RestaurantRepository <span class="cov0" title="0">{
+        return &amp;RestaurantRepository{db: db}
+}</span>
+
+func (r *RestaurantRepository) GetCartItem(ctx context.Context, productIDs []string, productAmounts map[string]int, restaurantID string) (models.Cart, error) <span class="cov0" title="0">{
+        rows, err := r.db.Query(ctx, getFieldProduct, productIDs)
+        if err != nil </span><span class="cov0" title="0">{
+                return models.Cart{}, err
+        }</span>
+        <span class="cov0" title="0">defer rows.Close()
+
+        var items []models.CartItem
+
+        for rows.Next() </span><span class="cov0" title="0">{
+                var item models.CartItem
+                err := rows.Scan(&amp;item.Id, &amp;item.Name, &amp;item.Price, &amp;item.ImageURL, &amp;item.Weight)
+                if err != nil </span><span class="cov0" title="0">{
+                        return models.Cart{}, err
+                }</span>
+                <span class="cov0" title="0">item.Amount = productAmounts[item.Id.String()]
+                items = append(items, item)</span>
+        }
+
+        <span class="cov0" title="0">var restaurantName string
+        err = r.db.QueryRow(ctx, getRestaurantName, restaurantID).Scan(&amp;restaurantName)
+        if err != nil </span><span class="cov0" title="0">{
+                return models.Cart{}, fmt.Errorf("не удалось получить имя ресторана: %w", err)
+        }</span>
+
+        <span class="cov0" title="0">uid, err := uuid.FromString(restaurantID)
+        if err != nil </span><span class="cov0" title="0">{
+                return models.Cart{}, err
+        }</span>
+
+        <span class="cov0" title="0">return models.Cart{
+                Id:        uid,
+                Name:      restaurantName,
+                CartItems: items,
+        }, nil</span>
+}
+
+func (r *RestaurantRepository) Save(ctx context.Context, order *models.Order, userLogin string) error <span class="cov0" title="0">{
+        log.Printf("Запрос на сохранение заказа. Логин пользователя: %s", userLogin)
+
+        var userID uuid.UUID
+        err := r.db.QueryRow(ctx, `SELECT id FROM users WHERE login = $1`, userLogin).Scan(&amp;userID)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Printf("Ошибка при поиске пользователя по логину %s: %v", userLogin, err)
+                return fmt.Errorf("не удалось найти пользователя по логину %s: %w", userLogin, err)
+        }</span>
+
+        <span class="cov0" title="0">log.Printf("Найден user_id для логина %s: %s", userLogin, userID)
+
+        orderProductsStr, err := order.OrderProducts.MarshalJSON()
+        if err != nil </span><span class="cov0" title="0">{
+                log.Printf("Ошибка при маршалинге заказанных товаров: %v", err)
+                return err
+        }</span>
+
+        <span class="cov0" title="0">log.Printf("Данные заказа: ID: %s, Статус: %s, Адрес: %s", order.ID, order.Status, order.Address)
+
+        _, err = r.db.Exec(ctx, insertOrder,
+                order.ID, userID, order.Status, order.Address, string(orderProductsStr),
+                order.ApartmentOrOffice, order.Intercom, order.Entrance, order.Floor,
+                order.CourierComment, order.LeaveAtDoor, order.CreatedAt, order.FinalPrice)
+
+        if err != nil </span><span class="cov0" title="0">{
+                log.Printf("Ошибка при вставке заказа в базу данных: %v", err)
+                return err
+        }</span>
+
+        <span class="cov0" title="0">log.Printf("Заказ с ID %s успешно сохранен", order.ID)
+
+        return nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file13" style="display: none">package repo
+
+import (
+        "context"
+        "fmt"
+        "log"
+
+        "github.com/redis/go-redis/v9"
+)
+
+type CartRepository struct {
+        redisClient *redis.Client
+}
+
+func NewCartRepository(redisClient *redis.Client) *CartRepository <span class="cov0" title="0">{
+        return &amp;CartRepository{redisClient: redisClient}
+}</span>
+
+func (r *CartRepository) GetCart(ctx context.Context, userID string) (map[string]int, string, error) <span class="cov0" title="0">{
+        key := "cart:" + userID
+        log.Printf("[GetCart] Получение корзины для ключа: %s", key)
+
+        items, err := r.redisClient.HGetAll(ctx, key).Result()
+        if err != nil </span><span class="cov0" title="0">{
+                log.Printf("[GetCart] Ошибка при HGetAll Redis: %v", err)
+                return nil, "", err
+        }</span>
+
+        <span class="cov0" title="0">cart := make(map[string]int)
+        var restaurantID string
+
+        for productID, quantity := range items </span><span class="cov0" title="0">{
+                if productID == "restaurant_id" </span><span class="cov0" title="0">{
+                        restaurantID = quantity
+                        continue</span>
+                }
+
+                <span class="cov0" title="0">var qty int
+                if _, err := fmt.Sscanf(quantity, "%d", &amp;qty); err != nil </span><span class="cov0" title="0">{
+                        log.Printf("[GetCart] Ошибка при конвертации количества товара (productID: %s, value: %s): %v", productID, quantity, err)
+                        continue</span>
+                }
+
+                <span class="cov0" title="0">cart[productID] = qty</span>
+        }
+
+        <span class="cov0" title="0">log.Printf("[GetCart] Итоговая корзина: %+v, restaurantID: %s", cart, restaurantID)
+
+        return cart, restaurantID, nil</span>
+}
+
+func (r *CartRepository) UpdateItemQuantity(ctx context.Context, userID, productID, restaurantID string, quantity int) error <span class="cov0" title="0">{
+        key := "cart:" + userID
+        log.Printf("[UpdateItemQuantity] Обновление товара %s для пользователя %s, ресторан: %s, количество: %d", productID, userID, restaurantID, quantity)
+
+        currentRestaurantID, err := r.redisClient.HGet(ctx, key, "restaurant_id").Result()
+        if err != nil &amp;&amp; err != redis.Nil </span><span class="cov0" title="0">{
+                log.Printf("[UpdateItemQuantity] Ошибка при получении restaurant_id из Redis: %v", err)
+                return err
+        }</span>
+
+        <span class="cov0" title="0">if currentRestaurantID != "" &amp;&amp; currentRestaurantID != restaurantID </span><span class="cov0" title="0">{
+                log.Printf("[UpdateItemQuantity] Рестораны не совпадают (текущий: %s, новый: %s), очищаем корзину", currentRestaurantID, restaurantID)
+                if err := r.redisClient.Del(ctx, key).Err(); err != nil </span><span class="cov0" title="0">{
+                        log.Printf("[UpdateItemQuantity] Ошибка при удалении ключа Redis: %v", err)
+                        return err
+                }</span>
+        }
+
+        <span class="cov0" title="0">if quantity &lt;= 0 </span><span class="cov0" title="0">{
+                log.Printf("[UpdateItemQuantity] Количество &lt;= 0, удаляем товар %s", productID)
+                err := r.redisClient.HDel(ctx, key, productID).Err()
+                if err != nil </span><span class="cov0" title="0">{
+                        log.Printf("[UpdateItemQuantity] Ошибка при удалении товара из корзины: %v", err)
+                        return err
+                }</span>
+
+                <span class="cov0" title="0">fields, err := r.redisClient.HKeys(ctx, key).Result()
+                if err == nil </span><span class="cov0" title="0">{
+                        onlyRestaurantID := len(fields) == 1 &amp;&amp; fields[0] == "restaurant_id"
+                        if onlyRestaurantID || len(fields) == 0 </span><span class="cov0" title="0">{
+                                log.Printf("[UpdateItemQuantity] Корзина пуста, удаляем restaurant_id")
+                                _ = r.redisClient.HDel(ctx, key, "restaurant_id").Err()
+                        }</span>
+                } else<span class="cov0" title="0"> {
+                        log.Printf("[UpdateItemQuantity] Ошибка при получении ключей из Redis: %v", err)
+                }</span>
+
+                <span class="cov0" title="0">return nil</span>
+        }
+
+        <span class="cov0" title="0">if quantity &gt; 999 </span><span class="cov0" title="0">{
+                log.Printf("[UpdateItemQuantity] Превышен лимит количества товара (%d)", quantity)
+                return fmt.Errorf("товар уже в корзине")
+        }</span>
+
+        <span class="cov0" title="0">pipe := r.redisClient.TxPipeline()
+        pipe.HSet(ctx, key, productID, quantity)
+        pipe.HSet(ctx, key, "restaurant_id", restaurantID)
+
+        _, err = pipe.Exec(ctx)
+        if err != nil </span><span class="cov0" title="0">{
+                log.Printf("[UpdateItemQuantity] Ошибка при выполнении транзакции Redis: %v", err)
+        }</span> else<span class="cov0" title="0"> {
+                log.Printf("[UpdateItemQuantity] Успешно обновлено: %s -&gt; %d", productID, quantity)
+        }</span>
+        <span class="cov0" title="0">return err</span>
+}
+
+func (r *CartRepository) ClearCart(ctx context.Context, userID string) error <span class="cov0" title="0">{
+        key := "cart:" + userID
+        log.Printf("[ClearCart] Очистка корзины для пользователя %s", userID)
+
+        err := r.redisClient.Del(ctx, key).Err()
+        if err != nil </span><span class="cov0" title="0">{
+                log.Printf("[ClearCart] Ошибка при удалении корзины из Redis: %v", err)
+                return err
+        }</span>
+
+        <span class="cov0" title="0">log.Printf("[ClearCart] Корзина для пользователя %s успешно очищена", userID)
+        return nil</span>
+}</pre>
+		
+		<pre class="file" id="file14" style="display: none">package usecase
+
+import (
+        "context"
+        "log"
+        "time"
+
+        "github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
+        pgRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/pg"
+        redisRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/redis"
+        "github.com/satori/uuid"
+)
+
+type CartUsecase struct {
+        cartRepo       *redisRepo.CartRepository
+        restaurantRepo *pgRepo.RestaurantRepository
+}
+
+func NewCartUsecase(cartRepo *redisRepo.CartRepository, restaurantRepo *pgRepo.RestaurantRepository) *CartUsecase <span class="cov0" title="0">{
+        return &amp;CartUsecase{
+                cartRepo:       cartRepo,
+                restaurantRepo: restaurantRepo,
+        }
+}</span>
+
+func (uc *CartUsecase) GetCart(ctx context.Context, userID string) (models.Cart, error, bool) <span class="cov0" title="0">{
+        cartRaw, restaurantID, err := uc.cartRepo.GetCart(ctx, userID)
+        log.Printf("[GetCart] usecase1 %v", err)
+        if err != nil </span><span class="cov0" title="0">{
+                return models.Cart{}, err, false
+        }</span>
+
+        <span class="cov0" title="0">if restaurantID == "" </span><span class="cov0" title="0">{
+                return models.Cart{}, nil, false
+        }</span>
+
+        <span class="cov0" title="0">if cartRaw == nil </span><span class="cov0" title="0">{
+                return models.Cart{}, nil, false
+        }</span>
+
+        <span class="cov0" title="0">productIDs := make([]string, 0, len(cartRaw))
+        for id := range cartRaw </span><span class="cov0" title="0">{
+                productIDs = append(productIDs, id)
+        }</span>
+
+        <span class="cov0" title="0">items, err := uc.restaurantRepo.GetCartItem(ctx, productIDs, cartRaw, restaurantID)
+        log.Printf("[GetCart] usecase2 %v", err)
+        if err != nil </span><span class="cov0" title="0">{
+                return models.Cart{}, err, false
+        }</span>
+
+        <span class="cov0" title="0">return items, nil, true</span>
+}
+
+func (uc *CartUsecase) UpdateItemQuantity(ctx context.Context, userID, productID string, restaurantId string, quantity int) error <span class="cov0" title="0">{
+        return uc.cartRepo.UpdateItemQuantity(ctx, userID, productID, restaurantId, quantity)
+}</span>
+
+func (uc *CartUsecase) ClearCart(ctx context.Context, userID string) error <span class="cov0" title="0">{
+        return uc.cartRepo.ClearCart(ctx, userID)
+}</span>
+
+func (u *CartUsecase) CreateOrder(ctx context.Context, userID string, req models.OrderInReq, cart models.Cart) (*models.Order, error) <span class="cov0" title="0">{
+        order := &amp;models.Order{
+                ID:                uuid.NewV4(),
+                UserID:            userID,
+                Status:            req.Status,
+                Address:           req.Address,
+                OrderProducts:     cart,
+                ApartmentOrOffice: req.ApartmentOrOffice,
+                Intercom:          req.Intercom,
+                Entrance:          req.Entrance,
+                Floor:             req.Floor,
+                CourierComment:    req.CourierComment,
+                LeaveAtDoor:       req.LeaveAtDoor,
+                CreatedAt:         time.Now(),
+                FinalPrice:        req.FinalPrice,
+        }
+
+        if err := u.restaurantRepo.Save(ctx, order, userID); err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov0" title="0">return order, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file15" style="display: none">package cors
+
+import (
+        "net/http"
+)
+
+const CSP = "default-src 'none'; script-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self'; base-uri 'self'; form-action 'self'"
+
+func CorsMiddleware(next http.Handler) http.Handler <span class="cov8" title="1">{
+
+        return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) </span><span class="cov8" title="1">{
+                w.Header().Set("Access-Control-Allow-Methods", "POST,GET")
+                w.Header().Set("Access-Control-Allow-Headers", "Authorization,Content-Type,X-Csrf-Token")
+                w.Header().Set("Access-Control-Allow-Credentials", "true")
+                w.Header().Set("Access-Control-Expose-Headers", "Authorization,X-Csrf-Token")
+                w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+                w.Header().Set("Access-Control-Max-Age", "86400")
+                w.Header().Set("Content-Security-Policy", CSP)
+                if r.Method == http.MethodOptions </span><span class="cov8" title="1">{
+                        return
+                }</span>
+                <span class="cov8" title="1">next.ServeHTTP(w, r)</span>
+        })
+}
+</pre>
+		
+		<pre class="file" id="file16" style="display: none">package log
+
+import (
+        "context"
+        "log/slog"
+        "net/http"
+
+        "github.com/satori/uuid"
+        "github.com/gorilla/mux"
+)
+
+func CreateLoggerMiddleware(logger *slog.Logger) mux.MiddlewareFunc <span class="cov0" title="0">{
+        return func(next http.Handler) http.Handler </span><span class="cov0" title="0">{
+                return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) </span><span class="cov0" title="0">{
+                        ctx := context.WithValue(r.Context(), "logger", logger.With(slog.String("ID", uuid.NewV4().String())))
+                        r = r.WithContext(ctx)
+                        next.ServeHTTP(w, r)
+                }</span>)
+        }
+}
+</pre>
+		
+		<pre class="file" id="file17" style="display: none">package http
+
+import (
+        "encoding/json"
+        "errors"
+        "fmt"
+        "log/slog"
+        "net/http"
+        "strconv"
+
+        interfaces "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants"
+        "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
+        utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/send_error"
+        "github.com/gorilla/mux"
+        "github.com/satori/uuid"
+)
+
+type RestaurantHandler struct {
+        restaurantUsecase interfaces.RestaurantUsecase
+}
+
+func NewRestaurantHandler(ru interfaces.RestaurantUsecase) *RestaurantHandler <span class="cov8" title="1">{
+        return &amp;RestaurantHandler{restaurantUsecase: ru}
+}</span>
+
+// GetProductsByRestaurant godoc
+// @Summary Получить продукты ресторана
+// @Description Получение списка продуктов ресторана с пагинацией
+// @Tags restaurants
+// @Param id path string true "ID ресторана"
+// @Param count query int false "Количество элементов (по умолчанию 100)"
+// @Param offset query int false "Смещение (по умолчанию 0)"
+// @Produce json
+// @Success 200 {array} models.Product "Успешное получение продуктов ресторана"
+// @Failure 400 {object} utils.ErrorResponse "Неверный формат ID ресторана"
+// @Failure 500 {object} utils.ErrorResponse "Внутренняя ошибка сервера"
+// @Router /restaurants/{id} [get]
+func (h *RestaurantHandler) GetProductsByRestaurant(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+        vars := mux.Vars(r)
+        restaurantIDStr := vars["id"]
+        restaurantID := uuid.FromStringOrNil(restaurantIDStr)
+        if restaurantID == uuid.Nil </span><span class="cov8" title="1">{
+                log.LogHandlerError(logger, errors.New("Неверный формат id ресторана"), http.StatusBadRequest)
+                w.WriteHeader(http.StatusBadRequest)
+                return
+        }</span>
+
+        <span class="cov8" title="1">countStr := r.URL.Query().Get("count")
+        offsetStr := r.URL.Query().Get("offset")
+
+        count, err := strconv.Atoi(countStr)
+        if err != nil </span><span class="cov8" title="1">{
+                count = 100
+        }</span>
+
+        <span class="cov8" title="1">offset, err := strconv.Atoi(offsetStr)
+        if err != nil </span><span class="cov8" title="1">{
+                offset = 0
+        }</span>
+
+        <span class="cov8" title="1">products, err := h.restaurantUsecase.GetProductsByRestaurant(r.Context(), restaurantID, count, offset)
+        if err != nil </span><span class="cov8" title="1">{
+                log.LogHandlerError(logger, fmt.Errorf("Ошибка уровнем ниже (usecase): %w", err), http.StatusInternalServerError)
+                w.WriteHeader(http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov8" title="1">data, err := json.Marshal(products)
+        if err != nil </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, fmt.Errorf("Не удалось сериализовать данные: %w", err), http.StatusInternalServerError)
+                utils.SendError(w, "Не удалось сериализовать данные", http.StatusInternalServerError)
+                return
+        }</span>
+        <span class="cov8" title="1">w.Header().Set("Content-Type", "application/json")
+        w.Write(data)
+        log.LogHandlerInfo(logger, "Success", http.StatusOK)</span>
+}
+
+// RestaurantList godoc
+// @Summary Список ресторанов
+// @Description Получение списка ресторанов с пагинацией
+// @Tags restaurants
+// @Param count query int false "Количество элементов"
+// @Param offset query int false "Смещение"
+// @Produce json
+// @Success 200 {array} models.Restaurant "Успешное получение списка ресторанов"
+// @Failure 500 {object} utils.ErrorResponse "Внутренняя ошибка сервера"
+// @Router /restaurants/list [get]
+func (h *RestaurantHandler) RestaurantList(w http.ResponseWriter, r *http.Request) <span class="cov8" title="1">{
+        logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+        countStr := r.URL.Query().Get("count")
+        offsetStr := r.URL.Query().Get("offset")
+
+        count, err := strconv.Atoi(countStr)
+        if err != nil </span><span class="cov0" title="0">{
+                count = 100
+        }</span>
+
+        <span class="cov8" title="1">offset, err := strconv.Atoi(offsetStr)
+        if err != nil </span><span class="cov0" title="0">{
+                offset = 0
+        }</span>
+
+        <span class="cov8" title="1">restaurants, err := h.restaurantUsecase.GetAll(r.Context(), count, offset)
+        if err != nil </span><span class="cov8" title="1">{
+                log.LogHandlerError(logger, fmt.Errorf("Ошибка уровнем ниже (usecase): %w", err), http.StatusInternalServerError)
+                w.WriteHeader(http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov8" title="1">if restaurants == nil </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, fmt.Errorf("рестораны не найдены: %w", err), http.StatusNotFound)
+                w.WriteHeader(http.StatusNotFound)
+                return
+        }</span>
+
+        <span class="cov8" title="1">data, err := json.Marshal(restaurants)
+        if err != nil </span><span class="cov0" title="0">{
+                log.LogHandlerError(logger, fmt.Errorf("Ошибка маршалинга: %w", err), http.StatusInternalServerError)
+                utils.SendError(w, "Не удалось сериализовать данные", http.StatusInternalServerError)
+                return
+        }</span>
+
+        <span class="cov8" title="1">w.Header().Set("Content-Type", "application/json")
+        w.Write(data)
+        log.LogHandlerInfo(logger, "Success", http.StatusOK)</span>
+}
+
+</pre>
+		
+		<pre class="file" id="file18" style="display: none">package repo
+
+import (
+        "context"
+        "log/slog"
+
+        "github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
+        "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
+        "github.com/jackc/pgtype/pgxtype"
+        "github.com/satori/uuid"
+)
+
+const (
+        getAllRestaurant        = "SELECT id, name, description, rating FROM restaurants LIMIT $1 OFFSET $2;"
+        getRestaurantByid       = "SELECT id, name, description, rating FROM restaurants WHERE id=$1;"
+        getProductsByRestaurant = "SELECT id, name, banner_url, address, description, rating, rating_count, working_mode_from, working_mode_to, delivery_time_from, delivery_time_to FROM restaurants WHERE id = $1;"
+        getRestaurantTag        = "SELECT rt.name FROM restaurant_tags rt JOIN restaurant_tags_relations rtr ON rtr.tag_id = rt.id WHERE rtr.restaurant_id = $1"
+        getRestaurantProduct    = "SELECT id, name, price, image_url, weight, category FROM products WHERE restaurant_id = $1 ORDER BY category LIMIT $2 OFFSET $3"
+)
+
+type RestaurantRepository struct {
+        db pgxtype.Querier
+}
+
+func NewRestaurantRepository(db pgxtype.Querier) *RestaurantRepository <span class="cov8" title="1">{
+        return &amp;RestaurantRepository{db: db}
+}</span>
+
+func (r *RestaurantRepository) GetProductsByRestaurant(ctx context.Context, restaurantID uuid.UUID, count, offset int) (*models.RestaurantFull, error) <span class="cov8" title="1">{
+        logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+        row := r.db.QueryRow(ctx, getProductsByRestaurant, restaurantID)
+
+        var rest models.RestaurantFull
+        err := row.Scan(
+                &amp;rest.Id, &amp;rest.Name, &amp;rest.BannerURL, &amp;rest.Address, &amp;rest.Description, &amp;rest.Rating, &amp;rest.RatingCount,
+                &amp;rest.WorkingMode.From, &amp;rest.WorkingMode.To,
+                &amp;rest.DeliveryTime.From, &amp;rest.DeliveryTime.To,
+        )
+        if err != nil </span><span class="cov0" title="0">{
+                logger.Error("failed to scan restaurant: " + err.Error())
+                return nil, err
+        }</span>
+
+        <span class="cov8" title="1">tagRows, err := r.db.Query(ctx, getRestaurantTag, restaurantID)
+        if err != nil </span><span class="cov0" title="0">{
+                logger.Error("failed to query tags: " + err.Error())
+                return nil, err
+        }</span>
+        <span class="cov8" title="1">defer tagRows.Close()
+
+        for tagRows.Next() </span><span class="cov8" title="1">{
+                var tag string
+                if err := tagRows.Scan(&amp;tag); err != nil </span><span class="cov0" title="0">{
+                        logger.Error("failed to scan tag: " + err.Error())
+                        return nil, err
+                }</span>
+                <span class="cov8" title="1">rest.Tags = append(rest.Tags, tag)</span>
+        }
+
+        <span class="cov8" title="1">prodRows, err := r.db.Query(ctx, getRestaurantProduct, restaurantID, count, offset)
+        if err != nil </span><span class="cov0" title="0">{
+                logger.Error("failed to query products: " + err.Error())
+                return nil, err
+        }</span>
+        <span class="cov8" title="1">defer prodRows.Close()
+
+        categoryMap := make(map[string][]models.Product)
+
+        for prodRows.Next() </span><span class="cov8" title="1">{
+                var p models.Product
+                var category string
+                err := prodRows.Scan(&amp;p.Id, &amp;p.Name, &amp;p.Price, &amp;p.ImageURL, &amp;p.Weight, &amp;category)
+                if err != nil </span><span class="cov0" title="0">{
+                        logger.Error("failed to scan product: " + err.Error())
+                        return nil, err
+                }</span>
+                <span class="cov8" title="1">p.Sanitize()
+                categoryMap[category] = append(categoryMap[category], p)</span>
+        }
+
+        <span class="cov8" title="1">for categoryName, products := range categoryMap </span><span class="cov8" title="1">{
+                rest.Categories = append(rest.Categories, models.Category{
+                        Name:     categoryName,
+                        Products: products,
+                })
+        }</span>
+
+        <span class="cov8" title="1">logger.Info("Successfully built RestaurantFull model")
+        return &amp;rest, nil</span>
+}
+
+func (r *RestaurantRepository) GetAll(ctx context.Context, count, offset int) ([]models.Restaurant, error) <span class="cov8" title="1">{
+        logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+        rows, err := r.db.Query(ctx, getAllRestaurant, count, offset)
+        if err != nil </span><span class="cov8" title="1">{
+                logger.Error(err.Error())
+                return nil, err
+        }</span>
+        <span class="cov8" title="1">defer rows.Close()
+
+        var restaurants []models.Restaurant
+        for rows.Next() </span><span class="cov8" title="1">{
+                var restaurant models.Restaurant
+                if err := rows.Scan(&amp;restaurant.Id, &amp;restaurant.Name, &amp;restaurant.Description, &amp;restaurant.Rating); err != nil </span><span class="cov0" title="0">{
+                        logger.Error(err.Error())
+                        return nil, err
+                }</span>
+                <span class="cov8" title="1">restaurants = append(restaurants, restaurant)</span>
+        }
+
+        <span class="cov8" title="1">logger.Info("Successful")
+        return restaurants, rows.Err()</span>
+}
+</pre>
+		
+		<pre class="file" id="file19" style="display: none">package usecase
+
+import (
+        "context"
+
+        "github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
+        interfaces "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants"
+        "github.com/satori/uuid"
+)
+
+type RestaurantUsecase struct {
+        repo interfaces.RestaurantRepo
+}
+
+func NewRestaurantsUsecase(r interfaces.RestaurantRepo) *RestaurantUsecase <span class="cov8" title="1">{
+        return &amp;RestaurantUsecase{repo: r}
+}</span>
+
+func (u *RestaurantUsecase) GetProductsByRestaurant(ctx context.Context, restaurantID uuid.UUID, count, offset int) (*models.RestaurantFull, error) <span class="cov8" title="1">{
+        return u.repo.GetProductsByRestaurant(ctx, restaurantID, count, offset)
+}</span>
+
+func (u *RestaurantUsecase) GetAll(ctx context.Context, count, offset int) ([]models.Restaurant, error) <span class="cov8" title="1">{
+        return u.repo.GetAll(ctx, count, offset)
+}</span>
+</pre>
+		
+		<pre class="file" id="file20" style="display: none">package utils
+
+import (
+        "fmt"
+        "net/http"
+
+        "github.com/golang-jwt/jwt"
+)
+
+func GetLoginFromJWT(JWTStr string, claims jwt.MapClaims, secret string) (string, bool) <span class="cov8" title="1">{
+        token, err := jwt.ParseWithClaims(JWTStr, claims, func(token *jwt.Token) (interface{}, error) </span><span class="cov8" title="1">{
+                if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok </span><span class="cov0" title="0">{
+                        return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+                }</span>
+                <span class="cov8" title="1">if secret == "" </span><span class="cov0" title="0">{
+                        return nil, fmt.Errorf("JWT_SECRET не установлен")
+                }</span>
+                <span class="cov8" title="1">return []byte(secret), nil</span>
+        })
+        <span class="cov8" title="1">if err != nil || !token.Valid </span><span class="cov8" title="1">{
+                return "", false
+        }</span>
+
+        <span class="cov8" title="1">login, ok := claims["login"].(string)
+        return login, ok</span>
+}
+
+func CheckDoubleSubmitCookie(w http.ResponseWriter, r *http.Request) bool <span class="cov8" title="1">{
+        cookieCSRF, err := r.Cookie("CSRF-Token")
+        if err != nil </span><span class="cov0" title="0">{
+                if err == http.ErrNoCookie </span><span class="cov0" title="0">{
+                        w.WriteHeader(http.StatusUnauthorized)
+                        return false
+                }</span>
+                <span class="cov0" title="0">w.WriteHeader(http.StatusBadRequest)
+                return false</span>
+        }
+
+        <span class="cov8" title="1">headerCSRF := r.Header.Get("X-CSRF-Token")
+        if cookieCSRF.Value == "" || headerCSRF == "" || cookieCSRF.Value != headerCSRF </span><span class="cov8" title="1">{
+                w.WriteHeader(http.StatusForbidden)
+                return false
+        }</span>
+
+        <span class="cov8" title="1">return true</span>
+}
+
+func GetIdFromJWT(JWTStr string, claims jwt.MapClaims, secret string) (string, bool) <span class="cov8" title="1">{
+        token, err := jwt.ParseWithClaims(JWTStr, claims, func(token *jwt.Token) (interface{}, error) </span><span class="cov8" title="1">{
+                if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok </span><span class="cov0" title="0">{
+                        return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+                }</span>
+                <span class="cov8" title="1">if secret == "" </span><span class="cov0" title="0">{
+                        return nil, fmt.Errorf("JWT_SECRET не установлен")
+                }</span>
+                <span class="cov8" title="1">return []byte(secret), nil</span>
+        })
+        <span class="cov8" title="1">if err != nil || !token.Valid </span><span class="cov8" title="1">{
+                return "", false
+        }</span>
+
+        <span class="cov8" title="1">id, ok := claims["id"].(string)
+        return id, ok</span>
+}
+</pre>
+		
+		<pre class="file" id="file21" style="display: none">package log
+
+import (
+        "context"
+        "errors"
+        "log/slog"
+        "os"
+        "runtime"
+        "strconv"
+        "strings"
+)
+
+func GetFuncName() string <span class="cov8" title="1">{
+        pc := make([]uintptr, 15)
+        n := runtime.Callers(2, pc)
+        if n == 0 </span><span class="cov0" title="0">{
+                return "unknown"  
+        }</span>
+
+        <span class="cov8" title="1">frames := runtime.CallersFrames(pc[:n])
+        frame, more := frames.Next()
+        if !more </span><span class="cov0" title="0">{
+                return "unknown"  
+        }</span>
+
+        <span class="cov8" title="1">values := strings.Split(frame.Function, "/")
+        if len(values) == 0 </span><span class="cov0" title="0">{
+                return "unknown"
+        }</span>
+
+        <span class="cov8" title="1">funcName := values[len(values)-1]
+        if dotIndex := strings.LastIndex(funcName, "."); dotIndex != -1 </span><span class="cov8" title="1">{
+                funcName = funcName[dotIndex+1:] 
+        }</span>
+
+        <span class="cov8" title="1">return funcName</span>
+}
+
+
+func LogHandlerInfo(logger *slog.Logger, msg string, statusCode int) <span class="cov8" title="1">{
+        logger = logger.With(slog.String("status", strconv.Itoa(statusCode)))
+        logger.Info(msg)
+}</span>
+
+func LogHandlerError(logger *slog.Logger, err error, statusCode int) <span class="cov8" title="1">{
+        logger = logger.With(slog.String("status", strconv.Itoa(statusCode)))
+
+        unwrappedErr := errors.Unwrap(err)
+        if unwrappedErr != nil </span><span class="cov8" title="1">{
+                logger.Error(unwrappedErr.Error())
+        }</span> else<span class="cov8" title="1"> {
+                logger.Error(err.Error())
+        }</span>
+}
+
+func GetLoggerFromContext(ctx context.Context) *slog.Logger <span class="cov8" title="1">{
+        if logger, ok := ctx.Value("logger").(*slog.Logger); ok </span><span class="cov8" title="1">{
+                return logger
+        }</span>
+        <span class="cov8" title="1">logger := slog.New(slog.NewJSONHandler(os.Stdout, &amp;slog.HandlerOptions{Level: slog.LevelInfo}))
+        logger.Error("Couldnt get logger from context")
+
+        return logger</span>
+}
+</pre>
+		
+		<pre class="file" id="file22" style="display: none">package options
+
+var defaultRestaurantOptions = restaurantOptions{
+        count:  10,
+        offset: 0,
+}
+
+type restaurantOptions struct {
+        count  int
+        offset int
+}
+
+type applyRestaurantOption interface {
+        apply(*restaurantOptions)
+}
+
+type funcRestaurantOption struct {
+        f func(option *restaurantOptions)
+}
+
+func (fdo *funcRestaurantOption) apply(opt *restaurantOptions) <span class="cov8" title="1">{
+        fdo.f(opt)
+}</span>
+
+func newFuncRestaurantOption(f func(option *restaurantOptions)) *funcRestaurantOption <span class="cov8" title="1">{
+        return &amp;funcRestaurantOption{
+                f: f,
+        }
+}</span>
+
+func WithCustomCount(count, total int) applyRestaurantOption <span class="cov8" title="1">{
+        return newFuncRestaurantOption(func(o *restaurantOptions) </span><span class="cov8" title="1">{
+                if count &gt;= 0 &amp;&amp; count &lt;= total </span><span class="cov8" title="1">{
+                        o.count = count
+                }</span>
+                <span class="cov8" title="1">if count &gt; total </span><span class="cov8" title="1">{
+                        o.count = total
+                }</span>
+                <span class="cov8" title="1">if count &lt; 0 </span><span class="cov8" title="1">{
+                        o.count = 0
+                }</span>
+        })
+}
+
+func WithCustomOffset(offset, total int) applyRestaurantOption <span class="cov8" title="1">{
+        return newFuncRestaurantOption(func(o *restaurantOptions) </span><span class="cov8" title="1">{
+                if offset &gt;= 0 &amp;&amp; offset &lt; total </span><span class="cov8" title="1">{
+                        o.offset = offset
+                }</span> else<span class="cov8" title="1"> {
+                        o.count = 0
+                }</span>
+        })
+}
+
+type Options struct {
+        opts restaurantOptions
+}
+
+func NewOptions(opts ...applyRestaurantOption) *Options <span class="cov8" title="1">{
+        options := defaultRestaurantOptions
+        for _, option := range opts </span><span class="cov8" title="1">{
+                option.apply(&amp;options)
+        }</span>
+        <span class="cov8" title="1">return &amp;Options{opts: options}</span>
+}
+
+func (o *Options) GetCount() int <span class="cov8" title="1">{
+        return o.opts.count
+}</span>
+
+func (o *Options) GetOffset() int <span class="cov8" title="1">{
+        return o.opts.offset
+}</span>
+</pre>
+		
+		<pre class="file" id="file23" style="display: none">package utils
+
+import (
+        "encoding/json"
+        "net/http"
+)
+
+type ErrorResponse struct {
+        Message string `json:"message"`
+}
+
+func SendError(w http.ResponseWriter, message string, statusCode int) <span class="cov8" title="1">{
+        w.Header().Set("Content-Type", "application/json")
+        w.WriteHeader(statusCode)
+        json.NewEncoder(w).Encode(map[string]string{"error": message})
+}</span>
+</pre>
+		
+		<pre class="file" id="file24" style="display: none">package utils
+
+import (
+        "errors"
+        "strings"
+
+        "github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
+)
+
+const (
+        maxShortFieldLength = 20
+        maxAddressLength    = 200
+        maxCommentLength    = 300
+        minFieldLength      = 1
+)
+
+const allowedSymbols = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя" +
+        "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" +
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -_#*,."
+
+func isValidShortField(s string) bool <span class="cov8" title="1">{
+        if len(s) &lt; minFieldLength || len(s) &gt; maxShortFieldLength </span><span class="cov8" title="1">{
+                return false
+        }</span>
+        <span class="cov8" title="1">for _, r := range s </span><span class="cov8" title="1">{
+                if !strings.ContainsRune(allowedSymbols, r) </span><span class="cov8" title="1">{
+                        return false
+                }</span>
+        }
+        <span class="cov8" title="1">return true</span>
+}
+
+func isValidAddress(s string) bool <span class="cov8" title="1">{
+        if len(s) &lt; minFieldLength || len(s) &gt; maxAddressLength </span><span class="cov8" title="1">{
+                return false
+        }</span>
+        <span class="cov8" title="1">for _, r := range s </span><span class="cov8" title="1">{
+                if !strings.ContainsRune(allowedSymbols, r) </span><span class="cov0" title="0">{
+                        return false
+                }</span>
+        }
+        <span class="cov8" title="1">return true</span>
+}
+
+func isValidComment(s string) bool <span class="cov8" title="1">{
+        if len(s) &gt; maxCommentLength </span><span class="cov8" title="1">{
+                return false
+        }</span>
+        <span class="cov8" title="1">for _, r := range s </span><span class="cov8" title="1">{
+                if !strings.ContainsRune(allowedSymbols, r) </span><span class="cov0" title="0">{
+                        return false
+                }</span>
+        }
+        <span class="cov8" title="1">return true</span>
+}
+
+func ValidateOrderInput(req *models.OrderInReq) error <span class="cov8" title="1">{
+        if !isValidShortField(req.Status) </span><span class="cov8" title="1">{
+                return errors.New("некорректный статус (макс 20 символов)")
+        }</span>
+        <span class="cov8" title="1">if !isValidAddress(req.Address) </span><span class="cov8" title="1">{
+                return errors.New("некорректный адрес (макс 200 символов)")
+        }</span>
+        <span class="cov8" title="1">if !isValidShortField(req.ApartmentOrOffice) </span><span class="cov8" title="1">{
+                return errors.New("некорректная квартира/офис (макс 20 символов)")
+        }</span>
+        <span class="cov8" title="1">if !isValidShortField(req.Intercom) </span><span class="cov0" title="0">{
+                return errors.New("некорректный домофон (макс 20 символов)")
+        }</span>
+        <span class="cov8" title="1">if !isValidShortField(req.Entrance) </span><span class="cov0" title="0">{
+                return errors.New("некорректный подъезд (макс 20 символов)")
+        }</span>
+        <span class="cov8" title="1">if !isValidShortField(req.Floor) </span><span class="cov0" title="0">{
+                return errors.New("некорректный этаж (макс 20 символов)")
+        }</span>
+        <span class="cov8" title="1">if req.CourierComment != "" &amp;&amp; !isValidComment(req.CourierComment) </span><span class="cov8" title="1">{
+                return errors.New("некорректный комментарий (макс 300 символов)")
+        }</span>
+        <span class="cov8" title="1">if req.FinalPrice &lt; 0 </span><span class="cov8" title="1">{
+                return errors.New("цена не может быть отрицательной")
+        }</span>
+        <span class="cov8" title="1">return nil</span>
+}
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>

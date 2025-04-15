@@ -70,6 +70,7 @@ func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
 		utils.SendError(w, "некорректный JWT-токен", http.StatusUnauthorized)
 		return
 	}
+	cart.Sanitize()
 
 	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
 		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
@@ -127,6 +128,8 @@ func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Reques
 		utils.SendError(w, "Некорректный формат данных", http.StatusBadRequest)
 		return
 	}
+
+	requestBody.Sanitize()
 
 	ctx := context.Background()
 	err = h.cartUsecase.UpdateItemQuantity(ctx, login, productID, requestBody.RestaurantId, requestBody.Quantity)
@@ -229,6 +232,8 @@ func (h *CartHandler) CreateOrder(w http.ResponseWriter, r *http.Request) {
 		utils.SendError(w, "Некорректный формат данных", http.StatusBadRequest)
 		return
 	}
+	req.Sanitize()
+	cart.Sanitize()
 
 	if err := validation.ValidateOrderInput(&req); err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("валидация заказа: %w", err), http.StatusBadRequest)

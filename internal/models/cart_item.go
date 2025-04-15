@@ -67,28 +67,39 @@ func (a *CartItem) Sanitize() {
 	a.ImageURL = html.EscapeString(a.ImageURL)
 }
 
-func (a *Cart) Sanitize() {
-	a.Name = html.EscapeString(a.Name)
+func (c *CartItem) Sanitize() {
+	c.Name = html.EscapeString(c.Name)
+	c.ImageURL = html.EscapeString(c.ImageURL)
 }
 
-func (a *CartInReq) Sanitize() {
-	a.RestaurantId = html.EscapeString(a.RestaurantId)
+func (c *Cart) Sanitize() {
+	c.Name = html.EscapeString(c.Name)
+	for i := range c.CartItems {
+		c.CartItems[i].Sanitize()
+	}
 }
 
-func (a *Order) Sanitize() {
-	a.Status = html.EscapeString(a.Status)
-	a.ApartmentOrOffice = html.EscapeString(a.ApartmentOrOffice)
-	a.Intercom = html.EscapeString(a.Intercom)
-	a.Entrance = html.EscapeString(a.Entrance)
-	a.Floor = html.EscapeString(a.Floor)
-	a.CourierComment = html.EscapeString(a.CourierComment)
+func (c *CartInReq) Sanitize() {
+	c.RestaurantId = html.EscapeString(c.RestaurantId)
 }
 
-func (a *OrderInReq) Sanitize() {
-	a.Status = html.EscapeString(a.Status)
-	a.ApartmentOrOffice = html.EscapeString(a.ApartmentOrOffice)
-	a.Intercom = html.EscapeString(a.Intercom)
-	a.Entrance = html.EscapeString(a.Entrance)
-	a.Floor = html.EscapeString(a.Floor)
-	a.CourierComment = html.EscapeString(a.CourierComment)
+func (o *Order) Sanitize() {
+	o.Status = html.EscapeString(o.Status)
+	o.Address = html.EscapeString(o.Address)
+	o.ApartmentOrOffice = html.EscapeString(o.ApartmentOrOffice)
+	o.Intercom = html.EscapeString(o.Intercom)
+	o.Entrance = html.EscapeString(o.Entrance)
+	o.Floor = html.EscapeString(o.Floor)
+	o.CourierComment = html.EscapeString(o.CourierComment)
+	o.OrderProducts.Sanitize()
+}
+
+func (o *OrderInReq) Sanitize() {
+	o.Status = html.EscapeString(o.Status)
+	o.Address = html.EscapeString(o.Address)
+	o.ApartmentOrOffice = html.EscapeString(o.ApartmentOrOffice)
+	o.Intercom = html.EscapeString(o.Intercom)
+	o.Entrance = html.EscapeString(o.Entrance)
+	o.Floor = html.EscapeString(o.Floor)
+	o.CourierComment = html.EscapeString(o.CourierComment)
 }
