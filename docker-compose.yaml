@@ -24,7 +24,7 @@ services:
     networks:
       - adminadmin-network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5458"]
+      test: ["CMD", "curl", "-f", "http://localhost:5458/api/restaurants/list"]
       interval: 10s
       timeout: 5s
       retries: 5
