@@ -14,6 +14,7 @@ import (
 	jwtUtils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/jwt"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/send_error"
+	validation "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/validation"
 	"github.com/golang-jwt/jwt"
 	"github.com/gorilla/mux"
 	"github.com/mailru/easyjson"
@@ -143,9 +144,8 @@ func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Reques
 	}
 
 	if !full_cart {
-		const msg = "корзина пуста"
-		log.LogHandlerError(logger, fmt.Errorf(msg), http.StatusOK)
-		utils.SendError(w, msg, http.StatusOK)
+		log.LogHandlerError(logger, fmt.Errorf("корзина пуста"), http.StatusOK)
+		utils.SendError(w, "корзина пуста", http.StatusOK)
 		return
 	}
 
@@ -218,9 +218,8 @@ func (h *CartHandler) CreateOrder(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !full_cart {
-		const msg = "корзина пуста"
-		log.LogHandlerError(logger, fmt.Errorf(msg), http.StatusNotFound)
-		utils.SendError(w, msg, http.StatusNotFound)
+		log.LogHandlerError(logger, fmt.Errorf("корзина пуста"), http.StatusNotFound)
+		utils.SendError(w, "корзина пуста", http.StatusNotFound)
 		return
 	}
 
@@ -228,6 +227,12 @@ func (h *CartHandler) CreateOrder(w http.ResponseWriter, r *http.Request) {
 	if err := easyjson.UnmarshalFromReader(r.Body, &req); err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка чтения тела запроса: %w", err), http.StatusBadRequest)
 		utils.SendError(w, "Некорректный формат данных", http.StatusBadRequest)
+		return
+	}
+
+	if err := validation.ValidateOrderInput(&req); err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("валидация заказа: %w", err), http.StatusBadRequest)
+		utils.SendError(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
