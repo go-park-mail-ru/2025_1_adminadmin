@@ -13,27 +13,11 @@ import (
 func GetFuncName() string {
 	pc := make([]uintptr, 15)
 	n := runtime.Callers(2, pc)
-	if n == 0 {
-		return "unknown"  
-	}
-
 	frames := runtime.CallersFrames(pc[:n])
-	frame, more := frames.Next()
-	if !more {
-		return "unknown"  
-	}
-
+	frame, _ := frames.Next()
 	values := strings.Split(frame.Function, "/")
-	if len(values) == 0 {
-		return "unknown"
-	}
 
-	funcName := values[len(values)-1]
-	if dotIndex := strings.LastIndex(funcName, "."); dotIndex != -1 {
-		funcName = funcName[dotIndex+1:] 
-	}
-
-	return funcName
+	return values[len(values)-1]
 }
 
 
