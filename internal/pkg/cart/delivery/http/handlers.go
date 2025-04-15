@@ -66,15 +66,19 @@ func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
 	cart, _, err, full_cart := h.getCartData(r)
 	if err != nil {
 		log.LogHandlerError(logger, err, http.StatusUnauthorized)
-		utils.SendError(w, err.Error(), http.StatusUnauthorized)
+		utils.SendError(w, "некорректный JWT-токен", http.StatusUnauthorized)
 		return
 	}
 
-	
+	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
+		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
+		utils.SendError(w, "некорректный CSRF-токен", http.StatusForbidden)
+		return
+	}
+
 	if !full_cart {
-		const msg = "корзина пуста"
 		log.LogHandlerError(logger, fmt.Errorf(msg), http.StatusNotFound)
-		utils.SendError(w, msg, http.StatusNotFound)
+		utils.SendError(w, "корзина пуста", http.StatusNotFound)
 		return
 	}
 
@@ -97,7 +101,7 @@ func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Reques
 	_, login, err, _ := h.getCartData(r)
 	if err != nil {
 		log.LogHandlerError(logger, err, http.StatusUnauthorized)
-		utils.SendError(w, err.Error(), http.StatusUnauthorized)
+		utils.SendError(w, "некорректный JWT-токен", http.StatusUnauthorized)
 		return
 	}
 
@@ -109,7 +113,7 @@ func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Reques
 
 	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
 		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
-		utils.SendError(w, err.Error(), http.StatusForbidden)
+		utils.SendError(w, "некорректный CSRF-токен", http.StatusForbidden)
 		return
 	}
 
@@ -133,8 +137,8 @@ func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Reques
 
 	cart, _, err, full_cart := h.getCartData(r)
 	if err != nil {
-		log.LogHandlerError(logger, err, http.StatusInternalServerError)
-		utils.SendError(w, err.Error(), http.StatusInternalServerError)
+		log.LogHandlerError(logger, err, http.StatusUnauthorized)
+		utils.SendError(w, "некорректный JWT-токен", http.StatusUnauthorized)
 		return
 	}
 
@@ -183,7 +187,7 @@ func (h *CartHandler) ClearCart(w http.ResponseWriter, r *http.Request) {
 
 	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
 		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
-		utils.SendError(w, err.Error(), http.StatusForbidden)
+		utils.SendError(w, "некорректный CSRF-токен", http.StatusForbidden)
 		return
 	}
 
@@ -203,13 +207,13 @@ func (h *CartHandler) CreateOrder(w http.ResponseWriter, r *http.Request) {
 	cart, userID, err, full_cart := h.getCartData(r)
 	if err != nil {
 		log.LogHandlerError(logger, err, http.StatusUnauthorized)
-		utils.SendError(w, err.Error(), http.StatusUnauthorized)
+		utils.SendError(w, "некорректный JWT-токен", http.StatusUnauthorized)
 		return
 	}
 
 	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
 		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
-		utils.SendError(w, err.Error(), http.StatusForbidden)
+		utils.SendError(w, "некорректный CSRF-токен", http.StatusForbidden)
 		return
 	}
 
