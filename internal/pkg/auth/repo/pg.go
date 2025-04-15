@@ -67,6 +67,7 @@ func (repo *AuthRepo) SelectUserByLogin(ctx context.Context, login string) (mode
 		logger.Error(err.Error())
 		return models.User{}, err
 	}
+	resultUser.Sanitize()
 
 	logger.Info("Successful")
 	return resultUser, nil
@@ -116,6 +117,7 @@ func (repo *AuthRepo) SelectUserAddresses(ctx context.Context, login string) ([]
 			return []models.Address{}, err
 		}
 		addresses = append(addresses, addr)
+		addr.Sanitize()
 	}
 
 	logger.Info("Successful")
