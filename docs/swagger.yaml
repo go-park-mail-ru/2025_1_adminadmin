@@ -1,17 +1,5 @@
 basePath: /api
 definitions:
-  http.CartUpdateBody:
-    properties:
-      quantity:
-        type: integer
-      restaurant_id:
-        type: string
-    type: object
-  http.DeleteAddressReq:
-    properties:
-      id:
-        type: string
-    type: object
   models.Address:
     properties:
       address:
@@ -21,20 +9,10 @@ definitions:
       user_id:
         type: string
     type: object
-  models.CartItem:
+  models.DeleteAddressReq:
     properties:
-      amount:
-        type: integer
       id:
         type: string
-      image_url:
-        type: string
-      name:
-        type: string
-      price:
-        type: number
-      weight:
-        type: integer
     type: object
   models.Product:
     properties:
@@ -202,7 +180,7 @@ paths:
         name: input
         required: true
         schema:
-          $ref: '#/definitions/http.DeleteAddressReq'
+          $ref: '#/definitions/models.DeleteAddressReq'
       produces:
       - application/json
       responses:
@@ -401,66 +379,6 @@ paths:
       summary: Обновление аватарки пользователя
       tags:
       - auth
-  /cart:
-    get:
-      description: Возвращает список товаров в корзине текущего пользователя
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Успешное получение корзины
-          schema:
-            items:
-              $ref: '#/definitions/models.CartItem'
-            type: array
-        "401":
-          description: Ошибка авторизации (проблемы с куки или JWT)
-          schema:
-            $ref: '#/definitions/utils.ErrorResponse'
-        "500":
-          description: Внутренняя ошибка сервера
-          schema:
-            $ref: '#/definitions/utils.ErrorResponse'
-      summary: Получить корзину
-      tags:
-      - cart
-  /cart/update/{productID}:
-    post:
-      consumes:
-      - application/json
-      description: Обновляет количество товара в корзине для текущего пользователя.
-      parameters:
-      - description: ID продукта
-        in: path
-        name: productID
-        required: true
-        type: string
-      - description: Параметры для изменения количества товара
-        in: body
-        name: input
-        required: true
-        schema:
-          $ref: '#/definitions/http.CartUpdateBody'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Успешное обновление количества товара в корзине
-        "400":
-          description: Некорректный формат данных
-          schema:
-            $ref: '#/definitions/utils.ErrorResponse'
-        "401":
-          description: Неавторизован (проблемы с куки или JWT)
-          schema:
-            $ref: '#/definitions/utils.ErrorResponse'
-        "500":
-          description: Ошибка сервера при обновлении корзины
-          schema:
-            $ref: '#/definitions/utils.ErrorResponse'
-      summary: Обновление количества продуктов в корзине
-      tags:
-      - cart
   /restaurants/{id}:
     get:
       description: Получение списка продуктов ресторана с пагинацией

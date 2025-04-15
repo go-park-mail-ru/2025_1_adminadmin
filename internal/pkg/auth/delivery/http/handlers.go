@@ -19,10 +19,6 @@ import (
 	"github.com/satori/uuid"
 )
 
-type DeleteAddressReq struct {
-	Id string `json:"id"`
-}
-
 const maxRequestBodySize = 10 << 20
 
 var allowedMimeTypes = map[string]string{
@@ -533,7 +529,7 @@ func (h *AuthHandler) GetUserAddresses(w http.ResponseWriter, r *http.Request) {
 // @ID delete_address
 // @Accept json
 // @Produce json
-// @Param input body DeleteAddressReq true "ID адреса для удаления"
+// @Param input body models.DeleteAddressReq true "ID адреса для удаления"
 // @Success 200
 // @Failure 400 {object} utils.ErrorResponse "Ошибка парсинга JSON"
 // @Failure 500 {object} utils.ErrorResponse "Ошибка на сервере при обработке запроса"
