@@ -3,8 +3,12 @@ package utils
 import (
 	"fmt"
 	"net/http"
+	"testing"
+	"time"
 
 	"github.com/golang-jwt/jwt"
+	"github.com/satori/uuid"
+	"github.com/stretchr/testify/require"
 )
 
 func GetLoginFromJWT(JWTStr string, claims jwt.MapClaims, secret string) (string, bool) {
@@ -61,4 +65,15 @@ func GetIdFromJWT(JWTStr string, claims jwt.MapClaims, secret string) (string, b
 
 	id, ok := claims["id"].(string)
 	return id, ok
+}
+
+func GenerateJWTForTest(t *testing.T, login, secret string, id uuid.UUID) string {
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"login": login,
+		"exp":   time.Now().Add(time.Hour).Unix(),
+		"id":    id,
+	})
+	tokenStr, err := token.SignedString([]byte(secret))
+	require.NoError(t, err)
+	return tokenStr
 }
