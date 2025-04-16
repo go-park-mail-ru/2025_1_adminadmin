@@ -29,5 +29,5 @@ go.work.sum
 
 coverage.html
 heatmap.html
-coverage.tmp
+coverprofile.tmp
 

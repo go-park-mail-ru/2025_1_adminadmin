@@ -1,4 +1,3 @@
-COVERAGE_FILE=coverage.out
 COVERAGE_HTML=coverage.html
 COVERPROFILE_TMP=coverprofile.tmp
 
