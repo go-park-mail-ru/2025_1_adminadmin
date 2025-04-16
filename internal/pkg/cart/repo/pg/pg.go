@@ -57,13 +57,11 @@ func (r *RestaurantRepository) GetCartItem(ctx context.Context, productIDs []str
 		return models.Cart{}, err
 	}
 
-	cart := models.Cart{
+	return models.Cart{
 		Id:        uid,
 		Name:      restaurantName,
 		CartItems: items,
-	}
-	cart.Sanitize()
-	return cart, nil
+	}, nil
 }
 
 func (r *RestaurantRepository) Save(ctx context.Context, order *models.Order, userLogin string) error {

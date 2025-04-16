@@ -44,7 +44,7 @@ func (uc *CartUsecase) GetCart(ctx context.Context, userID string) (models.Cart,
 	}
 
 	items, err := uc.restaurantRepo.GetCartItem(ctx, productIDs, cartRaw, restaurantID)
-	log.Printf("[GetCart] usecase2 %v", err)
+	log.Printf("[GetCart] usecase2 %v p%sp", err, restaurantID)
 	if err != nil {
 		return models.Cart{}, err, false
 	}
