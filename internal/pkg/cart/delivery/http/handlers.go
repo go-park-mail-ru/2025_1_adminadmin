@@ -21,11 +21,11 @@ import (
 )
 
 type CartHandler struct {
-	cartUsecase *usecase.CartUsecase
+	cartUsecase usecase.CartUsecase
 	secret      string
 }
 
-func NewCartHandler(cartUsecase *usecase.CartUsecase) *CartHandler {
+func NewCartHandler(cartUsecase usecase.CartUsecase) *CartHandler {
 	return &CartHandler{cartUsecase: cartUsecase, secret: os.Getenv("JWT_SECRET")}
 }
 
