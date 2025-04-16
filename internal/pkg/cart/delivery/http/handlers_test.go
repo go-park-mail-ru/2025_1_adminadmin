@@ -41,7 +41,7 @@ func TestCartHandler_GetCart(t *testing.T) {
 			cookieSetup: func(r *http.Request) {
 				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: validToken})
 				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: "csrf1"})
-				r.Header.Set("X-CSRF-Token", "csrf2") // Несовпадение
+				r.Header.Set("X-CSRF-Token", "csrf2")
 			},
 			mockSetup: func(mockUC *mocks.MockCartUsecase) {
 				mockUC.EXPECT().GetCart(gomock.Any(), login).
@@ -90,7 +90,7 @@ func TestCartHandler_GetCart(t *testing.T) {
 					}, nil, true)
 			},
 			expectedStatus: http.StatusOK,
-			expectedBody:   `{"id":"`, // просто проверка что пришел JSON
+			expectedBody:   `{"id":"`,
 		},
 	}
 
