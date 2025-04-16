@@ -12,11 +12,11 @@ import (
 )
 
 type CartUsecase struct {
-	cartRepo       redisRepo.CartRepository
-	restaurantRepo pgRepo.RestaurantRepository
+	cartRepo       *redisRepo.CartRepository
+	restaurantRepo *pgRepo.RestaurantRepository
 }
 
-func NewCartUsecase(cartRepo redisRepo.CartRepository, restaurantRepo pgRepo.RestaurantRepository) *CartUsecase {
+func NewCartUsecase(cartRepo *redisRepo.CartRepository, restaurantRepo *pgRepo.RestaurantRepository) *CartUsecase {
 	return &CartUsecase{
 		cartRepo:       cartRepo,
 		restaurantRepo: restaurantRepo,
