@@ -8,17 +8,16 @@ import (
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart"
-	redisRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/redis"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	"github.com/satori/uuid"
 )
 
 type CartUsecase struct {
-	cartRepo       *redisRepo.CartRepository
+	cartRepo       cart.CartRepo
 	restaurantRepo cart.RestaurantRepo
 }
 
-func NewCartUsecase(cartRepo *redisRepo.CartRepository, restaurantRepo cart.RestaurantRepo) *CartUsecase {
+func NewCartUsecase(cartRepo cart.CartRepo, restaurantRepo cart.RestaurantRepo) *CartUsecase {
 	return &CartUsecase{
 		cartRepo:       cartRepo,
 		restaurantRepo: restaurantRepo,
