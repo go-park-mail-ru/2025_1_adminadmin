@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"testing"
+	"time"
 
 	"github.com/driftprogramming/pgxpoolmock"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
@@ -95,6 +96,114 @@ func TestGetCartItem(t *testing.T) {
 			} else {
 				assert.NoError(t, err)
 				assert.Equal(t, tt.expectedResult, result)
+			}
+		})
+	}
+}
+
+func TestSave(t *testing.T) {
+	testOrderID := uuid.NewV4()
+	testUserID := uuid.NewV4()
+	testUserLogin := "testuser"
+	testOrder := models.Order{
+		ID:               testOrderID,
+		Status:           "New",
+		Address:          "Test Address",
+		OrderProducts:    models.Cart{},
+		ApartmentOrOffice: "Apt 101",
+		Intercom:         "123",
+		Entrance:         "A",
+		Floor:            "5",
+		CourierComment:   "Leave at door",
+		LeaveAtDoor:      true,
+		CreatedAt:        time.Now(),
+		FinalPrice:       1000,
+	}
+
+	tests := []struct {
+		name           string
+		repoMocker     func(*pgxpoolmock.MockPgxPool)
+		expectedResult error
+		expectError    bool
+	}{
+		{
+			name: "Success",
+			repoMocker: func(mockPool *pgxpoolmock.MockPgxPool) {
+				mockPool.EXPECT().
+					QueryRow(gomock.Any(), `SELECT id FROM users WHERE login = $1`, testUserLogin).
+					Return(pgxpoolmock.NewRows([]string{"id"}).AddRow(testUserID.String())).
+					Times(1)
+
+				mockPool.EXPECT().
+					Exec(gomock.Any(), insertOrder, gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).
+					Return(nil).
+					Times(1)
+			},
+			expectedResult: nil,
+			expectError:    false,
+		},
+		{
+			name: "User Not Found",
+			repoMocker: func(mockPool *pgxpoolmock.MockPgxPool) {
+				mockPool.EXPECT().
+					QueryRow(gomock.Any(), `SELECT id FROM users WHERE login = $1`, testUserLogin).
+					Return(pgxpoolmock.NewRows([]string{"id"})).
+					Times(1)
+			},
+			expectedResult: fmt.Errorf("не удалось найти пользователя по логину %s: no rows in result set", testUserLogin),
+			expectError:    true,
+		},
+		{
+			name: "Order Products Marshal JSON Error",
+			repoMocker: func(mockPool *pgxpoolmock.MockPgxPool) {
+				mockPool.EXPECT().
+					QueryRow(gomock.Any(), `SELECT id FROM users WHERE login = $1`, testUserLogin).
+					Return(pgxpoolmock.NewRows([]string{"id"}).AddRow(testUserID.String())).
+					Times(1)
+
+				mockPool.EXPECT().
+					Exec(gomock.Any(), insertOrder, gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).
+					Return(nil).
+					Times(0)
+			},
+			expectedResult: fmt.Errorf("error marshalling order products"),
+			expectError:    true,
+		},
+		{
+			name: "Insert Order Exec Error",
+			repoMocker: func(mockPool *pgxpoolmock.MockPgxPool) {
+				mockPool.EXPECT().
+					QueryRow(gomock.Any(), `SELECT id FROM users WHERE login = $1`, testUserLogin).
+					Return(pgxpoolmock.NewRows([]string{"id"}).AddRow(testUserID.String())).
+					Times(1)
+
+				mockPool.EXPECT().
+					Exec(gomock.Any(), insertOrder, gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).
+					Return(fmt.Errorf("db insert error")).
+					Times(1)
+			},
+			expectedResult: fmt.Errorf("db insert error"),
+			expectError:    true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			ctrl := gomock.NewController(t)
+			defer ctrl.Finish()
+
+			mockPool := pgxpoolmock.NewMockPgxPool(ctrl)
+			tt.repoMocker(mockPool)
+
+			repo := RestaurantRepository{db: mockPool}
+
+			err := repo.Save(context.Background(), testOrder, testUserLogin)
+
+			if tt.expectError {
+				assert.Error(t, err)
+				assert.Contains(t, err.Error(), tt.expectedResult.Error())
+			} else {
+				assert.NoError(t, err)
 			}
 		})
 	}
