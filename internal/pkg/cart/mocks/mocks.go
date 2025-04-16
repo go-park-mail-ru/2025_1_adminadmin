@@ -10,7 +10,6 @@ import (
 
 	models "github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	gomock "github.com/golang/mock/gomock"
-	uuid "github.com/satori/uuid"
 )
 
 // MockCartRepo is a mock of CartRepo interface.
@@ -48,36 +47,6 @@ func (m *MockCartRepo) ClearCart(ctx context.Context, userID string) error {
 func (mr *MockCartRepoMockRecorder) ClearCart(ctx, userID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ClearCart", reflect.TypeOf((*MockCartRepo)(nil).ClearCart), ctx, userID)
-}
-
-// GetAllByUser mocks base method.
-func (m *MockCartRepo) GetAllByUser(ctx context.Context, userID uuid.UUID) ([]models.Order, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetAllByUser", ctx, userID)
-	ret0, _ := ret[0].([]models.Order)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetAllByUser indicates an expected call of GetAllByUser.
-func (mr *MockCartRepoMockRecorder) GetAllByUser(ctx, userID interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAllByUser", reflect.TypeOf((*MockCartRepo)(nil).GetAllByUser), ctx, userID)
-}
-
-// GetByID mocks base method.
-func (m *MockCartRepo) GetByID(ctx context.Context, id uuid.UUID) (models.Order, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetByID", ctx, id)
-	ret0, _ := ret[0].(models.Order)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetByID indicates an expected call of GetByID.
-func (mr *MockCartRepoMockRecorder) GetByID(ctx, id interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByID", reflect.TypeOf((*MockCartRepo)(nil).GetByID), ctx, id)
 }
 
 // GetCart mocks base method.
@@ -121,20 +90,6 @@ func (m *MockCartRepo) UpdateItemQuantity(ctx context.Context, userID, productID
 func (mr *MockCartRepoMockRecorder) UpdateItemQuantity(ctx, userID, productID, restaurantId, quantity interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateItemQuantity", reflect.TypeOf((*MockCartRepo)(nil).UpdateItemQuantity), ctx, userID, productID, restaurantId, quantity)
-}
-
-// UpdateStatus mocks base method.
-func (m *MockCartRepo) UpdateStatus(ctx context.Context, orderID uuid.UUID, status string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpdateStatus", ctx, orderID, status)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// UpdateStatus indicates an expected call of UpdateStatus.
-func (mr *MockCartRepoMockRecorder) UpdateStatus(ctx, orderID, status interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateStatus", reflect.TypeOf((*MockCartRepo)(nil).UpdateStatus), ctx, orderID, status)
 }
 
 // MockCartUsecase is a mock of CartUsecase interface.
@@ -189,21 +144,6 @@ func (mr *MockCartUsecaseMockRecorder) CreateOrder(ctx, userID, details, cart in
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateOrder", reflect.TypeOf((*MockCartUsecase)(nil).CreateOrder), ctx, userID, details, cart)
 }
 
-// GetAllOrdersByUser mocks base method.
-func (m *MockCartUsecase) GetAllOrdersByUser(ctx context.Context, userID uuid.UUID) ([]models.Order, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetAllOrdersByUser", ctx, userID)
-	ret0, _ := ret[0].([]models.Order)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetAllOrdersByUser indicates an expected call of GetAllOrdersByUser.
-func (mr *MockCartUsecaseMockRecorder) GetAllOrdersByUser(ctx, userID interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAllOrdersByUser", reflect.TypeOf((*MockCartUsecase)(nil).GetAllOrdersByUser), ctx, userID)
-}
-
 // GetCart mocks base method.
 func (m *MockCartUsecase) GetCart(ctx context.Context, userID string) (models.Cart, error, bool) {
 	m.ctrl.T.Helper()
@@ -220,21 +160,6 @@ func (mr *MockCartUsecaseMockRecorder) GetCart(ctx, userID interface{}) *gomock.
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCart", reflect.TypeOf((*MockCartUsecase)(nil).GetCart), ctx, userID)
 }
 
-// GetOrderByID mocks base method.
-func (m *MockCartUsecase) GetOrderByID(ctx context.Context, id uuid.UUID) (models.Order, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetOrderByID", ctx, id)
-	ret0, _ := ret[0].(models.Order)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetOrderByID indicates an expected call of GetOrderByID.
-func (mr *MockCartUsecaseMockRecorder) GetOrderByID(ctx, id interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetOrderByID", reflect.TypeOf((*MockCartUsecase)(nil).GetOrderByID), ctx, id)
-}
-
 // UpdateItemQuantity mocks base method.
 func (m *MockCartUsecase) UpdateItemQuantity(ctx context.Context, userID, productID, restaurantId string, quantity int) error {
 	m.ctrl.T.Helper()
@@ -247,20 +172,6 @@ func (m *MockCartUsecase) UpdateItemQuantity(ctx context.Context, userID, produc
 func (mr *MockCartUsecaseMockRecorder) UpdateItemQuantity(ctx, userID, productID, restaurantId, quantity interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateItemQuantity", reflect.TypeOf((*MockCartUsecase)(nil).UpdateItemQuantity), ctx, userID, productID, restaurantId, quantity)
-}
-
-// UpdateOrderStatus mocks base method.
-func (m *MockCartUsecase) UpdateOrderStatus(ctx context.Context, id uuid.UUID, status string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpdateOrderStatus", ctx, id, status)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// UpdateOrderStatus indicates an expected call of UpdateOrderStatus.
-func (mr *MockCartUsecaseMockRecorder) UpdateOrderStatus(ctx, id, status interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateOrderStatus", reflect.TypeOf((*MockCartUsecase)(nil).UpdateOrderStatus), ctx, id, status)
 }
 
 // MockRestaurantRepo is a mock of RestaurantRepo interface.
