@@ -7,29 +7,16 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"time"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/mocks"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/usecase"
-	"github.com/golang-jwt/jwt"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/jwt"
 	"github.com/golang/mock/gomock"
 	"github.com/satori/uuid"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
-
-func generateJWT(t *testing.T, login, secret string, id uuid.UUID) string {
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"login": login,
-		"exp":   time.Now().Add(time.Hour).Unix(),
-		"id":    id,
-	})
-	tokenStr, err := token.SignedString([]byte(secret))
-	require.NoError(t, err)
-	return tokenStr
-}
 
 func TestSignIn(t *testing.T) {
 	salt := make([]byte, 8)
@@ -264,7 +251,7 @@ func TestCheck(t *testing.T) {
 		{
 			name: "Missing CSRF Cookie",
 			cookieSetup: func(r *http.Request) {
-				tokenStr := generateJWT(t, login, secret, userId)
+				tokenStr := utils.GenerateJWTForTest(t, login, secret, userId)
 				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
 				r.Header.Set("X-CSRF-Token", csrf_token)
 			},
@@ -273,7 +260,7 @@ func TestCheck(t *testing.T) {
 		{
 			name: "CSRF Mismatch",
 			cookieSetup: func(r *http.Request) {
-				tokenStr := generateJWT(t, login, secret, userId)
+				tokenStr := utils.GenerateJWTForTest(t, login, secret, userId)
 				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
 				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
 				r.Header.Set("X-CSRF-Token", "blablabla")
@@ -300,7 +287,7 @@ func TestCheck(t *testing.T) {
 		{
 			name: "User Not Found",
 			cookieSetup: func(r *http.Request) {
-				tokenStr := generateJWT(t, "unknown-user", secret, userId)
+				tokenStr := utils.GenerateJWTForTest(t, "unknown-user", secret, userId)
 				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
 				r.Header.Set("X-CSRF-Token", csrf_token)
 				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
@@ -315,7 +302,7 @@ func TestCheck(t *testing.T) {
 		{
 			name: "Successful",
 			cookieSetup: func(r *http.Request) {
-				tokenStr := generateJWT(t, login, secret, userId)
+				tokenStr := utils.GenerateJWTForTest(t, login, secret, userId)
 				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
 				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
 				r.Header.Set("X-CSRF-Token", csrf_token)
@@ -435,7 +422,7 @@ func TestUpdateUser(t *testing.T) {
 		{
 			name: "CSRF Token Mismatch",
 			cookieSetup: func(r *http.Request) {
-				tokenStr := generateJWT(t, login, secret, userId)
+				tokenStr := utils.GenerateJWTForTest(t, login, secret, userId)
 				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
 				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
 				r.Header.Set("X-CSRF-Token", "blablabla")
@@ -445,7 +432,7 @@ func TestUpdateUser(t *testing.T) {
 		{
 			name: "Error Parsing JSON Body",
 			cookieSetup: func(r *http.Request) {
-				tokenStr := generateJWT(t, login, secret, userId)
+				tokenStr := utils.GenerateJWTForTest(t, login, secret, userId)
 				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
 				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
 				r.Header.Set("X-CSRF-Token", csrf_token)
@@ -457,7 +444,7 @@ func TestUpdateUser(t *testing.T) {
 		{
 			name: "Invalid Update User Data (Password)",
 			cookieSetup: func(r *http.Request) {
-				tokenStr := generateJWT(t, login, secret, userId)
+				tokenStr := utils.GenerateJWTForTest(t, login, secret, userId)
 				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
 				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
 				r.Header.Set("X-CSRF-Token", csrf_token)
@@ -473,7 +460,7 @@ func TestUpdateUser(t *testing.T) {
 		{
 			name: "Successful Update User",
 			cookieSetup: func(r *http.Request) {
-				tokenStr := generateJWT(t, login, secret, userId)
+				tokenStr := utils.GenerateJWTForTest(t, login, secret, userId)
 				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
 				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
 				r.Header.Set("X-CSRF-Token", csrf_token)
@@ -547,7 +534,7 @@ func TestGetUserAddresses(t *testing.T) {
 		{
 			name: "CSRF Token Mismatch",
 			cookieSetup: func(r *http.Request) {
-				tokenStr := generateJWT(t, login, secret, userId)
+				tokenStr := utils.GenerateJWTForTest(t, login, secret, userId)
 				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
 				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
 				r.Header.Set("X-CSRF-Token", "blablabla")
@@ -557,7 +544,7 @@ func TestGetUserAddresses(t *testing.T) {
 		{
 			name: "Usecase Error",
 			cookieSetup: func(r *http.Request) {
-				tokenStr := generateJWT(t, login, secret, userId)
+				tokenStr := utils.GenerateJWTForTest(t, login, secret, userId)
 				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
 				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
 				r.Header.Set("X-CSRF-Token", csrf_token)
@@ -572,7 +559,7 @@ func TestGetUserAddresses(t *testing.T) {
 		{
 			name: "Successful Response",
 			cookieSetup: func(r *http.Request) {
-				tokenStr := generateJWT(t, login, secret, userId)
+				tokenStr := utils.GenerateJWTForTest(t, login, secret, userId)
 				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
 				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
 				r.Header.Set("X-CSRF-Token", csrf_token)
@@ -629,7 +616,7 @@ func TestDeleteAddress(t *testing.T) {
 		{
 			name: "CSRF Token Mismatch",
 			cookieSetup: func(r *http.Request) {
-				tokenStr := generateJWT(t, login, secret, userId)
+				tokenStr := utils.GenerateJWTForTest(t, login, secret, userId)
 				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
 				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
 				r.Header.Set("X-CSRF-Token", "blablabla")
@@ -639,7 +626,7 @@ func TestDeleteAddress(t *testing.T) {
 		{
 			name: "Error Parsing JSON Body",
 			cookieSetup: func(r *http.Request) {
-				tokenStr := generateJWT(t, login, secret, userId)
+				tokenStr := utils.GenerateJWTForTest(t, login, secret, userId)
 				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
 				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
 				r.Header.Set("X-CSRF-Token", csrf_token)
@@ -651,7 +638,7 @@ func TestDeleteAddress(t *testing.T) {
 		{
 			name: "Usecase Error",
 			cookieSetup: func(r *http.Request) {
-				tokenStr := generateJWT(t, login, secret, userId)
+				tokenStr := utils.GenerateJWTForTest(t, login, secret, userId)
 				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
 				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
 				r.Header.Set("X-CSRF-Token", csrf_token)
@@ -667,7 +654,7 @@ func TestDeleteAddress(t *testing.T) {
 		{
 			name: "Successful Delete",
 			cookieSetup: func(r *http.Request) {
-				tokenStr := generateJWT(t, login, secret, userId)
+				tokenStr := utils.GenerateJWTForTest(t, login, secret, userId)
 				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
 				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
 				r.Header.Set("X-CSRF-Token", csrf_token)
@@ -744,7 +731,7 @@ func TestAddAddress(t *testing.T) {
 		{
 			name: "CSRF Token Mismatch",
 			cookieSetup: func(r *http.Request) {
-				tokenStr := generateJWT(t, login, secret, userId)
+				tokenStr := utils.GenerateJWTForTest(t, login, secret, userId)
 				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
 				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
 				r.Header.Set("X-CSRF-Token", "blablabla")
@@ -754,7 +741,7 @@ func TestAddAddress(t *testing.T) {
 		{
 			name: "Error Parsing JSON Body",
 			cookieSetup: func(r *http.Request) {
-				tokenStr := generateJWT(t, login, secret, userId)
+				tokenStr := utils.GenerateJWTForTest(t, login, secret, userId)
 				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
 				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
 				r.Header.Set("X-CSRF-Token", csrf_token)
@@ -766,7 +753,7 @@ func TestAddAddress(t *testing.T) {
 		{
 			name: "Usecase Error",
 			cookieSetup: func(r *http.Request) {
-				tokenStr := generateJWT(t, login, secret, userId)
+				tokenStr := utils.GenerateJWTForTest(t, login, secret, userId)
 				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
 				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
 				r.Header.Set("X-CSRF-Token", csrf_token)
@@ -782,7 +769,7 @@ func TestAddAddress(t *testing.T) {
 		{
 			name: "Successful Add",
 			cookieSetup: func(r *http.Request) {
-				tokenStr := generateJWT(t, login, secret, userId)
+				tokenStr := utils.GenerateJWTForTest(t, login, secret, userId)
 				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
 				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
 				r.Header.Set("X-CSRF-Token", csrf_token)
