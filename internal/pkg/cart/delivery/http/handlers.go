@@ -170,11 +170,14 @@ func (h *CartHandler) ClearCart(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		if errors.Is(err, http.ErrNoCookie) {
 			log.LogHandlerError(logger, fmt.Errorf("токен отсутствует: %w", err), http.StatusUnauthorized)
+			utils.SendError(w, "JWT cookie not found", http.StatusUnauthorized)
 			return
 		}
 		log.LogHandlerError(logger, fmt.Errorf("ошибка при чтении куки: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "Bad request", http.StatusBadRequest) 
 		return
 	}
+
 
 	JWTStr := cookie.Value
 	claims := jwt.MapClaims{}
@@ -183,7 +186,7 @@ func (h *CartHandler) ClearCart(w http.ResponseWriter, r *http.Request) {
 
 	if login == "" {
 		log.LogHandlerError(logger, errors.New("пустой login из токена"), http.StatusUnauthorized)
-		http.Error(w, "невалидный токен", http.StatusUnauthorized)
+		utils.SendError(w, "некорректный JWT токен", http.StatusForbidden)
 		return
 	}
 
@@ -231,7 +234,6 @@ func (h *CartHandler) CreateOrder(w http.ResponseWriter, r *http.Request) {
 		utils.SendError(w, "Некорректный формат данных", http.StatusBadRequest)
 		return
 	}
-	req.Sanitize()
 	cart.Sanitize()
 
 	if err := validation.ValidateOrderInput(&req); err != nil {

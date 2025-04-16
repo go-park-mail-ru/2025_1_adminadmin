@@ -89,12 +89,12 @@ func (o *Order) Sanitize() {
 	o.OrderProducts.Sanitize()
 }
 
-func (o *OrderInReq) Sanitize() {
-	o.Status = html.EscapeString(o.Status)
-	o.Address = html.EscapeString(o.Address)
-	o.ApartmentOrOffice = html.EscapeString(o.ApartmentOrOffice)
-	o.Intercom = html.EscapeString(o.Intercom)
-	o.Entrance = html.EscapeString(o.Entrance)
-	o.Floor = html.EscapeString(o.Floor)
-	o.CourierComment = html.EscapeString(o.CourierComment)
-}
+// func (o *OrderInReq) Sanitize() {
+// 	o.Status = html.EscapeString(o.Status)
+// 	o.Address = html.EscapeString(o.Address)
+// 	o.ApartmentOrOffice = html.EscapeString(o.ApartmentOrOffice)
+// 	o.Intercom = html.EscapeString(o.Intercom)
+// 	o.Entrance = html.EscapeString(o.Entrance)
+// 	o.Floor = html.EscapeString(o.Floor)
+// 	o.CourierComment = html.EscapeString(o.CourierComment)
+// }

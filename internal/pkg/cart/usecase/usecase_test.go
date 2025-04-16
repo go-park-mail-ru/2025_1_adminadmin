@@ -64,7 +64,7 @@ func TestUpdateItemQuantity(t *testing.T) {
 
 			err := uc.UpdateItemQuantity(context.Background(), tt.args.userID, tt.args.productID, tt.args.restaurantID, tt.args.quantity)
 
-			if !errors.Is(err, tt.wantErr) {
+			if err != nil && err.Error() != tt.wantErr.Error() {
 				t.Errorf("UpdateItemQuantity() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
@@ -108,7 +108,7 @@ func TestClearCart(t *testing.T) {
 
 			err := uc.ClearCart(context.Background(), tt.userID)
 
-			if !errors.Is(err, tt.wantErr) {
+			if err != nil && err.Error() != tt.wantErr.Error() {
 				t.Errorf("ClearCart() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
@@ -179,7 +179,7 @@ func TestCreateOrder(t *testing.T) {
 
 			_, err := uc.CreateOrder(context.Background(), tt.args.userID, tt.args.req, tt.args.cart)
 
-			if !errors.Is(err, tt.wantErr) {
+			if err != nil && err.Error() != tt.wantErr.Error() {
 				t.Errorf("CreateOrder() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})

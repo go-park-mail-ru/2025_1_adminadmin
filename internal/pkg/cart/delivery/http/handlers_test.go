@@ -188,7 +188,8 @@ func TestCartHandler_UpdateQuantityInCart(t *testing.T) {
 			}`,
 			mockSetup: func(mockUC *mocks.MockCartUsecase) {
 				mockUC.EXPECT().UpdateItemQuantity(gomock.Any(), login, gomock.Any(), gomock.Any(), int64(2)).
-					Return(errors.New("failed"))
+					Return(nil)
+				mockUC.EXPECT().GetCart(gomock.Any(), login).Return(models.Cart{CartItems: []models.CartItem{}}, nil)
 			},
 			expectedStatus: http.StatusInternalServerError,
 			expectedBody:   "Не удалось обновить количество товара в корзине",
@@ -208,6 +209,7 @@ func TestCartHandler_UpdateQuantityInCart(t *testing.T) {
 			mockSetup: func(mockUC *mocks.MockCartUsecase) {
 				mockUC.EXPECT().UpdateItemQuantity(gomock.Any(), login, gomock.Any(), gomock.Any(), int64(3)).
 					Return(nil)
+				mockUC.EXPECT().GetCart(gomock.Any(), login).Return(models.Cart{CartItems: []models.CartItem{}}, nil)
 			},
 			expectedStatus: http.StatusOK,
 			expectedBody:   `"id":"`, // часть JSON-корзины
@@ -240,6 +242,10 @@ func TestCartHandler_UpdateQuantityInCart(t *testing.T) {
 		})
 	}
 }
+
+
+
+
 
 func TestCartHandler_ClearCart(t *testing.T) {
 	secret := "test-secret"

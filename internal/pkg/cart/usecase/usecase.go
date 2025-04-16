@@ -94,6 +94,8 @@ func (u *CartUsecase) CreateOrder(ctx context.Context, userID string, req models
 		FinalPrice:        req.FinalPrice,
 	}
 
+	order.Sanitize()
+
 	if err := u.restaurantRepo.Save(ctx, order, userID); err != nil {
 		logger.Error("не удалось сохранить заказ", slog.String("error", err.Error()))
 		return models.Order{}, err
