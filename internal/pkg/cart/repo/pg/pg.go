@@ -49,7 +49,7 @@ func (r *RestaurantRepository) GetCartItem(ctx context.Context, productIDs []str
 	var restaurantName string
 	err = r.db.QueryRow(ctx, getRestaurantName, restaurantID).Scan(&restaurantName)
 	if err != nil {
-		return models.Cart{}, fmt.Errorf("не удалось получить имя ресторана: %w", err)
+		return models.Cart{}, fmt.Errorf("не удалось получить имя ресторана: %w %s %s", err, restaurantName, restaurantID)
 	}
 
 	uid, err := uuid.FromString(restaurantID)

@@ -61,9 +61,9 @@
 				
 				<option value="file2">github.com/go-park-mail-ru/2025_1_adminadmin/internal/models/cart_item.go (0.0%)</option>
 				
-				<option value="file3">github.com/go-park-mail-ru/2025_1_adminadmin/internal/models/product.go (15.4%)</option>
+				<option value="file3">github.com/go-park-mail-ru/2025_1_adminadmin/internal/models/product.go (61.5%)</option>
 				
-				<option value="file4">github.com/go-park-mail-ru/2025_1_adminadmin/internal/models/restaurant.go (0.0%)</option>
+				<option value="file4">github.com/go-park-mail-ru/2025_1_adminadmin/internal/models/restaurant.go (100.0%)</option>
 				
 				<option value="file5">github.com/go-park-mail-ru/2025_1_adminadmin/internal/models/signin.go (100.0%)</option>
 				
@@ -71,11 +71,11 @@
 				
 				<option value="file7">github.com/go-park-mail-ru/2025_1_adminadmin/internal/models/update_user.go (100.0%)</option>
 				
-				<option value="file8">github.com/go-park-mail-ru/2025_1_adminadmin/internal/models/user.go (0.0%)</option>
+				<option value="file8">github.com/go-park-mail-ru/2025_1_adminadmin/internal/models/user.go (100.0%)</option>
 				
-				<option value="file9">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/http/handlers.go (67.9%)</option>
+				<option value="file9">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/http/handlers.go (67.2%)</option>
 				
-				<option value="file10">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/repo/pg.go (78.6%)</option>
+				<option value="file10">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/repo/pg.go (79.2%)</option>
 				
 				<option value="file11">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/usecase/usecase.go (68.3%)</option>
 				
@@ -93,13 +93,13 @@
 				
 				<option value="file18">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/delivery/http/handlers.go (80.4%)</option>
 				
-				<option value="file19">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/repo/pg.go (77.4%)</option>
+				<option value="file19">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/repo/pg.go (78.2%)</option>
 				
 				<option value="file20">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/usecase/usecase.go (100.0%)</option>
 				
 				<option value="file21">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/jwt/jwt.go (71.9%)</option>
 				
-				<option value="file22">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log/log.go (88.9%)</option>
+				<option value="file22">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log/log.go (100.0%)</option>
 				
 				<option value="file23">github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/options/options.go (100.0%)</option>
 				
@@ -299,6 +299,10 @@ type Address struct {
         UserId  uuid.UUID `json:"user_id"`
 }
 
+type DeleteAddressReq struct {
+        Id string `json:"id"`
+}
+
 func (a *Address) Sanitize() <span class="cov8" title="1">{
         a.Address = html.EscapeString(a.Address)
 }</span>
@@ -470,7 +474,7 @@ func (c *Category) Sanitize() <span class="cov0" title="0">{
 }
 
 // Санитайзинг для RestaurantFull
-func (r *RestaurantFull) Sanitize() <span class="cov0" title="0">{
+func (r *RestaurantFull) Sanitize() <span class="cov8" title="1">{
         r.Name = html.EscapeString(r.Name)
         r.BannerURL = html.EscapeString(r.BannerURL)
         r.Address = html.EscapeString(r.Address)
@@ -478,7 +482,7 @@ func (r *RestaurantFull) Sanitize() <span class="cov0" title="0">{
         for i := range r.Tags </span><span class="cov0" title="0">{
                 r.Tags[i] = html.EscapeString(r.Tags[i]) 
         }</span>
-        <span class="cov0" title="0">for i := range r.Categories </span><span class="cov0" title="0">{
+        <span class="cov8" title="1">for i := range r.Categories </span><span class="cov0" title="0">{
                 r.Categories[i].Sanitize() 
         }</span>
 }
@@ -500,7 +504,7 @@ type Restaurant struct {
         Rating      float64   `json:"rating"`
 }
 
-func (r *Restaurant) Sanitize() <span class="cov0" title="0">{
+func (r *Restaurant) Sanitize() <span class="cov8" title="1">{
         r.Name = html.EscapeString(r.Name)
         r.Description = html.EscapeString(r.Description)
 }</span>
@@ -586,7 +590,7 @@ type User struct {
         PasswordHash []byte    `json:"-"`
 }
 
-func (u *User) Sanitize() <span class="cov0" title="0">{
+func (u *User) Sanitize() <span class="cov8" title="1">{
         u.Login = html.EscapeString(u.Login)
         u.PhoneNumber = html.EscapeString(u.PhoneNumber)
         u.FirstName = html.EscapeString(u.FirstName)
@@ -615,10 +619,6 @@ import (
         "github.com/golang-jwt/jwt"
         "github.com/satori/uuid"
 )
-
-type DeleteAddressReq struct {
-        Id string `json:"id"`
-}
 
 const maxRequestBodySize = 10 &lt;&lt; 20
 
@@ -699,7 +699,6 @@ func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) <span class
         w.Header().Set("X-CSRF-Token", csrfToken)
         w.Header().Set("Content-Type", "application/json")
 
-        w.WriteHeader(http.StatusOK)
         if err := json.NewEncoder(w).Encode(user); err != nil </span><span class="cov0" title="0">{
                 log.LogHandlerError(logger, fmt.Errorf("Ошибка формирования JSON: %w", err), http.StatusInternalServerError)
                 utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
@@ -769,7 +768,6 @@ func (h *AuthHandler) SignUp(w http.ResponseWriter, r *http.Request) <span class
         w.Header().Set("X-CSRF-Token", csrfToken)
         w.Header().Set("Content-Type", "application/json")
 
-        w.WriteHeader(http.StatusOK)
         if err := json.NewEncoder(w).Encode(user); err != nil </span><span class="cov0" title="0">{
                 log.LogHandlerError(logger, fmt.Errorf("Ошибка формирования JSON: %w", err), http.StatusInternalServerError)
                 utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
@@ -836,7 +834,6 @@ func (h *AuthHandler) Check(w http.ResponseWriter, r *http.Request) <span class=
         }
 
         <span class="cov8" title="1">w.Header().Set("Content-Type", "application/json")
-        w.WriteHeader(http.StatusOK)
         if err := json.NewEncoder(w).Encode(user); err != nil </span><span class="cov0" title="0">{
                 log.LogHandlerError(logger, fmt.Errorf("Ошибка формирования JSON: %w", err), http.StatusInternalServerError)
                 utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
@@ -880,7 +877,6 @@ func (h *AuthHandler) LogOut(w http.ResponseWriter, r *http.Request) <span class
                 Path:     "/",
         })
 
-        w.WriteHeader(http.StatusOK)
         log.LogHandlerInfo(logger, "Successful", http.StatusOK)</span>
 }
 
@@ -951,7 +947,6 @@ func (h *AuthHandler) UpdateUser(w http.ResponseWriter, r *http.Request) <span c
         }
 
         <span class="cov8" title="1">w.Header().Set("Content-Type", "application/json")
-        w.WriteHeader(http.StatusOK)
         if err := json.NewEncoder(w).Encode(updatedUser); err != nil </span><span class="cov0" title="0">{
                 log.LogHandlerError(logger, fmt.Errorf("Ошибка формирования JSON: %w", err), http.StatusInternalServerError)
                 utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
@@ -1067,7 +1062,6 @@ func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) <spa
         }
 
         <span class="cov0" title="0">w.Header().Set("Content-Type", "application/json")
-        w.WriteHeader(http.StatusOK)
         if err := json.NewEncoder(w).Encode(updatedUser); err != nil </span><span class="cov0" title="0">{
                 log.LogHandlerError(logger, fmt.Errorf("Ошибка формирования JSON: %w", err), http.StatusInternalServerError)
                 utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
@@ -1125,7 +1119,6 @@ func (h *AuthHandler) GetUserAddresses(w http.ResponseWriter, r *http.Request) <
         }</span>
 
         <span class="cov8" title="1">w.Header().Set("Content-Type", "application/json")
-        w.WriteHeader(http.StatusOK)
         if err := json.NewEncoder(w).Encode(addresses); err != nil </span><span class="cov0" title="0">{
                 log.LogHandlerError(logger, fmt.Errorf("Ошибка формирования JSON: %w", err), http.StatusInternalServerError)
                 utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
@@ -1140,7 +1133,7 @@ func (h *AuthHandler) GetUserAddresses(w http.ResponseWriter, r *http.Request) <
 // @ID delete_address
 // @Accept json
 // @Produce json
-// @Param input body DeleteAddressReq true "ID адреса для удаления"
+// @Param input body models.DeleteAddressReq true "ID адреса для удаления"
 // @Success 200
 // @Failure 400 {object} utils.ErrorResponse "Ошибка парсинга JSON"
 // @Failure 500 {object} utils.ErrorResponse "Ошибка на сервере при обработке запроса"
@@ -1169,8 +1162,7 @@ func (h *AuthHandler) DeleteAddress(w http.ResponseWriter, r *http.Request) <spa
         }</span>
 
         <span class="cov8" title="1">logger.Info("Successful")
-        w.Header().Set("Content-Type", "application/json")
-        w.WriteHeader(http.StatusOK)</span>
+        w.Header().Set("Content-Type", "application/json")</span>
 }
 
 // AddAddress godoc
@@ -1240,7 +1232,6 @@ func (h *AuthHandler) AddAddress(w http.ResponseWriter, r *http.Request) <span c
         }</span>
 
         <span class="cov8" title="1">w.Header().Set("Content-Type", "application/json")
-        w.WriteHeader(http.StatusOK)
         log.LogHandlerInfo(logger, "Successful", http.StatusOK)</span>
 }
 </pre>
@@ -1314,8 +1305,9 @@ func (repo *AuthRepo) SelectUserByLogin(ctx context.Context, login string) (mode
                 logger.Error(err.Error())
                 return models.User{}, err
         }</span>
+        <span class="cov8" title="1">resultUser.Sanitize()
 
-        <span class="cov8" title="1">logger.Info("Successful")
+        logger.Info("Successful")
         return resultUser, nil</span>
 }
 
@@ -1362,7 +1354,8 @@ func (repo *AuthRepo) SelectUserAddresses(ctx context.Context, login string) ([]
                         logger.Error(err.Error())
                         return []models.Address{}, err
                 }</span>
-                <span class="cov8" title="1">addresses = append(addresses, addr)</span>
+                <span class="cov8" title="1">addresses = append(addresses, addr)
+                addr.Sanitize()</span>
         }
 
         <span class="cov8" title="1">logger.Info("Successful")
@@ -2613,8 +2606,9 @@ func (r *RestaurantRepository) GetProductsByRestaurant(ctx context.Context, rest
                 logger.Error("failed to scan restaurant: " + err.Error())
                 return nil, err
         }</span>
+        <span class="cov8" title="1">rest.Sanitize()
 
-        <span class="cov8" title="1">tagRows, err := r.db.Query(ctx, getRestaurantTag, restaurantID)
+        tagRows, err := r.db.Query(ctx, getRestaurantTag, restaurantID)
         if err != nil </span><span class="cov0" title="0">{
                 logger.Error("failed to query tags: " + err.Error())
                 return nil, err
@@ -2679,7 +2673,8 @@ func (r *RestaurantRepository) GetAll(ctx context.Context, count, offset int) ([
                         logger.Error(err.Error())
                         return nil, err
                 }</span>
-                <span class="cov8" title="1">restaurants = append(restaurants, restaurant)</span>
+                <span class="cov8" title="1">restaurants = append(restaurants, restaurant)
+                restaurant.Sanitize()</span>
         }
 
         <span class="cov8" title="1">logger.Info("Successful")
@@ -2795,28 +2790,12 @@ import (
 func GetFuncName() string <span class="cov8" title="1">{
         pc := make([]uintptr, 15)
         n := runtime.Callers(2, pc)
-        if n == 0 </span><span class="cov0" title="0">{
-                return "unknown"  
-        }</span>
+        frames := runtime.CallersFrames(pc[:n])
+        frame, _ := frames.Next()
+        values := strings.Split(frame.Function, "/")
 
-        <span class="cov8" title="1">frames := runtime.CallersFrames(pc[:n])
-        frame, more := frames.Next()
-        if !more </span><span class="cov0" title="0">{
-                return "unknown"  
-        }</span>
-
-        <span class="cov8" title="1">values := strings.Split(frame.Function, "/")
-        if len(values) == 0 </span><span class="cov0" title="0">{
-                return "unknown"
-        }</span>
-
-        <span class="cov8" title="1">funcName := values[len(values)-1]
-        if dotIndex := strings.LastIndex(funcName, "."); dotIndex != -1 </span><span class="cov8" title="1">{
-                funcName = funcName[dotIndex+1:] 
-        }</span>
-
-        <span class="cov8" title="1">return funcName</span>
-}
+        return values[len(values)-1]
+}</span>
 
 
 func LogHandlerInfo(logger *slog.Logger, msg string, statusCode int) <span class="cov8" title="1">{
