@@ -7,11 +7,9 @@ import (
 )
 
 type CartRepo interface {
-	GetCart(ctx context.Context, userID string) (map[string]int, error)
+	GetCart(ctx context.Context, userID string) (map[string]int, string, error)
 	UpdateItemQuantity(ctx context.Context, userID, productID string, restaurantId string, quantity int) error
 	ClearCart(ctx context.Context, userID string) error
-
-	Save(ctx context.Context, order models.Order) error
 }
 
 type CartUsecase interface {

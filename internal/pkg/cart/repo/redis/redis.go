@@ -3,8 +3,9 @@ package repo
 import (
 	"context"
 	"fmt"
-	"log"
+	"log/slog"
 
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	"github.com/redis/go-redis/v9"
 )
 
@@ -17,12 +18,14 @@ func NewCartRepository(redisClient *redis.Client) *CartRepository {
 }
 
 func (r *CartRepository) GetCart(ctx context.Context, userID string) (map[string]int, string, error) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()), slog.String("user_id", userID))
+
 	key := "cart:" + userID
-	log.Printf("[GetCart] Получение корзины для ключа: %s", key)
+	logger.Info("Получение корзины", slog.String("cart_key", key))
 
 	items, err := r.redisClient.HGetAll(ctx, key).Result()
 	if err != nil {
-		log.Printf("[GetCart] Ошибка при HGetAll Redis: %v", err)
+		logger.Error("Ошибка при HGetAll Redis", slog.String("error", err.Error()))
 		return nil, "", err
 	}
 
@@ -37,41 +40,43 @@ func (r *CartRepository) GetCart(ctx context.Context, userID string) (map[string
 
 		var qty int
 		if _, err := fmt.Sscanf(quantity, "%d", &qty); err != nil {
-			log.Printf("[GetCart] Ошибка при конвертации количества товара (productID: %s, value: %s): %v", productID, quantity, err)
+			logger.Error("Ошибка при конвертации количества товара", slog.String("product_id", productID), slog.String("quantity", quantity), slog.String("error", err.Error()))
 			continue
 		}
 
 		cart[productID] = qty
 	}
 
-	log.Printf("[GetCart] Итоговая корзина: %+v, restaurantID: %s", cart, restaurantID)
+	logger.Info("Итоговая корзина", slog.Any("cart", cart), slog.String("restaurant_id", restaurantID))
 
 	return cart, restaurantID, nil
 }
 
 func (r *CartRepository) UpdateItemQuantity(ctx context.Context, userID, productID, restaurantID string, quantity int) error {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()), slog.String("user_id", userID), slog.String("product_id", productID), slog.String("restaurant_id", restaurantID), slog.Int("quantity", quantity))
+
 	key := "cart:" + userID
-	log.Printf("[UpdateItemQuantity] Обновление товара %s для пользователя %s, ресторан: %s, количество: %d", productID, userID, restaurantID, quantity)
+	logger.Info("Обновление количества товара")
 
 	currentRestaurantID, err := r.redisClient.HGet(ctx, key, "restaurant_id").Result()
 	if err != nil && err != redis.Nil {
-		log.Printf("[UpdateItemQuantity] Ошибка при получении restaurant_id из Redis: %v", err)
+		logger.Error("Ошибка при получении restaurant_id из Redis", slog.String("error", err.Error()))
 		return err
 	}
 
 	if currentRestaurantID != "" && currentRestaurantID != restaurantID {
-		log.Printf("[UpdateItemQuantity] Рестораны не совпадают (текущий: %s, новый: %s), очищаем корзину", currentRestaurantID, restaurantID)
+		logger.Info("Рестораны не совпадают, очищаем корзину", slog.String("current_restaurant_id", currentRestaurantID), slog.String("new_restaurant_id", restaurantID))
 		if err := r.redisClient.Del(ctx, key).Err(); err != nil {
-			log.Printf("[UpdateItemQuantity] Ошибка при удалении ключа Redis: %v", err)
+			logger.Error("Ошибка при удалении ключа Redis", slog.String("error", err.Error()))
 			return err
 		}
 	}
 
 	if quantity <= 0 {
-		log.Printf("[UpdateItemQuantity] Количество <= 0, удаляем товар %s", productID)
+		logger.Info("Количество товара <= 0, удаляем товар", slog.String("product_id", productID))
 		err := r.redisClient.HDel(ctx, key, productID).Err()
 		if err != nil {
-			log.Printf("[UpdateItemQuantity] Ошибка при удалении товара из корзины: %v", err)
+			logger.Error("Ошибка при удалении товара из корзины", slog.String("error", err.Error()))
 			return err
 		}
 
@@ -79,18 +84,18 @@ func (r *CartRepository) UpdateItemQuantity(ctx context.Context, userID, product
 		if err == nil {
 			onlyRestaurantID := len(fields) == 1 && fields[0] == "restaurant_id"
 			if onlyRestaurantID || len(fields) == 0 {
-				log.Printf("[UpdateItemQuantity] Корзина пуста, удаляем restaurant_id")
+				logger.Info("Корзина пуста, удаляем restaurant_id")
 				_ = r.redisClient.HDel(ctx, key, "restaurant_id").Err()
 			}
 		} else {
-			log.Printf("[UpdateItemQuantity] Ошибка при получении ключей из Redis: %v", err)
+			logger.Error("Ошибка при получении ключей из Redis", slog.String("error", err.Error()))
 		}
 
 		return nil
 	}
 
 	if quantity > 999 {
-		log.Printf("[UpdateItemQuantity] Превышен лимит количества товара (%d)", quantity)
+		logger.Warn("Превышен лимит количества товара", slog.Int("quantity", quantity))
 		return fmt.Errorf("товар уже в корзине")
 	}
 
@@ -100,23 +105,25 @@ func (r *CartRepository) UpdateItemQuantity(ctx context.Context, userID, product
 
 	_, err = pipe.Exec(ctx)
 	if err != nil {
-		log.Printf("[UpdateItemQuantity] Ошибка при выполнении транзакции Redis: %v", err)
+		logger.Error("Ошибка при выполнении транзакции Redis", slog.String("error", err.Error()))
 	} else {
-		log.Printf("[UpdateItemQuantity] Успешно обновлено: %s -> %d", productID, quantity)
+		logger.Info("Успешно обновлено", slog.String("product_id", productID), slog.Int("quantity", quantity))
 	}
 	return err
 }
 
 func (r *CartRepository) ClearCart(ctx context.Context, userID string) error {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()), slog.String("user_id", userID))
+
 	key := "cart:" + userID
-	log.Printf("[ClearCart] Очистка корзины для пользователя %s", userID)
+	logger.Info("Очистка корзины")
 
 	err := r.redisClient.Del(ctx, key).Err()
 	if err != nil {
-		log.Printf("[ClearCart] Ошибка при удалении корзины из Redis: %v", err)
+		logger.Error("Ошибка при удалении корзины из Redis", slog.String("error", err.Error()))
 		return err
 	}
 
-	log.Printf("[ClearCart] Корзина для пользователя %s успешно очищена", userID)
+	logger.Info("Корзина успешно очищена")
 	return nil
 }
