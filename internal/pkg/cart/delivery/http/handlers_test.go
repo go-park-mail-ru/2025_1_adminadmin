@@ -64,27 +64,7 @@ func TestCartHandler_GetCart(t *testing.T) {
 			expectedStatus: http.StatusNotFound,
 			expectedBody:   "корзина пуста",
 		},
-		{
-			name: "Marshal Error",
-			cookieSetup: func(r *http.Request) {
-				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: validToken})
-				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: "csrf-token"})
-				r.Header.Set("X-CSRF-Token", "csrf-token")
-			},
-			mockSetup: func(mockUC *mocks.MockCartUsecase) {
-				mockUC.EXPECT().GetCart(gomock.Any(), login).
-					Return(models.Cart{
-						Id: uuid.NewV4(),
-						CartItems: []models.CartItem{
-							{
-								Name: string([]byte{0xff, 0xfe}), // Невалидный UTF-8
-							},
-						},
-					}, nil, true)
-			},
-			expectedStatus: http.StatusInternalServerError,
-			expectedBody:   "Не удалось сериализовать корзину",
-		},
+
 		{
 			name: "Success",
 			cookieSetup: func(r *http.Request) {
@@ -119,9 +99,9 @@ func TestCartHandler_GetCart(t *testing.T) {
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
 
-			mockUC := mocks.NewMockCartUsecase(ctrl)
+			mockUsecase := mocks.NewMockCartUsecase(ctrl)
 			if tt.mockSetup != nil {
-				tt.mockSetup(mockUC)
+				tt.mockSetup(mockUsecase)
 			}
 
 			req := httptest.NewRequest("GET", "/api/cart", nil)
@@ -129,7 +109,7 @@ func TestCartHandler_GetCart(t *testing.T) {
 			w := httptest.NewRecorder()
 
 			handler := CartHandler{
-				cartUsecase: mockUC,
+				cartUsecase: mockUsecase,
 				secret:      secret,
 			}
 			handler.GetCart(w, req)

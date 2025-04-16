@@ -6,24 +6,24 @@ import (
 	"log"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
-	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/jackc/pgtype/pgxtype"
 	"github.com/satori/uuid"
 )
 
 const (
 	getFieldProduct   = "SELECT id, name, price, image_url, weight FROM products WHERE id = ANY($1)"
 	getRestaurantName = "SELECT name FROM restaurants WHERE id = $1"
-	insertOrder = `INSERT INTO orders (id, user_id, status, address_id, order_products,
+	insertOrder       = `INSERT INTO orders (id, user_id, status, address_id, order_products,
 		apartment_or_office, intercom, entrance, floor,
 		courier_comment, leave_at_door, created_at, final_price) 
 		VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`
 )
 
 type RestaurantRepository struct {
-	db *pgxpool.Pool
+	db pgxtype.Querier
 }
 
-func NewRestaurantRepository(db *pgxpool.Pool) *RestaurantRepository {
+func NewRestaurantRepository(db pgxtype.Querier) *RestaurantRepository {
 	return &RestaurantRepository{db: db}
 }
 
@@ -66,7 +66,7 @@ func (r *RestaurantRepository) GetCartItem(ctx context.Context, productIDs []str
 	return cart, nil
 }
 
-func (r *RestaurantRepository) Save(ctx context.Context, order *models.Order, userLogin string) error {
+func (r *RestaurantRepository) Save(ctx context.Context, order models.Order, userLogin string) error {
 	log.Printf("Запрос на сохранение заказа. Логин пользователя: %s", userLogin)
 
 	var userID uuid.UUID

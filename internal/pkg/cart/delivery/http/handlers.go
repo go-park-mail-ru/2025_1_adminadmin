@@ -10,7 +10,8 @@ import (
 	"os"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
-	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/usecase"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart"
+
 	jwtUtils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/jwt"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/send_error"
@@ -21,11 +22,11 @@ import (
 )
 
 type CartHandler struct {
-	cartUsecase *usecase.CartUsecase
+	cartUsecase cart.CartUsecase
 	secret      string
 }
 
-func NewCartHandler(cartUsecase *usecase.CartUsecase) *CartHandler {
+func NewCartHandler(cartUsecase cart.CartUsecase) *CartHandler {
 	return &CartHandler{cartUsecase: cartUsecase, secret: os.Getenv("JWT_SECRET")}
 }
 

@@ -96,7 +96,7 @@ func (mr *MockCartRepoMockRecorder) GetCart(ctx, userID interface{}) *gomock.Cal
 }
 
 // Save mocks base method.
-func (m *MockCartRepo) Save(ctx context.Context, order *models.Order) error {
+func (m *MockCartRepo) Save(ctx context.Context, order models.Order) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Save", ctx, order)
 	ret0, _ := ret[0].(error)
@@ -175,17 +175,18 @@ func (mr *MockCartUsecaseMockRecorder) ClearCart(ctx, userID interface{}) *gomoc
 }
 
 // CreateOrder mocks base method.
-func (m *MockCartUsecase) CreateOrder(ctx context.Context, userID string, addressID uuid.UUID, cart models.Cart, details models.Order) error {
+func (m *MockCartUsecase) CreateOrder(ctx context.Context, userID string, details models.OrderInReq, cart models.Cart) (models.Order, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateOrder", ctx, userID, addressID, cart, details)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret := m.ctrl.Call(m, "CreateOrder", ctx, userID, details, cart)
+	ret0, _ := ret[0].(models.Order)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // CreateOrder indicates an expected call of CreateOrder.
-func (mr *MockCartUsecaseMockRecorder) CreateOrder(ctx, userID, addressID, cart, details interface{}) *gomock.Call {
+func (mr *MockCartUsecaseMockRecorder) CreateOrder(ctx, userID, details, cart interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateOrder", reflect.TypeOf((*MockCartUsecase)(nil).CreateOrder), ctx, userID, addressID, cart, details)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateOrder", reflect.TypeOf((*MockCartUsecase)(nil).CreateOrder), ctx, userID, details, cart)
 }
 
 // GetAllOrdersByUser mocks base method.
@@ -298,4 +299,18 @@ func (m *MockRestaurantRepo) GetCartItem(ctx context.Context, productIDs []strin
 func (mr *MockRestaurantRepoMockRecorder) GetCartItem(ctx, productIDs, productAmounts, restaurantID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCartItem", reflect.TypeOf((*MockRestaurantRepo)(nil).GetCartItem), ctx, productIDs, productAmounts, restaurantID)
+}
+
+// Save mocks base method.
+func (m *MockRestaurantRepo) Save(ctx context.Context, order models.Order, userLogin string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Save", ctx, order, userLogin)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Save indicates an expected call of Save.
+func (mr *MockRestaurantRepoMockRecorder) Save(ctx, order, userLogin interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Save", reflect.TypeOf((*MockRestaurantRepo)(nil).Save), ctx, order, userLogin)
 }

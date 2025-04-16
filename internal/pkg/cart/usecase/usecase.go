@@ -6,17 +6,17 @@ import (
 	"time"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
-	pgRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/pg"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart"
 	redisRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/redis"
 	"github.com/satori/uuid"
 )
 
 type CartUsecase struct {
 	cartRepo       *redisRepo.CartRepository
-	restaurantRepo *pgRepo.RestaurantRepository
+	restaurantRepo cart.RestaurantRepo
 }
 
-func NewCartUsecase(cartRepo *redisRepo.CartRepository, restaurantRepo *pgRepo.RestaurantRepository) *CartUsecase {
+func NewCartUsecase(cartRepo *redisRepo.CartRepository, restaurantRepo cart.RestaurantRepo) *CartUsecase {
 	return &CartUsecase{
 		cartRepo:       cartRepo,
 		restaurantRepo: restaurantRepo,
@@ -60,8 +60,8 @@ func (uc *CartUsecase) ClearCart(ctx context.Context, userID string) error {
 	return uc.cartRepo.ClearCart(ctx, userID)
 }
 
-func (u *CartUsecase) CreateOrder(ctx context.Context, userID string, req models.OrderInReq, cart models.Cart) (*models.Order, error) {
-	order := &models.Order{
+func (u *CartUsecase) CreateOrder(ctx context.Context, userID string, req models.OrderInReq, cart models.Cart) (models.Order, error) {
+	order := models.Order{
 		ID:                uuid.NewV4(),
 		UserID:            userID,
 		Status:            req.Status,
@@ -78,7 +78,7 @@ func (u *CartUsecase) CreateOrder(ctx context.Context, userID string, req models
 	}
 
 	if err := u.restaurantRepo.Save(ctx, order, userID); err != nil {
-		return nil, err
+		return models.Order{}, err
 	}
 
 	return order, nil
