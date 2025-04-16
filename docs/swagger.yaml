@@ -1,0 +1,447 @@
+basePath: /api
+definitions:
+  models.Address:
+    properties:
+      address:
+        type: string
+      id:
+        type: string
+      user_id:
+        type: string
+    type: object
+  models.DeleteAddressReq:
+    properties:
+      id:
+        type: string
+    type: object
+  models.Product:
+    properties:
+      id:
+        type: string
+      image_url:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+      weight:
+        type: integer
+    type: object
+  models.Restaurant:
+    properties:
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      rating:
+        type: number
+    type: object
+  models.SignInReq:
+    properties:
+      login:
+        type: string
+      password:
+        type: string
+    type: object
+  models.SignUpReq:
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+      login:
+        type: string
+      password:
+        type: string
+      phone_number:
+        type: string
+    type: object
+  models.UpdateUserReq:
+    properties:
+      description:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      password:
+        type: string
+      phone_number:
+        type: string
+    type: object
+  models.User:
+    properties:
+      description:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: string
+      last_name:
+        type: string
+      login:
+        type: string
+      path:
+        type: string
+      phone_number:
+        type: string
+    type: object
+  utils.ErrorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+host: localhost:5458
+info:
+  contact: {}
+  description: API для проекта DoorDashers.
+  title: AdminAdmin API
+  version: "1.0"
+paths:
+  /auth/add_address:
+    post:
+      consumes:
+      - application/json
+      description: Привязывание адреса к аккаунту пользователя (аккаунт может быть
+        связан с несколькими адресами)
+      operationId: add_address
+      parameters:
+      - description: Адрес для добавления (поле UserId будет установлено автоматически
+          из токена)
+        in: body
+        name: address
+        required: true
+        schema:
+          $ref: '#/definitions/models.Address'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Ошибка парсинга JSON или отсутствует токен
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "401":
+          description: Недействительный или отсутствующий токен
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Внутренняя ошибка при добавлении адреса
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Добавление адреса пользователю
+      tags:
+      - auth
+  /auth/check:
+    get:
+      consumes:
+      - application/json
+      description: Проверка JWT, а также проверка CSRF в Cookie и заголовке
+      operationId: check
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Успешный ответ с данными пользователя
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Некорректный запрос
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "401":
+          description: Ошибка авторизации (необходима авторизация)
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "403":
+          description: Ошибка авторизации (некорректный CSRF токен)
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Внутренняя ошибка сервера
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Проверка авторизации пользовател
+      tags:
+      - auth
+  /auth/delete_address:
+    post:
+      consumes:
+      - application/json
+      description: Удаляет адрес по его ID. Тело запроса должно содержать JSON с полем
+        id.
+      operationId: delete_address
+      parameters:
+      - description: ID адреса для удаления
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.DeleteAddressReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Ошибка парсинга JSON
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Ошибка на сервере при обработке запроса
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Удаление адреса пользователя
+      tags:
+      - auth
+  /auth/get_addresses:
+    get:
+      description: Возвращает список адресов, привязанных к пользователю.
+      operationId: get_addresses
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Address'
+            type: array
+        "400":
+          description: Ошибка чтения cookie
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "401":
+          description: Проблемы с авторизацией
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Ошибка на сервере при обработке запроса
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Получение адресов пользователя
+      tags:
+      - auth
+  /auth/logout:
+    get:
+      consumes:
+      - application/json
+      description: Выход из аккаунта путем обнуления куков
+      operationId: logout
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Пользователь уже разлогинен
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Выход из аккаунта
+      tags:
+      - auth
+  /auth/signin:
+    post:
+      consumes:
+      - application/json
+      description: Вход пользователя по логину и паролю
+      operationId: sign-in
+      parameters:
+      - description: Данные для входа
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.SignInReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Успешный ответ с данными пользователя
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Ошибка парсинга или неправильные данные
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Внутренняя ошибка сервера
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Авторизация пользователя
+      tags:
+      - auth
+  /auth/signup:
+    post:
+      consumes:
+      - application/json
+      description: Регистрация пользователя (логин, пароль, имя, фамилия, номер телефона)
+      operationId: sign-up
+      parameters:
+      - description: Данные для входа
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.SignUpReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Успешный ответ с данными пользователя
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Ошибка парсинга или неправильные данные
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Внутренняя ошибка сервера
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Регистрация пользователя
+      tags:
+      - auth
+  /auth/update_user:
+    post:
+      consumes:
+      - application/json
+      description: Обновление полей пользователя (description, first_name, last_name,
+        phone_number, password)
+      operationId: update_user
+      parameters:
+      - description: Параметры для редактирования
+        in: body
+        name: input
+        schema:
+          $ref: '#/definitions/models.UpdateUserReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Успешный ответ с обновленными данными пользователя
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Ошибка парсинга или формирования JSON
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "401":
+          description: Токен не найден или недействителен
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Ошибка на сервере при обработке запроса
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Обновление информации пользователя
+      tags:
+      - auth
+  /auth/update_userpic:
+    post:
+      consumes:
+      - multipart/form-data
+      description: 'Загружает новый файл аватарки пользователя. Поддерживаемые форматы:
+        JPEG, PNG, WEBP.'
+      operationId: update_userpic
+      parameters:
+      - description: Файл изображения
+        in: formData
+        name: user_pic
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Успешное обновление аватарки у пользователя
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Ошибка парсинга файла или формат не поддерживается
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "401":
+          description: Проблемы с авторизацией, отсутствует токен
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "413":
+          description: Файл слишком большой
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Ошибка при работе с файлом или сервером
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Обновление аватарки пользователя
+      tags:
+      - auth
+  /restaurants/{id}:
+    get:
+      description: Получение списка продуктов ресторана с пагинацией
+      parameters:
+      - description: ID ресторана
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Количество элементов (по умолчанию 100)
+        in: query
+        name: count
+        type: integer
+      - description: Смещение (по умолчанию 0)
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Успешное получение продуктов ресторана
+          schema:
+            items:
+              $ref: '#/definitions/models.Product'
+            type: array
+        "400":
+          description: Неверный формат ID ресторана
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Внутренняя ошибка сервера
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Получить продукты ресторана
+      tags:
+      - restaurants
+  /restaurants/list:
+    get:
+      description: Получение списка ресторанов с пагинацией
+      parameters:
+      - description: Количество элементов
+        in: query
+        name: count
+        type: integer
+      - description: Смещение
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Успешное получение списка ресторанов
+          schema:
+            items:
+              $ref: '#/definitions/models.Restaurant'
+            type: array
+        "500":
+          description: Внутренняя ошибка сервера
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Список ресторанов
+      tags:
+      - restaurants
+swagger: "2.0"

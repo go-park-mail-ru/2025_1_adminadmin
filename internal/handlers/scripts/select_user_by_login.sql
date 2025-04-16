@@ -1,1 +1,0 @@
-SELECT id, first_name, last_name, phone_number, description, user_pic, password_hash FROM users WHERE login = $1

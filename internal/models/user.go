@@ -1,7 +1,12 @@
 package models
 
-import uuid "github.com/satori/uuid"
+import (
+	"html"
 
+	uuid "github.com/satori/uuid"
+)
+
+// easyjson:json
 type User struct {
 	Login        string    `json:"login"`
 	PhoneNumber  string    `json:"phone_number"`
@@ -11,4 +16,12 @@ type User struct {
 	Description  string    `json:"description"`
 	UserPic      string    `json:"path"`
 	PasswordHash []byte    `json:"-"`
+}
+
+func (u *User) Sanitize() {
+	u.Login = html.EscapeString(u.Login)
+	u.PhoneNumber = html.EscapeString(u.PhoneNumber)
+	u.FirstName = html.EscapeString(u.FirstName)
+	u.LastName = html.EscapeString(u.LastName)
+	u.Description = html.EscapeString(u.Description)
 }
