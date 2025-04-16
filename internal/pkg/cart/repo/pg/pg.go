@@ -3,9 +3,10 @@ package pg
 import (
 	"context"
 	"fmt"
-	"log"
+	"log/slog"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	"github.com/jackc/pgtype/pgxtype"
 	"github.com/satori/uuid"
 )
@@ -28,8 +29,11 @@ func NewRestaurantRepository(db pgxtype.Querier) *RestaurantRepository {
 }
 
 func (r *RestaurantRepository) GetCartItem(ctx context.Context, productIDs []string, productAmounts map[string]int, restaurantID string) (models.Cart, error) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
 	rows, err := r.db.Query(ctx, getFieldProduct, productIDs)
 	if err != nil {
+		logger.Error("Ошибка при выполнении запроса", slog.String("error", err.Error()))
 		return models.Cart{}, err
 	}
 	defer rows.Close()
@@ -40,6 +44,7 @@ func (r *RestaurantRepository) GetCartItem(ctx context.Context, productIDs []str
 		var item models.CartItem
 		err := rows.Scan(&item.Id, &item.Name, &item.Price, &item.ImageURL, &item.Weight)
 		if err != nil {
+			logger.Error("Ошибка при сканировании строки", slog.String("error", err.Error()))
 			return models.Cart{}, err
 		}
 		item.Amount = productAmounts[item.Id.String()]
@@ -49,11 +54,13 @@ func (r *RestaurantRepository) GetCartItem(ctx context.Context, productIDs []str
 	var restaurantName string
 	err = r.db.QueryRow(ctx, getRestaurantName, restaurantID).Scan(&restaurantName)
 	if err != nil {
+		logger.Error("Ошибка при получении имени ресторана", slog.String("error", err.Error()))
 		return models.Cart{}, fmt.Errorf("не удалось получить имя ресторана: %w %s %s", err, restaurantName, restaurantID)
 	}
 
 	uid, err := uuid.FromString(restaurantID)
 	if err != nil {
+		logger.Error("Ошибка при преобразовании restaurantID в UUID", slog.String("error", err.Error()))
 		return models.Cart{}, err
 	}
 
@@ -63,29 +70,33 @@ func (r *RestaurantRepository) GetCartItem(ctx context.Context, productIDs []str
 		CartItems: items,
 	}
 	cart.Sanitize()
+
+	logger.Info("Успешно получена корзина", slog.String("restaurant_name", restaurantName), slog.Int("items_count", len(items)))
 	return cart, nil
 }
 
 func (r *RestaurantRepository) Save(ctx context.Context, order models.Order, userLogin string) error {
-	log.Printf("Запрос на сохранение заказа. Логин пользователя: %s", userLogin)
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()), slog.String("user_login", userLogin))
+
+	logger.Info("Запрос на сохранение заказа")
 
 	var userID uuid.UUID
 	err := r.db.QueryRow(ctx, `SELECT id FROM users WHERE login = $1`, userLogin).Scan(&userID)
 	if err != nil {
-		log.Printf("Ошибка при поиске пользователя по логину %s: %v", userLogin, err)
+		logger.Error("Ошибка при поиске пользователя по логину", slog.String("error", err.Error()))
 		return fmt.Errorf("не удалось найти пользователя по логину %s: %w", userLogin, err)
 	}
 
-	log.Printf("Найден user_id для логина %s: %s", userLogin, userID)
+	logger.Info("Найден user_id", slog.String("user_id", userID.String()))
 
 	orderProductsStr, err := order.OrderProducts.MarshalJSON()
 	if err != nil {
-		log.Printf("Ошибка при маршалинге заказанных товаров: %v", err)
+		logger.Error("Ошибка при маршалинге заказанных товаров", slog.String("error", err.Error()))
 		return err
 	}
 	order.Sanitize()
 
-	log.Printf("Данные заказа: ID: %s, Статус: %s, Адрес: %s", order.ID, order.Status, order.Address)
+	logger.Info("Данные заказа", slog.String("order_id", order.ID.String()), slog.String("status", order.Status), slog.String("address", order.Address))
 
 	_, err = r.db.Exec(ctx, insertOrder,
 		order.ID, userID, order.Status, order.Address, string(orderProductsStr),
@@ -93,11 +104,11 @@ func (r *RestaurantRepository) Save(ctx context.Context, order models.Order, use
 		order.CourierComment, order.LeaveAtDoor, order.CreatedAt, order.FinalPrice)
 
 	if err != nil {
-		log.Printf("Ошибка при вставке заказа в базу данных: %v", err)
+		logger.Error("Ошибка при вставке заказа в базу данных", slog.String("error", err.Error()))
 		return err
 	}
 
-	log.Printf("Заказ с ID %s успешно сохранен", order.ID)
+	logger.Info("Заказ успешно сохранен", slog.String("order_id", order.ID.String()))
 
 	return nil
 }
