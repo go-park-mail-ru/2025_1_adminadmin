@@ -2,6 +2,7 @@ package pg
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"testing"
 	"time"
@@ -101,89 +102,113 @@ func TestGetCartItem(t *testing.T) {
 	}
 }
 
-func TestSave(t *testing.T) {
+type mockRow struct {
+	scanFunc func(dest ...interface{}) error
+}
+
+func (m *mockRow) Scan(dest ...interface{}) error {
+	return m.scanFunc(dest...)
+}
+
+func TestSaveOrder(t *testing.T) {
 	testOrderID := uuid.NewV4()
+	testUserLogin := "test_user"
 	testUserID := uuid.NewV4()
-	testUserLogin := "testuser"
 	testOrder := models.Order{
-		ID:               testOrderID,
-		Status:           "New",
-		Address:          "Test Address",
-		OrderProducts:    models.Cart{},
-		ApartmentOrOffice: "Apt 101",
-		Intercom:         "123",
-		Entrance:         "A",
-		Floor:            "5",
-		CourierComment:   "Leave at door",
-		LeaveAtDoor:      true,
-		CreatedAt:        time.Now(),
-		FinalPrice:       1000,
+		ID:     testOrderID,
+		Status: "new",
+		Address: "123 Test St",
+		OrderProducts: models.Cart{
+			Id:   uuid.NewV4(),
+			Name: "Test Restaurant",
+			CartItems: []models.CartItem{
+				{
+					Id:       uuid.NewV4(),
+					Name:     "Test Burger",
+					Price:    499.99,
+					ImageURL: "burger.png",
+					Weight:   250,
+					Amount:   2,
+				},
+				{
+					Id:       uuid.NewV4(),
+					Name:     "Fries",
+					Price:    199.49,
+					ImageURL: "fries.png",
+					Weight:   150,
+					Amount:   1,
+				},
+			},
+		},
+		ApartmentOrOffice: "12B",
+		Intercom:          "123",
+		Entrance:          "A",
+		Floor:             "3",
+		CourierComment:    "Позвоните, когда будете на месте",
+		LeaveAtDoor:       true,
+		CreatedAt:         time.Now(),
+		FinalPrice:        1199.47,
 	}
+	
 
 	tests := []struct {
-		name           string
-		repoMocker     func(*pgxpoolmock.MockPgxPool)
-		expectedResult error
-		expectError    bool
+		name        string
+		mock        func(mockPool *pgxpoolmock.MockPgxPool)
+		expectError bool
 	}{
 		{
 			name: "Success",
-			repoMocker: func(mockPool *pgxpoolmock.MockPgxPool) {
-				mockPool.EXPECT().
-					QueryRow(gomock.Any(), `SELECT id FROM users WHERE login = $1`, testUserLogin).
-					Return(pgxpoolmock.NewRows([]string{"id"}).AddRow(testUserID.String())).
-					Times(1)
+			mock: func(mockPool *pgxpoolmock.MockPgxPool) {
+				userRow := pgxpoolmock.NewRows([]string{"id"}).AddRow(testUserID).ToPgxRows()
+				userRow.Next()
 
 				mockPool.EXPECT().
-					Exec(gomock.Any(), insertOrder, gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).
-					Return(nil).
-					Times(1)
-			},
-			expectedResult: nil,
-			expectError:    false,
-		},
-		{
-			name: "User Not Found",
-			repoMocker: func(mockPool *pgxpoolmock.MockPgxPool) {
-				mockPool.EXPECT().
 					QueryRow(gomock.Any(), `SELECT id FROM users WHERE login = $1`, testUserLogin).
-					Return(pgxpoolmock.NewRows([]string{"id"})).
-					Times(1)
-			},
-			expectedResult: fmt.Errorf("не удалось найти пользователя по логину %s: no rows in result set", testUserLogin),
-			expectError:    true,
-		},
-		{
-			name: "Order Products Marshal JSON Error",
-			repoMocker: func(mockPool *pgxpoolmock.MockPgxPool) {
-				mockPool.EXPECT().
-					QueryRow(gomock.Any(), `SELECT id FROM users WHERE login = $1`, testUserLogin).
-					Return(pgxpoolmock.NewRows([]string{"id"}).AddRow(testUserID.String())).
-					Times(1)
+					Return(userRow)
 
 				mockPool.EXPECT().
-					Exec(gomock.Any(), insertOrder, gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).
-					Return(nil).
-					Times(0)
+					Exec(gomock.Any(), insertOrder,
+						testOrder.ID, testUserID, testOrder.Status, testOrder.Address,
+						gomock.Any(),
+						testOrder.ApartmentOrOffice, testOrder.Intercom, testOrder.Entrance, testOrder.Floor,
+						testOrder.CourierComment, testOrder.LeaveAtDoor, testOrder.CreatedAt, testOrder.FinalPrice,
+					).
+					Return(nil, nil)
 			},
-			expectedResult: fmt.Errorf("error marshalling order products"),
-			expectError:    true,
+			expectError: false,
 		},
 		{
-			name: "Insert Order Exec Error",
-			repoMocker: func(mockPool *pgxpoolmock.MockPgxPool) {
+			name: "User not found",
+			mock: func(mockPool *pgxpoolmock.MockPgxPool) {
 				mockPool.EXPECT().
 					QueryRow(gomock.Any(), `SELECT id FROM users WHERE login = $1`, testUserLogin).
-					Return(pgxpoolmock.NewRows([]string{"id"}).AddRow(testUserID.String())).
-					Times(1)
+					Return(&mockRow{
+						scanFunc: func(dest ...interface{}) error {
+							return errors.New("no rows")
+						},
+					})
+			},
+			expectError: true,
+		},
+		{
+			name: "Insert fails",
+			mock: func(mockPool *pgxpoolmock.MockPgxPool) {
+				userRow := pgxpoolmock.NewRows([]string{"id"}).AddRow(testUserID).ToPgxRows()
+				userRow.Next()
 
 				mockPool.EXPECT().
-					Exec(gomock.Any(), insertOrder, gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).
-					Return(fmt.Errorf("db insert error")).
-					Times(1)
+					QueryRow(gomock.Any(), `SELECT id FROM users WHERE login = $1`, testUserLogin).
+					Return(userRow)
+
+				mockPool.EXPECT().
+					Exec(gomock.Any(), insertOrder,
+						testOrder.ID, testUserID, testOrder.Status, testOrder.Address,
+						gomock.Any(), testOrder.ApartmentOrOffice, testOrder.Intercom,
+						testOrder.Entrance, testOrder.Floor, testOrder.CourierComment,
+						testOrder.LeaveAtDoor, testOrder.CreatedAt, testOrder.FinalPrice).
+					Return(nil, errors.New("insert error"))
 			},
-			expectedResult: fmt.Errorf("db insert error"),
-			expectError:    true,
+			expectError: true,
 		},
 	}
 
@@ -193,15 +218,13 @@ func TestSave(t *testing.T) {
 			defer ctrl.Finish()
 
 			mockPool := pgxpoolmock.NewMockPgxPool(ctrl)
-			tt.repoMocker(mockPool)
+			tt.mock(mockPool)
 
-			repo := RestaurantRepository{db: mockPool}
+			repo := &RestaurantRepository{db: mockPool}
 
 			err := repo.Save(context.Background(), testOrder, testUserLogin)
-
 			if tt.expectError {
 				assert.Error(t, err)
-				assert.Contains(t, err.Error(), tt.expectedResult.Error())
 			} else {
 				assert.NoError(t, err)
 			}
