@@ -212,7 +212,7 @@ func TestCartHandler_UpdateQuantityInCart(t *testing.T) {
 				mockUC.EXPECT().GetCart(gomock.Any(), login).Return(models.Cart{CartItems: []models.CartItem{}}, nil)
 			},
 			expectedStatus: http.StatusOK,
-			expectedBody:   `"id":"`, // часть JSON-корзины
+			expectedBody:   `"id":"`,
 		},
 	}
 
@@ -243,10 +243,6 @@ func TestCartHandler_UpdateQuantityInCart(t *testing.T) {
 	}
 }
 
-
-
-
-
 func TestCartHandler_ClearCart(t *testing.T) {
 	secret := "test-secret"
 	login := "testuser"
@@ -260,8 +256,8 @@ func TestCartHandler_ClearCart(t *testing.T) {
 		expectedStatus int
 	}{
 		{
-			name: "No JWT cookie",
-			setupRequest: func(r *http.Request) {},
+			name:           "No JWT cookie",
+			setupRequest:   func(r *http.Request) {},
 			expectedStatus: http.StatusUnauthorized,
 		},
 		{
@@ -323,4 +319,3 @@ func TestCartHandler_ClearCart(t *testing.T) {
 		})
 	}
 }
-
