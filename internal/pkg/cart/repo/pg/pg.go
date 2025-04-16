@@ -49,6 +49,7 @@ func (r *RestaurantRepository) GetCartItem(ctx context.Context, productIDs []str
 		}
 		item.Amount = productAmounts[item.Id.String()]
 		items = append(items, item)
+		item.Sanitize()
 	}
 
 	var restaurantName string
