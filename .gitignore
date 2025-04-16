@@ -28,5 +28,6 @@ go.work.sum
 .DS_Store
 
 coverage.html
+heatmap.html
 coverage.tmp
 
