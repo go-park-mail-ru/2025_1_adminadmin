@@ -21,8 +21,6 @@ func (r *CartRepository) GetCart(ctx context.Context, userID string) (map[string
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()), slog.String("user_id", userID))
 
 	key := "cart:" + userID
-	logger.Info("Получение корзины", slog.String("cart_key", key))
-
 	items, err := r.redisClient.HGetAll(ctx, key).Result()
 	if err != nil {
 		logger.Error("Ошибка при HGetAll Redis", slog.String("error", err.Error()))
@@ -56,7 +54,6 @@ func (r *CartRepository) UpdateItemQuantity(ctx context.Context, userID, product
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()), slog.String("user_id", userID), slog.String("product_id", productID), slog.String("restaurant_id", restaurantID), slog.Int("quantity", quantity))
 
 	key := "cart:" + userID
-	logger.Info("Обновление количества товара")
 
 	currentRestaurantID, err := r.redisClient.HGet(ctx, key, "restaurant_id").Result()
 	if err != nil && err != redis.Nil {
@@ -65,7 +62,6 @@ func (r *CartRepository) UpdateItemQuantity(ctx context.Context, userID, product
 	}
 
 	if currentRestaurantID != "" && currentRestaurantID != restaurantID {
-		logger.Info("Рестораны не совпадают, очищаем корзину", slog.String("current_restaurant_id", currentRestaurantID), slog.String("new_restaurant_id", restaurantID))
 		if err := r.redisClient.Del(ctx, key).Err(); err != nil {
 			logger.Error("Ошибка при удалении ключа Redis", slog.String("error", err.Error()))
 			return err
@@ -73,7 +69,6 @@ func (r *CartRepository) UpdateItemQuantity(ctx context.Context, userID, product
 	}
 
 	if quantity <= 0 {
-		logger.Info("Количество товара <= 0, удаляем товар", slog.String("product_id", productID))
 		err := r.redisClient.HDel(ctx, key, productID).Err()
 		if err != nil {
 			logger.Error("Ошибка при удалении товара из корзины", slog.String("error", err.Error()))
@@ -116,7 +111,6 @@ func (r *CartRepository) ClearCart(ctx context.Context, userID string) error {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()), slog.String("user_id", userID))
 
 	key := "cart:" + userID
-	logger.Info("Очистка корзины")
 
 	err := r.redisClient.Del(ctx, key).Err()
 	if err != nil {

@@ -86,7 +86,6 @@ func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
 
 	data, err := json.Marshal(cart)
 	if err != nil {
@@ -154,7 +153,6 @@ func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Reques
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
 
 	data, err := json.Marshal(cart)
 	if err != nil {
@@ -258,7 +256,6 @@ func (h *CartHandler) CreateOrder(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
 
 	data, err := json.Marshal(order)
 	if err != nil {

@@ -78,8 +78,6 @@ func (r *RestaurantRepository) GetCartItem(ctx context.Context, productIDs []str
 func (r *RestaurantRepository) Save(ctx context.Context, order models.Order, userLogin string) error {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()), slog.String("user_login", userLogin))
 
-	logger.Info("Запрос на сохранение заказа")
-
 	var userID uuid.UUID
 	err := r.db.QueryRow(ctx, `SELECT id FROM users WHERE login = $1`, userLogin).Scan(&userID)
 	if err != nil {
@@ -87,16 +85,12 @@ func (r *RestaurantRepository) Save(ctx context.Context, order models.Order, use
 		return fmt.Errorf("не удалось найти пользователя по логину %s: %w", userLogin, err)
 	}
 
-	logger.Info("Найден user_id", slog.String("user_id", userID.String()))
-
 	orderProductsStr, err := order.OrderProducts.MarshalJSON()
 	if err != nil {
 		logger.Error("Ошибка при маршалинге заказанных товаров", slog.String("error", err.Error()))
 		return err
 	}
 	order.Sanitize()
-
-	logger.Info("Данные заказа", slog.String("order_id", order.ID.String()), slog.String("status", order.Status), slog.String("address", order.Address))
 
 	_, err = r.db.Exec(ctx, insertOrder,
 		order.ID, userID, order.Status, order.Address, string(orderProductsStr),

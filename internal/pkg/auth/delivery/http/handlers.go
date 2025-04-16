@@ -16,6 +16,7 @@ import (
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/send_error"
 	"github.com/golang-jwt/jwt"
+	"github.com/mailru/easyjson"
 	"github.com/satori/uuid"
 )
 
@@ -52,7 +53,7 @@ func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
 	var req models.SignInReq
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+	if err := easyjson.UnmarshalFromReader(r.Body, &req); err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("Ошибка парсинга JSON: %w", err), http.StatusBadRequest)
 		utils.SendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
 		return
@@ -120,7 +121,7 @@ func (h *AuthHandler) SignUp(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
 	var req models.SignUpReq
-	err := json.NewDecoder(r.Body).Decode(&req)
+	err := easyjson.UnmarshalFromReader(r.Body, &req)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("Ошибка парсинга JSON: %w", err), http.StatusBadRequest)
 		utils.SendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
@@ -325,7 +326,7 @@ func (h *AuthHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var updateData models.UpdateUserReq
-	if err := json.NewDecoder(r.Body).Decode(&updateData); err != nil {
+	if err := easyjson.UnmarshalFromReader(r.Body, &updateData); err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("Ошибка парсинга JSON: %w", err), http.StatusBadRequest)
 		utils.SendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
 		return
@@ -546,7 +547,7 @@ func (h *AuthHandler) DeleteAddress(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var address models.Address
-	err := json.NewDecoder(r.Body).Decode(&address)
+	err := easyjson.UnmarshalFromReader(r.Body, &address)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("Ошибка парсинга JSON: %w", err), http.StatusBadRequest)
 		utils.SendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
@@ -615,7 +616,7 @@ func (h *AuthHandler) AddAddress(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	var address models.Address
-	err = json.NewDecoder(r.Body).Decode(&address)
+	err = easyjson.UnmarshalFromReader(r.Body, &address)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("Ошибка парсинга JSON: %w", err), http.StatusBadRequest)
 		utils.SendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
