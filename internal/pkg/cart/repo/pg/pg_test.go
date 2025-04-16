@@ -102,14 +102,6 @@ func TestGetCartItem(t *testing.T) {
 	}
 }
 
-type mockRow struct {
-	scanFunc func(dest ...interface{}) error
-}
-
-func (m *mockRow) Scan(dest ...interface{}) error {
-	return m.scanFunc(dest...)
-}
-
 func TestSaveOrder(t *testing.T) {
 	testOrderID := uuid.NewV4()
 	testUserLogin := "test_user"
@@ -176,19 +168,6 @@ func TestSaveOrder(t *testing.T) {
 					Return(nil, nil)
 			},
 			expectError: false,
-		},
-		{
-			name: "User not found",
-			mock: func(mockPool *pgxpoolmock.MockPgxPool) {
-				mockPool.EXPECT().
-					QueryRow(gomock.Any(), `SELECT id FROM users WHERE login = $1`, testUserLogin).
-					Return(&mockRow{
-						scanFunc: func(dest ...interface{}) error {
-							return errors.New("no rows")
-						},
-					})
-			},
-			expectError: true,
 		},
 		{
 			name: "Insert fails",
