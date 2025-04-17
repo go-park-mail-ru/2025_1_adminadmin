@@ -1,4 +1,4 @@
-FROM golang:1.24.0-alpine AS builder
+FROM golang:1.24.2-alpine AS builder
 
 COPY . /github.com/go-park-mail-ru/2025_1_adminadmin
 WORKDIR /github.com/go-park-mail-ru/2025_1_adminadmin
