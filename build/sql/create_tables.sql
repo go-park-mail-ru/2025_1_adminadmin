@@ -319,8 +319,8 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Салат с морепродуктами', 780, 'seafood_salad.jpg', 200, 'Закуски и салаты'),
 	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Цезарь с креветками', 730, 'caesar_salad_with_shrimp.jpg', 200, 'Закуски и салаты'),
 	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Тартар из говядины', 780, 'beef_tartare.jpg', 200, 'Закуски и салаты'),
-	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'лимонад Клубнично-имбирный', 650, 'strawberry_ginger_lemonade.jpg', 800, 'Напитки'),
-	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'лимонад Манго-мята', 650, 'mango_mint_lemonade.jpg', 800, 'Напитки'),
+	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Лимонад клубнично-имбирный', 650, 'strawberry_ginger_lemonade.jpg', 800, 'Напитки'),
+	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Лимонад манго-мята', 650, 'mango_mint_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Кофе капучино', 350, 'cappuccino_coffee.jpg', 200, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Какао', 280, 'cacao.jpg', 200, 'Напитки');
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
