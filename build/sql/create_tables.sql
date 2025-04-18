@@ -91,7 +91,7 @@ VALUES
 
 INSERT INTO restaurants (id, name, banner_url, address, rating, rating_count, description, working_mode_from, working_mode_to, delivery_time_from, delivery_time_to)
 VALUES
-(uuid_generate_v4(), 'Claude Monet', 'сlaude_monet.jpg', 'Москва, улица Спиридоновка дом 25.1', 4.9, 833, 'Ресторан Claude Monet, вершина французской кулинарии.', 11, 20, 47, 63),
+(uuid_generate_v4(), 'Claude Monet', 'claude_monet.png', 'Москва, улица Спиридоновка дом 25.1', 4.9, 833, 'Ресторан Claude Monet, вершина французской кулинарии.', 11, 20, 47, 63),
 (uuid_generate_v4(), 'Arcobaleno', 'arcobaleno.jpg', 'Москва, улица Спиридоновка дом 27', 4.3, 965, 'Ресторан Arcobaleno, уютная атмосфера и вкусная еда.', 9, 22, 41, 65),
 (uuid_generate_v4(), 'Victor', 'hotel_eleon.jpg', 'Москва, ул. Большая Якиманка, д. 1', 4.7, 770, 'Ресторан Victor, мишленовский ресторан.', 8, 22, 51, 66),
 (uuid_generate_v4(), 'Вкусно и точка', 'vkusno_i_tochka.jpeg', 'Никольская ул., 10, Москва', 4.3, 1978, 'Ресторан Вкусно и точка, фастфуд, бургеры', 7, 23, 25, 35),
