@@ -91,7 +91,7 @@ VALUES
 
 INSERT INTO restaurants (id, name, banner_url, address, rating, rating_count, description, working_mode_from, working_mode_to, delivery_time_from, delivery_time_to)
 VALUES
-(uuid_generate_v4(), 'Паста и Вино', 'default_restaurant.jpg', 'Санкт-Петербург, ул. Мира, д. 193', 3.6, 833, 'Ресторан Паста и Вино, уютная атмосфера и вкусная еда.', 11, 20, 47, 63),
+(uuid_generate_v4(), 'Claude Monet', 'сlaude_monet.jpg', 'Москва, улица Спиридоновка дом 25.1', 4.9, 833, 'Ресторан Claude Monet, вершина французской кулинарии.', 11, 20, 47, 63),
 (uuid_generate_v4(), 'Суши Дрим', 'default_restaurant.jpg', 'Новосибирск, ул. Пушкина, д. 112', 4.3, 965, 'Ресторан Суши Дрим, уютная атмосфера и вкусная еда.', 9, 22, 41, 65),
 (uuid_generate_v4(), 'Бургерная Ривьера', 'default_restaurant.jpg', 'Москва, ул. Карла Маркса, д. 46', 2.2, 770, 'Ресторан Бургерная Ривьера, уютная атмосфера и вкусная еда.', 8, 22, 51, 66),
 (uuid_generate_v4(), 'Вкусно и точка', 'vkusno_i_tochka.jpeg', 'Никольская ул., 10, Москва', 4.3, 1978, 'Ресторан Вкусно и точка, фастфуд, бургеры', 7, 23, 25, 35),
@@ -169,7 +169,7 @@ INSERT INTO restaurant_tags_relations (restaurant_id, tag_id)
 VALUES
 ((SELECT id FROM restaurants WHERE name = 'Ресторан Томат'), (SELECT id FROM restaurant_tags WHERE name = 'Индийский')),
 ((SELECT id FROM restaurants WHERE name = 'Китайская кухня'), (SELECT id FROM restaurant_tags WHERE name = 'Веганский')),
-((SELECT id FROM restaurants WHERE name = 'Паста и Вино'), (SELECT id FROM restaurant_tags WHERE name = 'Вегетарианский')),
+((SELECT id FROM restaurants WHERE name = 'Claude Monet'), (SELECT id FROM restaurant_tags WHERE name = 'Вегетарианский')),
 ((SELECT id FROM restaurants WHERE name = 'Морская лагуна'), (SELECT id FROM restaurant_tags WHERE name = 'Индийский')),
 ((SELECT id FROM restaurants WHERE name = 'Веганский уголок'), (SELECT id FROM restaurant_tags WHERE name = 'Веганский')),
 ((SELECT id FROM restaurants WHERE name = 'Суши и роллы'), (SELECT id FROM restaurant_tags WHERE name = 'Средиземноморский')),
@@ -299,16 +299,30 @@ VALUES (
 
 -- Generated data inserts
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
-	((SELECT id FROM restaurants WHERE name = 'Паста и Вино' ), 'Рамен с курицей', 740, 'default_product.jpg', 350, 'Закуски'),
-	((SELECT id FROM restaurants WHERE name = 'Паста и Вино' ), 'Рамен с говядиной', 650, 'default_product.jpg', 400, 'Закуски'),
-	((SELECT id FROM restaurants WHERE name = 'Паста и Вино' ), 'Рамен с ананасом', 640, 'default_product.jpg', 350, 'Закуски'),
-	((SELECT id FROM restaurants WHERE name = 'Паста и Вино' ), 'Пельмени с сыром', 550, 'default_product.jpg', 400, 'Закуски'),
-	((SELECT id FROM restaurants WHERE name = 'Паста и Вино' ), 'Суши ассорти', 490, 'default_product.jpg', 250, 'Суши'),
-	((SELECT id FROM restaurants WHERE name = 'Паста и Вино' ), 'Тамаго суши', 400, 'default_product.jpg', 150, 'Суши'),
-	((SELECT id FROM restaurants WHERE name = 'Паста и Вино' ), 'Сырная тарелка', 790, 'default_product.jpg', 250, 'Суши'),
-	((SELECT id FROM restaurants WHERE name = 'Паста и Вино' ), 'Вареники с грибами', 800, 'default_product.jpg', 150, 'Суши'),
-	((SELECT id FROM restaurants WHERE name = 'Паста и Вино' ), 'Ролл с лососем', 300, 'default_product.jpg', 200, 'Суши'),
-	((SELECT id FROM restaurants WHERE name = 'Паста и Вино' ), 'Гёдза', 200, 'default_product.jpg', 180, 'Закуски');
+	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Телятина по-бургундски', 1140, 'veal_bourguignon.jpg', 350, 'Горячие блюда'),
+	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Утиные ножки конфи', 950, 'duck_leg_confit.jpg', 400, 'Горячие блюда'),
+	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Кордон Блю', 840, 'cordon_bleu.jpg', 350, 'Горячие блюда'),
+	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Филе миньон', 980, 'filet_mignon.jpg', 400, 'Горячие блюда'),
+	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Английский завтрак', 490, 'english_breakfast.jpg', 250, 'Завтраки'),
+	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Континентальный завтрак', 640, 'continental_breakfast.jpg', 350, 'Завтраки'),
+	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Рисовый пудинг с муссом', 550, 'rice_pudding_with_mousse.jpg', 250, 'Завтраки'),
+	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Сырники со сметаной', 590, 'syrniki_with_sour_cream.jpg', 250, 'Завтраки'),
+	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Буйабес', 790, 'bouillabaisse.jpg', 430, 'Супы'),
+	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Суп Кассуле', 680, 'cassoulet_soup.jpg', 420, 'Супы'),
+	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Французский луковый суп', 590, 'french_onion_soup.jpg', 450, 'Супы'),
+	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Ролл с лососем', 300, 'default_product.jpg', 200, 'Супы'),
+	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Ролл с лососем', 300, 'default_product.jpg', 200, 'Десерты'),
+	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Ролл с лососем', 300, 'default_product.jpg', 200, 'Десерты'),
+	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Ролл с лососем', 300, 'default_product.jpg', 200, 'Десерты'),
+	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Ролл с лососем', 300, 'default_product.jpg', 200, 'Десерты'),
+	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Ролл с лососем', 300, 'default_product.jpg', 200, 'Закуски и салаты'),
+	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Ролл с лососем', 300, 'default_product.jpg', 200, 'Закуски и салаты'),
+	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Ролл с лососем', 300, 'default_product.jpg', 200, 'Закуски и салаты'),
+	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Ролл с лососем', 300, 'default_product.jpg', 200, 'Закуски и салаты'),
+	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Ролл с лососем', 300, 'default_product.jpg', 200, 'Напитки'),
+	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Ролл с лососем', 300, 'default_product.jpg', 200, 'Напитки'),
+	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Ролл с лососем', 300, 'default_product.jpg', 200, 'Напитки'),
+	((SELECT id FROM restaurants WHERE name = 'Claude Monet' ), 'Ролл с лососем', 300, 'default_product.jpg', 200, 'Напитки');
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
 	((SELECT id FROM restaurants WHERE name = 'Суши Дрим' ), 'Рамен с курицей', 740, 'default_product.jpg', 350, 'Закуски'),
 	((SELECT id FROM restaurants WHERE name = 'Суши Дрим' ), 'Рамен с говядиной', 650, 'default_product.jpg', 400, 'Закуски'),
