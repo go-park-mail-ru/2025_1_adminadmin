@@ -65,7 +65,9 @@ var categories = []string{
 }
 
 var restaurants = []string{
-	// ... список ресторанов без изменений ...
+	"Паста и Вино",
+	"Суши Дрим",
+	// ...
 }
 
 func translate(str string) string {
@@ -87,6 +89,25 @@ func translate(str string) string {
 	var t Translation
 	json.NewDecoder(resp.Body).Decode(&t)
 	return t.Translations[0].Text
+}
+
+func cleanUnicode(s string) string {
+	var b strings.Builder
+	for _, r := range s {
+		if unicode.IsPrint(r) && !unicode.Is(unicode.Cf, r) {
+			b.WriteRune(r)
+		}
+	}
+	return b.String()
+}
+
+func sanitizeTranslated(s string) string {
+	s = html.UnescapeString(s)
+	s = strings.ReplaceAll(s, "&#34;", "\"")
+	s = strings.ReplaceAll(s, "&quot;", "\"")
+	s = strings.ReplaceAll(s, "\"", "")
+	s = cleanUnicode(s)
+	return s
 }
 
 func escapeSQL(s string) string {
@@ -125,10 +146,10 @@ VALUES`)
 
 	for i := 0; i < numRestaurants-1; i++ {
 		good[i].Id = uuid.NewV4()
-		good[i].Adress = html.UnescapeString(translate(good[i].Adress))
+		good[i].Adress = sanitizeTranslated(translate(good[i].Adress))
 		good[i].Banner = "default_restaurant.jpg"
 		good[i].Rating = math.Round((4+rand.Float64())*10) / 10
-		good[i].Category = html.UnescapeString(translate(good[i].Category))
+		good[i].Category = sanitizeTranslated(translate(good[i].Category))
 		good[i].RatingCount = rand.Intn(400) + 200
 		good[i].Description = fmt.Sprintf("%s, ресторан с вкусной едой и качественным обслуживанием", good[i].Name)
 
@@ -138,10 +159,10 @@ VALUES`)
 	}
 
 	good[numRestaurants-1].Id = uuid.NewV4()
-	good[numRestaurants-1].Adress = html.UnescapeString(translate(good[numRestaurants-1].Adress))
+	good[numRestaurants-1].Adress = sanitizeTranslated(translate(good[numRestaurants-1].Adress))
 	good[numRestaurants-1].Banner = "default_restaurant.jpg"
 	good[numRestaurants-1].Rating = math.Round((4+rand.Float64())*10) / 10
-	good[numRestaurants-1].Category = html.UnescapeString(translate(good[numRestaurants-1].Category))
+	good[numRestaurants-1].Category = sanitizeTranslated(translate(good[numRestaurants-1].Category))
 	good[numRestaurants-1].RatingCount = rand.Intn(400) + 200
 	good[numRestaurants-1].Description = fmt.Sprintf("%s, ресторан с вкусной едой и качественным обслуживанием", good[numRestaurants-1].Name)
 
@@ -164,7 +185,6 @@ VALUES`)
 	log.Println(len(menu))
 
 	for i := 0; i < numRestaurants; i++ {
-
 		fmt.Fprintf(&sb,
 			`INSERT INTO products (restaurant_id, name, price, image_url, weight, category)
 VALUES`)
@@ -173,14 +193,15 @@ VALUES`)
 		base := productsPerRestaurant * i
 		for j := 0; j < productsPerRestaurant-1; j++ {
 			menu[base+j].Id = uuid.NewV4()
-			menu[base+j].Name = html.UnescapeString(translate(menu[base+j].Name))
-			menu[base+j].Category = html.UnescapeString(translate(menu[base+j].Category))
+			menu[base+j].Name = sanitizeTranslated(translate(menu[base+j].Name))
+			menu[base+j].Category = sanitizeTranslated(translate(menu[base+j].Category))
 			menu[base+j].Price = strings.Replace(menu[base+j].Price, "USD", "", -1)
 			priceFloat, err := strconv.ParseFloat(strings.TrimSpace(menu[base+j].Price), 64)
 			if err != nil {
 				log.Printf("Ошибка преобразования цены '%s': %v", menu[base+j].Price, err)
 				priceFloat = 0
 			}
+			priceFloat *= 100
 			menu[base+j].ImageURL = "default_product.jpg"
 			menu[base+j].Weight = rand.Intn(400) + 100
 
@@ -191,14 +212,15 @@ VALUES`)
 		}
 
 		menu[productsPerRestaurant-1].Id = uuid.NewV4()
-		menu[productsPerRestaurant-1].Name = html.UnescapeString(translate(menu[productsPerRestaurant-1].Name))
-		menu[productsPerRestaurant-1].Category = html.UnescapeString(translate(menu[productsPerRestaurant-1].Category))
+		menu[productsPerRestaurant-1].Name = sanitizeTranslated(translate(menu[productsPerRestaurant-1].Name))
+		menu[productsPerRestaurant-1].Category = sanitizeTranslated(translate(menu[productsPerRestaurant-1].Category))
 		menu[productsPerRestaurant-1].Price = strings.Replace(menu[productsPerRestaurant-1].Price, "USD", "", -1)
 		priceFloat, err := strconv.ParseFloat(strings.TrimSpace(menu[productsPerRestaurant-1].Price), 64)
 		if err != nil {
 			log.Printf("Ошибка преобразования цены '%s': %v", menu[productsPerRestaurant-1].Price, err)
 			priceFloat = 0
 		}
+		priceFloat *= 100
 		menu[productsPerRestaurant-1].ImageURL = "default_product.jpg"
 		menu[productsPerRestaurant-1].Weight = rand.Intn(400) + 100
 
