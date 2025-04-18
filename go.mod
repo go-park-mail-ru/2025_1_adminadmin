@@ -3,6 +3,7 @@ module github.com/go-park-mail-ru/2025_1_adminadmin
 go 1.24.0
 
 require (
+	github.com/gocarina/gocsv v0.0.0-20240520201108-78e41c74b4b1
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/golang/mock v1.6.0
 	github.com/gorilla/mux v1.8.1
@@ -10,6 +11,7 @@ require (
 	github.com/jackc/pgx/v4 v4.18.3
 	github.com/mailru/easyjson v0.9.0
 	github.com/redis/go-redis/v9 v9.7.3
+	github.com/samber/lo v1.49.1
 	github.com/satori/uuid v1.2.0
 	github.com/stretchr/testify v1.10.0
 	github.com/swaggo/swag v1.16.4
