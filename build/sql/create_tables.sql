@@ -168,8 +168,9 @@ VALUES
 INSERT INTO restaurant_tags_relations (restaurant_id, tag_id)
 VALUES
 ((SELECT id FROM restaurants WHERE name = 'Ресторан Томат'), (SELECT id FROM restaurant_tags WHERE name = 'Индийский')),
+((SELECT id FROM restaurants WHERE name = 'Arcobaleno'), (SELECT id FROM restaurant_tags WHERE name = 'Индийский')),
 ((SELECT id FROM restaurants WHERE name = 'Китайская кухня'), (SELECT id FROM restaurant_tags WHERE name = 'Веганский')),
-((SELECT id FROM restaurants WHERE name = 'Claude Monet'), (SELECT id FROM restaurant_tags WHERE name = 'Вегетарианский')),
+((SELECT id FROM restaurants WHERE name = 'Claude Monet'), (SELECT id FROM restaurant_tags WHERE name = 'Французский')),
 ((SELECT id FROM restaurants WHERE name = 'Морская лагуна'), (SELECT id FROM restaurant_tags WHERE name = 'Индийский')),
 ((SELECT id FROM restaurants WHERE name = 'Веганский уголок'), (SELECT id FROM restaurant_tags WHERE name = 'Веганский')),
 ((SELECT id FROM restaurants WHERE name = 'Суши и роллы'), (SELECT id FROM restaurant_tags WHERE name = 'Средиземноморский')),
@@ -202,7 +203,7 @@ VALUES
 ((SELECT id FROM restaurants WHERE name = 'Китайская звезда'), (SELECT id FROM restaurant_tags WHERE name = 'Японский')),
 ((SELECT id FROM restaurants WHERE name = 'Dostaевский'), (SELECT id FROM restaurant_tags WHERE name = 'Японский')),
 ((SELECT id FROM restaurants WHERE name = 'Баварская пивоварня'), (SELECT id FROM restaurant_tags WHERE name = 'Японский')),
-((SELECT id FROM restaurants WHERE name = 'Victor'), (SELECT id FROM restaurant_tags WHERE name = 'Китайский')),
+((SELECT id FROM restaurants WHERE name = 'Victor'), (SELECT id FROM restaurant_tags WHERE name = 'Французский')),
 ((SELECT id FROM restaurants WHERE name = 'Пицца и Суши'), (SELECT id FROM restaurant_tags WHERE name = 'Китайский')),
 ((SELECT id FROM restaurants WHERE name = 'Средиземноморский ресторан'), (SELECT id FROM restaurant_tags WHERE name = 'Европейский')),
 ((SELECT id FROM restaurants WHERE name = 'Ресторан Мозаика'), (SELECT id FROM restaurant_tags WHERE name = 'Итальянский')),
