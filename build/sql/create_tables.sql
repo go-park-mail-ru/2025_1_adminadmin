@@ -91,7 +91,7 @@ VALUES
 
 INSERT INTO restaurants (id, name, banner_url, address, rating, rating_count, description, working_mode_from, working_mode_to, delivery_time_from, delivery_time_to)
 VALUES
-(uuid_generate_v4(), 'Claude Monet', 'claude_monet.png', 'Москва, улица Спиридоновка дом 25.1', 4.9, 833, 'Ресторан Claude Monet, вершина французской кулинарии.', 11, 20, 47, 63),
+(uuid_generate_v4(), 'Claude Monet', 'claude_monet.jpg', 'Москва, улица Спиридоновка дом 25.1', 4.9, 833, 'Ресторан Claude Monet, вершина французской кулинарии.', 11, 20, 47, 63),
 (uuid_generate_v4(), 'Arcobaleno', 'arcobaleno.jpg', 'Москва, улица Спиридоновка дом 27', 4.3, 965, 'Ресторан Arcobaleno, уютная атмосфера и вкусная еда.', 9, 22, 41, 65),
 (uuid_generate_v4(), 'Victor', 'hotel_eleon.jpg', 'Москва, ул. Большая Якиманка, д. 1', 4.7, 770, 'Ресторан Victor, мишленовский ресторан.', 8, 22, 51, 66),
 (uuid_generate_v4(), 'Вкусно и точка', 'vkusno_i_tochka.jpeg', 'Никольская ул., 10, Москва', 4.3, 1978, 'Ресторан Вкусно и точка, фастфуд, бургеры', 7, 23, 25, 35),
@@ -104,7 +104,7 @@ VALUES
 (uuid_generate_v4(), 'Шоколадница', 'shokoladnitsa.jpg', 'ул. Большая Якиманка, 58/2, Москва', 4.6, 196, 'Кофейня Шоколадница, кофе и различные дессерты.', 6, 4, 30, 40),
 (uuid_generate_v4(), 'Сыто Пьяно', 'sito_pyano.jpg', 'Страстной б-р, 4с3, Москва', 4.3, 32, 'Ресторан Сыто Пьяно, уютная атмосфера и вкусная еда.', 11, 23, 75, 85),
 (uuid_generate_v4(), 'FoodBand', 'foodband.jpg', 'Большая Татарская ул., 5, Москва', 4.5, 1331, 'Ресторан FoodBand, пиццы, суши и роллы.', 11, 23, 45, 55),
-(uuid_generate_v4(), 'Tacoland', 'tacoland.jpg', 'Большая Татарская ул., Москва', 4.9, 651, 'Ресторан Tacoland, вкуснейшие тако', 7, 5, 65, 75),
+(uuid_generate_v4(), 'Tacoland', 'taso.jpg', 'Большая Татарская ул., Москва', 4.9, 651, 'Ресторан Tacoland, вкуснейшие тако', 7, 5, 65, 75),
 (uuid_generate_v4(), 'Dostaевский', 'dostayevskiy.jpg', 'ул. Иловайская, д. 2Б, строение 6, Москва', 4.6, 255, 'Ресторан Dostaевский, комфортная пиццерия', 10, 23, 60, 70),
 (uuid_generate_v4(), 'Синнабон', 'cinnabon.jpg', 'Театральный пр-д, 5, строение 1, Москва', 4.7, 183, 'Вкуснейшие булочки с корицей.', 10, 22, 45, 55),
 (uuid_generate_v4(), 'Stardogs', 'stardogs.jpg', 'ул. Арбат, 18/1, Москва, 119002', 4.6, 429, 'Первоклассные хот-доги со свежими колбасками.', 8, 22, 50, 60),
