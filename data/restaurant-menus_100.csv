@@ -1,0 +1,1082 @@
+restaurant_id,category,name,description,price
+1356,GROUPS,Veggie Meal for 2,"Includes two Cheese Quesadillas, two Bean Burritos, two Spicy Potato Soft Tacos, and two orders of chips and nacho cheese sauce. Set max quantities to add item to cart.",15.0 USD
+1356,GROUPS,Meal for 4,"Includes two Crunchwrap Supremes®, two Chicken Quesadillas, four Soft Tacos, and two orders of chips and nacho cheese sauce. Set max quantities to add item to cart.",25.0 USD
+1356,GROUPS,Taco &amp; Burrito Cravings Pack,Includes 4 Crunchy Tacos and 4 Beefy 5-layer Burritos,13.19 USD
+1356,GROUPS,Taco Party Pack,"Your choice of 12 of the following tacos: Crunchy or Soft Tacos, Crunchy or Soft Taco Supremes®.",22.79 USD
+1356,GROUPS,Supreme Taco Party Pack,Your choice of 12 of the following tacos: Crunchy or Soft Taco Supremes®.,26.39 USD
+1356,GROUPS,Soft Taco Party Pack,Includes 12 Soft Tacos,22.79 USD
+1356,GROUPS,Supreme Soft Taco Party Pack,Includes 12 Soft Tacos Supreme®.,26.39 USD
+1356,GROUPS,Variety Taco Party Pack,"Your choice of 12 of the following tacos: Crunchy or Soft Taco, or Nacho Cheese Doritos® Locos Tacos.",23.99 USD
+1356,GROUPS,Supreme Variety Taco Party Pack,"Your choice of 12 of the following tacos: Crunchy or Soft Taco Supremes®, or Nacho Cheese Doritos® Locos Tacos Supremes®",27.59 USD
+1356,GROUPS,Drinks Party Pack,Includes four Medium fountain drinks of your choice.,4.8 USD
+1356,Sauce Packets,Fire Sauce Packet,,0.0 USD
+1356,Sauce Packets,Hot Sauce Packet,,0.0 USD
+1356,Sauce Packets,Mild Sauce Packet,,0.0 USD
+1356,Sauce Packets,Diablo Sauce Packet,,0.0 USD
+1356,Specialties,Toasted Cheddar Chalupa,"A Chalupa shell with 6-month aged cheddar toasted on the outside and with seasoned beef, reduced-fat sour cream, tomatoes, lettuce, and cheddar cheese on the inside.",5.75 USD
+1356,Specialties,Black Bean Toasted Cheddar Chalupa,"A Chalupa shell with 6-month aged cheddar toasted on the outside and with black beans, reduced-fat sour cream, tomatoes, lettuce, and cheddar cheese on the inside.",5.75 USD
+1356,Specialties,Chalupa Supreme®,"Chewy fried chalupa bread filled with seasoned beef, sour cream, crispy lettuce, three-cheese blend and ripe tomatoes.",5.03 USD
+1356,Specialties,Black Bean Chalupa Supreme®,"A chewy chalupa shell filled with black beans, reduced-fat sour cream, lettuce, tomatoes, and three-cheese blend.",4.79 USD
+1356,Specialties,Crunchwrap Supreme®,"A flour tortilla layered with seasoned beef, warm nacho cheese sauce, a crispy tostada shell, crispy lettuce, ripe tomatoes and topped with cool sour cream all wrapped in our signature crunchwrap fold and grilled to go.",6.23 USD
+1356,Specialties,Black Bean Crunchwrap Supreme®,"Flour tortilla, black beans, nacho cheese sauce, tostada shell, lettuce, tomatoes &amp; reduced fat sour cream layers grilled in a crunchwrap. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation method may lead to cross contact with meat",5.99 USD
+1356,Specialties,Cheesy Gordita Crunch,"A warm flatbread layered with three-cheese blend and wrapped around a crunchy taco filled with seasoned beef, spicy ranch sauce, crispy lettuce and shredded cheddar cheese.",5.03 USD
+1356,Specialties,Doritos® Cheesy Gordita Crunch - Nacho Cheese,"A Nacho Cheese Doritos® Locos Tacos wrapped up in a soft piece of flatbread with Seasoned Beef, Spicy Ranch Sauce, Lettuce, Cheddar Cheese, and a Three Cheese Blend.",5.99 USD
+1356,Specialties,Cheesy Roll Up,"A warm flour tortilla filled with our 3-cheese blend. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",1.2 USD
+1356,Specialties,Chicken Chipotle Melt,"Grilled chicken, creamy chipotle sauce, and real shredded cheddar cheese all wrapped up in a warm flour tortilla.",1.79 USD
+1356,Tacos,Soft Taco,"A warm flour tortilla filled with seasoned beef, crispy lettuce and shredded cheddar cheese.",2.03 USD
+1356,Tacos,Soft Taco Supreme®,"A warm flour tortilla filled with seasoned beef, cool sour cream, crispy lettuce, shredded cheddar cheese and ripe tomatoes.",3.23 USD
+1356,Tacos,Crunchy Taco,"A crunchy taco shell filled with seasoned beef, crispy lettuce and shredded cheddar cheese.",2.03 USD
+1356,Tacos,Crunchy Taco Supreme®,"A crunchy taco shell filled with seasoned beef, cool sour cream, crispy lettuce, shredded cheddar cheese and ripe tomatoes.",3.11 USD
+1356,Tacos,Nacho Cheese Doritos® Locos Tacos,"A crunchy taco shell made from Nacho Cheese Doritos® is filled with seasoned beef, crispy lettuce, and pico de gallo.",3.11 USD
+1356,Tacos,Nacho Cheese Doritos® Locos Tacos Supreme®,"A crunchy taco shell made from Nacho Cheese Doritos® is filled with seasoned beef, cool sour cream, crispy lettuce, shredded cheddar cheese and ripe tomatoes.",3.83 USD
+1356,Tacos,Spicy Potato Soft Taco,"A flour tortilla filled with crispy potato bites, lettuce, real shredded cheddar cheese, and creamy chipotle sauce.",1.2 USD
+1356,Burritos,Bean Burrito,"Warm flour tortilla filled with refried beans, shredded cheddar cheese, flavorful red sauce and diced onions. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",2.27 USD
+1356,Burritos,Beefy 5-Layer Burrito,"A warm tortilla is covered in a layer of warm nacho cheese and topped with seasoned beef, refried beans, cool sour cream and shredded cheddar cheese. Then it's wrapped creating a layer of nacho cheese all around the outside of the burrito.",3.83 USD
+1356,Burritos,Quesarito,"A melty cheese quesadilla, with shredded cheddar cheese and warm nacho cheese sauce is opened and wrapped around a burrito filled with seasoned beef, seasoned rice, cool sour cream and creamy chipotle sauce.",5.39 USD
+1356,Burritos,Black Bean Quesarito,"Cheese &amp; nacho cheese sauce quesadilla wrapped around a black bean, seasoned rice, reduced fat source cream &amp; chipotle sauce burrito. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat.",5.15 USD
+1356,Burritos,Burrito Supreme®,"A warm flour tortilla loaded with seasoned beef, refried beans, tomatoes, onions, iceberg lettuce, reduced-fat sour cream, red sauce and cheddar cheese.",5.87 USD
+1356,Burritos,Chipotle Ranch Grilled Chicken Burrito,"Grilled chicken, fiesta strips, avocado ranch sauce, creamy chipotle sauce, lettuce, tomatoes, and real shredded cheddar cheese wrapped inside a warm flour tortilla.",2.4 USD
+1356,Burritos,Beefy Melt Burrito,"Seasoned Rice, Seasoned Beef, Nacho Cheese Sauce, Fiesta Strips, Three Cheese Blend, Reduced Fat Sour Cream wrapped in a warm tortilla.",2.4 USD
+1356,Burritos,Cheesy Bean and Rice Burrito,"A warm flour tortilla filled with refried beans, seasoned rice, nacho cheese sauce and creamy jalapeño sauce. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",1.2 USD
+1356,Burritos,Fiesta Veggie Burrito,"The Fiesta Veggie Burrito comes with Seasoned Rice, Black Beans, Red Strips, Creamy Chipotle Sauce, Reduced-Fat Sour Cream, a Three-Cheese Blend, Tomatoes, and Guacamole.",2.4 USD
+1356,Quesadillas,Chicken Quesadilla,"An extra flour tortilla filled with melty three-cheese blend, fire grilled chicken, creamy jalapeño sauce folded and grilled to perfection.",6.23 USD
+1356,Quesadillas,Steak Quesadilla,"A warm flour tortilla filled with USDA Select Marinated Grilled Steak, Three Cheese Blend, Creamy Jalapeno Sauce, folded over and grilled.",6.47 USD
+1356,Quesadillas,Cheese Quesadilla,"Large flour tortilla filled with melty three-cheese blend, creamy jalapeño sauce, perfectly folded &amp; grilled. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",4.79 USD
+1356,Nachos,Nachos BellGrande®,"A portion of crispy tortilla chips topped with warm nacho cheese sauce, refried beans, seasoned beef, ripe tomatoes and cool sour cream.",6.35 USD
+1356,Nachos,Chips and Nacho Cheese Sauce,Nacho chips with a side of warm nacho cheese sauce for dipping.,2.03 USD
+1356,New Cravings Value Menu,Spicy Potato Soft Taco,"A flour tortilla filled with crispy potato bites, lettuce, real shredded cheddar cheese, and creamy chipotle sauce.",1.2 USD
+1356,New Cravings Value Menu,Chipotle Ranch Grilled Chicken Burrito,"Grilled chicken, fiesta strips, avocado ranch sauce, creamy chipotle sauce, lettuce, tomatoes, and real shredded cheddar cheese wrapped inside a warm flour tortilla.",2.4 USD
+1356,New Cravings Value Menu,Beefy Melt Burrito,"Seasoned Rice, Seasoned Beef, Nacho Cheese Sauce, Fiesta Strips, Three Cheese Blend, Reduced Fat Sour Cream wrapped in a warm tortilla.",2.4 USD
+1356,New Cravings Value Menu,Cheesy Bean and Rice Burrito,"A warm flour tortilla filled with refried beans, seasoned rice, nacho cheese sauce and creamy jalapeño sauce. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",1.2 USD
+1356,New Cravings Value Menu,Fiesta Veggie Burrito,"The Fiesta Veggie Burrito comes with Seasoned Rice, Black Beans, Red Strips, Creamy Chipotle Sauce, Reduced-Fat Sour Cream, a Three-Cheese Blend, Tomatoes, and Guacamole.",2.4 USD
+1356,New Cravings Value Menu,Cheesy Roll Up,"A warm flour tortilla filled with our 3-cheese blend. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",1.2 USD
+1356,New Cravings Value Menu,Cinnamon Twists,"Crispy, puffed corn twists sprinkled with cinnamon and sugar.",1.2 USD
+1356,New Cravings Value Menu,Classic Combo,"Includes a Beefy 5-Layer Burrito, regular Crunchy Taco, Cinnamon Twists, and a Large fountain drink.",6.0 USD
+1356,Sweets,Cinnamon Twists,"Crispy, puffed corn twists sprinkled with cinnamon and sugar.",1.2 USD
+1356,Sweets,Cinnabon Delights® 2 Pack,"Warm donut holes filled with Cinnabon® signature cream cheese frosting, and dusted in Makara Cinnamon sugar",1.91 USD
+1356,Sweets,Cinnabon Delights® 12 Pack,"Warm donut holes filled with Cinnabon® signature cream cheese frosting, and dusted in Makara Cinnamon sugar.",7.79 USD
+1356,Sides,Cheesy Fiesta Potatoes,Crispy potato bites topped with reduced-fat sour cream and nacho cheese sauce.,2.03 USD
+1356,Sides,Chips and Nacho Cheese Sauce,Nacho chips with a side of warm nacho cheese sauce for dipping.,2.03 USD
+1356,Sides,Black Beans,"Savory black beans. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",2.27 USD
+1356,Sides,Black Beans and Rice,"Black beans served with seasoned rice. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",2.27 USD
+1356,Sides,Cinnamon Twists,"Crispy, puffed corn twists sprinkled with cinnamon and sugar.",1.2 USD
+1356,Sides,Cinnabon Delights® 2 Pack,"Warm donut holes filled with Cinnabon® signature cream cheese frosting, and dusted in Makara Cinnamon sugar",1.91 USD
+1356,Sides,Cinnabon Delights® 12 Pack,"Warm donut holes filled with Cinnabon® signature cream cheese frosting, and dusted in Makara Cinnamon sugar.",7.79 USD
+1356,Sides,Mild Sauce Packet,,0.0 USD
+1356,Sides,Hot Sauce Packet,,0.0 USD
+1356,Sides,Fire Sauce Packet,,0.0 USD
+1356,Sides,Diablo Sauce Packet,,0.0 USD
+1356,Sides,Nacho Cheese Sauce,,0.84 USD
+1356,Sides,Reduced-Fat Sour Cream,,0.6 USD
+1356,Sides,Creamy Jalapeño Sauce,,0.48 USD
+1356,Sides,Guacamole,,0.84 USD
+1356,Sides,Chipotle Sauce,,0.48 USD
+1356,Sides,Avocado Ranch Sauce,,0.48 USD
+1356,Sides,Spicy Ranch,,0.48 USD
+1356,Drinks,Cherry Sunrise Freeze,"A sweet, cherry-flavored Freeze with a tropical swirl of pineapple orange flavor.",3.59 USD
+1356,Drinks,Mountain Dew Baja Blast® Freeze,Mountain Dew® Baja Blast in a frozen slushy drink.,3.59 USD
+1356,Drinks,Wild Cherry Freeze,"A sweet, cherry-flavored Freeze.",3.59 USD
+1356,Drinks,Blue Raspberry Freeze,"A sweet, juicy blue raspberry-flavored Freeze.",3.59 USD
+1356,Drinks,Pepsi®,,2.63 USD
+1356,Drinks,Diet Pepsi®,,2.63 USD
+1356,Drinks,Pepsi® Zero Sugar,,2.63 USD
+1356,Drinks,Mountain Dew®,,2.63 USD
+1356,Drinks,Diet Mountain Dew®,,2.63 USD
+1356,Drinks,Mountain Dew Baja Blast®,,2.63 USD
+1356,Drinks,Mountain Dew® Baja Blast™ Zero Sugar,,2.63 USD
+1356,Drinks,Dr Pepper®,,2.63 USD
+1356,Drinks,Mug® Root Beer,,2.63 USD
+1356,Drinks,Sierra Mist®,,2.63 USD
+1356,Drinks,G2 Gatorade® Fruit Punch,,2.63 USD
+1356,Drinks,Dole® Lemonade Strawberry Squeeze,,2.75 USD
+1356,Drinks,Brisk® Mango Fiesta,,2.63 USD
+1356,Drinks,Brisk® Dragon Paradise™ Sparkling Iced Tea,,2.75 USD
+1356,Drinks,Lipton® Unsweetened Iced Tea,,2.63 USD
+1356,Drinks,Drinks Party Pack,Includes four Medium fountain drinks of your choice.,4.8 USD
+1356,Bowls,Power Menu Bowl,"Seasoned rice and black beans topped with grilled chicken, avocado ranch sauce, reduced-fat sour cream, lettuce, tomatoes, real cheddar cheese and guacamole.",7.79 USD
+1356,Bowls,Power Menu Bowl - Veggie,"Seasoned rice and black beans topped with avocado ranch sauce, reduced-fat sour cream, lettuce, tomatoes, real cheddar cheese and guacamole.",7.19 USD
+1356,Veggie Cravings,Black Bean Toasted Cheddar Chalupa,"A Chalupa shell with 6-month aged cheddar toasted on the outside and with black beans, reduced-fat sour cream, tomatoes, lettuce, and cheddar cheese on the inside.",5.75 USD
+1356,Veggie Cravings,Bean Burrito,"Warm flour tortilla filled with refried beans, shredded cheddar cheese, flavorful red sauce and diced onions. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",2.27 USD
+1356,Veggie Cravings,Cheesy Bean and Rice Burrito,"A warm flour tortilla filled with refried beans, seasoned rice, nacho cheese sauce and creamy jalapeño sauce. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",1.2 USD
+1356,Veggie Cravings,Black Bean Quesarito,"Cheese &amp; nacho cheese sauce quesadilla wrapped around a black bean, seasoned rice, reduced fat source cream &amp; chipotle sauce burrito. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat.",5.15 USD
+1356,Veggie Cravings,Fiesta Veggie Burrito,"The Fiesta Veggie Burrito comes with Seasoned Rice, Black Beans, Red Strips, Creamy Chipotle Sauce, Reduced-Fat Sour Cream, a Three-Cheese Blend, Tomatoes, and Guacamole.",2.4 USD
+1356,Veggie Cravings,Spicy Potato Soft Taco,"A flour tortilla filled with crispy potato bites, lettuce, real shredded cheddar cheese, and creamy chipotle sauce.",1.2 USD
+1356,Veggie Cravings,Black Bean Chalupa Supreme®,"A chewy chalupa shell filled with black beans, reduced-fat sour cream, lettuce, tomatoes, and three-cheese blend.",4.79 USD
+1356,Veggie Cravings,Black Bean Crunchwrap Supreme®,"Flour tortilla, black beans, nacho cheese sauce, tostada shell, lettuce, tomatoes &amp; reduced fat sour cream layers grilled in a crunchwrap. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation method may lead to cross contact with meat",5.99 USD
+1356,Veggie Cravings,Cheese Quesadilla,"Large flour tortilla filled with melty three-cheese blend, creamy jalapeño sauce, perfectly folded &amp; grilled. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",4.79 USD
+1356,Veggie Cravings,Power Menu Bowl - Veggie,"Seasoned rice and black beans topped with avocado ranch sauce, reduced-fat sour cream, lettuce, tomatoes, real cheddar cheese and guacamole.",7.19 USD
+1356,Veggie Cravings,Cheesy Roll Up,"A warm flour tortilla filled with our 3-cheese blend. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",1.2 USD
+1356,Veggie Cravings,Cheesy Fiesta Potatoes,Crispy potato bites topped with reduced-fat sour cream and nacho cheese sauce.,2.03 USD
+1356,Veggie Cravings,Chips and Nacho Cheese Sauce,Nacho chips with a side of warm nacho cheese sauce for dipping.,2.03 USD
+1356,Veggie Cravings,Black Beans,"Savory black beans. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",2.27 USD
+1356,Veggie Cravings,Black Beans and Rice,"Black beans served with seasoned rice. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",2.27 USD
+1356,Veggie Cravings,Cinnamon Twists,"Crispy, puffed corn twists sprinkled with cinnamon and sugar.",1.2 USD
+1356,Veggie Cravings,Cinnabon Delights® 2 Pack,"Warm donut holes filled with Cinnabon® signature cream cheese frosting, and dusted in Makara Cinnamon sugar",1.91 USD
+1356,Veggie Cravings,Cinnabon Delights® 12 Pack,"Warm donut holes filled with Cinnabon® signature cream cheese frosting, and dusted in Makara Cinnamon sugar.",7.79 USD
+1357,Traditional Breakfast,"Eggs Benedict ",,10.59 USD
+1357,Traditional Breakfast,Sausage and Eggs,,9.99 USD
+1357,Traditional Breakfast,Bacon and Eggs,,9.99 USD
+1357,Hometocon Favorites,Rio Verde Breakfast Burrito,"Soft flour tortilla stuffed with hash browns, scrambled eggs, ham, sausage, and bacon. We smother the whole thing in our homemade chile Verde and melted cheddar cheese. Chile Verde has pork.",10.59 USD
+1357,Hometocon Favorites,Homemade Biscuits and Gravy,Served with hash browns.,9.99 USD
+1357,Breakfast Sandwich,Egg Sandwich,,3.99 USD
+1357,Breakfast Sandwich,Egg and Cheese,,4.29 USD
+1357,Breakfast Sandwich,Ham Egg and Cheese,,5.29 USD
+1357,Breakfast Sandwich,"Sausage, Egg, and Cheese",,5.29 USD
+1357,Breakfast Sandwich,"Bacon, Egg, and Cheese",,5.29 USD
+1357,Hot off the Griddle,Homemade Belgian Waffle,Delicate and tender Belgian-style waffle. Served with butter and maple syrup. If you prefer add strawberry topping.,7.49 USD
+1357,Hot off the Griddle,French Toast Combo,2 pcs of French toast and two eggs.,10.29 USD
+1357,Hot off the Griddle,French Toast (3 pcs),,7.99 USD
+1357,Hot off the Griddle,Pancake Combo,Two buttermilk vanilla pancakes and two eggs.,10.29 USD
+1357,Little Caboose Menu,Waffle,Served with whipped butter and syrup.,6.79 USD
+1357,Little Caboose Menu,Kids Pancake,,6.79 USD
+1357,Little Caboose Menu,French Toast,,6.79 USD
+1357,Appetizers,Hot Wings,,10.99 USD
+1357,Appetizers,Onion Rings,,9.99 USD
+1357,Appetizers,Cheese Stick,,9.99 USD
+1357,Appetizers,Combo Basket,,10.99 USD
+1357,Appetizers,Homemade Chili Cheese Fries,,8.59 USD
+1357,Appetizers,Cheese Fries,,7.0 USD
+1357,Salads,Cob Salad,,10.99 USD
+1357,Salads,BLT Chicken Salad,,10.99 USD
+1357,Salads,Ranchera Salad,,10.99 USD
+1357,Salads,Chef Salad,,10.99 USD
+1357,Salads,Grilled Chicken Salad,,10.99 USD
+1357,Salads,Crispy Chicken Salad,,10.99 USD
+1357,Salads,Chicken Caesar Salad,,10.99 USD
+1357,Lunch and Sandwiches,French Dip Sandwich,We take a hoagie and fill it with thinly sliced slow-roasted beef round. Served with aujust for dipping.,10.49 USD
+1357,Lunch and Sandwiches,Chicken Cordon Bleu Sandwich,"Grilled boneless, skinless chicken breast. Topped with country smoked ham and swiss cheese on a corn-dusted bun.",10.49 USD
+1357,Lunch and Sandwiches,Grilled Chicken Breast Sandwich,"Lean boneless, skinless chicken breast with lettuce, tomato, and pickles.",9.49 USD
+1357,Lunch and Sandwiches,Chicken Fingers Sandwich,White meat breaded chicken tenderloins. Served with dipping sauce and fries.,10.49 USD
+1357,Lunch and Sandwiches,"Triple Decker Club Sandwich ","Just like you remember it, we start with lean turkey breast, country ham, and smoked pioneer bacon. With mayo, lettuce, and sliced tomato all piled triple high.",10.49 USD
+1357,Lunch and Sandwiches,Reuben Sandwich,"Flavorful lean beef pastrami stacked high on rye bread, swiss cheese, thousand islands, and warm sauerkraut.",10.49 USD
+1357,Lunch and Sandwiches,Steak Sandwich,"Choice rib-eye steak cooked to your specification, served open-faced on Texas toast served with lettuce, and tomato.",14.99 USD
+1357,Lunch and Sandwiches,Hot Veal Sandwich,"Two large pieces of tender breaded veal cutlet. Served open-faced on country bread, with the veggie of the day, mashed potatoes, and gravy.",11.99 USD
+1357,Lunch and Sandwiches,"Hot Open Faced Sandwich ","Served with veggie of the day, mashed potatoes, and gravy.",10.99 USD
+1357,Lunch and Sandwiches,Hot Hamburger Sandwich,"Two ground beef patties served open-faced on a loaf of country bread, veggie of the day with mashed potatoes, and gravy.",11.99 USD
+1357,Lunch and Sandwiches,Bacon Chicken Ranch Sandwich,,10.49 USD
+1357,Lunch and Sandwiches,Turkey Avocado and Swiss Sandwich,,10.49 USD
+1357,Lunch and Sandwiches,Patti Melt Sandwich,Lean ground beef patty cooked to perfection with grilled onions and melted swiss cheese on rye bread.,10.49 USD
+1357,Lunch and Sandwiches,Philly Steak Sandwich,"A generous portion of thinly sliced rib-eye steak, sliced onions, and green peppers, sauteed together, and swiss cheese. Served on a hoagie.",12.99 USD
+1357,Lunch and Sandwiches,Fish Burger Sandwich,"A generous portion of breaded haddock on top of a warm corn-dusted bun with lettuce, tomato, and tartar sauce.",9.99 USD
+1357,Lunch and Sandwiches,Popcorn Shrim Sandwich,"A large portion of 'red hook ale' battered shrimp. Served with fresh-cut fries, dipping sauce, and lemon wedge.",10.59 USD
+1357,South of the Border,Cheese Quesadilla,"Served with guacamole, sour cream, and salsa.",8.59 USD
+1357,South of the Border,Chicken Quesadilla,"Served with guacamole, sour cream, and salsa.",10.99 USD
+1357,South of the Border,Steak Quesadilla,"Thinly sliced rib-eye steak, grilled onions, bell peppers, and cheddar cheese. Served with salsa, sour cream, and guacamole.",12.99 USD
+1357,South of the Border,Hard Shell Taco,"With lettuce, tomato, and cheese. Served with salsa and sour cream.",2.99 USD
+1357,South of the Border,Fish Tacos,"Battered codfish in flour tortillas with sour cream, cabbage, and pico de gallo. Served with lemon slices.",11.99 USD
+1357,South of the Border,Taco Salad,,9.99 USD
+1357,On The Lighter Side,BLT,,8.29 USD
+1357,On The Lighter Side,Grilled Ham and Cheese,,8.79 USD
+1357,On The Lighter Side,Grilled Cheese,,7.29 USD
+1357,Little Caboose Menu,Chicken Fingers,,6.99 USD
+1357,Little Caboose Menu,Hot Dog,,6.99 USD
+1357,Little Caboose Menu,Corn Dog,,6.99 USD
+1357,Little Caboose Menu,Hamburger,,6.99 USD
+1357,Little Caboose Menu,Grilled Cheese,,6.99 USD
+1357,Little Caboose Menu,Peanut Butter and Jelly,,6.99 USD
+1357,Beverages,Iced Tea,,2.49 USD
+1357,Beverages,Hot Tea,,2.25 USD
+1357,Beverages,Chocolate Milk,,2.29 USD
+1357,Beverages,Hot Chocolate,,2.49 USD
+1357,Beverages,Raspberry Iced Tea,,2.49 USD
+1357,Beverages,Lime Ricky,,3.29 USD
+1357,Side Orders,Bacon,,3.5 USD
+1357,Side Orders,Sausage,,3.5 USD
+1357,Side Orders,Ham,,4.5 USD
+1357,Side Orders,One Egg,,1.75 USD
+1357,Side Orders,Two Eggs,,2.5 USD
+1357,Side Orders,Hash Browns,,3.59 USD
+1357,Side Orders,Hash Browns with Cheese,,4.99 USD
+1357,Side Orders,Cinnamon Roll,,3.99 USD
+1357,Side Orders,Bagel with Cream Cheese,,3.99 USD
+1357,Side Orders,Oatmeal,,5.59 USD
+1357,Side Orders,Homemade Green Chile,,3.99 USD
+1357,Side Orders,Mashed Potatoes and Gravy,,3.99 USD
+1357,Side Orders,Chili,,4.29 USD
+1357,Side Orders,Fries,,3.59 USD
+1357,Side Orders,Sliced Jalapenos,,0.99 USD
+1357,Side Orders,Guacamole,,0.99 USD
+1357,Side Orders,Sour Cream,,0.99 USD
+1358,Picked for you,Brisket Plate,"Slow smoked Brisket sliced or chopped, served with 2 sides and a roll",16.5 USD
+1358,Picked for you,3 Meat Plate,Choose your favorite combination of three slow-smoked meats served with two sides and a roll.,18.5 USD
+1358,Picked for you,Pulled Pork Sandwich Plate,"Our delicious smoked pork on a brioche bun, served with 2 sides.",13.25 USD
+1358,Picked for you,Brisket Mac Stack,Slow-smoked brisket with creamy Mac &amp; Cheese,12.0 USD
+1358,Picked for you,2 for $24,Try your favorite combination of two slow-smoked meats served with two sides and a roll.,24.0 USD
+1358,Deals,2 for $24,Try your favorite combination of two slow-smoked meats served with two sides and a roll.,24.0 USD
+1358,Deals,Smokin Meal Deal,"Enjoy a sandwich of your choice, one side and a select dessert",9.0 USD
+1358,Packs,BYB Original Party Pack,"Enjoy 2 lbs. of Pulled Pork, 2 lbs. of Chopped Brisket, large Coleslaw, large Barbecue Beans, large Potato Salad, rolls, relish and sauce. Feeds up to 10-12.",140.0 USD
+1358,Packs,BYB Classic Sandwich Pack,"Enjoy 12 Classic sandwiches (your choice of meat), large Caesar Salad, large Potato Salad, relish and sauce",125.0 USD
+1358,Packs,BYB Wings and Ribs Party Pack,"A combination of 18 Ribs and 24 Wings, Mac and Cheese, Cole Slaw, Rolls, Barbecue Sauce, and ranch dressing",135.0 USD
+1358,Packs,BYB Pulled Pork Party Pack,"Dig in to 4 lbs. of Pulled Pork, large Coleslaw, large Barbecue Beans, large Potato Salad, rolls, relish and sauce",110.0 USD
+1358,Packs,BYB Texas Brisket Party Pack,"Get 4lbs. of Brisket, your choice of 3 large sides, rolls, relish and sauce",175.0 USD
+1358,Packs,Picnic Pack,"Includes a choice of your favorite meat (1 lb.), 2 medium sides, 4 rolls and barbecue sauce. Feeds up to 2-4.",39.0 USD
+1358,Packs,Family Pack,"Includes a choice of 2 meats (1 lb. each), 3 medium sides, 6 rolls and barbecue sauce",65.0 USD
+1358,Packs,XL Pack,"Includes a choice of 3 meats (1 lb. each) with 4 home-style medium sides, 8 rolls and barbecue sauce.",85.0 USD
+1358,Packs,XL Sides,Perfect complement to our slow-smoked barbecue.  Feeds 12-15 people,38.0 USD
+1358,Packs,Classic Family Pack Special,"1 LB brisket, 1 LB pulled pork, 1 each of medium potato salad, coleslaw, baked beans, 6 dinner rolls and your choice of sauce. **No substitutions**",52.0 USD
+1358,Packs,Wing Family Pack,"The Wing Family Pack includes 24 smoked chicken wings (12 flats, 12 drummies), topped with your choice of sauce, and one of each medium side: potato salad, cabbage slaw, and barbecue beans. Served with six rolls, ranch dressing, pickles and onions.  Feeds",48.0 USD
+1358,Packs,Extra Sauce for the Group,,5.0 USD
+1358,Plates,2 Meat Plate,Choose your favorite combination of two slow-smoked meats served with two sides and a roll.,17.5 USD
+1358,Plates,3 Meat Plate,Choose your favorite combination of three slow-smoked meats served with two sides and a roll.,18.5 USD
+1358,Plates,Half Rack Pork Rib Plate,"Slow-smoked and rubbed with our Dickey's rib rub, served with 2 sides and a roll",19.25 USD
+1358,Plates,Brisket Plate,"Slow smoked Brisket sliced or chopped, served with 2 sides and a roll",16.5 USD
+1358,Plates,Pulled Pork Plate,"Slow-smoked pulled pork dusted with our Dickey's rib rub, served with 2 sides and a roll",15.5 USD
+1358,Plates,Marinated Chicken Plate,"Sliced marinated chicken breast, served with 2 sides and a roll",15.0 USD
+1358,Plates,Turkey Breast Plate,"Slow-smoked sliced turkey breast, served with 2 sides and a roll",15.5 USD
+1358,Plates,Kielbasa Sausage Plate,"Your choice of Polish Kielbasa or Spicy Cheddar Kielbasa sausage,  served with 2 sides and a roll.",15.5 USD
+1358,Plates,Old School Plate,"Brisket and Kielbasa Sausage, 2 sides and a roll",18.0 USD
+1358,Plates,Pork &amp; Kielbasa Plate,"Pulled pork and Polish Kielbasa, 2 sides and a roll",16.0 USD
+1358,Plates,Poultry Plate,"Marinated Chicken Breast and Turkey Breast, 2 sides and a roll",16.0 USD
+1358,Plates,Chicken Breast Classic Sandwich Plate,"Marinated smoked chicken on a toasted brioche bun, served with two sides.",13.0 USD
+1358,Plates,Turkey Classic Sandwich Plate,"Order your favorite smokin' turkey sandwich, served with 2 sides today!",13.0 USD
+1358,Plates,Brisket Classic Sandwich Plate,"Includes a choice of chopped or sliced delicious slow-smoked brisket on a Brioche bun, served with 2 sides.",14.0 USD
+1358,Plates,Kielbasa Sausage Classic Sandwich Plate,"Includes a choice of Polish or Jalapeño cheddar kielbasa sausage on a Brioche bun, served with 2 sides.",13.25 USD
+1358,Plates,Cueban Sandwich Plate,"Pulled pork with lemon pepper, jalapeño cheddar sausage, mustard &amp; pickles on a toasted hoagie bun, served with 2 sides.",14.0 USD
+1358,Plates,Slider Plate,"Choice of a slow-smoked meat on a yeast roll, served with 2 sides.",7.75 USD
+1358,Plates,Pit Dip Sandwich Plate,"Sliced brisket, pit-smoked caramelized onions, &amp; cheddar cheese on a toasted hoagie bun. Served with smoky beef dipping sauce and 2 sides.",15.25 USD
+1358,Plates,Pulled Pork Sandwich Plate,"Our delicious smoked pork on a brioche bun, served with 2 sides.",13.25 USD
+1358,Plates,Westerner Sandwich Plate,"Texas sized sandwich, with your choice of two slow-smoked meats and cheddar cheese on a toasted hoagie bun, served with 2 sides.",16.0 USD
+1358,Sandwiches,Chicken Breast Classic Sandwich,Marinated smoked chicken on a toasted brioche bun,9.75 USD
+1358,Sandwiches,Chicken &amp; Cheese Classic Sandwich,"Marinated smoked chicken,  cheddar cheese on a toasted brioche bun",10.25 USD
+1358,Sandwiches,Turkey Classic Sandwich,Order your favorite smokin' turkey sandwich today!,9.5 USD
+1358,Sandwiches,Turkey &amp; Cheese Classic Sandwich,Order your favorite smokin' turkey sandwich with Cheddar cheese on a toasted brioche bun,10.25 USD
+1358,Sandwiches,Brisket Classic Sandwich,Includes a choice of chopped or sliced delicious slow-smoked brisket on a Brioche bun,10.5 USD
+1358,Sandwiches,Brisket &amp; Cheese Classic Sandwich,"Includes a choice of chopped or sliced delicious slow-smoked brisket, cheddar cheese on a Brioche bun",11.0 USD
+1358,Sandwiches,Kielbasa Sausage Classic Sandwich,Includes a choice of Polish or Jalapeño cheddar kielbasa sausage on a Brioche bun,9.75 USD
+1358,Sandwiches,Cueban Sandwich,"Citrus Pulled Pork, Jalapeno Cheddar Kielbasa with mustard &amp; pickles on a toasted hoagie.",10.5 USD
+1358,Sandwiches,Slider,Choice of a slow-smoked meat on a yeast roll,4.25 USD
+1358,Sandwiches,Pit Dip Sandwich,"Sliced brisket, pit-smoked caramelized onions, &amp; cheddar cheese on a toasted hoagie bun. Served with smoky beef dipping sauce",11.75 USD
+1358,Sandwiches,Pulled Pork Sandwich,Our delicious smoked pork on a brioche bun,9.75 USD
+1358,Sandwiches,Westerner Sandwich,"Texas sized sandwich, with your choice of two slow-smoked meats and cheddar cheese on a toasted hoagie bun.",12.75 USD
+1358,Sides,Baked Potato Casserole,"Delicious mashed potatoes blended with cheddar cheese, smokey bacon and green onions",0.0 USD
+1358,Sides,Assorted Chips,"Everyone’s favorite Frito-Lay chips in a wide range of classic, crispy flavors.",2.5 USD
+1358,Sides,Barbecue Beans,Signature baked beans with a smoky pork flavor,0.0 USD
+1358,Sides,Caesar Salad,"Cool and crisp romaine lettuce with zesty Caesar dressing, shredded parmesan and toasted croutons",0.0 USD
+1358,Sides,Fried Okra,"This old-school favorite is a Dickey’s classic. Crispy okra, lightly breaded and dusted with our signature seasoning mix",0.0 USD
+1358,Sides,Bacon &amp; Onion Green Beans,Cut green beans featuring bacon and onion.,0.0 USD
+1358,Sides,Jalapeño Beans,Our own signature recipe with pinto beans and a kick of jalapeños,0.0 USD
+1358,Sides,Mac &amp; Cheese,Pasta with our smooth and creamy cheese sauce,0.0 USD
+1358,Sides,Side of Chicken Nuggets,"Tender, breaded chicken, perfectly golden and served hot",4.0 USD
+1358,Sides,Hand-Cut Fries,,0.0 USD
+1358,Bakers &amp; ‘Cue Creations,Brisket Mac Stack,Slow-smoked brisket with creamy Mac &amp; Cheese,12.0 USD
+1358,Bakers &amp; ‘Cue Creations,Chicken Caesar Salad,"Crisp romaine lettuce, parmesan cheese and crisp croutons top with Marinated smoke chicken.  Includes a warm yeast roll",11.75 USD
+1358,Bakers &amp; ‘Cue Creations,Fritos Pie Stack,"Corn chips with your choice of barbecue beans or jalapeno beans and your choice of chopped beef brisket or pulled pork, topped with cheddar cheese and white onions, sprinkled with rib rub",11.75 USD
+1358,Bakers &amp; ‘Cue Creations,Buffalo Chicken Mac Stack,Spicy Buffalo Chicken with creamy Mac and Cheese topped with green onions,10.75 USD
+1358,Meats à La Carte,Marinated Chicken Breast,"Marinated chicken breast with a tender, smoky flavor of Italian seasoning",0.0 USD
+1358,Meats à La Carte,Polish Kielbasa Sausage,A blend of choice meats with cheddar cheese and jalapeño creating a signature bite,0.0 USD
+1358,Meats à La Carte,Jalapeno Cheddar Kielbasa,A blend of choice meats with cheddar cheese and jalapeño creating a signature bite,0.0 USD
+1358,Meats à La Carte,Pulled Pork,Slow-smoked and rubbed with our Dickey's rib rub,0.0 USD
+1358,Meats à La Carte,Brisket,Slow-smoked in our pit and rubbed with our famous Dickey's Brisket Rub,0.0 USD
+1358,Meats à La Carte,Turkey,Slow-smoked in our pit every day,0.0 USD
+1358,Meats à La Carte,Brisket Whole Large,"Whole beef brisket that is rubbed with our famous Dickey’s Brisket Rub, and smoked in our hickory wood pit for 12 hours. This creates a tender large 4 lbs brisket with a signature spicy peppercorn bark. Large whole briskets feeds 10-12 folks.",108.0 USD
+1358,Meats à La Carte,Pork Butt/Shoulder Whole,A whole pork butt dry rubbed with our secret rib rub spices slow then slow smoked for 12 hours in our hickory wood pit. Feeds 12-15 folks.,90.0 USD
+1358,Meats à La Carte,Sausage Ropes Whole,"A full rope of our proprietary Polish or Jalapeño cheddar Kielbasa sausage that is a blend of choice meats and spices. No MSG, Gluten Free, No Nitrates or Nitrates added, except those naturally occurring nitrates in celery power. Feeds 3-5 folks.",18.0 USD
+1358,Pit Smoked Wings,6 Piece Wings,6 pieces of Pit Smoked Wings with choice of flavor.,9.5 USD
+1358,Pit Smoked Wings,9 Piece Wings,9 pieces of Pit Smoked Wings with choice of flavor.,12.5 USD
+1358,Pit Smoked Wings,12 Piece Wings,12 pieces of Pit Smoked Wings with choice of flavor.,17.0 USD
+1358,Pit Smoked Wings,18 Piece Wings,18 pieces of Pit Smoked Wings with choice of flavor.,25.0 USD
+1358,Pit Smoked Wings,24 Piece Wings,24 pieces of Pit Smoked Wings with choice of flavor.,32.0 USD
+1358,Fall Off The Bone Ribs,Pork Ribs,Our tender ribs are slow-smoked and feature Dickey's Rib Rub and Sweet Sauce,0.0 USD
+1358,Fall Off The Bone Ribs,6 Piece Ribs,6 pieces of Fall off the Bone Ribs with choice of flavor.,18.0 USD
+1358,Fall Off The Bone Ribs,9 Piece Ribs,9 pieces of Fall off the Bone Ribs with choice of flavor.,25.0 USD
+1358,Fall Off The Bone Ribs,12 Piece Ribs,12 pieces of Fall off the Bone Ribs with choice of flavor.,32.0 USD
+1358,Fall Off The Bone Ribs,18 Piece Ribs,18  pieces of Fall off the Bone Ribs with choice of flavor.,45.0 USD
+1358,Fall Off The Bone Ribs,24 Piece Ribs,24 pieces of Fall off the Bone Ribs with choice of flavor.,62.0 USD
+1358,Kid's Meals,Kids Meat Plate,"Includes a meat and a side of your choice, together with Lil' Yellow Cup and a roll.",7.25 USD
+1358,Kid's Meals,Kids Slider Plate,"Includes a meat and a side of your choice, together with Lil' Yellow Cup and a roll.",7.25 USD
+1358,Kid's Meals,Kid's Chicken Nuggets Meal,"Tender, breaded chicken, perfectly golden and served hot with 1 side and Little Yellow Cup",7.25 USD
+1358,Drinks,Big Yellow Cup,Fill up your Big Yellow Cup with Miss Ollie Dickey's famous iced tea or another drink of your choice,3.5 USD
+1358,Drinks,Little Yellow Cup,,2.75 USD
+1358,Drinks,Dickey's Bottled Water 16.9 fl oz,Dickey's Bottled Water 16.9 fl oz,2.5 USD
+1358,Desserts,Pecan Pie Slice,A delicious combination of a buttery crisp pastry with a rich and chewy filling that is loaded with toasted pecans,4.75 USD
+1358,Desserts,Chocolate Chunk Cookie,Milk chocolate chunks in a golden brown cookie,4.0 USD
+1358,Sauces &amp; Extras,Dinner Rolls,"Our famous buttery rolls, straight from Miss Ollie’s family recipes. Choose from 1, 6, or a dozen.",0.0 USD
+1358,Sauces &amp; Extras,Corn Muffin,"As a southern classic, Dickey’s is proud to introduce our newest menu item, cornbread. Guests can now upgrade their meal by adding a side of comfort with our delicious cornbread",0.0 USD
+1358,Sauces &amp; Extras,Brioche Bun,"Rich and buttery, yet light and toasty sandwich bun",0.0 USD
+1358,Sauces &amp; Extras,Original Barbecue Sauce,Dickey's family recipe,0.5 USD
+1358,Sauces &amp; Extras,Spicy Barbecue Sauce,Our classic barbecue sauce with a chili pepper kick,0.5 USD
+1358,Sauces &amp; Extras,Sweet Barbecue Sauce,Dickey's sweet sauce,0.5 USD
+1358,Sauces &amp; Extras,Buffalo Sauce,Classic red pepper sauce,0.5 USD
+1358,Sauces &amp; Extras,Buffalo Hot Sauce,Red Pepper sauce spiked with red chilis,0.5 USD
+1358,Sauces &amp; Extras,Texas Hot Sauce,Bold spiced sauce with a hint of smoke and sweet,0.5 USD
+1358,Sauces &amp; Extras,Carolina Barbecue Sauce,Yellow mustard barbecue sauce,0.5 USD
+1358,Sauces &amp; Extras,Ranch Dressing,Ranch Dressing,0.5 USD
+1358,Sauces &amp; Extras,Jalapeno Peppers,Jalapeno Peppers,0.5 USD
+1358,Sauces &amp; Extras,Sliced Cheddar Cheese,Tillamook Cheddar Cheese,0.5 USD
+1358,Sauces &amp; Extras,Extra Onions,,0.5 USD
+1358,Sauces &amp; Extras,Extra Pickles,,0.5 USD
+1358,Local Favorites,Extra Sauce for the Group.,,5.0 USD
+1358,Local Favorites,Bangers &amp; Mash Stack,Jalapeño Cheddar Kielbasa with baked potato casserole,9.75 USD
+1358,Local Favorites,Racetrack Westerner,"Chopped beef brisket &amp; pulled pork, sprinkled with rib rub, topped with creamy cabbage slaw &amp; cheddar",11.0 USD
+1358,Local Favorites,Brisket &amp; Cheese Taco,"Slow smoked chopped brisket, cheddar cheese on a flour tortilla",3.75 USD
+1358,Local Favorites,Chicken &amp; Cheese Taco,"Slow smoked marinated chicken, cheddar cheese on a flour tortilla",3.5 USD
+1358,Local Favorites,The Fancy Pork Taco,"Pulled pork with creamy cabbage slaw, sprinkled with rib rub",3.5 USD
+1359,Picked for you,Steak &amp; Cheese Footlong Pro (Double Protein),"Our Steak &amp; Cheese sandwich is where warm, delicious steak gets topped with melty cheesiness. Get crazy with veggies and sauces to make it what you want.",14.74 USD
+1359,Picked for you,Meatball Marinara Footlong Pro (Double Protein),"The Meatball Marinara sandwich is drenched in irresistible marinara sauce, sprinkled with Parmesan cheese,  topped with whatever you want (no judgement) and perfectly toasted just for you.",12.58 USD
+1359,Picked for you,Oven Roasted Turkey Footlong Regular Sub,"If a classic is what you crave, our thin-sliced Oven Roasted Turkey is the sandwich for you. It’s full of flavor and made to order with your choice of crisp veggies, served on our freshly baked, Hearty Multigrain bread.",10.3 USD
+1359,Picked for you,Chicken &amp; Bacon Ranch,"This crave-worthy wrap has it all: hand-pulled, Rotisserie-Style Chicken, smothered in shredded Monterrey Cheddar Cheese, Hickory-Smoked Bacon, and Peppercorn Ranch, folded in a Spinach wrap.",9.58 USD
+1359,Picked for you,Black Forest Ham Footlong Regular Sub,"Our Black Forest Ham sandwich is a true classic. We add lettuce, baby spinach, cucumbers, green peppers and red onions to our delicious, thin-sliced ham and serve it on our Hearty Multigrain bread. Want cheese? Just ask.",9.34 USD
+1359,Sandwiches,Sweet Onion Chicken Teriyaki 6 Inch Regular Sub,"The Sweet Onion Chicken Teriyaki sub is one sah-weeet sub. It starts with Hearty Multigrain bread, add perfectly cooked grilled chicken strips, marinated in our NEW Sweet Onion Teriyaki Sauce, then pile on the crunch with lettuce, spinach, tomatoes, cucumbers, green peppers, red onions and top with another pass of our NEW Sweet Onion Teriyaki sauce.",7.19 USD
+1359,Sandwiches,Sweet Onion Chicken Teriyaki Footlong Regular Sub,"The Sweet Onion Chicken Teriyaki sub is one sah-weeet sub. It starts with Hearty Multigrain bread, add perfectly cooked grilled chicken strips, marinated in our NEW Sweet Onion Teriyaki Sauce, then pile on the crunch with lettuce, spinach, tomatoes, cucumbers, green peppers, red onions and top with another pass of our NEW Sweet Onion Teriyaki sauce.",11.03 USD
+1359,Sandwiches,Sweet Onion Chicken Teriyaki Footlong Pro (Double Protein),"The Sweet Onion Chicken Teriyaki sub is one sah-weeet sub. It starts with Hearty Multigrain bread, add perfectly cooked grilled chicken strips, marinated in our NEW Sweet Onion Teriyaki Sauce, then pile on the crunch with lettuce, spinach, tomatoes, cucumbers, green peppers, red onions and top with another pass of our NEW Sweet Onion Teriyaki sauce.",14.75 USD
+1359,Sandwiches,Mozza Meat  6 Inch Regular Sub,"This beautifully crafted beast of a sub is what dreams are made of: Thin-sliced Black Forest Ham, NEW Italian-style capicola, and Belgioioso® Fresh  Mozzarella on fresh-baked Artisan Italian bread. Topped with spinach, tomatoes, red onions, and banana peppers and drizzled with our famous MVP Parmesan Vinaigrette™. Hey, wake up, this bad boy is real.",7.79 USD
+1359,Sandwiches,Mozza Meat  Footlong Regular Sub,"This beautifully crafted beast of a sub is what dreams are made of: Thin-sliced Black Forest Ham, NEW Italian-style capicola, and Belgioioso® Fresh  Mozzarella on fresh-baked Artisan Italian bread. Topped with spinach, tomatoes, red onions, and banana peppers and drizzled with our famous MVP Parmesan Vinaigrette™. Hey, wake up, this bad boy is real.",11.99 USD
+1359,Sandwiches,Mozza Meat  Footlong Pro (Double Protein),"This beautifully crafted beast of a sub is what dreams are made of: Thin-sliced Black Forest Ham, NEW Italian-style capicola, and Belgioioso® Fresh  Mozzarella on fresh-baked Artisan Italian bread. Topped with spinach, tomatoes, red onions, and banana peppers and drizzled with our famous MVP Parmesan Vinaigrette™. Hey, wake up, this bad boy is real.",15.59 USD
+1359,Sandwiches,Supreme Meats 6 Inch Regular Sub,"There’s good reason we named it Supreme: NEW Italian-style capicola, thin-sliced Black Forest Ham, Genoa Salami, and pepperoni on fresh-baked Artisan Italian bread topped with provolone, lettuce, tomatoes, red onions, and tangy banana peppers and drizzled with our famous MVP Parmesan Vinaigrette™. Do we need to say more?",7.79 USD
+1359,Sandwiches,Supreme Meats Footlong Regular Sub,"There’s good reason we named it Supreme: NEW Italian-style capicola, thin-sliced Black Forest Ham, Genoa Salami, and pepperoni on fresh-baked Artisan Italian bread topped with provolone, lettuce, tomatoes, red onions, and tangy banana peppers and drizzled with our famous MVP Parmesan Vinaigrette™. Do we need to say more?",11.99 USD
+1359,Sandwiches,Supreme Meats Footlong Pro (Double Protein),"There’s good reason we named it Supreme: NEW Italian-style capicola, thin-sliced Black Forest Ham, Genoa Salami, and pepperoni on fresh-baked Artisan Italian bread topped with provolone, lettuce, tomatoes, red onions, and tangy banana peppers and drizzled with our famous MVP Parmesan Vinaigrette™. Do we need to say more?",15.59 USD
+1359,Sandwiches,All-American Club® 6 Inch Regular Sub,"The All-American Club® is a delicious combo of oven roasted turkey, Black Forest ham and hickory smoked bacon. We top it off with American cheese, lettuce, tomatoes and red onions on tasty, toasted Artisan Italian bread.
+",7.06 USD
+1359,Sandwiches,All-American Club® Footlong Regular Sub,"The All-American Club® is a delicious combo of oven roasted turkey, Black Forest ham and hickory smoked bacon. We top it off with American cheese, lettuce, tomatoes and red onions on tasty, toasted Artisan Italian bread.
+",10.78 USD
+1359,Sandwiches,All-American Club® Footlong Pro (Double Protein),"The All-American Club® is a delicious combo of oven roasted turkey, Black Forest ham and hickory smoked bacon. We top it off with American cheese, lettuce, tomatoes and red onions on tasty, toasted Artisan Italian bread.
+",14.38 USD
+1359,Sandwiches,Baja Chicken &amp; Bacon 6 Inch Regular Sub,"An irresistible sub with Southwest attitude: hand-pulled, Rotisserie-Style Chicken, Pepper Jack Cheese, and Hickory-Smoked Bacon, topped with our smoky Baja Chipotle sauce.",7.43 USD
+1359,Sandwiches,Baja Chicken &amp; Bacon Footlong Regular Sub,"An irresistible sub with Southwest attitude: hand-pulled, Rotisserie-Style Chicken, Pepper Jack Cheese, and Hickory-Smoked Bacon, topped with our smoky Baja Chipotle sauce.",11.15 USD
+1359,Sandwiches,Baja Chicken &amp; Bacon Footlong Pro (Double Protein),"An irresistible sub with Southwest attitude: hand-pulled, Rotisserie-Style Chicken, Pepper Jack Cheese, and Hickory-Smoked Bacon, topped with our smoky Baja Chipotle sauce.",14.75 USD
+1359,Sandwiches,Baja Steak &amp; Jack 6 Inch Regular Sub,"Spicy, cheesy, smoky — this one’s got it all. Steak meets Pepper Jack Cheese, with green peppers, red onions, and Baja Chipotle Sauce on Artisan Italian Bread. Try not to fall head over heels.",7.43 USD
+1359,Sandwiches,Baja Steak &amp; Jack Footlong Regular Sub,"Spicy, cheesy, smoky — this one’s got it all. Steak meets Pepper Jack Cheese, with green peppers, red onions, and Baja Chipotle Sauce on Artisan Italian Bread. Try not to fall head over heels.",11.15 USD
+1359,Sandwiches,Baja Steak &amp; Jack Footlong Pro (Double Protein),"Spicy, cheesy, smoky — this one’s got it all. Steak meets Pepper Jack Cheese, with green peppers, red onions, and Baja Chipotle Sauce on Artisan Italian Bread. Try not to fall head over heels.",14.75 USD
+1359,Sandwiches,Baja Turkey Avocado 6 Inch Regular Sub,"Oven-Roasted Turkey, Smashed Avocado, and crisp veggies, topped with Baja Chipotle sauce: this one is all about that bold, smoky and spicy flavor!",7.61 USD
+1359,Sandwiches,Baja Turkey Avocado Footlong Regular Sub,"Oven-Roasted Turkey, Smashed Avocado, and crisp veggies, topped with Baja Chipotle sauce: this one is all about that bold, smoky and spicy flavor!",12.11 USD
+1359,Sandwiches,Baja Turkey Avocado Footlong Pro (Double Protein),"Oven-Roasted Turkey, Smashed Avocado, and crisp veggies, topped with Baja Chipotle sauce: this one is all about that bold, smoky and spicy flavor!",15.71 USD
+1359,Sandwiches,Black Forest Ham 6 Inch Regular Sub,"Our Black Forest Ham sandwich is a true classic. We add lettuce, baby spinach, cucumbers, green peppers and red onions to our delicious, thin-sliced ham and serve it on our Hearty Multigrain bread. Want cheese? Just ask.",5.98 USD
+1359,Sandwiches,Black Forest Ham Footlong Regular Sub,"Our Black Forest Ham sandwich is a true classic. We add lettuce, baby spinach, cucumbers, green peppers and red onions to our delicious, thin-sliced ham and serve it on our Hearty Multigrain bread. Want cheese? Just ask.",9.34 USD
+1359,Sandwiches,Black Forest Ham Footlong Pro (Double Protein),"Our Black Forest Ham sandwich is a true classic. We add lettuce, baby spinach, cucumbers, green peppers and red onions to our delicious, thin-sliced ham and serve it on our Hearty Multigrain bread. Want cheese? Just ask.",13.18 USD
+1359,Sandwiches,Buffalo Chicken 6 Inch Regular Sub,"When you’re looking to spice things up, do it with Frank’s RedHot® and buffalo chicken. Our Buffalo Chicken Footlong is made with everyone’s favorite hot sauce – Frank’s RedHot® and topped with peppercorn ranch. Try it with lettuce, tomatoes and cucumbers! Frank’s RedHot® is a registered trademark of McCormick &amp; Co. and used under license by Subway Franchisee Advertising Fund Trust Ltd.®/© Subway IP LLC 2021.",7.19 USD
+1359,Sandwiches,Buffalo Chicken Footlong Regular Sub,"When you’re looking to spice things up, do it with Frank’s RedHot® and buffalo chicken. Our Buffalo Chicken Footlong is made with everyone’s favorite hot sauce – Frank’s RedHot® and topped with peppercorn ranch. Try it with lettuce, tomatoes and cucumbers! Frank’s RedHot® is a registered trademark of McCormick &amp; Co. and used under license by Subway Franchisee Advertising Fund Trust Ltd.®/© Subway IP LLC 2021.",11.15 USD
+1359,Sandwiches,Buffalo Chicken Footlong Pro (Double Protein),"When you’re looking to spice things up, do it with Frank’s RedHot® and buffalo chicken. Our Buffalo Chicken Footlong is made with everyone’s favorite hot sauce – Frank’s RedHot® and topped with peppercorn ranch. Try it with lettuce, tomatoes and cucumbers! Frank’s RedHot® is a registered trademark of McCormick &amp; Co. and used under license by Subway Franchisee Advertising Fund Trust Ltd.®/© Subway IP LLC 2021.",14.75 USD
+1359,Sandwiches,B.L.T. 6 Inch Regular Sub,"The sub that proves great things come in threes. In this case, those three things happen to be hickory smoked bacon, lettuce and juicy tomatoes. While there’s no scientific way of proving it, this B.L.T might be the most perfect sub in existence.",6.35 USD
+1359,Sandwiches,B.L.T. Footlong Regular Sub,"The sub that proves great things come in threes. In this case, those three things happen to be hickory smoked bacon, lettuce and juicy tomatoes. While there’s no scientific way of proving it, this B.L.T might be the most perfect sub in existence.",9.71 USD
+1359,Sandwiches,B.L.T. Footlong Pro (Double Protein),"The sub that proves great things come in threes. In this case, those three things happen to be hickory smoked bacon, lettuce and juicy tomatoes. While there’s no scientific way of proving it, this B.L.T might be the most perfect sub in existence.",13.31 USD
+1359,Sandwiches,Chicken &amp; Bacon Ranch 6 Inch Regular Sub,"What do you get when you mix juicy Rotisserie-Style Chicken, melty Monterey Cheddar Cheese, Hickory-Smoked Bacon, and our creamy Peppercorn Ranch? Your sandwich happy place.",7.78 USD
+1359,Sandwiches,Chicken &amp; Bacon Ranch Footlong Regular Sub,"What do you get when you mix juicy Rotisserie-Style Chicken, melty Monterey Cheddar Cheese, Hickory-Smoked Bacon, and our creamy Peppercorn Ranch? Your sandwich happy place.",11.38 USD
+1359,Sandwiches,Chicken &amp; Bacon Ranch Footlong Pro (Double Protein),"What do you get when you mix juicy Rotisserie-Style Chicken, melty Monterey Cheddar Cheese, Hickory-Smoked Bacon, and our creamy Peppercorn Ranch? Your sandwich happy place.",14.98 USD
+1359,Sandwiches,Cold Cut Combo® 6 Inch Regular Sub,"The Cold Cut Combo® sandwich with ham, salami, and bologna (all turkey based) is a long-time Subway® favorite. Yeah. It's that good.",5.74 USD
+1359,Sandwiches,Cold Cut Combo® Footlong Regular Sub,"The Cold Cut Combo® sandwich with ham, salami, and bologna (all turkey based) is a long-time Subway® favorite. Yeah. It's that good.",8.98 USD
+1359,Sandwiches,Cold Cut Combo® Footlong Pro (Double Protein),"The Cold Cut Combo® sandwich with ham, salami, and bologna (all turkey based) is a long-time Subway® favorite. Yeah. It's that good.",12.58 USD
+1359,Sandwiches,Grilled Chicken  6 Inch Regular Sub,"Tender grilled chicken loaded on our Hearty Multigrain bread with your choice of veggies. A little lettuce, tomatoes, onions and baby spinach, and you can’t go wrong.",7.19 USD
+1359,Sandwiches,Grilled Chicken  Footlong Regular Sub,"Tender grilled chicken loaded on our Hearty Multigrain bread with your choice of veggies. A little lettuce, tomatoes, onions and baby spinach, and you can’t go wrong.",11.03 USD
+1359,Sandwiches,Grilled Chicken  Footlong Pro (Double Protein),"Tender grilled chicken loaded on our Hearty Multigrain bread with your choice of veggies. A little lettuce, tomatoes, onions and baby spinach, and you can’t go wrong.",14.51 USD
+1359,Sandwiches,Honey Mustard Rotisserie-Style Chicken 6 Inch Regular Sub,"Savory, and sweet: this sub has all the bases covered with Rotisserie-Style Chicken, crisp veggies, and Honey Mustard on Hearty Multigrain bread.",7.43 USD
+1359,Sandwiches,Honey Mustard Rotisserie-Style Chicken Footlong Regular Sub,"Savory, and sweet: this sub has all the bases covered with Rotisserie-Style Chicken, crisp veggies, and Honey Mustard on Hearty Multigrain bread.",11.15 USD
+1359,Sandwiches,Honey Mustard Rotisserie-Style Chicken Footlong Pro (Double Protein),"Savory, and sweet: this sub has all the bases covered with Rotisserie-Style Chicken, crisp veggies, and Honey Mustard on Hearty Multigrain bread.",14.75 USD
+1359,Sandwiches,Italian B.M.T.® 6 Inch Regular Sub,"The Italian B.M.T.® sandwich is filled with Genoa salami, spicy pepperoni, and Black Forest Ham. Big. Meaty. Tasty. Get it. ",6.71 USD
+1359,Sandwiches,Italian B.M.T.® Footlong Regular Sub,"The Italian B.M.T.® sandwich is filled with Genoa salami, spicy pepperoni, and Black Forest Ham. Big. Meaty. Tasty. Get it. ",10.19 USD
+1359,Sandwiches,Italian B.M.T.® Footlong Pro (Double Protein),"The Italian B.M.T.® sandwich is filled with Genoa salami, spicy pepperoni, and Black Forest Ham. Big. Meaty. Tasty. Get it. ",13.78 USD
+1359,Sandwiches,Meatball Marinara 6 Inch Regular Sub,"The Meatball Marinara sandwich is drenched in irresistible marinara sauce, sprinkled with Parmesan cheese,  topped with whatever you want (no judgement) and perfectly toasted just for you.",5.74 USD
+1359,Sandwiches,Meatball Marinara Footlong Regular Sub,"The Meatball Marinara sandwich is drenched in irresistible marinara sauce, sprinkled with Parmesan cheese,  topped with whatever you want (no judgement) and perfectly toasted just for you.",8.98 USD
+1359,Sandwiches,Meatball Marinara Footlong Pro (Double Protein),"The Meatball Marinara sandwich is drenched in irresistible marinara sauce, sprinkled with Parmesan cheese,  topped with whatever you want (no judgement) and perfectly toasted just for you.",12.58 USD
+1359,Sandwiches,Oven Roasted Chicken  6 Inch Regular Sub,"Our Oven Roasted Chicken sandwich is freshly prepared with savory chicken and your choice of crisp veggies, served warm on our freshly baked Hearty Multigrain bread.",6.7 USD
+1359,Sandwiches,Oven Roasted Chicken  Footlong Regular Sub,"Our Oven Roasted Chicken sandwich is freshly prepared with savory chicken and your choice of crisp veggies, served warm on our freshly baked Hearty Multigrain bread.",10.18 USD
+1359,Sandwiches,Oven Roasted Chicken  Footlong Pro (Double Protein),"Our Oven Roasted Chicken sandwich is freshly prepared with savory chicken and your choice of crisp veggies, served warm on our freshly baked Hearty Multigrain bread.",13.78 USD
+1359,Sandwiches,Oven Roasted Turkey 6 Inch Regular Sub,"If a classic is what you crave, our thin-sliced Oven Roasted Turkey is the sandwich for you. It’s full of flavor and made to order with your choice of crisp veggies, served on our freshly baked, Hearty Multigrain bread.",6.7 USD
+1359,Sandwiches,Oven Roasted Turkey Footlong Regular Sub,"If a classic is what you crave, our thin-sliced Oven Roasted Turkey is the sandwich for you. It’s full of flavor and made to order with your choice of crisp veggies, served on our freshly baked, Hearty Multigrain bread.",10.3 USD
+1359,Sandwiches,Oven Roasted Turkey Footlong Pro (Double Protein),"If a classic is what you crave, our thin-sliced Oven Roasted Turkey is the sandwich for you. It’s full of flavor and made to order with your choice of crisp veggies, served on our freshly baked, Hearty Multigrain bread.",13.9 USD
+1359,Sandwiches,Oven Roasted Turkey &amp; Ham 6 Inch Regular Sub,"Enjoy the flavor of tender, thin-sliced oven roasted turkey and Black Forest Ham with your favorite veggies, from juicy tomatoes to sweet red onions, all served on freshly baked, Hearty Multigrain bread.",6.7 USD
+1359,Sandwiches,Oven Roasted Turkey &amp; Ham Footlong Regular Sub,"Enjoy the flavor of tender, thin-sliced oven roasted turkey and Black Forest Ham with your favorite veggies, from juicy tomatoes to sweet red onions, all served on freshly baked, Hearty Multigrain bread.",9.94 USD
+1359,Sandwiches,Oven Roasted Turkey &amp; Ham Footlong Pro (Double Protein),"Enjoy the flavor of tender, thin-sliced oven roasted turkey and Black Forest Ham with your favorite veggies, from juicy tomatoes to sweet red onions, all served on freshly baked, Hearty Multigrain bread.",13.54 USD
+1359,Sandwiches,Pizza Sub 6 Inch Regular Sub,"Hot outta the oven, it’s the Pizza Sub. Enjoy spicy pepperoni, piled high and layered with melt-a-licious cheese and our signature marinara sauce. Try it on freshly baked Artisan Italian bread today.",6.34 USD
+1359,Sandwiches,Pizza Sub Footlong Regular Sub,"Hot outta the oven, it’s the Pizza Sub. Enjoy spicy pepperoni, piled high and layered with melt-a-licious cheese and our signature marinara sauce. Try it on freshly baked Artisan Italian bread today.",9.58 USD
+1359,Sandwiches,Pizza Sub Footlong Pro (Double Protein),"Hot outta the oven, it’s the Pizza Sub. Enjoy spicy pepperoni, piled high and layered with melt-a-licious cheese and our signature marinara sauce. Try it on freshly baked Artisan Italian bread today.",13.18 USD
+1359,Sandwiches,Roast Beef 6 Inch Regular Sub,"Choice Angus Roast Beef, Hearty Multigrain Bread, and plenty of fresh veggies make this lunchtime classic one to remember.",8.27 USD
+1359,Sandwiches,Roast Beef Footlong Regular Sub,"Choice Angus Roast Beef, Hearty Multigrain Bread, and plenty of fresh veggies make this lunchtime classic one to remember.",12.7 USD
+1359,Sandwiches,Roast Beef Footlong Pro (Double Protein),"Choice Angus Roast Beef, Hearty Multigrain Bread, and plenty of fresh veggies make this lunchtime classic one to remember.",16.3 USD
+1359,Sandwiches,Rotisserie-Style Chicken 6 Inch Regular Sub,"Who doesn’t love tender, juicy rotisserie-style chicken? Especially when it’s served on our Hearty Multigrain bread with your choice of veggies. We like lettuce, tomatoes, red onions, and peppers, but hey, it’s your sandwich, do what you like.",7.43 USD
+1359,Sandwiches,Rotisserie-Style Chicken Footlong Regular Sub,"Who doesn’t love tender, juicy rotisserie-style chicken? Especially when it’s served on our Hearty Multigrain bread with your choice of veggies. We like lettuce, tomatoes, red onions, and peppers, but hey, it’s your sandwich, do what you like.",11.15 USD
+1359,Sandwiches,Rotisserie-Style Chicken Footlong Pro (Double Protein),"Who doesn’t love tender, juicy rotisserie-style chicken? Especially when it’s served on our Hearty Multigrain bread with your choice of veggies. We like lettuce, tomatoes, red onions, and peppers, but hey, it’s your sandwich, do what you like.",14.75 USD
+1359,Sandwiches,Spicy Italian 6 Inch Regular Sub,"Our Spicy Italian sandwich is a combo of pepperoni and Genoa salami. Pile on cheese, crunchy veggies, and finish it with your favorite sauce. Or don't. Your call. ",5.98 USD
+1359,Sandwiches,Spicy Italian Footlong Regular Sub,"Our Spicy Italian sandwich is a combo of pepperoni and Genoa salami. Pile on cheese, crunchy veggies, and finish it with your favorite sauce. Or don't. Your call. ",9.34 USD
+1359,Sandwiches,Spicy Italian Footlong Pro (Double Protein),"Our Spicy Italian sandwich is a combo of pepperoni and Genoa salami. Pile on cheese, crunchy veggies, and finish it with your favorite sauce. Or don't. Your call. ",14.14 USD
+1359,Sandwiches,"Turkey ""Cali Fresh"" 6 Inch Regular Sub","West coast, east coast, it doesn’t matter to us. We make our Cali Turkey for anyone, on freshly baked Hearty Multigrain bread loaded with oven roasted turkey, hickory smoked bacon, smashed avocado, BelGioioso® Fresh Mozzarella, mayo, and baby spinach. ",8.38 USD
+1359,Sandwiches,"Turkey ""Cali Fresh"" Footlong Regular Sub","West coast, east coast, it doesn’t matter to us. We make our Cali Turkey for anyone, on freshly baked Hearty Multigrain bread loaded with oven roasted turkey, hickory smoked bacon, smashed avocado, BelGioioso® Fresh Mozzarella, mayo, and baby spinach. ",13.54 USD
+1359,Sandwiches,"Turkey ""Cali Fresh"" Footlong Pro (Double Protein)","West coast, east coast, it doesn’t matter to us. We make our Cali Turkey for anyone, on freshly baked Hearty Multigrain bread loaded with oven roasted turkey, hickory smoked bacon, smashed avocado, BelGioioso® Fresh Mozzarella, mayo, and baby spinach. ",17.14 USD
+1359,Sandwiches,"Steak ""Cali Fresh"" 6 Inch Regular Sub","The Cali Steak is a hit in any time zone, made on our freshly baked Hearty Multigrain bread with delicious steak, hickory smoked bacon, smashed avocado, BelGioioso® Fresh Mozzarella and fresh veggies of your choice. ",9.1 USD
+1359,Sandwiches,"Steak ""Cali Fresh"" Footlong Regular Sub","The Cali Steak is a hit in any time zone, made on our freshly baked Hearty Multigrain bread with delicious steak, hickory smoked bacon, smashed avocado, BelGioioso® Fresh Mozzarella and fresh veggies of your choice. ",14.62 USD
+1359,Sandwiches,"Steak ""Cali Fresh"" Footlong Pro (Double Protein)","The Cali Steak is a hit in any time zone, made on our freshly baked Hearty Multigrain bread with delicious steak, hickory smoked bacon, smashed avocado, BelGioioso® Fresh Mozzarella and fresh veggies of your choice. ",18.22 USD
+1359,Sandwiches,Steak &amp; Cheese 6 Inch Regular Sub,"Our Steak &amp; Cheese sandwich is where warm, delicious steak gets topped with melty cheesiness. Get crazy with veggies and sauces to make it what you want.",7.42 USD
+1359,Sandwiches,Steak &amp; Cheese Footlong Regular Sub,"Our Steak &amp; Cheese sandwich is where warm, delicious steak gets topped with melty cheesiness. Get crazy with veggies and sauces to make it what you want.",11.14 USD
+1359,Sandwiches,Steak &amp; Cheese Footlong Pro (Double Protein),"Our Steak &amp; Cheese sandwich is where warm, delicious steak gets topped with melty cheesiness. Get crazy with veggies and sauces to make it what you want.",14.74 USD
+1359,Sandwiches,Subway Club 6 Inch Regular Sub,"You’ve never seen a club this good! Oven-Roasted Turkey, Black Forest Ham, and Choice Angus Roast Beef are stacked high with fresh veggies on Hearty Multigrain Bread.",7.42 USD
+1359,Sandwiches,Subway Club Footlong Regular Sub,"You’ve never seen a club this good! Oven-Roasted Turkey, Black Forest Ham, and Choice Angus Roast Beef are stacked high with fresh veggies on Hearty Multigrain Bread.",11.5 USD
+1359,Sandwiches,Subway Club Footlong Pro (Double Protein),"You’ve never seen a club this good! Oven-Roasted Turkey, Black Forest Ham, and Choice Angus Roast Beef are stacked high with fresh veggies on Hearty Multigrain Bread.",15.1 USD
+1359,Sandwiches,Tuna 6 Inch Regular Sub,"You’ll love every bite of our classic tuna sandwich. 100% wild caught tuna blended with creamy mayo then topped with your choice of crisp, fresh veggies. 100% delicious.
+",6.7 USD
+1359,Sandwiches,Tuna Footlong Regular Sub,"You’ll love every bite of our classic tuna sandwich. 100% wild caught tuna blended with creamy mayo then topped with your choice of crisp, fresh veggies. 100% delicious.
+",10.18 USD
+1359,Sandwiches,Tuna Footlong Pro (Double Protein),"You’ll love every bite of our classic tuna sandwich. 100% wild caught tuna blended with creamy mayo then topped with your choice of crisp, fresh veggies. 100% delicious.
+",13.78 USD
+1359,Sandwiches,Veggie Delite® 6 Inch Regular Sub,"The Veggie Delite® sandwich is crispy, crunchy, vegetarian perfection. With lettuce, baby spinach, tomatoes, cucumbers, green peppers and red onions, all on our Hearty Multigrain bread.",5.38 USD
+1359,Sandwiches,Veggie Delite® Footlong Regular Sub,"The Veggie Delite® sandwich is crispy, crunchy, vegetarian perfection. With lettuce, baby spinach, tomatoes, cucumbers, green peppers and red onions, all on our Hearty Multigrain bread.",7.9 USD
+1359,Fresh Melts®,Baja Chicken &amp; Bacon Melt Footlong Melt,"Freshly made? Cheesy? Why not have both? Rotisserie-Style Chicken, Hickory-Smoked Bacon, and our Baja Chipotle sauce are topped with crisp, veggies and extra Pepper Jack Cheese.",11.15 USD
+1359,Fresh Melts®,Baja Chicken &amp; Bacon Melt 6 Inch Melt,"Freshly made? Cheesy? Why not have both? Rotisserie-Style Chicken, Hickory-Smoked Bacon, and our Baja Chipotle sauce are topped with crisp, veggies and extra Pepper Jack Cheese.",7.43 USD
+1359,Fresh Melts®,Chicken &amp; Bacon Ranch Melt Footlong Melt,"How can you improve Rotisserie-Style Chicken, Hickory-Smoked Bacon, and Peppercorn Ranch? With a whole lot of gooey Provolone Cheese and veggies.",13.78 USD
+1359,Fresh Melts®,Chicken &amp; Bacon Ranch Melt 6 Inch Melt,"How can you improve Rotisserie-Style Chicken, Hickory-Smoked Bacon, and Peppercorn Ranch? With a whole lot of gooey Provolone Cheese and veggies.",8.98 USD
+1359,Fresh Melts®,Baja Steak &amp; Jack Melt Footlong Melt,"Steak is smothered with gooey, melty Pepper Jack Cheese. Add in green peppers and red onions, and top it with Baja Chipotle Sauce, and you’ve got a cheesy, smoky, perfect meal.",13.55 USD
+1359,Fresh Melts®,Baja Steak &amp; Jack Melt 6 Inch Melt,"Steak is smothered with gooey, melty Pepper Jack Cheese. Add in green peppers and red onions, and top it with Baja Chipotle Sauce, and you’ve got a cheesy, smoky, perfect meal.",8.63 USD
+1359,Fresh Melts®,Buffalo Chicken Melt Footlong Melt,"Packed with grilled chicken, plus just the right amount of Frank's RedHot® Buffalo sauce, a little peppercorn ranch to beat the heat and all the veggies you can fit in there. Frank’s RedHot® is a registered trademark of McCormick &amp; Co. and used under license by Subway Franchisee Advertising Fund Trust Ltd. ®/© Subway IP LLC 2021.",13.55 USD
+1359,Fresh Melts®,Buffalo Chicken Melt 6 Inch Melt,"Packed with grilled chicken, plus just the right amount of Frank's RedHot® Buffalo sauce, a little peppercorn ranch to beat the heat and all the veggies you can fit in there. Frank’s RedHot® is a registered trademark of McCormick &amp; Co. and used under license by Subway Franchisee Advertising Fund Trust Ltd. ®/© Subway IP LLC 2021.",8.39 USD
+1359,Fresh Melts®,Ham &amp; Cheese Melt Footlong Melt,"Your cravings called, and we answered with melty goodness and fresh veggies, too. The Ham &amp; Cheese Melt combines Black Forest ham, fresh tomato and American cheese and grills them all up to create an indulgent choice that’s freshly made, too.",11.74 USD
+1359,Fresh Melts®,Ham &amp; Cheese Melt 6 Inch Melt,"Your cravings called, and we answered with melty goodness and fresh veggies, too. The Ham &amp; Cheese Melt combines Black Forest ham, fresh tomato and American cheese and grills them all up to create an indulgent choice that’s freshly made, too.",7.18 USD
+1359,Fresh Melts®,Italian B.M.T.® Melt Footlong Melt,"Three craveable meats, melty cheese and fresh veggies. It’s not too good to be true, it’s the Italian B.M.T.® Melt. Now you can get the flavors you crave along with the goodness of fresh tomatoes, peppers and onions, that’s a win-win.",12.59 USD
+1359,Fresh Melts®,Italian B.M.T.® Melt 6 Inch Melt,"Three craveable meats, melty cheese and fresh veggies. It’s not too good to be true, it’s the Italian B.M.T.® Melt. Now you can get the flavors you crave along with the goodness of fresh tomatoes, peppers and onions, that’s a win-win.",7.91 USD
+1359,Fresh Melts®,Meatball Marinara Melt Footlong Melt,"Add some melty goodness to your Meatball Marinara sub. Make it a Fresh Melt™ and get craveable meatballs and tangy marinara sauce topped with American and parmesan, all grilled to cheesy perfection. Freshly made in front of you.",11.38 USD
+1359,Fresh Melts®,Meatball Marinara Melt 6 Inch Melt,"Add some melty goodness to your Meatball Marinara sub. Make it a Fresh Melt™ and get craveable meatballs and tangy marinara sauce topped with American and parmesan, all grilled to cheesy perfection. Freshly made in front of you.",6.94 USD
+1359,Fresh Melts®,Oven Roasted Turkey Melt Footlong Melt,"The Oven Roasted Turkey Melt is loaded with fresh veggies like tomatoes, peppers and onions, and grilled on our Hearty Multigrain bread until the American cheese is as melty and cheesy as you want it. Cravings, covered.",12.7 USD
+1359,Fresh Melts®,Oven Roasted Turkey Melt 6 Inch Melt,"The Oven Roasted Turkey Melt is loaded with fresh veggies like tomatoes, peppers and onions, and grilled on our Hearty Multigrain bread until the American cheese is as melty and cheesy as you want it. Cravings, covered.",7.9 USD
+1359,Fresh Melts®,Spicy Italian Melt Footlong Melt,"Spicy Italian Melt combines the mouth-watering flavor of pepperoni, salami and cheese grilled to melty perfection with the feel-good flavor of spinach, tomatoes and peppers. Guess you can have it all.",11.74 USD
+1359,Fresh Melts®,Spicy Italian Melt 6 Inch Melt,"Spicy Italian Melt combines the mouth-watering flavor of pepperoni, salami and cheese grilled to melty perfection with the feel-good flavor of spinach, tomatoes and peppers. Guess you can have it all.",7.18 USD
+1359,Fresh Melts®,Steak &amp; Cheese Melt Footlong Melt,"Grilled, melty and cheesy but also loaded with fresh vegetables? The Steak &amp; Cheese Melt is just that, freshly made with onions and peppers and perfectly grilled to cover all your cravings.",13.54 USD
+1359,Fresh Melts®,Steak &amp; Cheese Melt 6 Inch Melt,"Grilled, melty and cheesy but also loaded with fresh vegetables? The Steak &amp; Cheese Melt is just that, freshly made with onions and peppers and perfectly grilled to cover all your cravings.",8.62 USD
+1359,Fresh Melts®,Tuna Melt Footlong Melt,"100% wild-caught tuna with mayo. Fresh onion. Melty provolone. We brought the best ingredients together for something that satisfies your cravings for both fresh and savory. It’s not just a tuna melt, it’s a Fresh Melt™. Freshly made in front of you.",12.58 USD
+1359,Fresh Melts®,Tuna Melt 6 Inch Melt,"100% wild-caught tuna with mayo. Fresh onion. Melty provolone. We brought the best ingredients together for something that satisfies your cravings for both fresh and savory. It’s not just a tuna melt, it’s a Fresh Melt™. Freshly made in front of you.",7.9 USD
+1359,No Bready Bowls™,Sweet Onion Chicken Teriyaki,"The amazing Sweet Onion Chicken Teriyaki protein bowl carries its weight in deliciousness. It starts light with a veggie delight of lettuce, spinach, tomatoes, cucumbers, green peppers, black olives, and red onions, but then here come the big, heavy hitters—the juicy, grilled chicken strips topped with our NEW Sweet Onion Teriyaki sauce. It’s all that, and more.",11.15 USD
+1359,No Bready Bowls™,Mozza Meat,"This mouth-watering protein bowl is heavenly anytime. Tons of thin-sliced Black Forest Ham, NEW Italian-style capicola and Belgioioso® Fresh  Mozzarella piled high on a bed of lettuce, spinach, tomatoes, cucumbers, green peppers, black olives, red onions and banana peppers.",11.99 USD
+1359,No Bready Bowls™,Supreme Meats,"This Supreme Meats protein bowl is so stacked, just lifting it is a workout. That’s because it’s piled with NEW Italian-style capicola, thin-sliced Black Forest Ham, Genoa Salami, and pepperoni set on top of a bed of lettuce, spinach, tomatoes, cucumbers, green peppers, black olives, red onions, banana peppers and topped with provolone and our famous MVP Parmesan Vinaigrette™.",11.99 USD
+1359,No Bready Bowls™,All-American Club®,"Everything you want in the classic All-American Club® sandwich, all in a bowl. Oven roasted turkey, Black Forest ham and hickory smoked bacon pack the protein. With lettuce, baby spinach, tomatoes, cucumber, green peppers, black olives, red onions, and Monterey cheddar cheese.",10.78 USD
+1359,No Bready Bowls™,Baja Chicken &amp; Bacon,"Energize your meal with extra helpings of Rotisserie-Style Chicken, Pepper Jack Cheese, and Hickory-Smoked Bacon, piled high on crisp veggies and topped with our Baja Chipotle sauce.",11.15 USD
+1359,No Bready Bowls™,Baja Steak &amp; Jack,"That Baja Steak &amp; Jack Footlong you fell in love with? It comes in a bowl too: Steak and Pepper Jack Cheese, piled high on fresh, crisp veggies, with our Baja Chipotle Sauce.",11.15 USD
+1359,No Bready Bowls™,Baja Turkey Avocado,"Give your lunch a boost with a double portion of Oven-Roasted Turkey, along with Smashed Avocado and Baja Chipotle sauce on a bowl of greens and veggies.",15.71 USD
+1359,No Bready Bowls™,Black Forest Ham,"A Footlong’s worth of protein? Yup! When you make it a Protein Bowl you’ll get all of the Black Forest ham you’d get on your favorite Footlong, piled high atop fresh lettuce, tomato, cucumber and more veggies.",9.58 USD
+1359,No Bready Bowls™,Buffalo Chicken,"Packed with grilled chicken, plus just the right amount of Frank's RedHot® Buffalo sauce, a little peppercorn ranch to beat the heat and all the veggies you can fit in there. Frank’s RedHot® is a registered trademark of McCormick &amp; Co. and used under license by Subway Franchisee Advertising Fund Trust Ltd. ®/© Subway IP LLC 2021.",11.15 USD
+1359,No Bready Bowls™,B.L.T.," The classic B.L.T., in a bowl. It’s that simple. But of course, you can add your favorite veggies, too.",9.71 USD
+1359,No Bready Bowls™,Chicken &amp; Bacon Ranch,"Fuel your day with every last bite of Rotisserie-Style Chicken, Monterrey Cheddar Cheese, and Hickory-Smoked Bacon you’d get in a Footlong, now in a bowl with veggies and Peppercorn Ranch.",11.38 USD
+1359,No Bready Bowls™,Cold Cut Combo®,"Can’t pick just one protein for your Protein Bowl? Try three. The Cold Cut Combo® features heaping portions of ham, salami and bologna (all turkey based) plus lettuce, tomato, cucumbers and more.",8.98 USD
+1359,No Bready Bowls™,Grilled Chicken,"Tender grilled chicken is the star of the show, while you choose the supporting cast from our long list of veggies in this protein-packed bowl.",11.03 USD
+1359,No Bready Bowls™,"Honey Mustard Rotisserie-Style Chicken ","Even a salad can be extra. So, we’re giving you DOUBLE the Rotisserie-Style Chicken, on a bowl of crisp veggies, and topping it all with Honey Mustard.",11.15 USD
+1359,No Bready Bowls™,Italian B.M.T.®,"Big. Meaty. Tasty. And we mean meaty. You’ll get all the salami, pepperoni and ham you’d find on a Footlong Italian B.M.T®. on top of shredded lettuce, tomatoes, cucumbers and more. Yeah, that works.",10.18 USD
+1359,No Bready Bowls™,Meatball Marinara,"When it comes to the Meatball Marinara Protein Bowl, we won’t skimp on the protein. You’ll get spinach, peppers and other veggies plus all eight meatballs (count ‘em!) you’d find on a Footlong.",8.98 USD
+1359,No Bready Bowls™,Oven Roasted Chicken,Our Protein Bowls got their name for a reason. Because they’re stacked with the meats you love. Oven Roasted Chicken is no exception. Loaded with veggies and topped with all the savory chicken you’d get on a Footlong — this one’s a power meal.,10.18 USD
+1359,No Bready Bowls™,Oven Roasted Turkey,"Get all the flavor you’d find in an Oven Roasted Turkey Footlong, without sacrificing an ounce of protein. The Oven Roasted Turkey Protein Bowl is loaded with your choice of veggies and topped with all the thin-sliced turkey you’d get in your favorite Footlong.",10.3 USD
+1359,No Bready Bowls™,Oven Roasted Turkey &amp; Ham," Our thin-sliced, oven roasted turkey and Black Forest ham make an unbeatable duo, especially sitting on top of all your favorite veggies.",9.94 USD
+1359,No Bready Bowls™,Pizza Sub," We made pizza into a sub, then made that into a bowl. Why not? Packed with pepperoni, Monterey cheddar cheese and topped with marinara sauce. Feel free to add all the fresh veggies you (and the bowl) can handle.",9.58 USD
+1359,No Bready Bowls™,Roast Beef,A generous portion of Choice Angus Roast Beef and veggies: this is a Protein Bowl that packs a punch.,12.7 USD
+1359,No Bready Bowls™,Rotisserie-Style Chicken,"Fuel up with juicy rotisserie-style chicken, piled high on whatever veggies you happen to be in the mood for.",11.15 USD
+1359,No Bready Bowls™,Spicy Italian,"How do you turn your go-to Spicy Italian into a powerful Protein Bowl? You take all of the pepperoni and Genoa salami (seriously, every last slice!) you’d find on a Footlong and add it to a bowl with your pick of veggies.",9.34 USD
+1359,No Bready Bowls™,"Turkey ""Cali Fresh""","Whatever time zone you're in, the Cali Turkey Protein Bowl is always a good call. It's loaded with oven roasted turkey, hickory smoked bacon, smashed avocado, BelGioioso® Fresh Mozzarella, mayo, baby spinach, tomatoes and red onions.",13.54 USD
+1359,No Bready Bowls™,"Steak ""Cali Fresh""","Delicious steak and hickory smoked bacon provide the protein in our Cali Steak Protein Bowl, while smashed avocado and BelGioioso® fresh mozzarella give it that west coast vibe. Add your favorite fresh veggies and enjoy.",14.62 USD
+1359,No Bready Bowls™,Steak &amp; Cheese,"Packed with protein and stacked with veggies, the Steak &amp; Cheese Protein Bowl is everything you love about your favorite Footlong — literally, it has the same amount of juicy steak — plus peppers, onions and more.",11.14 USD
+1359,No Bready Bowls™,Subway Club®,"One bowl, THREE proteins: Oven-Roasted Turkey, Black Forest Ham, and Choice Angus Roast Beef are stacked on fresh, crisp veggies.",11.5 USD
+1359,No Bready Bowls™,Tuna,"How much tuna? A Footlong’s worth of tuna, that’s how much. Enjoy your go-to protein, 100% wild caught tuna, mixed with mayo on top of a bed of fresh lettuce with your choice of veggies. That’s a tuna Protein Bowl.",10.18 USD
+1359,Wraps,Sweet Onion Chicken Teriyaki,"Packed with flavor and texture, the sweet and tangy Sweet Onion Chicken Teriyaki wrap cannot be kept under wraps. Dig into a classic combination of juicy chicken strips marinated in our NEW Sweet Onion Teriyaki sauce, with lettuce, spinach, tomatoes, cucumbers, green peppers and red onions topped with more of our NEW Sweet Onion Teriyaki Sauce and piled into our tasty wrap. One bite and you’ll want to tell the world about it.",9.58 USD
+1359,Wraps,"Mozza Meat ","Roll it up and take it down. The Mozza Meat wrap has thin-sliced Black Forest Ham, NEW Italian-style capicola and  Belgioioso® Fresh  Mozzarella rolled in a Tomato Basil wrap with spinach, tomatoes, red onions, and banana peppers and drizzled with our famous MVP Parmesan Vinaigrette™.",9.59 USD
+1359,Wraps,Supreme Meats,"The flavors of Italy all wrapped up into one delicious, heavenly wrap. We roll up NEW Italian-style capicola , pile on thin-sliced Black Forest Ham, Genoa Salami , and pepperoni  in a Tomato Basil wrap with provolone, lettuce, tomatoes, red onions, and tangy banana peppers and finally top it with our famous MVP Parmesan Vinaigrette™.",9.59 USD
+1359,Wraps,All-American Club®,"The All-American Club® wrap is a delicious combo of oven roasted turkey, Black Forest ham and hickory smoked bacon. We top it off with American cheese, lettuce, tomatoes and red onions, served up in a delicious spinach wrap.",9.58 USD
+1359,Wraps,Baja Chicken &amp; Bacon,"Our spicy, smoky Baja Chicken &amp; Bacon — in a wrap! Rotisserie-Style Chicken, Pepper Jack Cheese, Hickory-Smoked Bacon, veggies, and Baja Chipotle sauce folded in a Tomato Basil Wrap.",9.58 USD
+1359,Wraps,Baja Steak &amp; Jack,"This is a wrap with serious southwestern flavor: Steak, Pepper Jack Cheese, green peppers, red onions, and Baja Chipotle Sauce, rolled up in a hearty Tomato Basil Wrap.",9.58 USD
+1359,Wraps,Baja Turkey Avocado,"Our Baja Turkey Avocado sub — as a wrap! Oven-Roasted Turkey, Smashed Avocado, crisp veggies, and Baja Chipotle sauce, all folded in a Spinach wrap.",9.59 USD
+1359,Wraps,Black Forest Ham,"The Black Forest Ham Wrap is packed with a double portion of ham packed into a tomato basil wrap with lettuce, spinach, tomatoes, cucumbers, green peppers and red onions. Definitely delish.",9.58 USD
+1359,Wraps,Buffalo Chicken,"A wrap that’s not afraid to be bold. We start with a footlong portion of grilled chicken, adding just the right amount of Frank's RedHot® Buffalo sauce. Then we cut the heat with crisp lettuce, tomatoes and cucumbers, and wrap it all up in a Tomato Basil Wrap. Frank’s RedHot® is a registered trademark of McCormick &amp; Co. and used under license by Subway Franchisee Advertising Fund Trust Ltd. ®/© Subway IP LLC 2021.",9.59 USD
+1359,Wraps,B.L.T.,"Simply delicious! This classic on a Tomato Basil wrap, is filled with a double portion of our crispy hickory smoked bacon and finished off with lettuce, juicy tomatoes, and mayo.",9.59 USD
+1359,Wraps,Chicken &amp; Bacon Ranch,"This crave-worthy wrap has it all: hand-pulled, Rotisserie-Style Chicken, smothered in shredded Monterrey Cheddar Cheese, Hickory-Smoked Bacon, and Peppercorn Ranch, folded in a Spinach wrap.",9.58 USD
+1359,Wraps,Cold Cut Combo®,"Can’t decide what kind of meat you want? Get three at once on a delicious tomato basil wrap. Stacked with a double portion of turkey-based meats including ham, salami, and bologna. Enjoy it with lettuce, tomatoes, cucumbers, green peppers, and red onions.",9.58 USD
+1359,Wraps,"Grilled Chicken ","When you want to be 100% satisfied, this wrap delivers. Tender grilled chicken, with fresh veggies like lettuce, baby spinach, tomatoes, cucumbers, green peppers and red onions in a spinach wrap.",9.59 USD
+1359,Wraps," Honey Mustard Rotisserie-Style Chicken","Something tasty is unfolding! Rotisserie-Style Chicken, crisp veggies, and Honey Mustard are served in a hearty spinach wrap.",9.58 USD
+1359,Wraps,Italian B.M.T. ®,"The Italian B.M.T. ® wrap tastes great on a tomato basil wrap. It's filled with a double portion of Genoa salami, spicy pepperoni, and Black Forest ham topped with lettuce, tomatoes, cucumbers, green peppers, and red onions. So tasty.",9.58 USD
+1359,Wraps,Meatball Marinara,"Our Meatball Marinara wrap is a double portion of Italian-style meatballs in irresistible marinara sauce, with Parmesan cheese, in a wrap. Get yourself one.",9.58 USD
+1359,Wraps,Oven Roasted Chicken,"The Oven Roasted Chicken wrap is a fan favorite featuring a double portion of the oven roasted chicken you love, on a delicious spinach wrap. Top it with lettuce, tomatoes, cucumbers, spinach, crisp green peppers, and red onions.",9.58 USD
+1359,Wraps,Oven Roasted Turkey,"Our Oven Roasted Turkey Wrap is a go-to. It's a footlong portion of our premium, thin-sliced, oven roasted turkey, with fresh veggies like lettuce, tomatoes, baby spinach, cucumbers, green peppers and red onions, all served up in a spinach wrap.",9.58 USD
+1359,Wraps,Oven Roasted Turkey &amp; Ham,"Take a bite of this Spinach wrap filled with a footlong portion of our tender, thin-sliced oven roasted turkey and tasty Black Forest ham. Top it with lettuce, spinach, tomatoes, cucumbers, green peppers and red onions. It’s simply delicious.",9.58 USD
+1359,Wraps,Pizza Sub,"Hot outta the oven, it’s the Pizza Sub Wrap. Enjoy spicy pepperoni, piled high and layered with melt-a-licious cheese and our signature marinara sauce. Topped with green peppers and red onions in a tomato basil wrap.",9.58 USD
+1359,Wraps,Roast Beef,"Choice Angus Roast Beef brings the premium flavor, with fresh veggies and a Tomato Basil Wrap.",9.58 USD
+1359,Wraps,Rotisserie-Style Chicken,"A generous portion of juicy rotisserie-style chicken with fresh lettuce, baby spinach, tomatoes, cucumbers, green peppers and red onions. Served in a spinach wrap.",9.58 USD
+1359,Wraps,Spicy Italian,"Feeling spicy? Grab a Spicy Italian wrap. It's a double portion of spicy pepperoni and Genoa salami on a tomato basil wrap. Topped with lettuce, tomatoes, cucumbers, green peppers and red onions…it's a pretty delicious meal.",9.58 USD
+1359,Wraps,"Turkey ""Cali Fresh""","West coast, east coast, it doesn’t matter to us. We make a Cali Turkey Wrap for anyone, loaded with oven roasted turkey, hickory smoked bacon, smashed avocado, BelGioioso® Fresh Mozzarella, mayo, tomatoes, red onions and baby spinach. Served in a spinach wrap.",13.54 USD
+1359,Wraps,"Steak ""Cali Fresh""","The Cali Steak Wrap is made fresh in any time zone, with delicious steak, hickory smoked bacon, smashed avocado, BelGioioso® fresh mozzarella and fresh veggies of your choice. Served in a spinach wrap.
+",11.99 USD
+1359,Wraps,Steak &amp; Cheese,"Our Steak &amp; Cheese wrap is a double portion of shaved steak, wrapped up with melty American cheese in a spinach wrap. Get crazy with veggies and sauces to make it what you want.",9.58 USD
+1359,Wraps,Subway Club®,"Because you don’t need bread to make a good Club: Oven-Roasted Turkey, Black Forest Ham, Choice Angus Roast Beef, and veggies — all folded up in a Tomato Basil Wrap.",9.58 USD
+1359,Wraps,Tuna,Our tasty Tuna Wrap is completely cravable. It has a double serving of 100% wild caught tuna mixed with mayo in a spinach wrap. Then it gets topped with any crunchy veggies you want.,9.58 USD
+1359,Wraps,Veggie Delite®,"The Veggie Delite® wrap has a double portion of the fresh veggies you love. All wrapped in a flavorful tomato basil wrap with lettuce, tomatoes, spinach, green peppers, cucumbers, and red onions. It's one bold, crunchy flavor combo.",9.58 USD
+1359,Breakfast,"Bacon, Egg &amp; Cheese 6 Inch with Regular Egg","Start your day in a sizzlin' way with  bacon, egg, and melty cheese on freshly toasted flatbread (or whatever you like). Pile on your favorite veggies and sauce. Start the day right. ",5.98 USD
+1359,Breakfast,"Bacon, Egg &amp; Cheese Footlong with Regular Egg","Start your day in a sizzlin' way with  bacon, egg, and melty cheese on freshly toasted flatbread (or whatever you like). Pile on your favorite veggies and sauce. Start the day right. ",9.34 USD
+1359,Breakfast,"Bacon, Egg &amp; Cheese Wrap","Start your day in a sizzlin' way with a Tomato Basil wrap filled with American Cheese, a double portion of delicious egg and crispy hickory smoked bacon.",9.58 USD
+1359,Breakfast,"Black Forest Ham, Egg &amp; Cheese 6 Inch with Regular Egg","Enjoy savory Black Forest ham, melted cheese, and egg -  all on your favorite bread. Add your choice of veggies for a tasty way to start the day. Hello, delicious. ",5.98 USD
+1359,Breakfast,"Black Forest Ham, Egg &amp; Cheese Footlong with Regular Egg","Enjoy savory Black Forest ham, melted cheese, and egg -  all on your favorite bread. Add your choice of veggies for a tasty way to start the day. Hello, delicious. ",9.34 USD
+1359,Breakfast,"Black Forest Ham, Egg &amp; Cheese Wrap",Helllooo delicious! Enjoy a Spinach wrap filled with American cheese and a double portion of savory Black Forest ham and egg. What a tasty way to start the day!,9.58 USD
+1359,Breakfast,Egg &amp; Cheese 6 Inch with Regular Egg,A classic for a reason. Our Egg and Cheese is simply delicious. Enjoy a fluffy egg with melted cheese. Try it toasted - It's unbeatable.,5.26 USD
+1359,Breakfast,Egg &amp; Cheese Footlong with Regular Egg,A classic for a reason. Our Egg and Cheese is simply delicious. Enjoy a fluffy egg with melted cheese. Try it toasted - It's unbeatable.,8.74 USD
+1359,Breakfast,Egg &amp; Cheese Wrap,"A classic for a reason, now available on a Spinach wrap. Enjoy with American Cheese and a double portion of fluffy egg.",9.58 USD
+1359,Breakfast,"Steak, Egg &amp; Cheese 6 Inch with Regular Egg","No matter what side of the bed you wake up on, you’ll love this. Yummy egg  with tender and delicious steak covered in melty cheese. That's one beautiful breakfast.",5.98 USD
+1359,Breakfast,"Steak, Egg &amp; Cheese Footlong with Regular Egg","No matter what side of the bed you wake up on, you’ll love this. Yummy egg  with tender and delicious steak covered in melty cheese. That's one beautiful breakfast.",9.34 USD
+1359,Breakfast,"Steak, Egg &amp; Cheese Wrap","No matter what side of the bed you wake up on, you'll love this. Enjoy American cheese and a double portion of egg and tender shaved steak on a delicious Tomato Basil wrap. Oh, what a beautiful breakfast.",9.58 USD
+1359,Salads,Sweet Onion Chicken Teriyaki,"The Sweet Onion Chicken Teriyaki salad has so much flavor that it may turn into your go-to meal. It starts with crunchy veggies—lettuce, spinach, tomatoes, cucumbers, green peppers, black olives, and red onions followed by our juicy, grilled chicken strips that are topped with our delicious NEW Sweet Onion Teriyaki Sauce. It’s one sweet and tangy tasting salad.",9.59 USD
+1359,Salads,Mozza Meat,"Has a salad ever made your mouth water? This one will. A heavenly mix of thin-sliced Black Forest Ham, NEW Italian-style capicola and Belgioioso® Fresh  Mozzarella comes together on top of a bed of lettuce, spinach, tomatoes, cucumbers, green peppers, black olives, red onions and banana peppers. Psst, hey, you’re drooling.",10.19 USD
+1359,Salads,Supreme Meats,"Side salad? More like front and center supreme salad. This one is packed with mouth-watering meats. We’re talking NEW Italian-style capicola, thin-sliced Black Forest Ham, Genoa Salami, and pepperoni set on top of a bed of lettuce, spinach, tomatoes, cucumbers, green peppers, black olives, red onions, banana peppers with provolone, and topped off with our famous MVP Parmesan Vinaigrette™.",10.19 USD
+1359,Salads,All-American Club®,"Our classic All-American Club® is now a classic salad, too. Oven roasted turkey, Black Forest ham, hickory smoked bacon are the leaders of this club. Then we add American cheese and crisp lettuce, baby spinach, tomatoes, cucumbers, green peppers, red onions and black olives. ",9.46 USD
+1359,Salads,Baja Chicken &amp; Bacon,"When your salad game could use some zest: Rotisserie-Style Chicken, Pepper Jack Cheese, and Hickory-Smoked Bacon in a big bowl of veggies and topped with our Baja Chipotle sauce.",8.99 USD
+1359,Salads," Baja Steak &amp; Jack","This is no “side salad”: it’s the main course. Steak and Pepper Jack Cheese are piled on fresh, crisp veggies and drizzled with Baja Chipotle Sauce for a whole bowl of awesomeness.",9.83 USD
+1359,Salads,Baja Turkey Avocado,"Spice up your salad with Oven-Roasted Turkey, and Smashed Avocado, on a bed of greens and crisp veggies and topped with Baja Chipotle sauce.",10.01 USD
+1359,Salads,Black Forest Ham,"The Black Forest Ham salad is a flavorful way to enjoy a Subway® favorite. Sliced ham, lettuce, and a pile of your favorite veggies - all tossed with your choice of dressing. ",8.38 USD
+1359,Salads,Buffalo Chicken,"Grilled chicken topped with Frank's RedHot® Buffalo sauce, with lettuce, spinach, tomatoes, cucumbers, green peppers, black olives and red onions. A drizzle of peppercorn ranch dressing cools the spice. Very nice. Frank’s RedHot® is a registered trademark of McCormick &amp; Co. and used under license by Subway Franchisee Advertising Fund Trust Ltd. ®/© Subway IP LLC 2021.",9.59 USD
+1359,Salads,B.L.T.,"Savory hickory smoked bacon. Crisp lettuce. Ripe tomatoes. All mixed with Spinach, crunchy cucumbers, sweet green peppers, black olives, and zesty red onions.",8.75 USD
+1359,Salads,Chicken &amp; Bacon Ranch,"Rotisserie-Style Chicken, Monterey Cheddar Cheese, and Hickory-Smoked Bacon, all on a bowl of greens and topped with Peppercorn Ranch. Because sometimes a garden salad won’t do.",10.06 USD
+1359,Salads,Cold Cut Combo®,"The Cold Cut Combo® salad has ham, salami, and bologna (all turkey-based) tossed together with crisp lettuce and your favorite veggies. Mix it up with whatever dressing you love best.",8.14 USD
+1359,Salads,"Grilled Chicken ","Beautiful in its simplicity. Tender grilled chicken on a bed of fresh lettuce topped with tomatoes, red onions, baby spinach, cucumbers, green peppers and black olives. Perfection. ",9.59 USD
+1359,Salads,Honey Mustard Rotisserie-Style Chicken,"Rotisserie-Style Chicken, piled on crisp veggies and topped with Honey Mustard. It’s official: you can be excited for salads again.",9.83 USD
+1359,Salads,"Italian B.M.T. ® ","The Italian B.M.T. ® salad is the salad version of our popular sub. Crisp greens topped with Genoa salami, spicy pepperoni, and Black Forest ham. Meaty deliciousness, all in a salad. ",9.11 USD
+1359,Salads,Meatball Marinara,"The Meatball Marinara salad is the ultimate cravings crusher. Hot Italian-style meatballs in marinara sauce and a sprinkle of Parmesan cheese, all sitting on top of your favorite greens and veggies. Yes!",8.14 USD
+1359,Salads,Oven Roasted Chicken,"The Oven Roasted Chicken salad has warm, savory chicken tossed together with crisp greens and any veggies you want.  Your favorite sandwich, just in salad form. ",9.1 USD
+1359,Salads,"Oven Roasted Turkey ","The Oven Roasted Turkey Salad is a go-to salad choice. Our premium, thin-sliced oven roasted turkey, tossed together with lettuce, crunchy veggies and whatever dressing does it for you. Simply the best. ",9.1 USD
+1359,Salads,Oven Roasted Turkey &amp; Ham,"Thin-sliced oven roasted turkey and Black Forest ham with crisp lettuce, tender spinach and many more of your favorite veggies. ",9.1 USD
+1359,Salads,Roast Beef,Level up your salad with NEW Choice Angus Roast Beef and a whole lot of crisp veggies.,10.55 USD
+1359,Salads,Rotisserie-Style Chicken,"Juicy rotisserie-style chicken is mixed with fresh lettuce, baby spinach, tomatoes, cucumbers and other veggies of your choosing. We’ll even let you choose your dressing. We’re good like that.",9.83 USD
+1359,Salads,Spicy Italian,"Our Spicy Italian salad  is a combo of pepperoni and Genoa salami. Basically, the ideal Italian sub, but transformed into a salad. Genius, right?",8.38 USD
+1359,Salads,"Turkey ""Cali Fresh""","West coast, east coast, it doesn’t matter to us. We make a  Cali Turkey Salad for anyone, loaded with oven roasted turkey, hickory smoked bacon, BelGioioso® Fresh Mozzarella, smashed avocado, lettuce, baby spinach, tomatoes, green peppers, red onions and black olives.",10.78 USD
+1359,Salads,"Steak ""Cali Fresh""","The Cali Steak Salad is made fresh in any time zone, packed with delicious steak, hickory smoked bacon, BelGioioso® fresh mozzarella, smashed avocado, and loaded with  lettuce, baby spinach, tomatoes, cucumbers, green peppers, red onions and black olives.
+",11.5 USD
+1359,Salads,Steak &amp; Cheese,"The Steak &amp; Cheese salad starts with crisp greens, but gets to the next level with warm, delicious steak topped with cheese. Dreams do come true. ",9.82 USD
+1359,Salads,Subway Club®,"Club Sandwich? Meet CLUB SALAD. Oven-Roasted Turkey, Black Forest Ham, and Choice Angus Roast Beef on a big bowl of the freshest veggies and your choice of dressing.",9.82 USD
+1359,Salads,Tuna,"Our Tuna salad is simply delish. 100% wild caught tuna mixed with mayo, riding high on top of a bed of crisp lettuce and veggies. Classic for a reason.",9.1 USD
+1359,Salads,Veggie Delite®,"Enjoy the simpler things? The Veggie Delite® salad is simply delish. A pile of your favorite veggies, finished with the dressing of your choice. Crisp. Delicious. All for you. ",7.9 USD
+1359,Salads,Pizza Sub,"Spicy pepperoni, American cheese and mouthwatering marinara sauce over crisp lettuce, spinach, ripe tomatoes, cucumbers, green peppers, black olives and red onions.",8.74 USD
+1359,Drinks,1% Low Fat Milk,"As delicious as our sandwiches are, they are even better when paired with the perfect side and drink or even adding a little something extra. With such a variety to choose from, there's truly something for every taste.",2.39 USD
+1359,Drinks,Coca-Cola® Classic," Crisp, refreshing, original taste.",2.74 USD
+1359,Drinks,Dasani® Water,"As delicious as our sandwiches are, they are even better when paired with the perfect side and drink or even adding a little something extra. With such a variety to choose from, there's truly something for every taste.",2.87 USD
+1359,Drinks,Honest Kids® Super Fruit Punch,"Grape, strawberry, apple, watermelon juices and other ingredients unite to truly pack a punch.
+
+USDA organic certified. Sweetened only with fruit juice. No added sugar. No artificial sweeteners. No high fructose corn syrup. Gluten free. No GMOs.",1.9 USD
+1359,Drinks,Simply Orange®,"100% pure-squeezed, pasteurized orange juice.",2.86 USD
+1359,Drinks,Sprite®,"Cool, crisp lemon-lime taste that’s caffeine free with 100% natural flavors.
+
+A lemon-lime soda with 100% natural flavors.",2.74 USD
+1359,Drinks,vitamin water® XXX,"Delicious taste of açai-blueberry-pomegranate flavor with other natural flavors.
+Vitamin and nutrient-enhanced water beverage with electrolytes and other good stuff.
+With three types of antioxidants to help fight free radicals: vitamin-a, vitamin-c and selenium. plus a great source of vitamin b5, vitamin b6, and vitamin b12.",3.1 USD
+1359,Drinks,Gatorade® Cool Blue," The thirst quenching taste of cool blue raspberry to rehydrate and help maximize your performance.",3.11 USD
+1359,Sides,Musselman’s Apple Sauce,"As delicious as our sandwiches are, they are even better when paired with the perfect side and drink or even adding a little something extra. With such a variety to choose from, there's truly something for every taste.",1.9 USD
+1359,Sides,Chocolate Chip,"Soft, buttery, chock full of chips. What more can we say? Enjoy.",0.94 USD
+1359,Sides,Oatmeal Raisin,"Soft, chewy and delicious, our oatmeal raisin cookie is the perfect dessert, or snack.",0.94 USD
+1359,Sides,Raspberry Cheesecake,The flavor of sweet raspberry. The richness of cheesecake. Together in one awesome cookie creation.,0.94 USD
+1359,Sides,White Chip Macadamia Nut,Chunks of Macadamia nuts and white chips in a ridiculously delicious cookie.,0.94 USD
+1359,Sides,Baked Lay's® Original,"SNACK A LITTLE SMARTER™? with Baked LAY’S®? Potato Chips. It’s the LAY’S®? chip you love, just Baked. Perfectly paired with your favorite Subway sandwich.",1.66 USD
+1359,Sides,DORITOS® Nacho Cheese,"The iconic bold and intense cheesiness of Doritos® Nacho Cheese Flavored Tortilla Chips. Doritos® flavors ignite adventure and inspire action. Are you ready? If so, crunch on. ",1.66 USD
+1359,Sides,SunChips® Harvest Cheddar®,"The flavor of real cheddar cheese is layered onto a delicious whole grain chip to create this tasty combination. ",1.54 USD
+1359,Sides,LAY’S® Classic,"It all starts with farm-grown potatoes, cooked and seasoned to perfection. So every LAY'S® potato chip is perfectly crispy and full of fresh potato taste. Happiness in Every Bite.®",1.66 USD
+1359,Sides,Miss Vickie’s® Jalapeño,Made with jalapeño seasoning for enough heat to make things deliciously interesting. And every spicy bite is made with no artificial flavors or preservatives.,1.66 USD
+1360,Picked for you,Cinnabon Delights® 12 Pack,"Warm donut holes filled with Cinnabon® signature cream cheese frosting, and dusted in Makara Cinnamon sugar.",7.43 USD
+1360,Picked for you,Quesarito,"A melty cheese quesadilla, with shredded cheddar cheese and warm nacho cheese sauce is opened and wrapped around a burrito filled with seasoned beef, seasoned rice, cool sour cream and creamy chipotle sauce.",5.63 USD
+1360,Picked for you,Nachos BellGrande®,"A portion of crispy tortilla chips topped with warm nacho cheese sauce, refried beans, seasoned beef, ripe tomatoes and cool sour cream.",6.35 USD
+1360,Picked for you,Mountain Dew Baja Blast®,,2.39 USD
+1360,Picked for you,Beefy Melt Burrito,"Seasoned Rice, Seasoned Beef, Nacho Cheese Sauce, Fiesta Strips, Three Cheese Blend, Reduced Fat Sour Cream wrapped in a warm tortilla.",2.4 USD
+1360,Featured,Toasted Cheddar Chalupa,"A Chalupa shell with 6-month aged cheddar toasted on the outside and with seasoned beef, reduced-fat sour cream, tomatoes, lettuce, and cheddar cheese on the inside.",4.79 USD
+1360,Featured,Black Bean Toasted Cheddar Chalupa,"A Chalupa shell with 6-month aged cheddar toasted on the outside and with black beans, reduced-fat sour cream, tomatoes, lettuce, and cheddar cheese on the inside.",4.79 USD
+1360,Featured,Toasted Cheddar Chalupa Deluxe Box,"Includes one Toasted Cheddar Chalupa with grilled, all-white-meat chicken, one Crunchy Taco, chips and nacho cheese sauce, and a medium fountain drink.",8.99 USD
+1360,Featured,Toasted Cheddar Chalupa Box,"Includes one Toasted Cheddar Chalupa, one Crunchy Taco, Cinnamon Twists, and a medium fountain drink.",6.59 USD
+1360,Featured,Brisk® Dragon Paradise™ Sparkling Iced Tea,,2.39 USD
+1360,Featured,Dole® Lemonade Strawberry Squeeze,,2.39 USD
+1360,Featured,Taco &amp; Burrito Cravings Pack,Includes 4 Crunchy Tacos and 4 Beefy 5-layer Burritos,13.19 USD
+1360,Featured,Taco Party Pack,"Your choice of 12 of the following tacos: Crunchy or Soft Tacos, Crunchy or Soft Taco Supremes®.",20.39 USD
+1360,Featured,Soft Taco Party Pack,Includes 12 Soft Tacos,20.39 USD
+1360,Featured,Supreme Taco Party Pack,Your choice of 12 of the following tacos: Crunchy or Soft Taco Supremes®.,25.19 USD
+1360,Featured,Supreme Soft Taco Party Pack,Includes 12 Soft Tacos Supreme®.,25.19 USD
+1360,Combos,Toasted Cheddar Chalupa Deluxe Box,"Includes one Toasted Cheddar Chalupa with grilled, all-white-meat chicken, one Crunchy Taco, chips and nacho cheese sauce, and a medium fountain drink.",8.99 USD
+1360,Combos,Toasted Cheddar Chalupa Box,"Includes one Toasted Cheddar Chalupa, one Crunchy Taco, Cinnamon Twists, and a medium fountain drink.",6.59 USD
+1360,Combos,Chicken Quesadilla Combo,"Served with large drink, chicken quesadilla, regular crunchy taco.",9.83 USD
+1360,Combos,Nachos BellGrande® Combo,Served with a large drink and a crunchy taco supreme.,10.19 USD
+1360,Combos,2 Chicken Chalupas Supreme Combo,"Served with a drink, 2 Chicken Chalupa Supremes, and a regular crunchy taco.",11.87 USD
+1360,Combos,Crunchwrap Supreme® Combo,Served with a large drink and a regular crunchy taco.,9.23 USD
+1360,Combos,3 Crunchy Tacos Combo,Served with a large drink and 3 beef tacos.,7.43 USD
+1360,Combos,3 Crunchy Tacos Supreme® Combo,Served with a large drink and 3 tacos.,9.35 USD
+1360,Combos,3 Doritos® Locos Tacos Combo,Includes three Nacho Cheese Doritos® Locos Tacos and a Large drink.,9.23 USD
+1360,Combos,3 Doritos® Locos Tacos Supreme Combo,Includes three Nacho Cheese Doritos® Locos Tacos Supreme® and a Large drink.,9.95 USD
+1360,Combos,3 Soft Tacos Combo,Served with a drink and 3 beef tacos.,7.43 USD
+1360,Combos,3 Soft Tacos Supreme® Combo,Three Soft Taco Supremes served with a large drink,8.99 USD
+1360,Combos,Burrito Supreme® Combo,"Served with a large drink, beef burrito supreme and crunchy taco supreme.",9.35 USD
+1360,Combos,Classic Combo,"Includes a Beefy 5-Layer Burrito, regular Crunchy Taco, Cinnamon Twists, and a Large fountain drink.",6.0 USD
+1360,GROUPS,Meal for 2,"Includes two Crunchwrap Supremes®, two Bean Burritos, two Soft Tacos, and two orders of chips and nacho cheese sauce. Set max quantities to add item to cart.",15.0 USD
+1360,GROUPS,Meal for 4,"Includes two Crunchwrap Supremes®, two Chicken Quesadillas, four Soft Tacos, and two orders of chips and nacho cheese sauce. Set max quantities to add item to cart.",25.0 USD
+1360,GROUPS,Taco &amp; Burrito Cravings Pack,Includes 4 Crunchy Tacos and 4 Beefy 5-layer Burritos,13.19 USD
+1360,GROUPS,Taco Party Pack,"Your choice of 12 of the following tacos: Crunchy or Soft Tacos, Crunchy or Soft Taco Supremes®.",20.39 USD
+1360,GROUPS,Supreme Taco Party Pack,Your choice of 12 of the following tacos: Crunchy or Soft Taco Supremes®.,25.19 USD
+1360,GROUPS,Soft Taco Party Pack,Includes 12 Soft Tacos,20.39 USD
+1360,GROUPS,Supreme Soft Taco Party Pack,Includes 12 Soft Tacos Supreme®.,25.19 USD
+1360,GROUPS,Variety Taco Party Pack,"Your choice of 12 of the following tacos: Crunchy or Soft Taco, or Nacho Cheese Doritos® Locos Tacos.",22.79 USD
+1360,GROUPS,Supreme Variety Taco Party Pack,"Your choice of 12 of the following tacos: Crunchy or Soft Taco Supremes®, or Nacho Cheese Doritos® Locos Tacos Supremes®",26.39 USD
+1360,GROUPS,Drinks Party Pack,Includes four Medium fountain drinks of your choice.,4.8 USD
+1360,Sauce Packets,Fire Sauce Packet,,0.0 USD
+1360,Sauce Packets,Hot Sauce Packet,,0.0 USD
+1360,Sauce Packets,Mild Sauce Packet,,0.0 USD
+1360,Sauce Packets,Diablo Sauce Packet,,0.0 USD
+1360,Specialties,Toasted Cheddar Chalupa,"A Chalupa shell with 6-month aged cheddar toasted on the outside and with seasoned beef, reduced-fat sour cream, tomatoes, lettuce, and cheddar cheese on the inside.",4.79 USD
+1360,Specialties,Black Bean Toasted Cheddar Chalupa,"A Chalupa shell with 6-month aged cheddar toasted on the outside and with black beans, reduced-fat sour cream, tomatoes, lettuce, and cheddar cheese on the inside.",4.79 USD
+1360,Specialties,Chalupa Supreme®,"Chewy fried chalupa bread filled with seasoned beef, sour cream, crispy lettuce, three-cheese blend and ripe tomatoes.",5.03 USD
+1360,Specialties,Black Bean Chalupa Supreme®,"A chewy chalupa shell filled with black beans, reduced-fat sour cream, lettuce, tomatoes, and three-cheese blend.",3.95 USD
+1360,Specialties,Crunchwrap Supreme®,"A flour tortilla layered with seasoned beef, warm nacho cheese sauce, a crispy tostada shell, crispy lettuce, ripe tomatoes and topped with cool sour cream all wrapped in our signature crunchwrap fold and grilled to go.",5.75 USD
+1360,Specialties,Black Bean Crunchwrap Supreme®,"Flour tortilla, black beans, nacho cheese sauce, tostada shell, lettuce, tomatoes &amp; reduced fat sour cream layers grilled in a crunchwrap. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation method may lead to cross contact with meat",5.27 USD
+1360,Specialties,Cheesy Gordita Crunch,"A warm flatbread layered with three-cheese blend and wrapped around a crunchy taco filled with seasoned beef, spicy ranch sauce, crispy lettuce and shredded cheddar cheese.",5.27 USD
+1360,Specialties,Doritos® Cheesy Gordita Crunch - Nacho Cheese,"A Nacho Cheese Doritos® Locos Tacos wrapped up in a soft piece of flatbread with Seasoned Beef, Spicy Ranch Sauce, Lettuce, Cheddar Cheese, and a Three Cheese Blend.",5.03 USD
+1360,Specialties,Cheesy Roll Up,"A warm flour tortilla filled with our 3-cheese blend. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",1.2 USD
+1360,Specialties,Chicken Chipotle Melt,"Grilled chicken, creamy chipotle sauce, and real shredded cheddar cheese all wrapped up in a warm flour tortilla.",1.79 USD
+1360,Tacos,Soft Taco,"A warm flour tortilla filled with seasoned beef, crispy lettuce and shredded cheddar cheese.",1.79 USD
+1360,Tacos,Soft Taco Supreme®,"A warm flour tortilla filled with seasoned beef, cool sour cream, crispy lettuce, shredded cheddar cheese and ripe tomatoes.",2.75 USD
+1360,Tacos,Crunchy Taco,"A crunchy taco shell filled with seasoned beef, crispy lettuce and shredded cheddar cheese.",1.79 USD
+1360,Tacos,Crunchy Taco Supreme®,"A crunchy taco shell filled with seasoned beef, cool sour cream, crispy lettuce, shredded cheddar cheese and ripe tomatoes.",2.75 USD
+1360,Tacos,Nacho Cheese Doritos® Locos Tacos,"A crunchy taco shell made from Nacho Cheese Doritos® is filled with seasoned beef, crispy lettuce, and pico de gallo.",2.63 USD
+1360,Tacos,Nacho Cheese Doritos® Locos Tacos Supreme®,"A crunchy taco shell made from Nacho Cheese Doritos® is filled with seasoned beef, cool sour cream, crispy lettuce, shredded cheddar cheese and ripe tomatoes.",3.59 USD
+1360,Burritos,Bean Burrito,"Warm flour tortilla filled with refried beans, shredded cheddar cheese, flavorful red sauce and diced onions. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",2.15 USD
+1360,Burritos,Beefy 5-Layer Burrito,"A warm tortilla is covered in a layer of warm nacho cheese and topped with seasoned beef, refried beans, cool sour cream and shredded cheddar cheese. Then it's wrapped creating a layer of nacho cheese all around the outside of the burrito.",4.07 USD
+1360,Burritos,Quesarito,"A melty cheese quesadilla, with shredded cheddar cheese and warm nacho cheese sauce is opened and wrapped around a burrito filled with seasoned beef, seasoned rice, cool sour cream and creamy chipotle sauce.",5.63 USD
+1360,Burritos,Black Bean Quesarito,"Cheese &amp; nacho cheese sauce quesadilla wrapped around a black bean, seasoned rice, reduced fat source cream &amp; chipotle sauce burrito. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat.",3.59 USD
+1360,Burritos,Burrito Supreme®,"A warm flour tortilla loaded with seasoned beef, refried beans, tomatoes, onions, iceberg lettuce, reduced-fat sour cream, red sauce and cheddar cheese.",5.03 USD
+1360,Burritos,Chipotle Ranch Grilled Chicken Burrito,"Grilled chicken, fiesta strips, avocado ranch sauce, creamy chipotle sauce, lettuce, tomatoes, and real shredded cheddar cheese wrapped inside a warm flour tortilla.",2.4 USD
+1360,Burritos,Beefy Melt Burrito,"Seasoned Rice, Seasoned Beef, Nacho Cheese Sauce, Fiesta Strips, Three Cheese Blend, Reduced Fat Sour Cream wrapped in a warm tortilla.",2.4 USD
+1360,Burritos,Cheesy Bean and Rice Burrito,"A warm flour tortilla filled with refried beans, seasoned rice, nacho cheese sauce and creamy jalapeño sauce. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",1.2 USD
+1360,Burritos,Fiesta Veggie Burrito,"The Fiesta Veggie Burrito comes with Seasoned Rice, Black Beans, Red Strips, Creamy Chipotle Sauce, Reduced-Fat Sour Cream, a Three-Cheese Blend, Tomatoes, and Guacamole.",2.4 USD
+1360,Burritos,Chili Cheese Burrito,Chili and shredded cheddar cheese wrapped inside a warm flour tortilla.,3.59 USD
+1360,Quesadillas,Chicken Quesadilla,"An extra flour tortilla filled with melty three-cheese blend, fire grilled chicken, creamy jalapeño sauce folded and grilled to perfection.",5.87 USD
+1360,Quesadillas,Steak Quesadilla,"A warm flour tortilla filled with USDA Select Marinated Grilled Steak, Three Cheese Blend, Creamy Jalapeno Sauce, folded over and grilled.",5.99 USD
+1360,Quesadillas,Cheese Quesadilla,"Large flour tortilla filled with melty three-cheese blend, creamy jalapeño sauce, perfectly folded &amp; grilled. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",5.03 USD
+1360,Nachos,Nachos BellGrande®,"A portion of crispy tortilla chips topped with warm nacho cheese sauce, refried beans, seasoned beef, ripe tomatoes and cool sour cream.",6.35 USD
+1360,Nachos,Chips and Nacho Cheese Sauce,Nacho chips with a side of warm nacho cheese sauce for dipping.,2.15 USD
+1360,New Cravings Value Menu,Chipotle Ranch Grilled Chicken Burrito,"Grilled chicken, fiesta strips, avocado ranch sauce, creamy chipotle sauce, lettuce, tomatoes, and real shredded cheddar cheese wrapped inside a warm flour tortilla.",2.4 USD
+1360,New Cravings Value Menu,Beefy Melt Burrito,"Seasoned Rice, Seasoned Beef, Nacho Cheese Sauce, Fiesta Strips, Three Cheese Blend, Reduced Fat Sour Cream wrapped in a warm tortilla.",2.4 USD
+1360,New Cravings Value Menu,Cheesy Bean and Rice Burrito,"A warm flour tortilla filled with refried beans, seasoned rice, nacho cheese sauce and creamy jalapeño sauce. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",1.2 USD
+1360,New Cravings Value Menu,Fiesta Veggie Burrito,"The Fiesta Veggie Burrito comes with Seasoned Rice, Black Beans, Red Strips, Creamy Chipotle Sauce, Reduced-Fat Sour Cream, a Three-Cheese Blend, Tomatoes, and Guacamole.",2.4 USD
+1360,New Cravings Value Menu,Cheesy Roll Up,"A warm flour tortilla filled with our 3-cheese blend. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",1.2 USD
+1360,New Cravings Value Menu,Cinnamon Twists,"Crispy, puffed corn twists sprinkled with cinnamon and sugar.",1.2 USD
+1360,New Cravings Value Menu,Classic Combo,"Includes a Beefy 5-Layer Burrito, regular Crunchy Taco, Cinnamon Twists, and a Large fountain drink.",6.0 USD
+1360,Sweets,Cinnamon Twists,"Crispy, puffed corn twists sprinkled with cinnamon and sugar.",1.2 USD
+1360,Sweets,Cinnabon Delights® 2 Pack,"Warm donut holes filled with Cinnabon® signature cream cheese frosting, and dusted in Makara Cinnamon sugar",1.91 USD
+1360,Sweets,Cinnabon Delights® 12 Pack,"Warm donut holes filled with Cinnabon® signature cream cheese frosting, and dusted in Makara Cinnamon sugar.",7.43 USD
+1360,Sides,Chips and Nacho Cheese Sauce,Nacho chips with a side of warm nacho cheese sauce for dipping.,2.15 USD
+1360,Sides,Black Beans,"Savory black beans. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",1.79 USD
+1360,Sides,Black Beans and Rice,"Black beans served with seasoned rice. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",1.79 USD
+1360,Sides,Cinnamon Twists,"Crispy, puffed corn twists sprinkled with cinnamon and sugar.",1.2 USD
+1360,Sides,Cinnabon Delights® 2 Pack,"Warm donut holes filled with Cinnabon® signature cream cheese frosting, and dusted in Makara Cinnamon sugar",1.91 USD
+1360,Sides,Cinnabon Delights® 12 Pack,"Warm donut holes filled with Cinnabon® signature cream cheese frosting, and dusted in Makara Cinnamon sugar.",7.43 USD
+1360,Sides,Mild Sauce Packet,,0.0 USD
+1360,Sides,Hot Sauce Packet,,0.0 USD
+1360,Sides,Fire Sauce Packet,,0.0 USD
+1360,Sides,Diablo Sauce Packet,,0.0 USD
+1360,Sides,Nacho Cheese Sauce,,0.83 USD
+1360,Sides,Reduced-Fat Sour Cream,,0.47 USD
+1360,Sides,Creamy Jalapeño Sauce,,0.23 USD
+1360,Sides,Guacamole,,0.59 USD
+1360,Sides,Chipotle Sauce,,0.36 USD
+1360,Sides,Avocado Ranch Sauce,,0.23 USD
+1360,Sides,Spicy Ranch,,0.36 USD
+1360,Drinks,Cherry Sunrise Freeze,"A sweet, cherry-flavored Freeze with a tropical swirl of pineapple orange flavor.",3.47 USD
+1360,Drinks,Mountain Dew Baja Blast® Freeze,Mountain Dew® Baja Blast in a frozen slushy drink.,3.47 USD
+1360,Drinks,Wild Cherry Freeze,"A sweet, cherry-flavored Freeze.",3.47 USD
+1360,Drinks,Blue Raspberry Freeze,"A sweet, juicy blue raspberry-flavored Freeze.",3.47 USD
+1360,Drinks,Pepsi®,,2.39 USD
+1360,Drinks,Diet Pepsi®,,2.39 USD
+1360,Drinks,Pepsi® Zero Sugar,,2.39 USD
+1360,Drinks,Cherry Pepsi®,,2.39 USD
+1360,Drinks,Mountain Dew®,,2.39 USD
+1360,Drinks,Diet Mountain Dew®,,2.39 USD
+1360,Drinks,Mountain Dew Baja Blast®,,2.39 USD
+1360,Drinks,Mountain Dew® Baja Blast™ Zero Sugar,,2.39 USD
+1360,Drinks,Mug® Root Beer,,2.39 USD
+1360,Drinks,Sierra Mist®,,2.39 USD
+1360,Drinks,G2 Gatorade® Fruit Punch,,2.39 USD
+1360,Drinks,Dole® Lemonade Strawberry Squeeze,,2.39 USD
+1360,Drinks,Brisk® Mango Fiesta,,2.39 USD
+1360,Drinks,Brisk® Dragon Paradise™ Sparkling Iced Tea,,2.39 USD
+1360,Drinks,Lipton® Unsweetened Iced Tea,,2.39 USD
+1360,Drinks,Premium Hot Coffee,Rainforest alliance certified™ coffee.,2.15 USD
+1360,Drinks,Regular Iced Coffee,Rainforest alliance certified™ coffee poured over ice.,2.15 USD
+1360,Drinks,Drinks Party Pack,Includes four Medium fountain drinks of your choice.,4.8 USD
+1360,Bowls,Power Menu Bowl,"Seasoned rice and black beans topped with grilled chicken, avocado ranch sauce, reduced-fat sour cream, lettuce, tomatoes, real cheddar cheese and guacamole.",6.95 USD
+1360,Bowls,Power Menu Bowl - Veggie,"Seasoned rice and black beans topped with avocado ranch sauce, reduced-fat sour cream, lettuce, tomatoes, real cheddar cheese and guacamole.",6.59 USD
+1360,Veggie Cravings,Black Bean Toasted Cheddar Chalupa,"A Chalupa shell with 6-month aged cheddar toasted on the outside and with black beans, reduced-fat sour cream, tomatoes, lettuce, and cheddar cheese on the inside.",4.79 USD
+1360,Veggie Cravings,Bean Burrito,"Warm flour tortilla filled with refried beans, shredded cheddar cheese, flavorful red sauce and diced onions. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",2.15 USD
+1360,Veggie Cravings,Cheesy Bean and Rice Burrito,"A warm flour tortilla filled with refried beans, seasoned rice, nacho cheese sauce and creamy jalapeño sauce. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",1.2 USD
+1360,Veggie Cravings,Black Bean Quesarito,"Cheese &amp; nacho cheese sauce quesadilla wrapped around a black bean, seasoned rice, reduced fat source cream &amp; chipotle sauce burrito. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat.",3.59 USD
+1360,Veggie Cravings,Fiesta Veggie Burrito,"The Fiesta Veggie Burrito comes with Seasoned Rice, Black Beans, Red Strips, Creamy Chipotle Sauce, Reduced-Fat Sour Cream, a Three-Cheese Blend, Tomatoes, and Guacamole.",2.4 USD
+1360,Veggie Cravings,Black Bean Chalupa Supreme®,"A chewy chalupa shell filled with black beans, reduced-fat sour cream, lettuce, tomatoes, and three-cheese blend.",3.95 USD
+1360,Veggie Cravings,Black Bean Crunchwrap Supreme®,"Flour tortilla, black beans, nacho cheese sauce, tostada shell, lettuce, tomatoes &amp; reduced fat sour cream layers grilled in a crunchwrap. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation method may lead to cross contact with meat",5.27 USD
+1360,Veggie Cravings,Cheese Quesadilla,"Large flour tortilla filled with melty three-cheese blend, creamy jalapeño sauce, perfectly folded &amp; grilled. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",5.03 USD
+1360,Veggie Cravings,Power Menu Bowl - Veggie,"Seasoned rice and black beans topped with avocado ranch sauce, reduced-fat sour cream, lettuce, tomatoes, real cheddar cheese and guacamole.",6.59 USD
+1360,Veggie Cravings,Cheesy Roll Up,"A warm flour tortilla filled with our 3-cheese blend. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",1.2 USD
+1360,Veggie Cravings,Chips and Nacho Cheese Sauce,Nacho chips with a side of warm nacho cheese sauce for dipping.,2.15 USD
+1360,Veggie Cravings,Black Beans,"Savory black beans. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",1.79 USD
+1360,Veggie Cravings,Black Beans and Rice,"Black beans served with seasoned rice. Item is lacto-ovo, allowing for dairy &amp; egg consumption. Preparation methods may lead to cross contact with meat. See ta.co for full details.",1.79 USD
+1360,Veggie Cravings,Cinnamon Twists,"Crispy, puffed corn twists sprinkled with cinnamon and sugar.",1.2 USD
+1360,Veggie Cravings,Cinnabon Delights® 2 Pack,"Warm donut holes filled with Cinnabon® signature cream cheese frosting, and dusted in Makara Cinnamon sugar",1.91 USD
+1360,Veggie Cravings,Cinnabon Delights® 12 Pack,"Warm donut holes filled with Cinnabon® signature cream cheese frosting, and dusted in Makara Cinnamon sugar.",7.43 USD
+1361,Picked for you,NEW! Raspberry Lemon Drop,"Light &amp; refreshing! Yellow sponge cake is layered with lemon mousse and thick raspberry preserves. Finished with a bright lemon glaze and mini white chocolate curls. ",5.79 USD
+1361,Picked for you,Chocolate French Silk Pie,"Creamy chocolate topped with real whipped cream and dark chocolate curls. (760 cal/slice)
+
+Serves six or more! 
+
+",17.29 USD
+1361,Picked for you,Heath® Crunch Cheesecake Pie,"A caramel toffee cheesecake topped with real whipped cream, crushed Heath® bar and chocolate curls, layered with chocolate ganache and toffee pieces in a graham cracker crust. (750 cal/slice)",17.89 USD
+1361,Picked for you,Banana Cream Pie,"Loaded with hand-sliced bananas and topped with real whipped cream and chopped walnuts.
+(700 cal/slice)
+
+Serves six or more! 
+
+",16.09 USD
+1361,Picked for you,Half Dozen Blueberry Mammoth Muffins®,(650 cal each),11.39 USD
+1361,Pie Slices,"Banana Cream Pie, slice","Loaded with hand-sliced bananas and topped with real whipped cream and chopped walnuts.
+(700 cal/slice)
+
+",4.99 USD
+1361,Pie Slices,"Caramel Apple Pie, slice","Luscious apples with a crumb topping and rich caramel icing. (500 cal/slice)
+
+",4.59 USD
+1361,Pie Slices,"Cherry Pie, slice",Sweet and tangy cherries baked inside a golden double crust. (580 cal/slice),4.59 USD
+1361,Pie Slices,"Chocolate French Silk Pie, slice","Creamy chocolate topped with real whipped cream and dark chocolate curls. (760 cal/slice)
+
+",4.99 USD
+1361,Pie Slices,"Coconut Cream Pie, slice","Shredded coconut in a vanilla filling, topped with real whipped cream. (640 cal/slice)
+
+",4.99 USD
+1361,Pie Slices,"Fresh Strawberry Pie, slice","Fresh glazed strawberries layered with Bavarian cream in a flaky pie crust. (540 cal/slice)   ",4.99 USD
+1361,Pie Slices,Heath® Crunch Cheesecake Pie,"A caramel toffee cheesecake topped with real whipped cream, crushed Heath® bar and chocolate curls, layered with chocolate ganache and toffee pieces in a graham cracker crust. (750 cal/slice)
+",4.99 USD
+1361,Pie Slices,"Homestyle Apple Pie, slice","Juicy sweet apples baked fresh inside a golden flaky crust.
+(570 cal/slice)
+
+",4.59 USD
+1361,Pie Slices,"Lemon Meringue Pie, slice","Tangy lemon filling, light and fluffy. (500 cal/slice)
+
+",4.59 USD
+1361,Pie Slices,"Peanut Butter Silk Pie, slice","Layers of chocolate, peanut butter silk, real whipped cream and mini chocolate peanut butter cups. (930 cal/slice)
+
+",4.99 USD
+1361,Pie Slices,"Wildberry Pie, slice","Seasonal ripe berries.  No sugar added. (470 cal/slice)
+
+",4.59 USD
+1361,Whole Pies,Banana Cream Pie,"Loaded with hand-sliced bananas and topped with real whipped cream and chopped walnuts.
+(700 cal/slice)
+
+Serves six or more! 
+
+",16.09 USD
+1361,Whole Pies,Caramel Apple Pie,"Luscious apples with a crumb topping and rich caramel icing. (500 cal/slice)
+
+Serves six or more! 
+
+",16.09 USD
+1361,Whole Pies,Chocolate French Silk Pie,"Creamy chocolate topped with real whipped cream and dark chocolate curls. (760 cal/slice)
+
+Serves six or more! 
+
+",17.29 USD
+1361,Whole Pies,Cherry Pie,"Sweet and tangy cherries baked inside a golden double crust. (580 cal/slice)
+
+Serves six or more!",16.09 USD
+1361,Whole Pies,Fresh Strawberry Pie,"Fresh glazed strawberries layered with Bavarian cream in a flaky pie crust. (540 cal/slice)   
+
+Serves six or more! 
+
+",18.39 USD
+1361,Whole Pies,Heath® Crunch Cheesecake Pie,"A caramel toffee cheesecake topped with real whipped cream, crushed Heath® bar and chocolate curls, layered with chocolate ganache and toffee pieces in a graham cracker crust. (750 cal/slice)",17.89 USD
+1361,Whole Pies,Homestyle Apple Pie,"Juicy sweet apples baked fresh inside a golden flaky crust.
+(570 cal/slice)
+
+Serves six or more! 
+
+",14.99 USD
+1361,Whole Pies,Lemon Meringue Pie,"Tangy lemon filling, light and fluffy. (500 cal/slice)
+
+Serves six or more! 
+
+",16.09 USD
+1361,Whole Pies,Peanut Butter Silk Pie,"Layers of chocolate, peanut butter silk, real whipped cream and mini chocolate peanut butter cups. (930 cal/slice)
+
+Serves six or more! 
+
+
+
+",17.29 USD
+1361,Whole Pies,Wildberry Pie,"Seasonal ripe berries.  No sugar added. (470 cal/slice)
+
+Serves six or more! 
+
+",16.49 USD
+1361,Mammoth Muffins®,Half Dozen Strawberry Cream Cheese Mammoth Muffin®,(600 cal each),11.39 USD
+1361,Mammoth Muffins®,Apple Cinnamon Mammoth Muffin®,,3.79 USD
+1361,Mammoth Muffins®,Half Dozen Apple Cinnamon Mammoth Muffins®,(630 cal each),11.39 USD
+1361,Mammoth Muffins®,Banana Nut Mammoth Muffin®,,3.79 USD
+1361,Mammoth Muffins®,Half Dozen Banana Nut Mammoth Muffins®,(790 cal each),11.39 USD
+1361,Mammoth Muffins®,Blueberry Mammoth Muffin®,,3.79 USD
+1361,Mammoth Muffins®,Half Dozen Blueberry Mammoth Muffins®,(650 cal each),11.39 USD
+1361,Sweet Treats,NEW! Whole New York Cheesecake,"Whole, Fourteen Slices  (510 cal/slice)",34.49 USD
+1361,Sweet Treats,NEW! New York Cheesecake Slice,,4.99 USD
+1361,Sweet Treats,Strawberry &amp; Cream Cheese Crispers,"Delicious strawberries and sweet cream cheese tucked inside two hand-rolled wraps, lightly fried and dusted with powdered sugar.",5.29 USD
+1361,Sweet Treats,Chocolate Walnut Brownie,,2.69 USD
+1361,Sweet Treats,Half Dozen Chocolate Walnut Brownies,(560 cal each),7.99 USD
+1361,Sweet Treats,Cinnamon Roll,,3.79 USD
+1361,Cookies,Oatmeal Cranberry Cookie,"Oatmeal Cranberry Cookie (contains coconut) ",1.99 USD
+1361,Cookies,Half Dozen Oatmeal Cranberry Cookies,Oatmeal Cranberry Cookie (contains coconut)  (290 cal each),5.89 USD
+1361,Cookies,Sugar Cookie,,1.99 USD
+1361,Cookies,Half Dozen Sugar Cookies,(310 cal each),5.89 USD
+1361,Cakes,NEW! Chocolate Peanut Butter Drop,"A dynamite combination of fudge brownies, velvety smooth peanut butter mousse and chocolate cake is topped with brownie chunks and peanut butter chips. (710 Cal)",5.79 USD
+1361,Cakes,NEW! Raspberry Lemon Drop,"Light &amp; refreshing! Yellow sponge cake is layered with lemon mousse and thick raspberry preserves. Finished with a bright lemon glaze and mini white chocolate curls. ",5.79 USD
+1361,Cakes,NEW! Chocolate Overload Cake,"Four rich, dark chocolate, melt-in-your-mouth cake layers stacked high with sweet milk chocolate mousse filling and covered in decadent chocolate ganache. Since there can never be too much chocolate, it’s garnished with generous amounts of chocolate shavings. 940 calories/slice.",6.89 USD
+1361,Beverages,Coffee,,3.39 USD
+1361,Beverages,Decaf Coffee,,3.39 USD
+1361,Beverages,Hot Tea,,3.39 USD
+1361,Beverages,Hot Chocolate,,3.39 USD
+1361,Beverages,Iced Tea,,3.49 USD
+1361,Beverages,Coca-Cola Freestyle® Drink Choices,,3.49 USD
+1361,Beverages,Juice (L),,3.79 USD
+1361,Beverages,Milk (L),,3.89 USD
+1361,Beverages,Milkshakes,"Hand-dipped with premium ice cream. Vanilla 880 cal, Chocolate 970 cal or Strawberry 900 cal.
+",5.69 USD
+1362,Picked for you,Bacon,,3.95 USD
+1362,Picked for you,Sirloin Steak &amp; Shrimp Dinner (6 oz),Regular or blackened steak served with popcorn shrimp.,12.95 USD
+1362,Picked for you,Short Stack,,4.95 USD
+1362,Picked for you,Beer Battered Alaskan Pollock,Served with lemon and tartar sauce.,10.95 USD
+1362,Picked for you,Super Nachos,"Taco meat, chili, cheese, tomatoes, onions, sour cream, and salsa.",10.95 USD
+1362,Appetizers,French Fries,,5.95 USD
+1362,Appetizers,Chili Cheese Fries,,7.95 USD
+1362,Appetizers,Super Nachos,"Taco meat, chili, cheese, tomatoes, onions, sour cream, and salsa.",10.95 USD
+1362,Appetizers,Pretzel Bites,,6.95 USD
+1362,Appetizers,Beer Battered Onion Rings,,7.95 USD
+1362,Appetizers,Jalapeno Poppers,,6.95 USD
+1362,Appetizers,Fried Mozzarella Sticks,,7.95 USD
+1362,Appetizers,Fried Mushrooms,,7.25 USD
+1362,Appetizers,Mini Tacos,,7.95 USD
+1362,Appetizers,Popcorn Chicken,,8.95 USD
+1362,Appetizers,Lariat Hot Wings,,9.95 USD
+1362,Rustle 'em Up,Indian Taco,"Frybread topped with taco meat, cheese, lettuce, tomatoes, onions, salsa, and sour cream.",8.95 USD
+1362,Side Winders,Baked Potato,,2.95 USD
+1362,Side Winders,Mashed Potatoes,,2.5 USD
+1362,Side Winders,Cottage Cheese,,2.25 USD
+1362,For the Lighter Side of the Trail,Taco Salad,"Lettuce topped with taco meat, cheese, tomatoes, onions, sour cream de salsa served in a tortilla bowl.",9.5 USD
+1362,Hot Off the Griddle (Breakfast),Short Stack,,4.95 USD
+1362,Hot Off the Griddle (Breakfast),Blueberry Short Stack,,5.5 USD
+1362,Hot Cereal,Oatmeal,"Served with milk, raisins, and brown sugar.",4.95 USD
+1362,Side Saddles,Caramel Roll,,2.95 USD
+1362,Side Saddles,English Muffin,,1.95 USD
+1362,Side Saddles,Bacon,,3.95 USD
+1362,Side Saddles,Sausage,,2.95 USD
+1362,Side Saddles,Ham,,3.95 USD
+1362,Side Saddles,1 Egg,,1.5 USD
+1362,Side Saddles,2 Eggs,,2.5 USD
+1362,Side Saddles,Hashbrowns,,2.5 USD
+1362,Side Saddles,American Fries,,2.5 USD
+1362,Steaks ( Dinner),Sirloin Steak Dinner (6 oz),,9.95 USD
+1362,Steaks ( Dinner),Sirloin Steak &amp; Shrimp Dinner (6 oz),Regular or blackened steak served with popcorn shrimp.,12.95 USD
+1362,Seafood,Beer Battered Alaskan Pollock,Served with lemon and tartar sauce.,10.95 USD
+1363,Picked for you,Crispy Chicken Sandwich,Hand-breaded chicken breast sandwich built just the way you want it.,11.49 USD
+1363,Picked for you,Bacon Smashed Hatch Chile Burger,"Hand-smashed double patty topped with American cheese, bacon, hatch chile peppers, grilled onions, pickled peppers and hatch chile aioli,  served on a Challah bun.",13.49 USD
+1363,Picked for you,Single Burger,Single patty hand-smashed burger built the way you want it.,10.49 USD
+1363,Picked for you,All-American Cheeseburger,"Hand-smashed double patty topped with American cheese, lettuce, tomato, pickles, mustard, mayo, salt &amp; pepper, served on a Challah bun.",11.49 USD
+1363,Picked for you,Double Burger,Double patty hand-smashed burger built just the way you want it.,11.49 USD
+1363,Build Your Own,Double Burger,Double patty hand-smashed burger built just the way you want it.,11.49 USD
+1363,Build Your Own,Crispy Chicken Sandwich,Hand-breaded chicken breast sandwich built just the way you want it.,11.49 USD
+1363,Build Your Own,Grilled Chicken Sandwich,Grilled chicken breast sandwich built just the way you want it.,11.49 USD
+1363,Build Your Own,Black Bean Burger,Black bean burger built just the way you want it.,9.99 USD
+1363,Build Your Own,Single Burger,Single patty hand-smashed burger built the way you want it.,10.49 USD
+1363,Burgers,All-American Cheeseburger,"Hand-smashed double patty topped with American cheese, lettuce, tomato, pickles, mustard, mayo, salt &amp; pepper, served on a Challah bun.",11.49 USD
+1363,Burgers,Smoked Brisket Burger,"Hand-smashed double patty topped with American cheese, smoked brisket, Honey BBQ Sauce, bacon aioli, grilled onions and pickles, served on a Challah bun.",14.49 USD
+1363,Burgers,Bacon Smashed Hatch Chile Burger,"Hand-smashed double patty topped with American cheese, bacon, hatch chile peppers, grilled onions, pickled peppers and hatch chile aioli,  served on a Challah bun.",13.49 USD
+1363,Burgers,Wild Chicken Sandwich,"Hand-breaded chicken breast topped with Wild sauce, mayo and pickles, served on a Challah bun.",11.49 USD
+1363,Burgers,Grilled Chicken Club Sandwich,"Grilled chicken breast topped with Swiss cheese, bacon, guacamole, bacon aioli, lettuce and tomato, served on a Challah bun.",15.49 USD
+1363,Burgers,Southwestern Black Bean Burger,"Black bean burger topped with cheddar cheese, guacamole, Southwestern Ranch, lettuce, tomato, onion and pickles, served on a Challah bun.",11.99 USD
+1363,Sides,French Fries,Natural-cut fries topped with sea salt and coarse pepper,2.0 USD
+1363,Sides,Potato Wedges,Thick-cut potato wedges flavored with sour cream – chive seasoning.,3.0 USD
+1363,Sides,Tater Tots,Crispy golden brown tater tots,3.0 USD
+1363,Sides,Fried Pickles,Breaded dill pickle slices served with southwestern ranch,8.79 USD
+1363,Desserts,Chocolate Fudge Cake,"Big, rich slice of chocolate fudge cake.",7.29 USD
+1363,Drinks,Bottled Soda,,0.0 USD
+1363,Drinks,Bottled Water,,1.99 USD
+1364,Picked for you,Half Bird	,"Choice of 2 sides, green, or red salsa with homemade corn tortillas.",13.99 USD
+1364,Picked for you,Rotisserie Tacos	,"Three homemade tortillas filled with our fresh rotisserie chicken topped with pico de gallo, served with classic costa rican black beans-rice and side of green, or red salsa.",11.0 USD
+1364,Picked for you,Breast and Wing	,"1 side, green, or red salsa with homemade corn tortillas.",10.25 USD
+1364,Picked for you,Chicken Chorizo Tacos	,"A fresh mix of chicken, carrots, cabbage and cashews. Marinated with a combination of soy sauce, garlic and Sirach sauce makes this dish healthy and delicious! Roger that!",11.75 USD
+1364,Picked for you,Chicken Lettuce Wraps	,"Three large homemade empanadas. Filled up with rotisserie chicken and Colby cheese. Served with classic costa Rican black beans-rice and side of our green, or red salsa.",11.0 USD
+1364,Appetizers,Chicken Wings	,"Delicious and fresh. Never frozen. 1 lb. Unbraided wings juicy and fallin’ from the bone. Choose from one of our sauces or get naked. Hot, medium, mild honey, or BBQ. Served with house bleu cheese.",12.99 USD
+1364,Appetizers,Zinger Chicken Strips	,"5 of our breaded chicken strips tossed in your choice of wing sauce hot, medium, mild, honey, or BBQ. Served with bleu cheese or ranch.",9.5 USD
+1364,Appetizers,Cheese Please,"5 of our breaded chicken strips tossed in your choice of wing sauce. Hot, medium, mild, honey or bbq. Served with bleu cheese or ranch",9.99 USD
+1364,Appetizers,Buffadilla	,"Mozzarella cheese quesadilla stuffed with rotisserie chicken bathed in our medium wing sauce. Served with side of guacamole and red, or green salsa.",10.75 USD
+1364,Appetizers,Chicken Gizzards	,"Mozzarella cheese quesadilla stuffed with rotisserie chicken bathed in our medium wing sauce. Served with side of guacamole and red, or green salsa.",9.25 USD
+1364,Chicken Dish,Hearty Chicken Pot Pie,,11.75 USD
+1364,Chicken Dish,Rotisserie Tacos	,"Three homemade tortillas filled with our fresh rotisserie chicken topped with pico de gallo, served with classic costa rican black beans-rice and side of green, or red salsa.",11.0 USD
+1364,Chicken Dish,The Coop Soup,,6.5 USD
+1364,Chicken Dish,Chicken Chorizo Tacos	,"A fresh mix of chicken, carrots, cabbage and cashews. Marinated with a combination of soy sauce, garlic and Sirach sauce makes this dish healthy and delicious! Roger that!",11.75 USD
+1364,Chicken Dish,Chicken Lettuce Wraps	,"Three large homemade empanadas. Filled up with rotisserie chicken and Colby cheese. Served with classic costa Rican black beans-rice and side of our green, or red salsa.",11.0 USD
+1364,Chicken Dish,Chicken Empanadas	,,12.0 USD
+1364,Chicken Dish,Chimichanga	,"Macaroni and cheese is not just a side anymore! We added a healthy portion of shredded chicken and broccoli making this an irresistible and filling meal. Garnished with Colby jack cheese, and served with a side of Sirach chili sauce.",11.5 USD
+1364,Chicken Dish,Macnarello	,,12.0 USD
+1364,Rotisserie Meals,Whole Bird	,,23.99 USD
+1364,Rotisserie Meals,Breast and Wing	,"1 side, green, or red salsa with homemade corn tortillas.",10.25 USD
+1364,Rotisserie Meals,Half Bird	,"Choice of 2 sides, green, or red salsa with homemade corn tortillas.",13.99 USD
+1364,Rotisserie Meals,Thigh and Leg	,"1 side, green, or red salsa with homemade corn tortillas.",9.99 USD
+1364,Our Sides,Charros Beans,,3.99 USD
+1364,Our Sides,French Fries,,3.99 USD
+1364,Our Sides,Mac-n-Cheese,Gluten free.,3.99 USD
+1364,Our Sides,Corn Tortillas,Gluten free.,3.99 USD
+1364,Our Sides,Green Beans,Gluten free.,3.99 USD
+1364,Our Sides,Corn,Gluten free.,3.99 USD
+1364,Our Sides,Pico de Gallo,Gluten free.,3.99 USD
+1364,Our Sides,Black Beans,,3.99 USD
+1364,Our Sides,Corn Bread,Gluten free.,3.99 USD
+1364,Our Sides,Smashed potatoes,Gluten free.,3.99 USD
+1364,Our Sides,Serrano Peppers,Gluten free.,3.99 USD
+1364,Our Sides,Steamed Broccoli,Gluten free.,3.99 USD
+1364,Our Sides,Shredded Cabbage,Gluten free.,3.99 USD
+1364,Our Sides,Guacamole,,3.99 USD
+1364,Our Sides,Vanilla Ice Cream,,3.99 USD
+1364,Desserts,Tres Leches Cake,,7.0 USD
+1364,Desserts,Impossible Cake,"Gillette’s very own ice cream café has handcrafted a churro ice cream flavor, with the perfect combination of sugar, and cinnamon just for our coop customers. Served with a delicious churro for dipping makes this treat irresistible.",7.0 USD
+1364,Desserts,Churro Ice Cream	,"Has handcrafted a churro ice cream flavor, with the perfect combination of sugar and cinnamon just for our Coop customers! Served with a delicious churro for dipping makes this treat irresistible.",7.0 USD
+1365,Picked for you,Alpine Dip *New Recipe*,"Grilled roast beef, horseradish aioli, sautéed mushrooms, caramelized onions and Swiss served with au jus.",12.19 USD
+1365,Picked for you,Original Mo!,"Chopped Sirloin with melted American, topped with chopped romaine, tomatoes, red onions, banana peppers, mayo, oil &amp; vinegar, and salt &amp; pepper.",11.79 USD
+1365,Picked for you,Wildfire Chicken,"Grilled chicken with melted provolone, avocado mash, tomatoes, and our housemade sriracha lime mayo.",11.79 USD
+1365,Picked for you,BBQ Bacon Mo!,"Chopped sirloin with melted American and bacon, topped with BBQ sauce, chopped romaine, crispy onion straws, and mayo.",11.99 USD
+1365,Picked for you,The Motherlode,"Grilled turkey, roasted beef, ham, bacon, and melted swiss and cheddar, topped with chopped romaine, tomatoes, banana peppers and mayo.",11.79 USD
+1365,THE MO!,Original Mo!,"Chopped Sirloin with melted American, topped with chopped romaine, tomatoes, red onions, banana peppers, mayo, oil &amp; vinegar, and salt &amp; pepper.",11.79 USD
+1365,THE MO!,Beyond Mo! (100% Plant-based Meat),"Beyond 100% Plant-Based Meat with melted American, topped with romaine, tomatoes, red onions, banana peppers, mayo, Mo's Vinaigrette",10.29 USD
+1365,THE MO!,Steakhouse Mo!,"Chopped sirloin with melted American, grilled mushrooms and onions, Swiss, peppercorn aioli and A.1. Original Steak Sauce",11.79 USD
+1365,THE MO!,Southwest Mo!,"Chopped sirloin with melted American, topped with chopped romaine, avocado mash, chipotle mayo, salsa fresca, and jalapeno rings",11.99 USD
+1365,THE MO!,BBQ Bacon Mo!,"Chopped sirloin with melted American and bacon, topped with BBQ sauce, chopped romaine, crispy onion straws, and mayo.",11.99 USD
+1365,THE MO!,Bacon Blackened Bleu Mo!,"Blackened chopped sirloin with melted American, hardwood-smoked bacon, bleu cheese crumbles, shredded romaine, diced tomatos, mayo, and salt &amp; pepper.",11.99 USD
+1365,THE MO!,Bronx Pastrami Mo!,"Chopped sirloin with melted American, premium grilled pastrami, sauteed onions, grey poupon dijon mustard, and roasted garlic aioli all topped with melted swiss and even more pastrami.",12.49 USD
+1365,SIGNATURE SANDWICHES,NEW!  Apple and Bleu Sandwich,"Grilled turkey, bacon, maple dijonnaise, red apple, spinach and bleu cheese crumbles featured on our NEW all-butter croissant",11.79 USD
+1365,SIGNATURE SANDWICHES,Pesto Peak Italiano,"Grilled salami, capicola, pepperoni, ham, and melted provolone, topped with chopped romaine, red onions, tomatoes, banana peppers, and our housemade lemon pesto mayo.",11.79 USD
+1365,SIGNATURE SANDWICHES,The Motherlode,"Grilled turkey, roasted beef, ham, bacon, and melted swiss and cheddar, topped with chopped romaine, tomatoes, banana peppers and mayo.",11.79 USD
+1365,SIGNATURE SANDWICHES,Dude Ranch,"Grilled turkey, bacon, cheddar, avocado mash, chopped romaine, tomatoes, and ranch dressing",11.79 USD
+1365,SIGNATURE SANDWICHES,Wild Turkey,"Oven-roasted turkey, bacon, Swiss, avocado mash, spinach, tomatoes, and our housemade cranberry chipotle mayo",11.79 USD
+1365,SIGNATURE SANDWICHES,Mountain Club,"Grilled turkey, bacon, and melted Swiss, topped with chopped romaine, tomatoes, red onions, and our own lemon pesto mayo.",11.79 USD
+1365,SIGNATURE SANDWICHES,Hikers Harvest (Nut),"Grilled chicken, sweetened dried cranberries, candied pecans, red onions, chopped romaine and our own orange rosemary dressing",11.79 USD
+1365,SIGNATURE SANDWICHES,Green Thumb (Veg),"Sauteed spinach, roasted red peppers, artichoke hearts, tomatoes, and mushrooms with melted Swiss and our own lemon pesto mayo.",11.59 USD
+1365,SIGNATURE SANDWICHES,Hippie Chick P. (Veg),"Roasted red pepper hummus, cheddar, avocado mash, topped with spinach, tomatoes, cucumbers, red onions, and cilantro",11.49 USD
+1365,SIGNATURE SANDWICHES,Alpine Dip *New Recipe*,"Grilled roast beef, horseradish aioli, sautéed mushrooms, caramelized onions and Swiss served with au jus.",12.19 USD
+1365,SIGNATURE SANDWICHES,Chicken Cordon Bleu,"Grilled chicken, ham, provolone, romaine, tomatoes, and Maple Dijonnaise",11.79 USD
+1365,SIGNATURE SANDWICHES,Wildfire Chicken,"Grilled chicken with melted provolone, avocado mash, tomatoes, and our housemade sriracha lime mayo.",11.79 USD
+1365,SIGNATURE SANDWICHES,Ridgeline Pastrami,"Grilled pastrami, melted Swiss, sauerkraut, and 1000 island dressing on marble rye.",12.19 USD
+1365,SIGNATURE SANDWICHES,Buckin Bronco Beef,"Grilled roast beef and melted pepper jack, topped with chopped romaime. jalepeno rings roasted red peppers, and our own chipotle mayo.",12.19 USD
+1365,SIGNATURE SANDWICHES,C.Y.A SANDWICH,BREAD +  PROTEIN + CHEESE + 4 TOPPINGS + 2 SPREADS,7.5 USD
+1365,SALADS,Blackened Caesar (Full Salad),"Blackened Chicken, romaine, shaved parmesan, croutons, parmesan crisps, Caesar dressing.",9.59 USD
+1365,SALADS,Creekside Greek (Full Salad),"Grilled chicken, Kalamata olives, provolone, red onions, tomatoes, cucumbers, and chopped romaine tossed with Greek Feta dressing.",9.79 USD
+1365,SALADS,Sweet Harvest (Nut) (Full Salad),"Grilled chicken, sweetened dried cranberries, candied pecans, red onions, and mixed greens, tossed with our own orange rosemary dressing.",9.5 USD
+1365,SALADS,Country Cobb (Full Salad),"Grilled chicken, bacon, cheddar and crumbled blue cheese, sliced hardboiled egg, tomatoes, cucumbers, avocado, and chopped romaine tossed with ranch dressing.",9.99 USD
+1365,SALADS,Italiano (Full Salad),"Pepperoni, Salami, Capacola, Ham, Romaine, Tomatoes, Red Onions, Banana Peppers and Italian Herb Dressing",9.79 USD
+1365,SALADS,C.Y.A SALAD (CYA Full Salad)," - CHOICE OF GREENS + 5 TOPPINGS + DRESSING -",7.0 USD
+1365,BREAKFAST (ALL DAY),Morning Moose Stack (BREAKFAST),"Sausage, Ham, Bacon, Scrambled Eggs, Cheddar",7.59 USD
+1365,BREAKFAST (ALL DAY),Morning Moose (Single Meat) (BREAKFAST),"Scrambled eggs with your choice of bacon, sausage, or ham with melted cheddar on toasted bagel or ciabatta.",5.99 USD
+1365,BREAKFAST (ALL DAY),Mo Rito (Mo Rito),"Scrambled eggs, chopped sirloin with melted American, seasoned potatoes, homemade salsa fresca, and cream cheese on a plain tortilla.",6.59 USD
+1365,BREAKFAST (ALL DAY),Avocado Toast (BREAKFAST),"Fresh avocado, roasted red peppers, spinach on multigrain toast with balsamic vinaigrette",6.99 USD
+1365,BREAKFAST (ALL DAY),Wake N' Bake Waffles (BREAKFAST),"Two pearl sugar-crusted Belgian waffles with maple syrup. ",6.49 USD
+1365,BREAKFAST (ALL DAY),Mountain Sunrise (BREAKFAST),"Scrabbled eggs, sausage, sauteed spinach, roasted red peppers, and melted pepper jack on a chili tortilla.",5.99 USD
+1365,BREAKFAST (ALL DAY),Southwest Steak &amp; Eggs (BREAKFAST),"Roast Beef, Scrambled Eggs, Pepper Jack, Chipotle Mayo and Jalapenos",6.79 USD
+1365,PERFECT PAIR,1/2 Sandwich &amp; Cup of Soup (PERFECT PAIR),Your Choice of 2 Items:  Choice of Multigrain or Marble Rye &amp; Soup.,10.0 USD
+1365,PERFECT PAIR,1/2 Sandwich &amp; Side Salad (PERFECT PAIR),Your Choice of 2 Items:  Choice of Multigrain or Marble Rye &amp; Salad.,10.0 USD
+1365,SOUPS,Cream of Tomato Basil,,4.0 USD
+1365,SOUPS,Homestyle Chicken Noodle,,4.0 USD
+1365,SOUPS,Spicy Chicken Enchilada,,4.5 USD
+1365,KIDS MENU,Chicken Noodle Soup (KIDS MENU),Homestyle Chicken Noodle Soup to make any kid smile!,6.0 USD
+1365,KIDS MENU,Chicken Quesadilla (KIDS MENU),Tender chicken wrapped up in a warm tortilla with melted cheese,6.0 USD
+1365,KIDS MENU,Mac N Cheese (KIDS MENU),Noodles smothered in melty cheese,6.0 USD
+1365,KIDS MENU,Grilled Cheese (KIDS MENU),Grilled cheese sandwich served on multigrain bread.,6.0 USD
+1365,KIDS MENU,Kids Mo! (KIDS MO!),"Cheeseburger sandwich! Chopped sirloin, American, mayo",6.0 USD
+1365,SIDES &amp; DESSERTS,Chips (SIDES),,1.75 USD
+1365,SIDES &amp; DESSERTS,Waffle Fries (SIDES),,3.0 USD
+1365,SIDES &amp; DESSERTS,Big Cookie (SIDES),,2.0 USD
+1365,SIDES &amp; DESSERTS,Mac-n-Cheese,,2.0 USD
+1365,SIDES &amp; DESSERTS,Fudge Brownie (SIDES),,3.0 USD
+1365,SIDES &amp; DESSERTS,Rice Krispy Treat (SIDES),,2.0 USD
+1365,SIDES &amp; DESSERTS,Chips &amp; Fountain Drink Combo,,3.0 USD
+1365,SIDES &amp; DESSERTS,Cookie and Fountain Drink Combo,,3.0 USD
+1365,SIDES &amp; DESSERTS,Mac-Cheese and Fountain Drink Combo,,5.0 USD
+1365,SIDES &amp; DESSERTS,Fries &amp; Fountain Drink Combo,,4.0 USD
+1365,SIDES &amp; DESSERTS,Soup and Fountain Drink Combo,,5.0 USD
+1365,COLD DRINKS,Fountain Drink,,2.25 USD
+1365,COLD DRINKS,Bottled Water (COLD DRINKS),,2.0 USD
+1365,COLD DRINKS,Capri Sun (COLD DRINKS),,1.25 USD
+1365,COLD DRINKS,Gatorade (COLD DRINKS),,2.49 USD
+1365,COLD DRINKS,Horizon Organic Milk (COLD DRINKS),,2.5 USD
+1365,**ALMOST GONE***  Smokestack'd Mo!,KC Smokestack'd Mo!,"KC BBQ Pork STACK'D on our signature ground sirloin with Mayo, Cheddar Cheese, Crispy Onions &amp; Pickles",12.0 USD
+1366,Picked for you,"Hand-Scooped Ice Cream Shake™ ","Creamy, hand-scooped ice cream blended with real milk and topped with Whipped Topping. Available in chocolate, vanilla, and strawberry.",4.95 USD
+1366,Picked for you,"Super Star® with Cheese ","Two charbroiled all-beef patties, two slices of American cheese, lettuce, tomato, sliced onions, dill pickles, special sauce, and mayonnaise on a seeded bun. ",8.42 USD
+1366,Picked for you,Monster Angus Burger,"Charbroiled Third Pound 100% black angus beef patties, 4 strips of bacon, 3 slices of melted American cheese and mayonnaise, served on a toasted potato bun.",10.9 USD
+1366,Picked for you,"Famous Star® with Cheese ","Charbroiled All-Beef Patty, Melted American cheese, lettuce, tomato, sliced onions, dill pickles, Special Sauce, and mayonnaise on a seeded bun. ",6.93 USD
+1366,Picked for you,"5 Piece - Hand-Breaded Chicken Tenders™ ","Premium, all-white meat chicken, hand dipped in buttermilk, lightly breaded and fried to a golden brown. Served with a choice of dipping sauce.",8.54 USD
+1366,Charbroiled Burgers,Primal Angus Thickburger,"100%  Black Angus beef patty, charbroiled over an open flame and topped with tender slow cooked sliced prime rib, sweet and savory Amber sauce, smoked cheddar, and onion rings served on a toasted potato bun.",10.53 USD
+1366,Charbroiled Burgers,"Famous Star® with Cheese ","Charbroiled All-Beef Patty, Melted American cheese, lettuce, tomato, sliced onions, dill pickles, Special Sauce, and mayonnaise on a seeded bun. ",6.93 USD
+1366,Charbroiled Burgers,"Super Star® with Cheese ","Two charbroiled all-beef patties, two slices of American cheese, lettuce, tomato, sliced onions, dill pickles, special sauce, and mayonnaise on a seeded bun. ",8.42 USD
+1366,Charbroiled Burgers,"Western Bacon Cheeseburger® ","Charbroiled all-beef patty, two strips of bacon,  American cheese, two crispy onion rings and tangy BBQ sauce on a seeded bun. ",7.18 USD
+1366,Charbroiled Burgers,"Double Western Bacon Cheeseburger® ","Two charbroiled all-beef patty, two strips of bacon,  American cheese, two crispy onion rings and tangy BBQ sauce on a seeded bun. ",8.67 USD
+1366,Charbroiled Burgers,The Big Hardee,"Two charbroiled all-beef patties, our classic sauce, two slices of melted American cheese, and lettuce all on a toasted seed bun.",7.18 USD
+1366,Charbroiled Burgers,"Big Cheeseburger ","Charbroiled All-Beef Patty, Melted American Cheese, Dill Pickles, Onions, Mustard and Ketchup on a sesame seed bun. ",5.94 USD
+1366,Charbroiled Burgers,Original Angus Burger,"Charbroiled Third Pound 100% Angus Beef, melted American cheese, lettuce, tomato, red onions, pickles, mustard, mayonnaise and ketchup, served on a potato bun. ",7.55 USD
+1366,Charbroiled Burgers,Mushroom &amp; Swiss Angus Burger,"Charbroiled Third Pound 100% black angus beef patty, topped with melted Swiss and finished with mushroom sauce, served on a potato bun. ",7.8 USD
+1366,Charbroiled Burgers,Bacon &amp; Cheese Angus Burger,"Charbroiled Third Pound 100% black angus beef patty, crisp bacon, melted American cheese, tomato, lettuce, red onion, and mayonnaise, served on a potato bun.",8.67 USD
+1366,Charbroiled Burgers,Frisco Angus Burger,"Charbroiled Third Pound 100% black angus beef patty, crispy bacon, melted Swiss cheese, tomato, and mayonnaise, served on toasted sourdough. ",8.67 USD
+1366,Charbroiled Burgers,Monster Angus Burger,"Charbroiled Third Pound 100% black angus beef patties, 4 strips of bacon, 3 slices of melted American cheese and mayonnaise, served on a toasted potato bun.",10.9 USD
+1366,Charbroiled Burgers,Double Cheeseburger,"Two charbroiled all-beef patties topped with American Cheese, dill pickles, diced onions, ketchup, and mustard on a seeded bun.",4.7 USD
+1366,Charbroiled Burgers,Small Hamburger,"Charbroiled all-beef patty topped with dill pickles, ketchup and mustard on a seeded bun.",3.09 USD
+1366,Charbroiled Burgers,Small Cheeseburger,"Charbroiled all-beef patty topped with American cheese, dill pickles, ketchup and mustard on a seeded bun.",3.34 USD
+1366,Chicken &amp; More,Hand-Breaded Chicken Sandwich,"Premium, all-white chicken fillet, hand dipped in buttermilk, lightly breaded and fried to a golden brown, deli pickle and mayonnaise served on a potato bun. ",6.93 USD
+1366,Chicken &amp; More,"3 Piece - Hand-Breaded Chicken Tenders™ ","Premium, all-white meat chicken, hand dipped in buttermilk, lightly breaded and fried to a golden brown. Served with a choice of dipping sauce, small drink, small fry and chocolate chip cookie.",6.44 USD
+1366,Chicken &amp; More,"5 Piece - Hand-Breaded Chicken Tenders™ ","Premium, all-white meat chicken, hand dipped in buttermilk, lightly breaded and fried to a golden brown. Served with a choice of dipping sauce.",8.54 USD
+1366,Chicken &amp; More,10 Piece - Hand-Breaded Chicken Tenders™ Box,"Premium, all-white meat chicken, hand dipped in buttermilk, lightly breaded and fried to a golden brown. Served with a choice of dipping sauce.",15.24 USD
+1366,Chicken &amp; More,15 Piece - Hand-Breaded Chicken Tenders™ Box,"Premium, all-white meat chicken, hand dipped in buttermilk, lightly breaded and fried to a golden brown. Served with a choice of dipping sauce.",24.29 USD
+1366,Chicken &amp; More,20 Piece - Hand-Breaded Chicken Tenders™ Box,"Premium, all-white meat chicken, hand dipped in buttermilk, lightly breaded and fried to a golden brown. Served with a choice of dipping sauce.",28.01 USD
+1366,Chicken &amp; More,Charbroiled Chicken Club Sandwich,"A charbroiled chicken breast, two strips of bacon, melted Swiss cheese, lettuce, tomato and mayonnaise, served on a seeded bun.",8.05 USD
+1366,Chicken &amp; More,Big Hot Ham 'N' Cheese™,"Sliced ham and melted Swiss cheese, served on a potato bun. ",6.81 USD
+1366,Chicken &amp; More,Big Roast Beef,"Sliced roast beef dipped in au jus, served on a premium bun, with your choice of horseradish or BBQ.",7.18 USD
+1366,Chicken &amp; More,Monster Roast Beef,Sliced roast beef and melted American cheese served on a potato bun. Served with Horseradish or BBQ.,9.41 USD
+1366,Chicken &amp; More,Original Hot Ham 'N' Cheese,"Sliced ham and melted Swiss cheese, served on a  premium bun.",4.95 USD
+1366,Chicken &amp; More,Original Roast Beef Sandwich,"Sliced roast beef, on a seeded bun. Served with Horseradish or BBQ.",4.82 USD
+1366,Sides &amp; Desserts,"9-piece Jalapeno POPPERS® Bites ","Crispy, breaded Cheddar cheese &amp; Jalapeño bites.",6.19 USD
+1366,Sides &amp; Desserts,Natural-Cut French Fries,"Premium-quality, skin-on, Natural-Cut French fries.",3.21 USD
+1366,Sides &amp; Desserts,Onion Rings,"Crispy, golden brown onion rings.",3.71 USD
+1366,Sides &amp; Desserts,Crispy Curls®,"Premium-quality, skin-on, seasoned Crispy Curls",3.21 USD
+1366,Sides &amp; Desserts,"Hand-Scooped Ice Cream Shake™ ","Creamy, hand-scooped ice cream blended with real milk and topped with Whipped Topping. Available in chocolate, vanilla, and strawberry.",4.95 USD
+1366,Sides &amp; Desserts,Chocolate Chip Cookie,Semi-Sweet Chocolate Chip Cookie,1.48 USD
+1366,Sides &amp; Desserts,Apple Turnover,Deep fried apple turnover.,1.48 USD
+1366,Sides &amp; Desserts,Cinnamon Roll,"Flakey, gooey, pillow-y goodness topped with sweet icing, served warm.",3.58 USD
+1366,Beverages,Soft Drink,"Choose from a variety of soft drinks: Coca-Cola, Diet Coke, Sprite, Cherry Coke, Coke Zero, Dr Pepper, Diet Dr Pepper, Hi-C Orange, Mello Yello and more.",0.0 USD
+1366,Beverages,Dasani® Water,,3.46 USD
+1366,Beverages,Rise and Shine® Coffee,Medium body Central American blend made from 100% Arabica beans,2.84 USD
+1366,Beverages,Decaf Coffee,,2.84 USD
+1366,Beverages,"Simply Orange® ",100% pure-squeezed orange juice.,3.58 USD
+1366,Beverages,1% Milk,7oz Low Fat Milk,2.59 USD
+1366,Beverages,Chocolate Milk,7oz Low Fat Chocolate Milk,2.59 USD
+1366,StarPals® Kids Meals,Hamburger Kid's Meal,"Charbroiled all-beef patty topped with dill pickles, ketchup and mustard on a seeded bun. Served with kid's drink and kid's fry.",5.07 USD
+1366,StarPals® Kids Meals,Cheeseburger Kid's Meal,"Charbroiled all-beef patty topped with American cheese, dill pickles, ketchup and mustard on a seeded bun. Served with kid's drink and kid's fry.",5.44 USD
+1366,StarPals® Kids Meals,2-piece Chicken Tender Kid's Meal,"Premium, all-white meat chicken, hand dipped in buttermilk, lightly breaded and fried to a golden brown. Served with kid's drink and kid's fry.",5.44 USD
+1367,Most Popular,"Crispy Chicken Sandwich ",,6.59 USD
+1367,Most Popular,Crispy Chicken Sandwich Meal,,10.59 USD
+1367,Most Popular,Big Mac Meal,,10.59 USD
+1367,Most Popular,Double Quarter Pounder with Cheese Meal,,12.59 USD
+1367,Most Popular,10 Piece McNuggets Meal,,10.39 USD
+1367,Most Popular,20 Piece McNuggets,,8.69 USD
+1367,Most Popular,40 McNuggets,,16.69 USD
+1367,Most Popular,Medium French Fries,,3.59 USD
+1367,Combo Meals,Crispy Chicken Sandwich Meal,,10.59 USD
+1367,Combo Meals,"Spicy Chicken Sandwich Meal ",,10.59 USD
+1367,Combo Meals,Deluxe Crispy Chicken Sandwich Meal,,11.49 USD
+1367,Combo Meals,Spicy Deluxe Crispy Chicken Sandwich Meal,,11.49 USD
+1367,Combo Meals,Big Mac Meal,,10.59 USD
+1367,Combo Meals,Bacon Quarter Pounder with Cheese Meal,,11.79 USD
+1367,Combo Meals,Quarter Pounder with Cheese Meal,,10.99 USD
+1367,Combo Meals,Double Bacon Quarter Pounder with Cheese Meal,,14.09 USD
+1367,Combo Meals,Double Quarter Pounder with Cheese Meal,,12.59 USD
+1367,Combo Meals,2 Cheeseburger Meal,,8.89 USD
+1367,Combo Meals,Quarter Pounder with Cheese Deluxe Meal,,11.69 USD
+1367,Combo Meals,Double Quarter Cheese Deluxe Meal,,12.69 USD
+1367,Combo Meals,10 Piece McNuggets Meal,,10.39 USD
+1367,Combo Meals,Filet O Fish Meal,,9.59 USD
+1367,Shareables,40 McNuggets &amp; 2 L Fries,,24.0 USD
+1367,Shareables,40 McNuggets,,16.69 USD
+1367,Shareables,"Classic Cheeseburger Pack ","Cheeseburger (x2), Medium French Fries (x2), 20 pc McNuggets",17.99 USD
+1367,Shareables,"Classic Big Mac Pack ","Big Mac (x2), Medium French Fries (x2), 20 pc McNuggets",19.19 USD
+1367,Sweets &amp; Treats,Medium Chocolate Shake,,4.29 USD
+1367,Sweets &amp; Treats,Medium Strawberry Shake,,4.29 USD
+1367,Sweets &amp; Treats,Medium Vanilla Shake,,4.29 USD
+1367,Sweets &amp; Treats,Regular M&amp;M McFlurry,,4.99 USD
+1367,Sweets &amp; Treats,Regular Oreo McFlurry,,4.99 USD
+1367,Sweets &amp; Treats,Medium Minute Maid Tropical Mango Slushie®,,2.29 USD
+1367,Sweets &amp; Treats,Medium Minute Maid Strawberry Watermelon Slushie®,,2.29 USD
+1367,Sweets &amp; Treats,2 Cookies,,1.59 USD
+1367,Sweets &amp; Treats,Apple Pie,,1.89 USD
+1367,Happy Meal,Hamburger - Happy Meal,,5.29 USD
+1367,Happy Meal,4 Piece Chicken McNugget - Happy Meal,,5.89 USD
+1367,Happy Meal,6pc Chicken McNuggets Happy Meal,,6.19 USD
+1367,Condiments,Creamer Packet,Limit of 3,0.0 USD
+1367,Condiments,Sugar Packet,Limit of 3,0.0 USD
+1367,Condiments,Equal Packet,Limit of 3,0.0 USD
+1367,Condiments,Pepper Packet,Limit of 3,0.0 USD
+1367,Condiments,Salt Packet,Limit of 3,0.0 USD
+1367,Condiments,Splenda Packet,Limit of 3,0.0 USD
+1367,Condiments,Tangy BBQ Dipping Sauce,Limit of 2,0.0 USD
+1367,Condiments,Ketchup Packet,Limit of 5,0.0 USD

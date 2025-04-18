@@ -1,0 +1,1217 @@
+restaurant_id,category,name,description,price
+1,Extra Large Pizza,Extra Large Meat Lovers,Whole pie.,15.99 USD
+1,Extra Large Pizza,Extra Large Supreme,Whole pie.,15.99 USD
+1,Extra Large Pizza,Extra Large Pepperoni,Whole pie.,14.99 USD
+1,Extra Large Pizza,Extra Large BBQ Chicken &amp; Bacon,Whole Pie,15.99 USD
+1,Extra Large Pizza,Extra Large 5 Cheese,Whole pie.,14.99 USD
+1,Extra Large Pizza,Extra Large Pepperoni Slice,Slice.,3.99 USD
+1,Extra Large Pizza,Extra Large BBQ Chicken &amp; Bacon Slice,,3.99 USD
+1,Extra Large Pizza,Extra Large Meat Lovers Slice,Slice.,3.99 USD
+1,Extra Large Pizza,Extra Large Supreme Slice,Slice.,3.99 USD
+1,Extra Large Pizza,Extra Large 5 Cheese Slice,Slice.,3.99 USD
+1,Jumbo Wings,Jumbo Chicken Wings Five Pieces,,8.99 USD
+1,Jumbo Wings,Jumbo Chicken Wings Seven Pieces,,10.99 USD
+1,Jumbo Wings,Jumbo Chicken Wings Nine Pieces,,12.99 USD
+1,Jumbo Wings,Jumbo Chicken Wings Twelve Pieces,,15.99 USD
+1,Spicy Jumbo Wings,Jumbo Spicy Chicken Wings Five Pieces,,8.99 USD
+1,Spicy Jumbo Wings,Jumbo Spicy Chicken Wings Seven Pieces,,10.99 USD
+1,Spicy Jumbo Wings,Jumbo Spicy Chicken Wings Nine Pieces,,12.99 USD
+1,Spicy Jumbo Wings,Jumbo Spicy Chicken Wings Twelve Pieces,,15.99 USD
+1,Chicken Tenders,Five Chicken Tenders,,8.99 USD
+1,Chicken Tenders,Seven Chicken Tenders,,10.99 USD
+1,Chicken Tenders,Nine Chicken Tenders,,12.99 USD
+1,Chicken Tenders,Twelve Chicken Tenders,,15.99 USD
+1,Snacks,Grab and Go Cheese It,3oz.,1.89 USD
+1,Snacks,Doritos Nacho,3.125oz.,1.99 USD
+1,Snacks,Lay's Classic,2.75oz.,1.99 USD
+1,Snacks,Ruffles Cheddar and Sour Cream,2.625oz.,1.99 USD
+1,Snacks,Doritos Cool Ranch,3.125oz.,1.99 USD
+1,Snacks,Cheetos Crunchy,3.5oz.,1.99 USD
+1,Snacks,Funyuns,2.375oz.,1.99 USD
+1,Snacks,Chex Mix Traditional,3.75oz.,2.69 USD
+1,Snacks,Combos Pretzel With Cheddar Cheese,6.30oz.,2.99 USD
+1,Snacks,Snak Club Family Size Energizer Trail Mix,16oz.,7.39 USD
+1,Snacks,Wonderful Roasted and Salted Pistachios,8oz.,10.99 USD
+1,Snacks,Wonderful Roasted and Salted Unshelled Pistachios,6oz.,14.99 USD
+1,Snacks,Wonderful Roasted and Salted Pistachios,16oz,14.99 USD
+1,Snacks,Jack Links Original Jerky,5.85oz.,13.49 USD
+1,Snacks,Jack Links Peppered Jerky,5.85oz.,13.49 USD
+1,Snacks,Jack Links Teriyaki Jerky,5.85oz.,13.49 USD
+1,Snacks,Old Trapper Old Fashion Jerky,10oz.,16.99 USD
+1,Snacks,Old Trapper Peppered Jerky,10oz.,16.99 USD
+1,Candy,Haribo Gold Bears,8oz.,2.69 USD
+1,Candy,Hershey Almond King Size,,2.29 USD
+1,Candy,Hershey Bar Milk Chocolate King Size,,2.29 USD
+1,Candy,Kit Kat King Size,,2.29 USD
+1,Candy,M and M Peanut King Size,,2.29 USD
+1,Candy,Payday King,,2.29 USD
+1,Candy,Reese Cup King Size,,2.29 USD
+1,Candy,Reese Fast Break King Size,,2.29 USD
+1,Candy,Reese Sticks King Size,,2.29 USD
+1,Candy,Snickers King Two Piece,,2.29 USD
+1,Candy,Twix Caramel King,,2.29 USD
+1,Pastries,Bon Appetit Cheese and Berry Danish,Single.,2.69 USD
+1,Pastries,Bon Appetit Cheese Croissant,Single.,2.69 USD
+1,Pastries,Bon Appetit Apple Turnover,Single.,2.69 USD
+1,Pastries,Bon Appetit Bluberry Cream Danish,Single.,2.69 USD
+1,Pastries,Rice Krispies Treat Original Big Bar,2.2oz.,1.89 USD
+1,Coffee,Monster Java Mean Bean,15oz can.,3.49 USD
+1,Coffee,Monster Java Loca Moca,15oz can.,3.49 USD
+1,Coffee,Monster Java Sltd Crml,15oz can.,3.49 USD
+1,Coffee,Starbucks Frapp Mocha,7oz bottle.,3.79 USD
+1,Coffee,Starbucks Frapp Van,7oz bottle.,3.79 USD
+1,Coffee,Starbucks Frapp Crml Macchiato,7oz bottle.,3.79 USD
+1,Energy,Monster,16oz can.,3.29 USD
+1,Energy,Monster Zero Ultra,16oz can.,3.29 USD
+1,Energy,Monster Ultra Paradise,16oz can.,3.29 USD
+1,Energy,Red Bull,12oz can.,3.79 USD
+1,Energy,Red Bull Sugar Free,12oz can.,3.79 USD
+1,Energy,Red Bull Blue Berry,12oz can.,3.79 USD
+1,Energy,Five Hour Energy Ex Strong Berry,3oz bottle.,4.29 USD
+1,Juice,Tropicana Orange No Pulp,12oz.,2.29 USD
+1,Juice,Tropicana Prem Orange Hmstl Pulp,12oz bottle.,2.29 USD
+1,Juice,Tropicana Apple,12oz.,2.29 USD
+1,Soda,Diet Coke,20oz bottle.,2.39 USD
+1,Soda,Diet Mountain Dew,20oz bottle.,2.39 USD
+1,Soda,Diet Pepsi,20oz bottle.,2.39 USD
+1,Soda,Dr Pepper,20oz bottle.,2.39 USD
+1,Soda,Mountain Dew,20oz bottle.,2.39 USD
+1,Soda,Mountain Dew Code Red,20oz bottle.,2.39 USD
+1,Soda,Pepsi,20oz bottle.,2.39 USD
+1,Soda,Sprite,20oz bottle.,2.39 USD
+1,Soda,Canada Dry Ginger Ale,20oz bottle.,2.29 USD
+1,Soda,Coca Cola,20oz bottle.,2.39 USD
+1,Soda,Coke Chry,20oz bottle.,2.39 USD
+1,Soda,Coke Zero,20oz bottle.,2.39 USD
+1,Soda,Coke Zero Chry Two,20oz bottle.,2.39 USD
+1,Soda,Diet Dr Pepper,20oz bottle.,2.39 USD
+1,Soda,Dr Pepper Chry,20oz bottle.,2.39 USD
+1,Tea,Arizona Green Tea,34oz bottle.,2.49 USD
+1,Tea,Arizona Tea Sweet,One liter bottle.,2.49 USD
+1,Tea,Arizona Tea Arnld Plmr,34oz bottle.,2.49 USD
+1,Water,Bodyarmor Strawberry Banana,28oz bottle.,2.99 USD
+1,Water,Bodyarmor Orange Mango,28oz bottle.,2.99 USD
+1,Water,Bodyarmor Fruit Punch,28oz bottle.,2.99 USD
+1,Water,Fiji Water 700 ml,700 ml bottle.,2.89 USD
+1,Water,Fiji Water,One liter bottle.,3.39 USD
+2,Smoothies,J’ Ti`’z Smoothie,"Tropical fruit blend, dragon fruit mix, mango, bananas, pineapples, apples, and spinach. Special blue and green with strawberry bananas juice blend smoothies. Our fruity tasty smoothies are blended to perfection.",5.49 USD
+2,Smoothies,Ti`’z Fruity Thang Smoothie,"Tropical fruit blend, dragon fruit mix, craisin, and apricot. Special green juice blend smoothies. Our fruity tasty smoothies are blended to perfection.",5.49 USD
+2,Smoothies,Ashunti`Way Smoothie,"Fruit n greens, mango bananas, tropical fruit blend, dragon fruit mix, mango, bananas, pineapples, apples, and spinach. Special green with strawberry bananas juice blend . Our fruity tasty smoothies are blended to perfection.",5.49 USD
+2,Smoothies,Jimmy Jam Smoothie,"Berries n kale, strawberries, bananas, blueberries kale, tropical fruit blend, and dragon fruit. Our fruity tasty smoothies are blended to perfection.",5.49 USD
+2,Smoothies,J’ Ti`’z Tastey Ice Smoothie,"Tropical fruit blend, dragon fruit, pineapple, bananas, and mango. Our fruity tasty smoothies are blended to perfection.",5.49 USD
+2,Smoothies,Tejay Impact Smoothie,"Tropical fruit blend, dragon fruit mix, mango, bananas, pineapples, apples, and spinach. Special blue juice blend smoothies.",5.49 USD
+2,Smoothies,Dayton 500 Smoothie,"Tropical fruit blend, dragon fruit mix, mango, bananas, pineapples, apples. Special green juice blend. Our fruity tasty smoothies are blended to perfection.",5.49 USD
+2,Smoothies,Nappy Head Truth Smoothie,"Refreshing greens with a hint of mint, apples, bananas, kale, cucumbers, spinach, and mint leaves smoothies. Our fruity tasty smoothies are blended to perfection.",6.49 USD
+2,Smoothies,Aw Shuckie Shuckie Now Smoothie,"Triple berry blend, blueberries, strawberries, raspberries, bananas, non- fat yogurt, carrots, and mango smoothies. Our fruity tasty smoothies are blended to perfection.",6.49 USD
+2,Smoothies,J’ Taste Bud Factor Smoothie,"Strawberries, bananas, peaches, apples, coconut water, and grape smoothies. Our fruity tasty smoothies are blended to perfection.",5.49 USD
+2,Smoothies,Early Birds Get the Worm Smoothie,"Mango, pineapples, bananas, sweet potato, v s and b special blue blend berry. Our fruity tasty smoothies are blended to perfection.",5.49 USD
+2,Smoothies,Jameria Crush Smoothie,"Detox rocks, pineapple, bananas, cranberry, kale, lemon, and berry mango blend smoothies. Our fruity tasty smoothies are blended to perfection.",5.49 USD
+2,Smoothies,Tongue Teaser Smoothie,"Tropical fruit blend, dragon fruit, pineapples, bananas, mango, apples, spinach, ginger powder. Special green blend, pineapple and ginger smoothies. Our fruity tasty smoothies are blended to perfection.",6.49 USD
+2,Smoothies,Groovy Louie Smoothie,"Mango, taro, coconut milk, pineapple juice or lime. Our fruity tasty smoothies are blended to perfection.",5.49 USD
+2,Smoothies,J Wit Da Weezy Smoothie,"Kale, pineapples, peaches, blueberries, and cran blackberries. Our fruity tasty smoothies are blended to perfection.",6.49 USD
+2,Smoothies,Dance Wit Ginger Smoothie,"Avocado, blueberries, kale, spinach, and ginger. Special blue and green. Our fruity tasty smoothies are blended to perfection.",6.49 USD
+2,Smoothies,N Da Clouds Smoothie,"Berries, mango, pineapples, and dragon fruit. Our fruity tasty smoothies are blended to perfection.",6.49 USD
+2,Smoothies,Taste on Da Tongue Smoothie,"Pineapples, orange, peaches, and coconut water. Our fruity tasty smoothies are blended to perfection.",5.49 USD
+2,Smoothies,Summer Time Smoothie,"Orange tangerine, tropical sunshine, apricot, craisin, lime, and pineapples. Our fruity tasty smoothies are blended to perfection.",6.49 USD
+2,Smoothies,K Blend Smoothie,"Mango, pineapple, peaches pear apricot, cranberry, lemons, lemonade, flaxseeds, and strawberry protein. Our fruity tasty smoothies are blended to perfection.",8.49 USD
+2,Coffee,Black Tar Coffee,"Fresh medium roast brewed, with or without boba fresh decaf roast brewed. Fresh brewed whole beans coffee! Taste will be fresh and add in our gourmet flavors of your choice.",2.5 USD
+2,Espresso Shots,Ray Single Shot,Fresh and strong to give you the kick start you need.,0.75 USD
+2,Espresso Shots,Garri Double Shot,Fresh and strong to give you the double kick start you need.,3.95 USD
+2,Latte,Tereze Latte,"Creamy espresso, steamed milk, and light froth. Made from fresh whole bean coffee made with espresso and hot steamed milk.",4.95 USD
+2,Latte,Tiese Mocha Latte,"Cocoa, chocolate, espresso, steamed milk, and whipped cream. Made from fresh whole bean coffee made with espresso and hot steamed milk.",4.95 USD
+2,Latte,Matcha Green Tea Latte,Almond breeze vanilla unsweetened almond milk. Made from fresh whole bean coffee made with espresso and hot steamed milk.,4.95 USD
+2,Latte,Toffee Nut or Butter Pecan Latte,"Butter pecan, caramel sauce, espresso, steamed milk, and whipped cream. Made from fresh whole bean coffee made with espresso and hot steamed milk.",5.5 USD
+2,Jtizpuccino,Caramel Jtizpuccino,"Coffee, sweetened condense milk, cream, caramel sauce, and whip cream.",5.5 USD
+2,Jtizpuccino,Java Chip Jtizpuccino,"Coffee, chocolate syrup, sweetened condense milk, cream, chocolate chips, and whip cream.",5.5 USD
+2,Jtizpuccino,Cotton Candy Jtizpuccino,"Vanilla syrup, raspberry syrup, milk, whip cream, and vanilla ice cream.",4.99 USD
+2,Teas,Matcha Mint Chip Cafe Essential,Specialty drinks.,5.5 USD
+2,Teas,Boba Milk Tea Flavors,,4.95 USD
+2,Teas,Homemade Tea,,2.5 USD
+2,Teas,Gourmet Flavor Tea,,0.6 USD
+2,Desserts,Fruit N Yogurt Parfait,,4.5 USD
+2,Desserts,Mango,,4.5 USD
+2,Desserts,Strawberry,,4.5 USD
+2,Desserts,Acai Berry Blend,,4.5 USD
+2,Breakfast (All-Day),Waffles,"Traditional or belgian waffle. Add a topping (strawberries, chocolate chips, or whipped cream).",4.99 USD
+2,Breakfast (All-Day),Waffle Omelets,"Eggs, shredded mozzarella, chopped red peppers, chopped broccoli or spinach, andbreakfast sliced sausage.",6.0 USD
+2,Breakfast (All-Day),Chicken Waffle Sandwich,"Pulled chicken, jalapeno, shredded cabbage, shredded carrot, maple syrup apple cider vinegar, and mayo.",7.99 USD
+2,Breakfast (All-Day),Stuffed Waffle Biscuits,"Your Choose your size of meats are sausage or ham or bacon or eggs, turkey (two meats with cheese).",5.95 USD
+2,Breakfast (All-Day),Bacon with Eggs &amp; Cheese,,5.95 USD
+2,Breakfast (All-Day),Breakfast Plate,"Grits, eggs, bacon or sausage with toast.",7.99 USD
+2,Breakfast (All-Day),Sausage &amp; Egg with Cheese Sandwich,,5.95 USD
+2,Breakfast (All-Day),Bacon Egg &amp; Cheese Sandwich,,4.39 USD
+2,Lunch,Kings Hawaiian,"Kaiser roll, turkey, ham, and monterey Jack cheese (French chili). Take a,oad off and relax sip-n-snack at J'ti'z.",7.29 USD
+2,Lunch,Cuban,"Cuban bread, roast pork, ham, swiss, and slice pickle (honey mustard). Take a,oad off and relax sip-n-snack at J'ti'z.",7.29 USD
+2,Lunch,Italian,"Tomato basil focaccia, salami, ham, and cheese provolone (feta dressing). Take a,oad off and relax sip-n-snack at J'ti'z.",7.29 USD
+2,Lunch,Tuna Wrap,"Tuna and tomato. Take a,oad off and relax sip-n-snack at J'ti'z.",4.95 USD
+2,Lunch,Waffle Pizza,"Pepperoni, ham, cheese, onions, and green peppers. Take a,oad off and relax sip-n-snack at J'ti'z.",4.95 USD
+2,Tuna Sandwiches,Ti'z Tuna Crunch Sandwich,,7.29 USD
+2,Tuna Sandwiches,J' Ti'z Tuna Melt (Wrap),,7.49 USD
+2,Tuna Sandwiches,Sho Nuff Kicken Tuna Sandwich,,7.99 USD
+2,Tuna Sandwiches,"Avocado Tuna Sandwich with,ime",,7.49 USD
+2,Salads,Tuna Salad,Tuna salad and crackers (one scoop). Grab a freshly made salad.,4.25 USD
+2,Salads,Chicken Salad,"Pulled chicken, jalapeno, shredded cabbage, and shredded carrot. Grab a freshly made salad.",7.99 USD
+2,Salads,Garden Salad,"Lettuce, tomatoes, and cucumbers. Grab a freshly made salad.",4.95 USD
+2,Soup,Broccoli &amp; Cheddar Soup,Freshly made soup.,3.5 USD
+2,Soup,Tomato Basil Soup,Freshly made soup.,3.5 USD
+3,Picked for you,Chicken Bacon Ranch Cheesesteak,"Chicken sandwich with bacon, ranch, and your choice of cheese.",14.38 USD
+3,Picked for you,Philadelphia Cheesesteak,Steak sandwich with your choice of cheese.,10.78 USD
+3,Picked for you,Cheesesteak Hoagie,"Steak sandwich with lettuce, tomato, onion, and your choice of cheese.",14.38 USD
+3,Picked for you,Buffalo Chicken Cheesesteak,"Chicken sandwich with buffalo sauce, grilled onions, and your choice of cheese.",13.18 USD
+3,Picked for you,BBQ Chicken Cheesesteak,"Chicken sandwich with BBQ sauce, fried onions, and your choice of cheese.",13.18 USD
+3,Philly Fresh Cheesesteaks,Philadelphia Cheesesteak,Steak sandwich with your choice of cheese.,10.78 USD
+3,Philly Fresh Cheesesteaks,Classic Cheesesteak,Steak sandwich with grilled onions and your choice of cheese.,11.98 USD
+3,Philly Fresh Cheesesteaks,Roasted Pepper Cheesesteak,"Steak sandwich with grilled onions, bell peppers, and your choice of cheese.",13.18 USD
+3,Philly Fresh Cheesesteaks,Mushroom Cheesesteak,"Steak sandwich with mushrooms, grilled onions, and your choice of cheese.",13.18 USD
+3,Philly Fresh Cheesesteaks,Loaded Cheesesteak,"Steak sandwich with grilled onions, bell peppers, mushrooms, and your choice of cheese.",14.38 USD
+3,Philly Fresh Cheesesteaks,Buffalo Cheesesteak,"Steak sandwich with buffalo sauce, grilled onions, and your choice of cheese.",13.18 USD
+3,Philly Fresh Cheesesteaks,BBQ Cheesesteak,"Steak sandwich with BBQ sauce, fried onions, and your choice of cheese.",13.18 USD
+3,Philly Fresh Cheesesteaks,Bacon Ranch Cheesesteak,"Steak sandwich with bacon, ranch, and your choice of cheese.",14.38 USD
+3,Philly Fresh Cheesesteaks,Cheesesteak Hoagie,"Steak sandwich with lettuce, tomato, onion, and your choice of cheese.",14.38 USD
+3,Philly Fresh Cheesesteaks,Cheesesteak Combo,Your choice of cheesesteak and side.,16.78 USD
+3,Philly Fresh Chicken Cheesesteaks,Chicken Cheesesteak,Chicken sandwich with grilled onions and your choice of cheese.,11.98 USD
+3,Philly Fresh Chicken Cheesesteaks,Chicken Bacon Ranch Cheesesteak,"Chicken sandwich with bacon, ranch, and your choice of cheese.",14.38 USD
+3,Philly Fresh Chicken Cheesesteaks,BBQ Chicken Cheesesteak,"Chicken sandwich with BBQ sauce, fried onions, and your choice of cheese.",13.18 USD
+3,Philly Fresh Chicken Cheesesteaks,Buffalo Chicken Cheesesteak,"Chicken sandwich with buffalo sauce, grilled onions, and your choice of cheese.",13.18 USD
+3,Philly Fresh Chicken Cheesesteaks,Chicken Cheesesteak Combo,Your choice of cheesesteak and side.,16.78 USD
+3,Philly Fresh Sides,Cheese Fries,Crispy fries served with melted cheese.,5.98 USD
+3,Philly Fresh Sides,French Fries,Crispy fries.,4.78 USD
+3,Philly Fresh Sides,Onion Rings,Crispy onion rings.,4.78 USD
+3,Philly Fresh Drinks,Water,,3.0 USD
+3,Philly Fresh Drinks,Coke,,3.0 USD
+3,Philly Fresh Drinks,Diet Coke,,3.0 USD
+3,Philly Fresh Drinks,Sprite,,3.0 USD
+3,Philly Fresh Drinks,Iced Tea,,3.0 USD
+4,New! Crustless Pizzas - Keto Friendly (Baking Required),Chicken Bacon Artichoke - Keto Friendly (Baking Required),"Creamy Garlic Sauce, Whole-Milk Mozzarella, Grilled Chicken Raised Without Antibiotics, Crispy Bacon, Marinated Artichoke Hearts, Fresh Spinach, Aged Parmesan and Zesty Herbs without the Crust. This recipe is Keto-friendly, but still fully customizable. Macros for this entire tray with the default build are Fats: 89g, Proteins: 91g, Carbs: 21g",10.99 USD
+4,New! Crustless Pizzas - Keto Friendly (Baking Required),Cowboy - Keto Friendly (Baking Required),"Traditional Red Sauce, Whole-Milk Mozzarella, Premium Pepperoni, Italian Sausage, Sliced Mushrooms, Black Olives, Cheddar, and Herb &amp; Cheese Blend without the Crust. 
+
+To make this Keto-friendly, simply change the Traditional Red Sauce to Creamy Garlic Sauce or Olive Oil &amp; Garlic Sauce. Macros for this entire tray with the default build are Fats: 100g, Proteins: 75g, Carbs: 28g",10.99 USD
+4,New! Crustless Pizzas - Keto Friendly (Baking Required),Create Your Own Crustless - Keto Friendly (Baking Required),"Choose your sauce (or no sauce at all!) and add up to 5 toppings for best results.  Toppings that are Keto-friendly are marked with ""KF"".",9.0 USD
+4,New! Crustless Pizzas - Keto Friendly (Baking Required),Gourmet Vegetarian - Keto Friendly (Baking Required),"Creamy Garlic Sauce, Whole-Milk Mozzarella, Fresh Spinach, Sliced Zucchini, Sliced Mushrooms, Marinated Artichoke Hearts, Roma Tomatoes, Mixed Onions, Cheddar, and Herb &amp; Cheese Blend. This recipe is Keto-friendly, but still fully customizable. Macros for this entire tray with the default build are Fats: 79g, Proteins: 57g, Carbs: 23g",10.99 USD
+4,New! Crustless Pizzas - Keto Friendly (Baking Required),Papa's All Meat - Keto Friendly (Baking Required),"Traditional Red Sauce, Whole-Milk Mozzarella, Canadian Bacon, Salami, Premium Pepperoni, Italian Sausage and Ground Beef, and Cheddar. 
+
+To make this Keto-friendly, simply change the Traditional Red Sauce to Creamy Garlic Sauce or Olive Oil &amp; Garlic Sauce. Macros for this entire tray with the default build are Fats: 108g, Proteins: 88g, Carbs: 25g",10.99 USD
+4,New! Crustless Pizzas - Keto Friendly (Baking Required),Papa's Favorite - Keto Friendly (Baking Required),"Traditional Red Sauce, Whole-Milk Mozzarella, Premium Pepperoni, Italian Sausage, Ground Beef, Sliced Mushrooms, Mixed Onions, Green Peppers, Black Olives, and Cheddar. To make this Keto-friendly, simply change the Traditional Red Sauce to Creamy Garlic Sauce or Olive Oil &amp; Garlic Sauce. Macros for this entire tray with the default build are Fats: 104g, Proteins: 77g, Carbs: 33g",10.99 USD
+4,Signature Pizza (Baking Required),Cowboy (Baking Required),"Our Original Crust topped with Traditional Red Sauce, Whole-Milk Mozzarella, Premium Pepperoni, Italian Sausage, Sliced Mushrooms, Black Olives, Cheddar, and Herb &amp; Cheese Blend. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",12.99 USD
+4,Signature Pizza (Baking Required),Papa's Favorite® (Baking Required),"Our Original Crust topped with Traditional Red Sauce, Whole-Milk Mozzarella, Premium Pepperoni, Italian Sausage, Ground Beef, Sliced Mushrooms, Mixed Onions, Green Peppers, Black Olives, and Cheddar. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",12.99 USD
+4,Signature Pizza (Baking Required),Murphy's Combo (Baking Required),"Our Original Crust topped with Traditional Red Sauce, Whole-Milk Mozzarella, Salami, Premium Pepperoni, Italian Sausage, Sliced Mushrooms, Mixed Onions and Black Olives, and Cheddar. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",12.99 USD
+4,Signature Pizza (Baking Required),Chicken Garlic (Baking Required),"Our Original Crust topped with Creamy Garlic Sauce, Whole-Milk Mozzarella, Grilled Chicken Raised Without Antibiotics, Roma Tomatoes, Green Onions, Cheddar, and Herb &amp; Cheese Blend. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",12.99 USD
+4,Signature Pizza (Baking Required),Papa's All Meat (Baking Required),"Our Original Crust topped with Traditional Red Sauce, Whole-Milk Mozzarella, Canadian Bacon, Salami, Premium Pepperoni, Italian Sausage and Ground Beef, and Cheddar. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",12.99 USD
+4,Signature Pizza (Baking Required),Rancher,"Our Original Crust topped with Traditional Red Sauce, Whole-Milk Mozzarella, Canadian Bacon, Premium Pepperoni, Ground Beef, Mixed Onions, and Cheddar.",12.99 USD
+4,Gourmet Delite Pizza (Baking Required),Chicken Bacon Artichoke (Baking Required),"Our Artisan Thin Crust, topped with Creamy Garlic Sauce, Whole-Milk Mozzarella, Grilled Chicken Raised Without Antibiotics, Crispy Bacon, Marinated Artichoke Hearts, Fresh Spinach, Aged Parmesan and Zesty Herbs. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",11.99 USD
+4,Gourmet Delite Pizza (Baking Required),Herb Chicken Mediterranean (Baking Required),"Our Artisan Thin Crust, topped with Olive Oil, Chopped Garlic, Whole-Milk Mozzarella, Grilled Chicken Raised Without Antibiotics, Fresh Spinach, Sun-dried Tomatoes, Crumbled Feta and Zesty Herbs. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",11.99 USD
+4,Gourmet Delite Pizza (Baking Required),Gourmet Vegetarian (Baking Required),"Our Artisan Thin Crust, topped with Creamy Garlic Sauce, Whole-Milk Mozzarella, Fresh Spinach, Sliced Zucchini, Sliced Mushrooms, Marinated Artichoke Hearts, Roma Tomatoes, Mixed Onions, Cheddar, and Herb &amp; Cheese Blend. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",11.99 USD
+4,Gourmet Delite Pizza (Baking Required),Thai Chicken(Baking Required),"Our Artisan Thin Crust topped with Traditional Red Sauce, Whole-Milk Mozzarella, Premium Pepperoni, Fresh Spinach, Black Olives, Roma Tomatoes, Feta Cheese, and Zesty Herbs. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",11.99 USD
+4,Gourmet Delite Pizza (Baking Required),Tuscan Chicken and Sausage ( Baking Required),"Our Artisan Thin Crust topped with Traditional Red Sauce, Whole-Milk Mozzarella, Premium Pepperoni, Fresh Spinach, Black Olives, Roma Tomatoes, Feta Cheese, and Zesty Herbs. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",11.99 USD
+4,Stuffed Pizza (Baking Required),5-Meat Stuffed (Baking Required) Family,"Two layers of our Original Crust stuffed with Traditional Red Sauce, Whole-Milk Mozzarella, Canadian Bacon, Premium Pepperoni, Italian Sausage, Crispy Bacon and topped with Traditional Red Sauce, Ground Beef, Mozzarella and Mild Cheddar.",16.99 USD
+4,Stuffed Pizza (Baking Required),5-Meat Stuffed (Baking Required) Large,"Two layers of our Original Crust stuffed with Traditional Red Sauce, Whole-Milk Mozzarella, Canadian Bacon, Premium Pepperoni, Italian Sausage, Crispy Bacon and topped with Traditional Red Sauce, Ground Beef, Mozzarella and Mild Cheddar.",14.99 USD
+4,Stuffed Pizza (Baking Required),Chicago-Styled Stuffed (Baking Required) Family,"Two layers of our Original Crust stuffed with Traditional Red Sauce, Whole-Milk Mozzarella, Salami, Premium Pepperoni, Italian Sausage, Ground Beef, Mixed Onions and topped with Traditional Red Sauce, Green Onions, Roma Tomatoes, Mozzarella and Mild Cheddar. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",16.99 USD
+4,Stuffed Pizza (Baking Required),Chicago-Styled Stuffed (Baking Required) Large,"Two layers of our Original Crust stuffed with Traditional Red Sauce, Whole-Milk Mozzarella, Salami, Premium Pepperoni, Italian Sausage, Ground Beef, Mixed Onions and topped with Traditional Red Sauce, Green Onions, Roma Tomatoes, Mozzarella and Mild Cheddar. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",14.99 USD
+4,Stuffed Pizza (Baking Required),Big Murphy's Stuffed (Baking Required) Large,"Two layers of our Original Crust stuffed with Traditional Red Sauce, Whole-Milk Mozzarella, Premium Pepperoni, Italian Sausage, Sliced Mushrooms and Black Olives topped with Traditional Red Sauce, Green Peppers, Roma Tomatoes, Mild Cheddar and Herb &amp; Cheese Blend. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",14.99 USD
+4,Stuffed Pizza (Baking Required),Big Murphy's Stuffed (Baking Required) Family,"Two layers of our Original Crust stuffed with Traditional Red Sauce, Whole-Milk Mozzarella, Premium Pepperoni, Italian Sausage, Sliced Mushrooms and Black Olives topped with Traditional Red Sauce, Green Peppers, Roma Tomatoes, Mild Cheddar and Herb &amp; Cheese Blend. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",16.99 USD
+4,Stuffed Pizza (Baking Required),Chicken Bacon Stuffed (Baking Required) Large,"Two layers of our Original Crust stuffed with Creamy Garlic Sauce, Whole-Milk Mozzarella, Grilled Chicken Raised Without Antibiotics, Crispy Bacon, Roma Tomatoes, Mixed Onions and topped with Creamy Garlic Sauce, Roma Tomatoes, Crispy Bacon, Mozzarella and Mild Cheddar. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",14.99 USD
+4,Stuffed Pizza (Baking Required),Chicken Bacon Stuffed (Baking Required) Family,"Two layers of our Original Crust stuffed with Creamy Garlic Sauce, Whole-Milk Mozzarella, Grilled Chicken Raised Without Antibiotics, Crispy Bacon, Roma Tomatoes, Mixed Onions and topped with Creamy Garlic Sauce, Roma Tomatoes, Crispy Bacon, Mozzarella and Mild Cheddar. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",16.99 USD
+4,"Starters, Sides, Desserts and Beverages",Scratch-Made 5-Cheese Bread (Baking Required),"Fresh dough topped with our Herb Garlic Spread, ¼ pound of Whole-Milk Mozzarella, Herb &amp; Cheese Blend, and Mild Cheddar Cheese served with a side of Marinara.",5.0 USD
+4,"Starters, Sides, Desserts and Beverages",Chocolate Chip Cookie Dough (Baking Required),Fresh-made in house with Semi-Sweet Chocolate Chips.,5.0 USD
+4,"Starters, Sides, Desserts and Beverages",Cinnamon Wheel (Baking Required),"Our Original Crust topped with Cinnamon Spread, Oatmeal Crisp Topping, served with Cream Cheese Frosting.",5.0 USD
+4,"Starters, Sides, Desserts and Beverages",S’mores Bars,"Chocolate chip cookie dough topped with marshmallows, crisp topping, and even more chocolate chips.",6.0 USD
+4,"Starters, Sides, Desserts and Beverages",Soft Drink (2-Liter Pepsi Product),,2.49 USD
+4,"Starters, Sides, Desserts and Beverages",Mini Murph Cheese,Make 'n' Bake Pizza Kit with Red Sauce &amp; Mozzarella.,4.99 USD
+4,"Starters, Sides, Desserts and Beverages",Mini Murph Pepperoni,"Make 'n' Bake Pizza Kit with Red Sauce, Mozzarella &amp; Pepperoni.",4.99 USD
+4,Create Your Own,Create Your Own,"Choose your size and one of our fresh dough options, and then top your pizza with everyone's favorites .",2.49 USD
+4,Salad,Garden Salad,"Romaine lettuce topped with green peppers, Roma tomatoes, black olives, whole milk mozzarella, and mild cheddar cheeses.",5.99 USD
+4,Salad,Caesar Salad,Romaine lettuce topped with shredded aged parmesan cheese.,5.99 USD
+4,Salad,Club Salad,"Romaine lettuce topped with crispy bacon, Canadian bacon, Roma tomatoes, whole milk mozzarella, and mild cheddar cheese.",5.99 USD
+4,Salad,Mediterranean  Salad,"Romaine lettuce and fresh spinach topped with black olives, sun dried tomatoes, mixed onions, and crumbled feta cheese.",5.99 USD
+5,Picked for you,Pork Chop Rice with Gravy Plate,,7.0 USD
+5,Picked for you,Full Sausage (2 pcs) with 2 Eggs,2 pieces.,7.25 USD
+5,Picked for you,Bacon and Egg with Cheese Breakfast Sandwich,,3.5 USD
+5,Picked for you,Double Cheese Burger,Grilled or fried patty with cheese on a bun.,3.25 USD
+5,Picked for you,Full Bacon (3 pcs) with 2 Eggs,3 pieces.,7.25 USD
+5,Breakfast,Full Ham with 2 Eggs,,7.25 USD
+5,Breakfast,1/2  Ham with 1 Egg,,6.25 USD
+5,Breakfast,Full Bacon (3 pcs) with 2 Eggs,3 pieces.,7.25 USD
+5,Breakfast,1/2  Bacon (2 pcs) with 1 Egg,2 pieces.,6.25 USD
+5,Breakfast,Full Sausage (2 pcs) with 2 Eggs,2 pieces.,7.25 USD
+5,Breakfast,1/2 Sausage (1 pc) with 1 Egg,1 piece.,6.25 USD
+5,Breakfast,Full Salmon (2 pcs) with 2 Eggs,2 pieces.,7.25 USD
+5,Breakfast,1/2 Salmon (1 pc) with 1 Egg,1 piece.,6.25 USD
+5,Breakfast,Full Frank (2 pcs) with 2 Eggs,2 pieces.,7.25 USD
+5,Breakfast,1/2 Frank (1 pc) with 1 Egg,1 piece.,6.25 USD
+5,Breakfast,Fish and  Grits,Porridge made from ground corn.,6.75 USD
+5,Breakfast,Grits with 2 Eggs,Porridge made from ground corn.,5.25 USD
+5,Breakfast,Bowl of Grits,Porridge made from ground corn.,1.75 USD
+5,Breakfast,Bowl of Rice,,1.75 USD
+5,Breakfast Sandwich,Sausage Breakfast Sandwich,,2.75 USD
+5,Breakfast Sandwich,Sausage with Egg Breakfast Sandwich,,3.25 USD
+5,Breakfast Sandwich,Sausage with Cheese Breakfast Sandwich,,3.5 USD
+5,Breakfast Sandwich,"Ham, Egg with Cheese Breakfast Sandwich","Sandwich built with pork and cheese. ",4.5 USD
+5,Breakfast Sandwich,Frank and Egg with Cheese Breakfast Sandwich,,4.9 USD
+5,Breakfast Sandwich,Bacon and Egg with Cheese Breakfast Sandwich,,3.5 USD
+5,Breakfast Sandwich,Salmon and Egg Breakfast Sandwich,Subtle rich fish and egg sandwich.,3.75 USD
+5,Breakfast Sandwich,BLT Breakfast Sandwich,"Bacon, lettuce, and tomato. ",3.5 USD
+5,Breakfast Sandwich,Grilled Cheese Breakfast Sandwich,"Hot sandwich filled with cheese that has been pan cooked or grilled. ",2.25 USD
+5,Pancakes,Pancakes (3 pcs),,3.5 USD
+5,Pancakes,Pancakes (3 pcs) with Meat,,6.75 USD
+5,Plates,Pork Chop Rice with Gravy Plate,,7.0 USD
+5,Plates,Steak Rice with Gravy Plate,,7.0 USD
+5,Plates,Liver Rice with Gravy Plate,,6.75 USD
+5,Plates,Chicken Rice with Gravy Plate,,6.0 USD
+5,Plates,Wings (3 pcs) with Fries Plate,,5.5 USD
+5,Sandwiches and Burgers,Cheese Burger,Grilled or fried patty with cheese on a bun.,2.5 USD
+5,Sandwiches and Burgers,Hot Dog,Sausage served on a bun.,2.25 USD
+5,Sandwiches and Burgers,Polish,,3.25 USD
+5,Sandwiches and Burgers,Frank,,3.0 USD
+5,Sandwiches and Burgers,Cheese Frank,,3.25 USD
+5,Sandwiches and Burgers,Hamburger,"Grilled or fried patty on a bun. ",2.25 USD
+5,Sandwiches and Burgers,Double Hamburger,"Grilled or fried patty on a bun. ",3.0 USD
+5,Sandwiches and Burgers,Double Cheese Burger,Grilled or fried patty with cheese on a bun.,3.25 USD
+5,Sandwiches and Burgers,Turkey with Cheese Deluxe Sandwich,,3.5 USD
+5,Sandwiches and Burgers,Ham Deluxe Sandwich,,4.0 USD
+5,Sandwiches and Burgers,Salmon Sandwich,"Subtle rich fish sandwich. ",3.0 USD
+5,Sandwiches and Burgers,Pork Chop Sandwich,Thick cut of meat from a pig typically cut from the spine.,4.5 USD
+5,Sandwiches and Burgers,Fish Sandwich,"Sandwich made with a piece of cut fish that is either fried, baked, or grilled. ",4.0 USD
+5,Sandwiches and Burgers,Liver Sandwich,Sandwich with liver meat typically made as a spread or a patty.,3.75 USD
+5,Sandwiches and Burgers,Pig Ear Sandwich,,3.75 USD
+5,Sides,Mac &amp; Cheese,,2.75 USD
+5,Sides,Coleslaw,,2.75 USD
+5,Sides,Potato Salad,,2.75 USD
+5,Sides,Green Beans,,2.75 USD
+5,Sides,Baked Beans,,2.75 USD
+5,Sides,Bowl Peas,,3.75 USD
+5,Sides,Bowl Beans,,3.75 USD
+5,Sides,Fries,,2.25 USD
+5,Dessert,Pie Slice,,2.25 USD
+5,Dessert,Cake Slice,,2.5 USD
+5,Dessert,Whole Pie,,12.0 USD
+5,Dessert,Whole Cake,,20.0 USD
+5,Beverages,Hot Coffee,,1.0 USD
+5,Beverages,Tea,,1.0 USD
+5,Beverages,Can Sodas,,1.0 USD
+5,Beverages,Water,,1.0 USD
+6,Picked for you,Hereford Filet Mignon,"Potato pave, haricot verts, caramalized onion bacon foam, and worcestershire blue butter.",44.0 USD
+6,Picked for you,Alaskan Halibut,"lemongrass &amp; ginger tea crusted, cucumber zucchini ribbon salad, asparagus, honey stone ground vinaigrette, dandelion honey
+",40.0 USD
+6,Picked for you,King Crab Cobb Salad,"plus king crab, avocado, quail eggs, bacon lardons, heirloom tomato, persian cukes, fried capers, mixed greens, green goddess dressing",43.0 USD
+6,Picked for you,Grilled King Salmon,"artichoke barigoule, baby carrots, pearl onions, local pintos, lardons, jus
+",36.0 USD
+6,Picked for you,"Lobster Tortellini ","plus maine lobster, english peas, fennel shallot salad , grana, truffle and chive oils",18.0 USD
+6,Appetizers &amp; Salads,Fritto Misto,"Calamari, shrimp, pesce, parsley, sweet pepper, fennel, lemon, and green curry aioli.",14.0 USD
+6,Appetizers &amp; Salads,King Crab Cobb Salad,"plus king crab, avocado, quail eggs, bacon lardons, heirloom tomato, persian cukes, fried capers, mixed greens, green goddess dressing",43.0 USD
+6,Appetizers &amp; Salads,"Heirloom and Eggplant Caprese ","plus heirloom tomato, coal roasted eggplant, burrata, pesto cetarese",17.0 USD
+6,Appetizers &amp; Salads,"Lobster Tortellini ","plus maine lobster, english peas, fennel shallot salad , grana, truffle and chive oils",18.0 USD
+6,Appetizers &amp; Salads,"Gulf Coast Red Snapper Crudo ","plus yukon gold causa, satsumas, indian finger chiles, pistachio vinaigrette",17.0 USD
+6,Appetizers &amp; Salads,Smoked Halibut Chowder,,15.0 USD
+6,Appetizers &amp; Salads,"Ocean Salad ""Greek Style"" with Fried Feta","Crispy greens, roma tomatoes, red onion, and kalamata olives.",12.0 USD
+6,Sushi,Bubblegum Roll,"Tempura shrimp, tuna, cucumber, avocado, sriracha, and wasabi aioli.",15.0 USD
+6,Sushi,Soul Roll,"Tempura fried alaskan king crab. Jalapeno, cream cheese, and carrots.",16.0 USD
+6,Sushi,Tempura Ocean,"Tuna, salmon, sesame oil, and chives.",14.0 USD
+6,Sushi,DEE's Roll,"bbq eel, tamago, red pepper, cucumber, green onion, avocado, eel sauce",18.0 USD
+6,Sushi,Veggie Tempura Roll,"bell pepper, shiitake, carrot, green onion, asparagus, sesame seed, ginger dressing",13.0 USD
+6,Sushi,Spicy Crab Salad Roll,"tuna, crab, scallions, tempura, spicy mayo, eel sauce
+",16.0 USD
+6,Sushi,Spicy Tuna Tempura Bonbons,"Cream cheese, sambal, hot mustard, and sweet chili glaze.",14.0 USD
+6,Sushi,Smoked Salmon King Crab,"Avocado, cucumber, and sambal aioli.",15.0 USD
+6,Entrées,Hereford Filet Mignon,"Potato pave, haricot verts, caramalized onion bacon foam, and worcestershire blue butter.",44.0 USD
+6,Entrées,Grilled Main Lobster,"1.5# maine lobster, oregon red dulce seaweed butter, kale &amp; toasted almonds",52.0 USD
+6,Entrées,G.B. Scallops,"Red lentils and  barley, golden chanterelles, parsnip purée, and skordalia.",37.0 USD
+6,Entrées,Thai Green Curry Bouillabaisse,"Lobster tail, gulf shrimp, mussels, clams, pesce, and pineapple jasmine rice.",48.0 USD
+6,Entrées,Gulf Shrimp Al Ajillo,"garlic, flat leaf parsley, lemon white wine, h.c. tomato chive risotto, griddled baguette",33.0 USD
+6,Entrées,Crispy Duck Breast,"butter braised radishes, carrot sage puree, granny apple chips, red delicious orange gastrique
+",36.0 USD
+6,Entrées,Grilled King Salmon,"artichoke barigoule, baby carrots, pearl onions, local pintos, lardons, jus
+",36.0 USD
+6,Entrées,Alaskan Halibut,"lemongrass &amp; ginger tea crusted, cucumber zucchini ribbon salad, asparagus, honey stone ground vinaigrette, dandelion honey
+",40.0 USD
+6,Entrées,Pan Seared Red Snapper,"red lentil salad, avocado pomelo pomegranate salsa, green chick pea hummus
+",38.0 USD
+6,Entrées,Gulf Grouper,"agave tequila glazed sweet potatoes, hominy, epazote, fish bits, salsa verde
+",38.0 USD
+6,Whole Fish,Red Snapper (from Gulf of Mexico),"hickory grilled, italian verde",38.0 USD
+6,Whole Fish,Flounder(from Gulf of Mexico),"southern cornmeal crusted, gribiche",42.0 USD
+7,Picked for you,"Red Dragon ","Spicy tuna tartare, tuna tataki, cucumber, scallions, sesame dressing. ",16.0 USD
+7,Picked for you,Edamame,Steamed or grilled. Served with ponzu.,8.0 USD
+7,Picked for you,Spicy Hotate,"Spicy scallop, avocado, crab salad, tobiko, tempura flakes, eel sauce, sriracha.",17.0 USD
+7,Picked for you,Kadoma Tuna,"Spicy tuna tartare, tempura rice cake, avocado, jalapeno, tobiko, sesame seeds, eel sauce.",17.0 USD
+7,Picked for you,Spiro Roll,"Spicy tuna tartare, sake, tempura asparagus, avocado, spicy aioli, chili powder.",16.0 USD
+7,Starters,Miso Soup,,8.0 USD
+7,Starters,Chili Miso Soup,,8.0 USD
+7,Starters,Grilled Shishito Peppers,Served With Ponzu.,9.0 USD
+7,Starters,Edamame,Steamed or grilled. Served with ponzu.,8.0 USD
+7,Starters,Green Beans,Choose between tempura fried or grilled green beans.,8.0 USD
+7,Starters,Rock Shrimp,Tempura fried shrimp tossed in a yuzu aoli.,16.0 USD
+7,Starters,Tempura Platter,,13.0 USD
+7,Starters,Soft Shell Crab,,13.0 USD
+7,Starters,Agedashi Tofu,,9.0 USD
+7,Greens,"Hawaiian Kelp ",,14.0 USD
+7,Greens,Jinsei Salad,,15.0 USD
+7,Greens,Baby Greens,,7.0 USD
+7,Greens,Wakame,,9.0 USD
+7,Greens,"Spider Salad ",,14.0 USD
+7,Cold Dishes,Jinseviche,"Sake, tuna tataki, tako, ebi, mango, cucumber, red onion, cilantro, wakamezu.",16.0 USD
+7,Cold Dishes,Kadoma Tuna,"Spicy tuna tartare, tempura rice cake, avocado, jalapeno, tobiko, sesame seeds, eel sauce.",17.0 USD
+7,Cold Dishes,Poké,"Tuna, avocado, cucumber, tomato, cilantro, scallions, spicy sesame, ponzu sauce, served on endive.",16.0 USD
+7,Cold Dishes,Somatsu,"Tuna, avocado, asparagus, mint, yamagobo, cithai sauce, wrapped with cucumber.",16.0 USD
+7,Cold Dishes,Yellowtail Serrano,"Gluten free. Hamachi, serrano, cilantro, yuzu soy.",19.0 USD
+7,Cold Dishes,Hamachi Fig,"Hamachi sashimi lightly tossed in a fig sauce with rum raisins, and serrano peppers then topped with fried lotus root.",16.0 USD
+7,Cold Dishes,Maguro Ringo,"Maguro tossed in anchovy sauce. served with sliced honey crisp apples, and garnished with goat cheese.
+",16.0 USD
+7,Hot Dishes,Grouper Buns,"Tempura grouper, Asian slaw, served with crispy lotus root.",19.0 USD
+7,Hot Dishes,Hamachi Kama,"Lightly seasoned hamachi collar, baked and broiled, served with ponzu.",21.0 USD
+7,Hot Dishes,Beef Sliders,"Lettuce, mayo, tonkatsu sauce, served with tempura sweet potato fries.",19.0 USD
+7,Hot Dishes,Beef Wrapped Asparagus,"Kobe beef, asparagus, Japanese BBQ sauce.",19.0 USD
+7,Hot Dishes,Tebasaki Wings,Twice fried wings tossed in a savory sesame ginger sauce.,13.0 USD
+7,Hot Dishes,Tochiru Buns,"Kobe flank steak, iceberg lettuce, mayo, caramalized onions, and served with crispy lotus root.",19.0 USD
+7,Hot Dishes,Nikko,"Smoked Salmon, unagi, tamago, asparagus, avocado, cream cheese, tempura fried, topped with eel sauce.",16.0 USD
+7,Sushi,Hatsu,"Beef, hot sesame, olive oil, ginger, avocado, cucumber scallions, cilantro, topped with Japanese bbq sauce and sriracha.",19.0 USD
+7,Sushi,"Jarijari ","Tempura shrimp, kani, avocado, cucumber, yamagobo, tempura flakes, eel sauce.",16.0 USD
+7,Sushi,Jinsei Special,"Maguro, hamachi, masago, jalapeno, cilantro, cucumber, avocado.",15.0 USD
+7,Sushi,"Lobster ","Tempura lobster, masago, tempura asparagus, cucumber, avocado, eel sauce.",19.0 USD
+7,Sushi,"Sachihoko ","Tempura shrimp, kani, avocado, cucumber, yamagobo, unagi, tobiko, eel sauce.",17.0 USD
+7,Sushi,Spicy Hotate,"Spicy scallop, avocado, crab salad, tobiko, tempura flakes, eel sauce, sriracha.",17.0 USD
+7,Sushi,"Suteki ","Smoked salmon, avocado, cream cheese, honey crisp apple, squid ink tobiko, soy-mirin.",16.0 USD
+7,Sushi,Bangkok,"Maguro, hamachi, jalapeno, cilantro, avocado, potato matchsticks, sweet and spicy Thai sauce.",16.0 USD
+7,Sushi,"Bubblegum ","Tempura shrimp, maguro, ebi, avocado, wasabi aioli, sriracha.",16.0 USD
+7,Sushi,"Ginger Albacore ","Maguro, hamachi, jalapeno, cilantro, topped with avocado and ginger albacore, scallions, ponzu sauce.",16.0 USD
+7,Sushi,"Hamajiku ","Hamachi, avocado, cucumber, rum raisins, crispy lotus root, fig sauce, serrano.",16.0 USD
+7,Sushi,Island,"Japanese red snapper, avocado, asparagus, mango, wasabi tobiko, sriracha. Gluten-free.",16.0 USD
+7,Sushi,Jinsei Special,"Maguro, hamachi, masago, jalapeno, cilantro, cucumber, avocado.",16.0 USD
+7,Sushi,"Kiiro ","Salmon, avocado, cucumber, topped with octopus, squid, golden tobiko, was vice sauce.",16.0 USD
+7,Sushi,"Red Dragon ","Spicy tuna tartare, tuna tataki, cucumber, scallions, sesame dressing. ",16.0 USD
+7,Sushi,"Red Spider ","Tempura soft shell crab, tobiko, cucumber, avocado, eel sauce.",16.0 USD
+7,Sushi,Spiro Roll,"Spicy tuna tartare, sake, tempura asparagus, avocado, spicy aioli, chili powder.",16.0 USD
+7,Nigiri / Sashimi,Albacore,White tuna.,6.0 USD
+7,Nigiri / Sashimi,Ebi,Shrimp.,5.0 USD
+7,Nigiri / Sashimi,Hamachi,Yellowtail.,6.0 USD
+7,Nigiri / Sashimi,Ika,Squid.,5.0 USD
+7,Nigiri / Sashimi,Ikura,Salmon roe.,6.0 USD
+7,Nigiri / Sashimi,Kani,Crab.,5.0 USD
+7,Nigiri / Sashimi,Masago,Gluten free. Capelin roe.,5.0 USD
+7,Nigiri / Sashimi,Sake,Salmon.,6.0 USD
+7,Nigiri / Sashimi,Sake Kunsei,Smoked salmon.,5.0 USD
+7,Nigiri / Sashimi,Tako,Octopus.,6.0 USD
+7,Nigiri / Sashimi,Tobiko,Gluten-free. Flying fish roe.,5.0 USD
+7,Nigiri / Sashimi,Tuna Tataki,Seared tuna.,6.0 USD
+7,Nigiri / Sashimi,Amaebi,Sweet shrimp.,7.0 USD
+7,Nigiri / Sashimi,Amaebi,Sweet shrimp.,7.0 USD
+7,Nigiri / Sashimi,Foie Gras-2 Pc,Duck liver.,10.0 USD
+7,Nigiri / Sashimi,Hotate,Scallop.,7.0 USD
+7,Nigiri / Sashimi,Maguro,Tuna.,7.0 USD
+7,Nigiri / Sashimi,Sake Toro,Salmon belly.,7.0 USD
+7,Nigiri / Sashimi,Spicy Hotate,Spicy scallop.,8.0 USD
+7,Nigiri / Sashimi,Hamachi Toro,Yellowtail belly.,7.0 USD
+7,Nigiri / Sashimi,Tuna Tataki,Seared tuna.,6.0 USD
+7,Nigiri / Sashimi,Unagi,Freshwater eel.,7.0 USD
+7,Nigiri / Sashimi,Chef Select,,60.0 USD
+7,Nigiri / Sashimi,Chirashi Bowl,,50.0 USD
+8,Tacos,Chorizo,,2.49 USD
+8,Tacos,Chicken (Pollo),,2.49 USD
+8,Tacos,Breaded Chicken (Milanesa de Pollo),,2.49 USD
+8,Tacos,Steak (Asada),,2.49 USD
+8,Tacos,Mixed Meat (Campechano),,2.49 USD
+8,Chilaquiles,Chicken (Pollo),,7.99 USD
+8,Chilaquiles,Steak (Asada),,7.99 USD
+8,Chilaquiles,Mixed Meat,,7.99 USD
+8,Tortas,Chorizo (Mexican Sausage),,6.99 USD
+9,Seafood Meals,2 Piece Batter Dipped Fish Meal,"Two of our famous batter dipped fish fillets, golden on the outside tender on the inside. Served with your choice of two sides and hush puppies.",8.79 USD
+9,Seafood Meals,3 Piece Batter Dipped Fish Meal,"Three of our famous batter dipped fish fillets, golden on the outside tender on the inside. Served with your choice of two sides and hush puppies.",9.99 USD
+9,Seafood Meals,4 Piece Batter Dipped Fish Meal,"Four of our famous batter dipped fish fillets, golden on the outside tender on the inside. Served with your choice of two sides and hush puppies.",10.99 USD
+9,Seafood Meals,2 Piece Fish &amp; 6 Piece Butterfly Shrimp Meal,Two batter dipped fish fillets and six butterfly shrimp served with your choice of two sides and hush puppies.,10.49 USD
+9,Seafood Meals,2 Piece Catfish Meal,Two hand-breaded catfish fillets served with your choice of two sides and hush puppies.,9.79 USD
+9,Seafood Meals,Catfish Feast,Hand-breaded catfish fillets served with your choice of three sides and hush puppies.,11.59 USD
+9,Seafood Meals,15 Piece Butterfly Shrimp Meal,A plentiful portion of our butterfly shrimp served with your choice of two sides and hush puppies.,9.09 USD
+9,Seafood Meals,Deluxe Seafood Platter,"For those seeking seafood variety, we combine two fish fillets, six shrimp, two seafood stuffed crab shells with your choice of two sides and hush puppies.",11.49 USD
+9,Seafood Meals,Supreme Sampler,"Two pieces of our famous batter dipped fish, two chicken tenders, and six butterfly shrimp. Served with your choice of two sides and hush puppies.",10.99 USD
+9,Seafood Meals,"White Fish, Shrimp, &amp; Crab Meal","Our southern-style white fish, four butterfly shrimp and a stuffed seafood crab shell served with your choice of two sides and hush puppies.",11.49 USD
+9,Chicken Meals,2 Piece Fish &amp; 2 Piece Chicken Meal,"Two pieces of batter dipped fish and two chicken tenders, served with your choice of two sides and hush puppies.",9.99 USD
+9,Chicken Meals,4 Piece Chicken Meal,Four crispy breaded chicken tenders with your choice of two sides and hush puppies. Perfect for dipping in D’s delicious honey mustard!,9.79 USD
+9,Family Meals,10 Piece Fish Family Meal,Ten of our famous batter dipped fish fillets with eight hush puppies and your choice of two family-style sides.,29.99 USD
+9,Family Meals,14 Piece Chicken Family Meal,Fourteen of our breaded chicken tenders with eight hush puppies and your choice of two family-style sides.,29.99 USD
+9,Family Meals,Seafood Feast,"Twelve pieces of our famous batter dipped fish, twelve crispy butterfly shrimp, three seafood stuffed crab shells, twelve hush puppies and your choice of two family-style sides.",36.99 USD
+9,Grilled Meals,Grilled Tilapia Meal,Kick up the flavor with seasoned tilapia served on a bed of rice with your choice of two sides and a breadstick.,9.49 USD
+9,Grilled Meals,Grilled White Fish &amp; Shrimp Skewer Meal,A fillet of our delicious grilled white fish served alongside a skewer of succulent grilled shrimp. Served on a bed of rice with your choice of two sides and breadstick.,10.79 USD
+9,Grilled Meals,Lemon Pepper White Fish Meal,"A fillet of our tender and flaky white fish, seasoned with pepper and tangy lemon. Served on a bed of rice with your choice of two sides and breadstick.",8.99 USD
+9,Grilled Meals,Shrimp Skewers Meal,Plump seasoned shrimp that are seared to perfection and served on a bed of rice with your choice of two sides and a breadstick.,10.49 USD
+9,Grilled Meals,Wild Alaskan Salmon Meal,Wild Alaskan Salmon seared to perfection and served on a bed of rice with your choice of two sides and a breadstick.,9.99 USD
+9,Sandwiches,The Giant Fish Sandwich and Side,"Two batter dipped fish fillets on a toasty bun with cracklins, tangy tartar sauce, and shredded lettuce",7.99 USD
+9,Kids Menu,Kid's Batter Dipped Fish Meal,"One piece of our famous batter dipped fish served with a choice of one side, hush puppies, and drink.",4.99 USD
+9,Kids Menu,Kid's Chicken Tenders Meal,"Two seasoned and breaded chicken tenders, with a choice of one side, hush puppies, and drink.",4.99 USD
+9,Kids Menu,Kid's Popcorn Shrimp Meal,"A plentiful portion of tender, breaded bite-sized shrimp with a choice of one side, hush puppies, and drink.",4.99 USD
+9,Appetizers,Clam Strips,A quarter-pound of our fan-favorite crispy breaded clam strips.,3.99 USD
+9,Appetizers,Clam Strips &amp; Butterfly Shrimp,A delicious combination of crispy breaded clam strips and butterfly shrimp.,4.99 USD
+9,Appetizers,Jalapeño Poppers,"Golden fried jalapeños and cheese that’s just begging to be dipped in ranch, will start your meal with a kick.",3.99 USD
+9,Appetizers,Mozzarella Sticks,"Crispy yet gooey breaded mozzarella sticks, perfect for dipping in tangy marinara sauce.",3.99 USD
+9,Add-Ons,1 Piece Batter Dipped Fish,Add one piece of our famous batter dipped fish to any meal.,2.69 USD
+9,Add-Ons,2 Piece Batter Dipped Fish,Add two pieces of our famous batter dipped fish to any meal.,4.99 USD
+9,Add-Ons,2 Piece Chicken,Looking for surf and turf? Add two pieces of our breaded chicken tenders to any meal.,3.59 USD
+9,Add-Ons,4 Piece Chicken,Looking for surf and turf? Add four pieces of our breaded chicken tenders to any meal.,5.49 USD
+9,Add-Ons,6 Piece Butterfly Shrimp,Customize your meal by adding six breaded butterfly shrimp to any meal.,2.99 USD
+9,Add-Ons,12 Piece Butterfly Shrimp,Customize your meal by adding twelve breaded butterfly shrimp to any meal.,4.99 USD
+9,Add-Ons,Grilled Shrimp Skewer,One fire-grilled shrimp skewer is the perfect addition to any meal.,3.69 USD
+9,Add-Ons,6 Hush Puppies,Our famous golden brown hush puppies are made from a batter that’s freshly prepared and hand scooped with care. They are perfectly paired with our seafood meals.,2.99 USD
+9,Desserts,Cheesecake,"A rich, creamy cheesecake with a graham cracker crust.",2.99 USD
+9,Desserts,Funnel Cake Stix,"A twist on a popular state fair favorite in an easy-to-share serving, these sweet and delicious funnel cake stix are the perfect finish to any Captain D's meal.",2.99 USD
+9,Sides,Baked Potato,A generous sized potato cooked to fluffy perfection and then served with butter and sour cream.,3.19 USD
+9,Sides,Loaded Baked Potato,"A perfectly baked potato, loaded with cheese and bacon.",4.19 USD
+9,Sides,Broccoli,Tender broccoli florets steamed to order.,2.49 USD
+9,Sides,Coleslaw,Fresh cabbage combined with Captain D’s own signature sweet slaw dressing with a delicate blend of sweet and savory flavors.,2.49 USD
+9,Sides,Corn on the Cob,Simply sweet corn on the cob steamed and served hot.,3.19 USD
+9,Sides,French Fries,Crispy cut french fries.,2.49 USD
+9,Sides,Fried Okra,"A simple, southern classic; slices of okra in southern-style breading fried to a golden brown.",3.19 USD
+9,Sides,Green Beans,Green beans slow cooked with country ham and served hot.,2.49 USD
+9,Sides,Mac &amp; Cheese,Classic home-style macaroni and cheese prepared with delicate Cheddar cheese sauce and tender noodles.,3.19 USD
+9,Beverages,Bottled Water,Purified Drinking Water,1.99 USD
+9,Beverages,Gallon of Sweet Tea,A gallon of D's famous sweet tea.,4.79 USD
+9,Beverages,Gallon of Unsweet Tea,A gallon of D's famous unsweet tea.,4.79 USD
+9,Beverages,Kid's Soft Drink,"Choice of Pepsi, Diet Pepsi, Mountain Dew, Dr. Pepper, Sierra Mist, Sweet Tea, Unsweet Tea.",1.49 USD
+9,Beverages,Large Soft Drink,"Choice of Pepsi, Diet Pepsi, Mountain Dew, Dr. Pepper, Sierra Mist, Sweet Tea, Unsweet Tea.",2.69 USD
+9,Beverages,Medium Soft Drink,"Choice of Pepsi, Diet Pepsi, Mountain Dew, Dr. Pepper, Sierra Mist, Sweet Tea, Unsweet Tea.",2.49 USD
+9,Beverages,Small Soft Drink,"Choice of Pepsi, Diet Pepsi, Mountain Dew, Dr. Pepper, Sierra Mist, Sweet Tea, Unsweet Tea.",2.29 USD
+10,Salads,Grilled Shrimp Salad,,12.0 USD
+10,Salads,Chef Salad,,10.0 USD
+10,Salads,Grilled Chicken Salad,,11.0 USD
+10,Cajun Crab Legs,Cajun Crab Legs,"Most popular. Crab cluster, ten shrimp, sausage, boiled eggs, potatoes, and corn. Choice of sauce.",27.0 USD
+10,Peaux Boys,Shrimp Peaux Boy,Most popular. Fried or grilled. Served with fries.,10.0 USD
+10,Peaux Boys,Chicken Peaux Boy,"Fried or grilled. Served with fries.
+",8.0 USD
+10,Peaux Boys,Swamp Thang Peaux Boy,"Cajun fish fillet and fried shrimp. Served with fries.
+",13.0 USD
+10,Peaux Boys,Cajun Fish Peaux Boy,"Fried or grilled. Served with fries.
+",9.0 USD
+10,Peaux Boys,Smoked Andouille Sausage Peaux Boy,"Grilled. Served with fries.
+",8.0 USD
+10,Signature Entrées,Crescent City Wings,Your choice of sauce.,8.0 USD
+10,Signature Entrées,Bayou Burger,,9.0 USD
+10,Signature Entrées,Shrimp &amp; Grits,,6.5 USD
+10,Signature Entrées,Bistro Fries,Your choice of style.,12.0 USD
+10,Signature Entrées,Quesadilla,"Your choice of style.
+",11.0 USD
+10,Signature Entrées,Nawlins Gumbo,"Your choice of style.
+",12.0 USD
+10,Sides,Cajun Corn &amp; Potatoes,,3.0 USD
+10,Sides,Cheese Grits,,3.0 USD
+10,Sides,Waffle Fries,,3.0 USD
+10,Sides,Fried Okra,,3.0 USD
+11,Bundles,Build Your Own Bundle,Select your favorite flavors!,0.0 USD
+11,Top Sellers,Ben and Jerry's Chocolate Chip Cookie Dough,Big delicious chunks of chocolate chip cookie dough surrounded by creamy vanilla ice cream.  16oz,7.99 USD
+11,Top Sellers,Ben and Jerry's Half Baked,A delectable dance of Chocolate Chip Cookie Dough and Chocolate Fudge Brownie. Vanilla ice cream and chocolate ice cream with chunks of cookie dough and fudge brownies—it’s hard to imagine a better combination.  16oz,7.99 USD
+11,Top Sellers,Ben and Jerry's Tonight Dough,Caramel and chocolate ice creams with crunchy chocolate cookie swirls and gobs of chocolate chip cookie dough and peanut butter cookie dough. Its indulgence is simply over the top.  16oz,7.99 USD
+11,Top Sellers,Ben and Jerry's Americone Dream,Vanilla ice cream with fudge-covered waffle cone pieces and a caramel swirl.  16oz,7.99 USD
+11,Top Sellers,Ben and Jerry's Strawberry Cheesecake,Strawberry cheesecake ice cream with strawberries and a graham cracker swirl. 16oz,7.99 USD
+11,Ben &amp; Jerry's,Ben and Jerry's Chocolate Chip Cookie Dough,Big delicious chunks of chocolate chip cookie dough surrounded by creamy vanilla ice cream.  16oz,7.99 USD
+11,Ben &amp; Jerry's,Ben and Jerry's Half Baked,A delectable dance of Chocolate Chip Cookie Dough and Chocolate Fudge Brownie. Vanilla ice cream and chocolate ice cream with chunks of cookie dough and fudge brownies—it’s hard to imagine a better combination.  16oz,7.99 USD
+11,Ben &amp; Jerry's,Ben and Jerry's Chocolate Fudge Brownie,Fudgy chunks of brownie goodness mixed into dark and rich chocolate ice cream. Sounds like a dream.  16oz,7.99 USD
+11,Ben &amp; Jerry's,Ben and Jerry's Tonight Dough,Caramel and chocolate ice creams with crunchy chocolate cookie swirls and gobs of chocolate chip cookie dough and peanut butter cookie dough. Its indulgence is simply over the top.  16oz,7.99 USD
+11,Ben &amp; Jerry's,Ben and Jerry's Americone Dream,Vanilla ice cream with fudge-covered waffle cone pieces and a caramel swirl.  16oz,7.99 USD
+11,Ben &amp; Jerry's,Ben and Jerry's Strawberry Cheesecake,Strawberry cheesecake ice cream with strawberries and a graham cracker swirl. 16oz,7.99 USD
+11,Ben &amp; Jerry's,Ben and Jerry's Milk &amp; Cookies,"Vanilla ice cream with a chocolate cookie swirl, chocolate chip and chocolate chocolate chip cookies. Cookie madness, mixed with vanilla ice cream—has your inner cookie monster exploded with joy yet? 16oz",7.99 USD
+11,Ben &amp; Jerry's,Ben and Jerry's Mint Chocolate Cookie,A perky peppermint ice cream with plentiful chunks of chocolate sandwich cookies.  16oz,7.99 USD
+11,Ben &amp; Jerry's,Ben &amp; Jerry's Netflix &amp; Chilll'd™,Peanut Butter ice cream with sweet and salty pretzel swirls and fudge brownie pieces. 16 oz.,7.99 USD
+11,Ben &amp; Jerry's,Ben &amp; Jerry's Phish Food,Chocolate ice cream with gooey marshmallow swirls &amp; caramel swirls &amp; fudge fish. 16 oz.,7.99 USD
+11,Ben &amp; Jerry's,Ben &amp; Jerry's Topped Salted Caramel Brownie,"Ben &amp; Jerry's Vanilla ice cream with salted caramel swirls &amp; fudge brownies topped with caramel cups and topped with chocolatey ganache. 15.2 oz.
+",7.99 USD
+11,Ben &amp; Jerry's,Ben &amp; Jerry's Cherry Garcia,"Cherry Ice Cream with cherries and fudge flakes. A euphoric tribute to guitarist Jerry Garcia &amp; Grateful Dead fans everywhere. 16 oz.
+",7.99 USD
+11,Ben &amp; Jerry's,Ben &amp; Jerry's Non-Dairy Chocolate Fudge Brownie,"Chocolate Non-Dairy Frozen Dessert with Fudge Brownies. Made with Almond Milk. 16 oz.
+",7.99 USD
+11,Ben &amp; Jerry's,Ben &amp; Jerry's Non Dairy P.B. &amp; Cookies,"Vanilla non-dairy frozen dessert with chocolate sandwich cookies &amp; crunchy peanut butter swirls. Certified Vegan. 16 oz.
+",7.99 USD
+11,Breyers,Breyers Cookies &amp; Cream 16 oz,"Dive into Breyers® rich and creamy vanilla loaded with scrumptious, crème-filled chocolate cookie pieces in Breyers® Cookies and Cream, now with 20% more cookie pieces. 16 oz.",5.19 USD
+11,Breyers,Breyers Vanilla Chocolate Strawberry 48 oz,"Vanilla ice cream, chocolate ice cream, strawberry ice cream. All in one?! Oh my! The Breyers take on the classic Neopolitan ice cream is the best of three worlds. 48 oz - a great size for the whole family.
+",8.99 USD
+11,Breyers,Breyers Natural Vanilla 48 oz,"Our original vanilla ice cream. The way vanilla should taste! Breyers Natural Vanilla is made with fresh cream, sugar, milk, and Rainforest Alliance Certified vanilla beans. 48 oz - a great size for the whole family.
+",8.99 USD
+11,Breyers,Breyers Reese's 16 oz,"Breyers joins forces with America's favorite peanut butter chocolate candy to bring you Breyers Reese's Peanut Butter! Loaded with chunks of 100% real reese's peanut butter cups and a rich fudge swirl. 16 oz.
+",5.19 USD
+11,Magnum,Magnum Double Caramel Ice Cream Bars 3ct,"A sweet delight featuring two layers of decadent chocolate. Velvety Madagascan vanilla bean ice cream is dipped in a gooey chocolatey coating, followed by a rich caramel sauce and covered again in a cracking milk chocolate shell. Made with Belgian chocolate. 3 bars in a box.
+",7.99 USD
+11,Talenti,Talenti Salted Caramel Truffle Layers,"Our Salted Caramel Truffle is an ode to our best-selling Sea Salt Caramel Gelato. We started with a layer of our Sea Salt Caramel, added a layer of chocolatey cookies for a delicious crunch and created a third layer with our dulce de leche, added more Sea Salt Gelato and finally finished with a fifth layer of chocolatey caramel truffles.",8.99 USD
+11,Talenti,Talenti Layers Confetti Cookie Gelato,"Vanilla gelato​, a layer of vanilla cookie pieces, followed by​ pink frosting​, another layer of vanilla gelato​, and a final layer of rainbow sprinkles​.
+",8.99 USD
+11,Talenti,Talenti Roman Raspberry Sorbetto 16 oz,"Packed with raspberries, this non-dairy, vegan sorbetto is intensely flavorful. With hints of lemon, it's the perfect balance of tang and sweetness. 16 oz.
+",7.99 USD
+11,Talenti,Talenti Caramel Cookie Crunch Gelato 16 oz,"We blend chocolate cookies into our delicious sweet cream gelato, then add a swirl of our one-of-a-kind dulce de leche. 16 oz. 
+",7.99 USD
+12,Bundles,Build Your Own Bundle,Select your favorite flavors!,0.0 USD
+12,Top Sellers,Ben and Jerry's Chocolate Chip Cookie Dough,Big delicious chunks of chocolate chip cookie dough surrounded by creamy vanilla ice cream.  16oz,7.99 USD
+12,Top Sellers,Ben and Jerry's Half Baked,A delectable dance of Chocolate Chip Cookie Dough and Chocolate Fudge Brownie. Vanilla ice cream and chocolate ice cream with chunks of cookie dough and fudge brownies—it’s hard to imagine a better combination.  16oz,7.99 USD
+12,Top Sellers,Ben and Jerry's Tonight Dough,Caramel and chocolate ice creams with crunchy chocolate cookie swirls and gobs of chocolate chip cookie dough and peanut butter cookie dough. Its indulgence is simply over the top.  16oz,7.99 USD
+12,Top Sellers,Ben and Jerry's Americone Dream,Vanilla ice cream with fudge-covered waffle cone pieces and a caramel swirl.  16oz,7.99 USD
+12,Top Sellers,Ben and Jerry's Strawberry Cheesecake,Strawberry cheesecake ice cream with strawberries and a graham cracker swirl. 16oz,7.99 USD
+12,Ben &amp; Jerry's,Ben and Jerry's Chocolate Chip Cookie Dough,Big delicious chunks of chocolate chip cookie dough surrounded by creamy vanilla ice cream.  16oz,7.99 USD
+12,Ben &amp; Jerry's,Ben and Jerry's Half Baked,A delectable dance of Chocolate Chip Cookie Dough and Chocolate Fudge Brownie. Vanilla ice cream and chocolate ice cream with chunks of cookie dough and fudge brownies—it’s hard to imagine a better combination.  16oz,7.99 USD
+12,Ben &amp; Jerry's,Ben and Jerry's Chocolate Fudge Brownie,Fudgy chunks of brownie goodness mixed into dark and rich chocolate ice cream. Sounds like a dream.  16oz,7.99 USD
+12,Ben &amp; Jerry's,Ben and Jerry's Tonight Dough,Caramel and chocolate ice creams with crunchy chocolate cookie swirls and gobs of chocolate chip cookie dough and peanut butter cookie dough. Its indulgence is simply over the top.  16oz,7.99 USD
+12,Ben &amp; Jerry's,Ben and Jerry's Americone Dream,Vanilla ice cream with fudge-covered waffle cone pieces and a caramel swirl.  16oz,7.99 USD
+12,Ben &amp; Jerry's,Ben and Jerry's Strawberry Cheesecake,Strawberry cheesecake ice cream with strawberries and a graham cracker swirl. 16oz,7.99 USD
+12,Ben &amp; Jerry's,Ben and Jerry's Milk &amp; Cookies,"Vanilla ice cream with a chocolate cookie swirl, chocolate chip and chocolate chocolate chip cookies. Cookie madness, mixed with vanilla ice cream—has your inner cookie monster exploded with joy yet? 16oz",7.99 USD
+12,Ben &amp; Jerry's,Ben and Jerry's Mint Chocolate Cookie,A perky peppermint ice cream with plentiful chunks of chocolate sandwich cookies.  16oz,7.99 USD
+12,Ben &amp; Jerry's,Ben &amp; Jerry's Netflix &amp; Chilll'd™,Peanut Butter ice cream with sweet and salty pretzel swirls and fudge brownie pieces. 16 oz.,7.99 USD
+12,Ben &amp; Jerry's,Ben &amp; Jerry's Phish Food,Chocolate ice cream with gooey marshmallow swirls &amp; caramel swirls &amp; fudge fish. 16 oz.,7.99 USD
+12,Ben &amp; Jerry's,Ben &amp; Jerry's Topped Salted Caramel Brownie,"Ben &amp; Jerry's Vanilla ice cream with salted caramel swirls &amp; fudge brownies topped with caramel cups and topped with chocolatey ganache. 15.2 oz.
+",7.99 USD
+12,Ben &amp; Jerry's,Ben &amp; Jerry's Cherry Garcia,"Cherry Ice Cream with cherries and fudge flakes. A euphoric tribute to guitarist Jerry Garcia &amp; Grateful Dead fans everywhere. 16 oz.
+",7.99 USD
+12,Ben &amp; Jerry's,Ben &amp; Jerry's Non-Dairy Chocolate Fudge Brownie,"Chocolate Non-Dairy Frozen Dessert with Fudge Brownies. Made with Almond Milk. 16 oz.
+",7.99 USD
+12,Ben &amp; Jerry's,Ben &amp; Jerry's Non Dairy P.B. &amp; Cookies,"Vanilla non-dairy frozen dessert with chocolate sandwich cookies &amp; crunchy peanut butter swirls. Certified Vegan. 16 oz.
+",7.99 USD
+12,Breyers,Breyers Cookies &amp; Cream 16 oz,"Dive into Breyers® rich and creamy vanilla loaded with scrumptious, crème-filled chocolate cookie pieces in Breyers® Cookies and Cream, now with 20% more cookie pieces. 16 oz.",5.19 USD
+12,Breyers,Breyers Vanilla Chocolate Strawberry 48 oz,"Vanilla ice cream, chocolate ice cream, strawberry ice cream. All in one?! Oh my! The Breyers take on the classic Neopolitan ice cream is the best of three worlds. 48 oz - a great size for the whole family.
+",8.99 USD
+12,Breyers,Breyers Natural Vanilla 48 oz,"Our original vanilla ice cream. The way vanilla should taste! Breyers Natural Vanilla is made with fresh cream, sugar, milk, and Rainforest Alliance Certified vanilla beans. 48 oz - a great size for the whole family.
+",8.99 USD
+12,Breyers,Breyers Reese's 16 oz,"Breyers joins forces with America's favorite peanut butter chocolate candy to bring you Breyers Reese's Peanut Butter! Loaded with chunks of 100% real reese's peanut butter cups and a rich fudge swirl. 16 oz.
+",5.19 USD
+12,Magnum,Magnum Double Caramel Ice Cream Bars 3ct,"A sweet delight featuring two layers of decadent chocolate. Velvety Madagascan vanilla bean ice cream is dipped in a gooey chocolatey coating, followed by a rich caramel sauce and covered again in a cracking milk chocolate shell. Made with Belgian chocolate. 3 bars in a box.
+",7.99 USD
+12,Talenti,Talenti Salted Caramel Truffle Layers,"Our Salted Caramel Truffle is an ode to our best-selling Sea Salt Caramel Gelato. We started with a layer of our Sea Salt Caramel, added a layer of chocolatey cookies for a delicious crunch and created a third layer with our dulce de leche, added more Sea Salt Gelato and finally finished with a fifth layer of chocolatey caramel truffles.",8.99 USD
+12,Talenti,Talenti Layers Confetti Cookie Gelato,"Vanilla gelato​, a layer of vanilla cookie pieces, followed by​ pink frosting​, another layer of vanilla gelato​, and a final layer of rainbow sprinkles​.
+",8.99 USD
+12,Talenti,Talenti Roman Raspberry Sorbetto 16 oz,"Packed with raspberries, this non-dairy, vegan sorbetto is intensely flavorful. With hints of lemon, it's the perfect balance of tang and sweetness. 16 oz.
+",7.99 USD
+12,Talenti,Talenti Caramel Cookie Crunch Gelato 16 oz,"We blend chocolate cookies into our delicious sweet cream gelato, then add a swirl of our one-of-a-kind dulce de leche. 16 oz. 
+",7.99 USD
+13,Create The Bun Of Day,Let There Be Buns,American beef patty topped with your favorite choice of toppings! Served on a bun.,8.79 USD
+13,The Bun Of Day,Classic Bunrise Burger,"American beef patty topped with lettuce, tomato, onion, and pickles. Served on a bun.",8.79 USD
+13,The Bun Of Day,Break Of Day Bacon Burger,"American beef patty topped with melted cheese, layers of crispy bacon, lettuce, tomato, onion, and pickles. Served on a bun.",9.39 USD
+13,The Bun Of Day,Crack-Of Dawn Cheese Burger,"American beef patty topped with melted cheese, lettuce, tomato, onion, and pickles. Served on a bun.",9.29 USD
+13,The Bun Of Day,Rise Of The BBQ Burger,"American beef patty topped with melted cheese, barbecue sauce, and caramelized onions. Served on a bun.",9.39 USD
+13,The Bun Of Day,Jalapeno Sunup Burger,"American beef patty topped with melted cheese, jalapenos, lettuce, tomato, onion, and pickles. Served on a bun.",9.39 USD
+13,The Bun Of Day,Peep Of Day French Fries Burger,"American beef patty topped with fries, caramelized onions, ketchup, lettuce, tomato, onion, and pickles. Served on a bun.",10.39 USD
+13,The Bun Of Day,Cockcrow Cheese Double Burger,"Two American beef patties topped with melted cheese, lettuce, tomato, onion, and pickles. Served on a bun.",10.39 USD
+13,The Sides of Dawn,Fries And Shine,(Vegetarian) Idaho potato fries cooked until golden brown and garnished with salt.,5.49 USD
+13,The Sides of Dawn,Ranchero Morn Fries,(Vegetarian) Idaho potato fries cooked until golden brown and garnished with ranch.,6.59 USD
+13,The Sides of Dawn,Cheesy Morning Fries,(Vegetarian) Idaho potato fries cooked until golden brown and garnished with salt and melted cheddar cheese.,6.59 USD
+13,The Sides of Dawn,Cheery Chili Cheese Fries,"Idaho potato fries cooked until golden brown and garnished with salt, melted cheddar cheese, and chili sauce.",6.59 USD
+13,The Sides of Dawn,R&amp;C Combo Fries,Idaho potato fries cooked until golden brown and garnished with ranch and cheese.,6.59 USD
+13,Beverages,"Canned Soda ","Your choice of soda, served cold. ",1.79 USD
+13,Beverages,Gallon Juice,"Juice by the gallon, served cold. ",7.69 USD
+14,Picked for you,Frozen Strawberry Lemonade,"130 Cal. Strawberry fruit blend, our Agave Lemonade blend and fresh strawberries blended with ice. Allergens: none",4.19 USD
+14,Picked for you,Broccoli Cheddar Soup,"Bowl (360 Cal.), Cup (230 Cal.), Bread Bowl (900 Cal.), Group (800 Cal.) Chopped broccoli, shredded carrots and select seasonings simmered in a velvety smooth cheese sauce. Allergens: Contains Wheat, Milk",6.49 USD
+14,Picked for you,NEW Mango Yuzu Citrus - With Guarana &amp; Caffeine,"Regular (330 Cal.), Large (500 Cal.) Signature Craft Agave Lemonade, Caffeine, Coffee Extract, Guarana Extract, Mango, Yuzu and Citrus Flavors. Please note, this beverage is self-serve when ordering In-Cafe Pick-Up or Dine-In. Allergens: none",4.59 USD
+14,Picked for you,Caesar Salad with Chicken,"Whole (440 Cal.), Half (220 Cal.) Chicken raised without antibiotics, romaine, grated Parmesan and homemade black pepper focaccia croutons tossed with Caesar dressing. Allergens: Contains Wheat, Milk, Egg, Fish",8.79 USD
+14,Picked for you,Pepperoni Flatbread Pizza,"980 Cal. Thick sliced Pepperoni, fresh mozzarella and our shredded Fontina and mozzarella cheese blend with tomato bell pepper sauce on our flatbread. Allergens: Contains Wheat, Milk",11.49 USD
+14,Sandwiches,NEW The Signature Take Chicken Sandwich,"560 Cal. Seasoned and seared chicken breast, parmesan crisps, emerald greens and garlic aioli on a brioche roll. Allergens: Contains Wheat, Milk, Egg. May contain Soy",12.89 USD
+14,Sandwiches,NEW The Spicy Take Chicken Sandwich,"570 Cal. Seasoned and seared chicken breast, spicy Buffalo sauce, crispy pickle chips, and garlic aioli on a brioche roll. Allergens: Contains Wheat, Milk, Egg. May contain Soy",12.89 USD
+14,Sandwiches,Toasted Frontega Chicken,"Whole (830 Cal.), Half (420 Cal.) Smoked, pulled chicken raised without antibiotics, fresh mozzarella, salt and pepper, vine-ripened tomatoes, red onions, fresh basil and chipotle sauce on Black Pepper Focaccia. Allergens: Contains Wheat, Milk, Egg",8.79 USD
+14,Sandwiches,Chipotle Chicken Avocado Melt,"Whole (940 Cal.), Half (470 Cal.) Smoked, pulled chicken raised without antibiotics, smoked Gouda, fresh avocado and cilantro, zesty sweet Peppadew™ peppers and chipotle sauce on Black Pepper Focaccia. Allergens: Contains Wheat, Milk, Egg",8.79 USD
+14,Sandwiches,Roasted Turkey &amp; Avocado BLT,"Whole (940 Cal.), Half (470 Cal.) Roasted turkey raised without antibiotics, Applewood-smoked bacon, emerald green, vine-ripened tomatoes, fresh avocado, mayo, salt, and pepper on Country Rustic Sourdough. Allergens: Contains Wheat, Egg",9.59 USD
+14,Sandwiches,Toasted Steak &amp; White Cheddar,"Whole (940 Cal.), Half (470 Cal.) Grass fed beef, aged white cheddar, pickled red onions and horseradish sauce on Artisan Ciabatta. Allergens: Contains Wheat, Milk, Egg",9.59 USD
+14,Sandwiches,Bacon Turkey Bravo Sandwich,"Whole (1010 Cal.), Half (500 Cal.) Oven-roasted turkey breast raised without antibiotics, Applewood-smoked bacon, smoked Gouda, emerald greens, vine-ripened tomatoes, signature sauce , salt and pepper on Tomato Basil Bread. Allergens: Contains Wheat, Milk, Egg",8.79 USD
+14,Sandwiches,Classic Grilled Cheese Sandwich,"Whole (870 Cal.), Half (440 Cal.) Sliced American cheese grilled on thick-sliced Classic White Miche. Allergens: Contains Wheat, Milk",6.19 USD
+14,Sandwiches,Smokehouse BBQ Chicken Sandwich,"Whole (760 Cal.), Half (380 Cal.) Smoked, pulled chicken raised without antibiotics, BBQ sauce, red onions, aged white cheddar, and frizzled onions on Classic White Miche. Allergens: Contains Wheat, Milk",7.19 USD
+14,Sandwiches,Grilled Mac &amp; Cheese Sandwich,"Whole (850 Cal.), Half (430 Cal.) Creamy Mac &amp; Cheese with our fontina and mozzarella cheese blend and parmesan crisps on toasted thick-sliced Classic White Miche. Allergens: Contains Wheat, Milk, Egg",8.79 USD
+14,Sandwiches,Napa Almond Chicken Salad Sandwich,"Whole (620 Cal.), Half (310 Cal.) Chicken raised without antibiotics tossed with diced celery, sliced red grapes, toasted almonds and special dressing, served with emerald greens, vine-ripened tomatoes, salt and pepper on Country Rustic Sourdough. Allergens: Contains Wheat, Egg, Tree Nuts",7.19 USD
+14,Sandwiches,Tuna Salad Sandwich,"Whole (740 Cal.), Half (370 Cal.) Special recipe tuna salad, emerald greens, vine-ripened tomatoes, red onions, salt and pepper on Black Pepper Foccacia. Allergens: Contains Wheat, Egg, Fish",7.19 USD
+14,Sandwiches,Deli Turkey Sandwich,"Whole (590 Cal.), Half (300 Cal.) Oven-roasted turkey breast raised without antibiotics, emerald greens, vine-ripened tomatoes, red onions, mayo, spicy mustard, salt and pepper on Country Rustic Sourdough. Allergens: Contains Wheat, Egg",7.19 USD
+14,Sandwiches,Mediterranean Veggie,"Whole (680 Cal.), Half (340 Cal.) Zesty sweet Peppadew™ piquant peppers, feta, cucumbers, emerald greens, vine-ripened tomatoes, red onions, hummus, salt, and pepper on Tomato Basil. Allergens: Contains Wheat, Milk",6.19 USD
+14,Sandwiches,Family Feast with Cookies,"A meal to feed the whole family, including 4 half sandwiches, 1 whole salad, 1 group soup, 1 whole French baguette and 4 Chocolate Chipper Cookies. Serves 4-6.",41.09 USD
+14,Sandwiches,Family Feast,"A meal to feed the whole family, including 4 half sandwiches, 1 whole salad, 1 group soup and 1 whole French baguette. Serves 4-6.",36.39 USD
+14,Sandwiches,Family Feast with Soup or Mac &amp; Cookies,"A meal to feed the whole family, including 2 half sandwiches, 2 kids' sandwiches, 1 whole salad, 1 group soup or family Mac &amp; Cheese, 1 whole French baguette and 4 Chocolate Chipper Cookies. Serves 4-6.",41.09 USD
+14,Sandwiches,Family Feast with Soup or Mac,"A meal to feed the whole family, including 2 half sandwiches, 2 kids' sandwiches, 1 whole salad, 1 group soup or family Mac &amp; Cheese and 1 whole French baguette. Serves 4-6.",36.39 USD
+14,Sandwiches,Premium Family Feast with Cookies,"A meal to feed the whole family. Includes 4 Half Sandwiches, 1 Whole Salad, 1 Quart of Soup, 1 Whole French Baguette, and 4 Chocolate Chippers. Serves 4-6.",45.79 USD
+14,Sandwiches,Premium Family Feast,"A meal to feed the whole family. Includes 4 Half Sandwiches, 1 Whole Salad, 1 Quart of Soup, and 1 Whole French Baguette. Serves 4-6.",41.09 USD
+14,Sandwiches,Classic Grilled Cheese &amp; Creamy Tomato Soup,A half portion of our Classic Grilled Cheese served alongside a cup of Creamy Tomato Soup.,6.99 USD
+14,Sandwiches,Tuna Sandwich &amp; Creamy Tomato Soup,A half portion of our Tuna Sandwich served alongside a cup of Creamy Tomato Soup.,6.99 USD
+14,You Pick Two,Sandwich and Soup/Mac,Selection of a half soup and a half sandwich,0.0 USD
+14,You Pick Two,Soup/Mac and Salad,Selection of a half soup and a half salad,0.0 USD
+14,You Pick Two,Soup/Mac and Soup/Mac,Selection of any two Soup/Mac.,0.0 USD
+14,You Pick Two,Sandwich and Salad,Selection of a half sandwich and a half salad,0.0 USD
+14,You Pick Two,Sandwich and Sandwich,Selection of any two half sandwiches,0.0 USD
+14,You Pick Two,Salad and Salad,Selection of any two half salads,0.0 USD
+14,You Pick Two,Flatbread Pizza and Flatbread Pizza,Selection of any two Flatbread Pizzas,0.0 USD
+14,You Pick Two,Flatbread Pizza and Soup/Mac,Selection of a flatbread pizza and a half soup,0.0 USD
+14,You Pick Two,Flatbread Pizza and Sandwich,Selection of a flatbread pizza and a half sandwich,0.0 USD
+14,You Pick Two,Flatbread Pizza and Salad,Selection of a flatbread Pizza and a half salad,0.0 USD
+14,You Pick Two,Warm Bowl and Soup/Mac,Selection of a warm bowl and a half soup,0.0 USD
+14,You Pick Two,Warm Bowl and Sandwich,Selection of a warm bowl and a half sandwich,0.0 USD
+14,You Pick Two,Warm Bowl and Salad,Selection of a warm bowl and a half salad,0.0 USD
+14,You Pick Two,Warm Bowl and Warm Bowl,Selection of any two warm bowls,0.0 USD
+14,You Pick Two,Warm Bowl and Flatbread Pizza,Selection of a warm bowl and a flatbread pizza,0.0 USD
+14,Salads,NEW Citrus Asian Crunch Salad with Chicken,"Whole (640 Cal.), Half (320 Cal.) Romaine and a blend of chopped broccoli, green cabbage, carrots, and kale tossed with edamame, pickled red onions, and fresh cilantro in tangerine soy ginger dressing and topped with warm seared chicken thigh meat, crispy carrots, and a teriyaki drizzle. Allergens: Contains Wheat, Soy",9.89 USD
+14,Salads,Green Goddess Cobb Salad with Chicken,"Whole (500 Cal.), Half (250 Cal.) Chicken raised without antibiotics, arugula, romaine, baby kale and red leaf blend, grape tomatoes and pickled red onions tossed in freshly made Green Goddess dressing and topped with fresh avocado, Applewood-smoked bacon and cage-free hard-boiled egg. Allergens: Contains Milk, Egg",9.89 USD
+14,Salads,Fuji Apple Salad with Chicken,"Whole (560 Cal.), Half (280 Cal.) Chicken raised without antibiotics, arugula, romaine, baby kale and red leaf blend, grape tomatoes, red onions, toasted pecan pieces, Gorgonzola and apple chips tossed in sweet white balsamic vinaigrette. Allergens: Contains Milk, Tree Nuts",8.79 USD
+14,Salads,Caesar Salad with Chicken,"Whole (440 Cal.), Half (220 Cal.) Chicken raised without antibiotics, romaine, grated Parmesan and homemade black pepper focaccia croutons tossed with Caesar dressing. Allergens: Contains Wheat, Milk, Egg, Fish",8.79 USD
+14,Salads,Greek Salad,"Whole (400 Cal.), Half (200 Cal.) Romaine, grape tomatoes, feta, red onions, kalamata olives, salt and pepper tossed in Greek dressing with a pepperoncini. Allergens: Contains Milk",6.79 USD
+14,Salads,Asian Sesame Salad with Chicken,"Whole (410 Cal.), Half (200 Cal.) Chicken raised without antibiotics, romaine, fresh cilantro, toasted almonds, sesame seeds and wonton strips tossed in Asian sesame vinaigrette. Allergens: Contains Wheat, Tree Nuts. May contain Egg",8.79 USD
+14,Salads,BBQ Chicken Salad,"Whole (490 Cal.), Half (250 Cal.) Chicken raised without antibiotics, romaine, black bean and corn salsa and BBQ ranch dressing topped with frizzled onions and apple cider vinegar BBQ sauce. Allergens: Contains Wheat, Milk, Egg",8.79 USD
+14,Salads,Caesar Salad,"Whole (330 Cal.), Half (170 Cal.) Romaine, grated Parmesan and homemade black pepper focaccia croutons tossed with Caesar dressing. Allergens: Contains Wheat, Milk, Egg, Fish",6.79 USD
+14,Soups &amp; Mac,Broccoli Cheddar Soup,"Bowl (360 Cal.), Cup (230 Cal.), Bread Bowl (900 Cal.), Group (800 Cal.) Chopped broccoli, shredded carrots and select seasonings simmered in a velvety smooth cheese sauce. Allergens: Contains Wheat, Milk",6.49 USD
+14,Soups &amp; Mac,Mac &amp; Cheese,"Large (920 Cal.), Small (460 Cal.), Bread Bowl (1130 Cal.), Group (1840 Cal.) Tender shell pasta in a blend of rich cheeses including our tangy aged white cheddar cheese sauce. Allergens: Contains Wheat, Milk, Egg",6.99 USD
+14,Soups &amp; Mac,NEW Mexican Street Corn Chowder,"Bowl (330 Cal.), Cup (210 Cal.), Bread Bowl (880 Cal.), Group (750 Cal.) Sweet corn, fire-roasted poblano peppers, russet potatoes, chile powder, lime juice and cilantro in a creamy broth topped with Blue Corn Tortilla Strips. Allergens: Contains Wheat, Milk",6.99 USD
+14,Soups &amp; Mac,Homestyle Chicken Noodle Soup,"Bowl (100 Cal.), Cup (60 Cal.), Bread Bowl (780 Cal.), Group (230 Cal.) Tender pieces of white-meat chicken simmered in a rich, perfectly seasoned homestyle chicken bone broth with curly egg noodles, sliced carrots, celery and herbs. Allergens: Contains Wheat, Egg",6.49 USD
+14,Soups &amp; Mac,Creamy Tomato Soup,"Bowl (350 Cal.), Cup (240 Cal.), Bread Bowl (910 Cal.), Group (850 Cal.) Vine-ripened pear tomatoes pureed with fresh cream for a velvety smooth flavor accented by hints of red pepper and oregano and topped with black pepper focaccia croutons. Allergens: Contains Wheat, Milk",6.49 USD
+14,Soups &amp; Mac,Cream of Chicken &amp; Wild Rice Soup,"Bowl (260 Cal.), Cup (180 Cal.), Bread Bowl (840 Cal.), Group (620 Cal.) Diced chicken, long grain and wild rice, celery, onion and carrots simmered in chicken stock with cream and select herbs. Allergens: Contains Wheat, Milk",6.49 USD
+14,Soups &amp; Mac,Broccoli Cheddar Mac &amp; Cheese,"Large (740 Cal.), Small (370 Cal.), Bread Bowl (1040 Cal.), Group (1480 Cal.) Shell pasta in a blend of creamy cheese sauce and tangy white cheddar, simmered with seasoned broccoli and carrots. Allergens: Contains Wheat, Milk, Egg",6.99 USD
+14,Soups &amp; Mac,Bistro French Onion Soup,"Bowl (310 Cal.), Cup (190 Cal.), Bread Bowl (850 Cal.), Group (600 Cal.) Sweet caramelized onions in a savory broth with a sherry wine vinegar gastrique,  sea salt, topped with gruyere and  our homemade black pepper focaccia croutons. Allergens: Contains Wheat, Soy, Milk",6.49 USD
+14,Pizza,Sausage &amp; Pepperoni Flatbread Pizza,"900 Cal. Chicken sausage crumbles, thick sliced pepperoni, our shredded Fontina and mozzarella cheese blend with tomato bell pepper sauce on our flatbread. Allergens: Contains Wheat, Milk",11.49 USD
+14,Pizza,Pepperoni Flatbread Pizza,"980 Cal. Thick sliced Pepperoni, fresh mozzarella and our shredded Fontina and mozzarella cheese blend with tomato bell pepper sauce on our flatbread. Allergens: Contains Wheat, Milk",11.49 USD
+14,Pizza,Chipotle Chicken &amp; Bacon Flatbread Pizza,"980 Cal. Smoked, pulled chicken raised without antibiotics, chopped Applewood-smoked bacon, grape tomatoes and our fontina and mozzarella blend with garlic cream sauce on our flatbread. Allergens: Contains Wheat, Milk, Egg",11.49 USD
+14,Pizza,Margherita Flatbread Pizza,"820 Cal. Grape tomatoes, fresh mozzarella and our shredded fontina and mozzarella blend with tomato bell pepper sauce on our flatbread, topped with fresh basil. Allergens: Contains Wheat, Milk",10.89 USD
+14,Pizza,Cheese Flatbread Pizza,"860 Cal. Fontina mozzarella cheese blend and tomato bell pepper sauce on our flatbread. Allergens: Contains Wheat, Milk",9.59 USD
+14,Pizza,2 Flatbread Pizza Family Feast with Vanilla Cinnamon Rolls,"A meal to feed the whole family, including any 2 Flatbread Pizzas, 2 whole salads and 4 Vanilla Cinnamon Rolls. Serves 4-6.",36.39 USD
+14,Pizza,2 Flatbread Pizza Family Feast,"A meal to feed the whole family, including any 2 Flatbread Pizzas and 2 whole salads. Serves 4-6.",28.19 USD
+14,Pizza,3 Flatbread Pizza Family Feast with Vanilla Cinnamon Rolls,"A meal to feed the whole family, including any 3 Flatbread Pizzas, 2 whole salads, and 4 Vanilla Cinnamon Rolls. Serves 4-6.",41.09 USD
+14,Pizza,3 Flatbread Pizza Family Feast,"A meal to feed the whole family, including any 3 Flatbread Pizzas and 2 whole salads. Serves 4-6.",36.39 USD
+14,Bakery,Asiago Bagel,"320 Cal. Freshly baked bagel made with chunks of asiago cheese baked inside and topped with more asiago. Allergens: Contains Wheat, Milk",1.79 USD
+14,Bakery,Half Dozen Bagels,6 freshly baked bagels. Cream Cheese tubs sold separately from the Sides menu.,8.09 USD
+14,Bakery,Baker's Dozen Bagels,13 freshly baked bagels. Cream Cheese tubs sold separately from the Sides menu.,12.89 USD
+14,Bakery,Bagel Pack,Your choice of 13 freshly baked bagels served with two tubs of cream cheese spreads. Serves 13.,17.79 USD
+14,Bakery,Dozen &amp; a Half Bagels,18 freshly baked bagels. Cream Cheese tubs sold separately from the Sides menu.,16.39 USD
+14,Bakery,Chocolate Chipper Cookie,"390 Cal. A traditional favorite, freshly baked and made with semi-sweet chocolate chunks &amp; milk chocolate flakes. Allergens: Contains Wheat, Soy, Milk, Egg",2.99 USD
+14,Bakery,Brownie,"470 Cal. Rich, fudgy soft chocolate brownie dusted with powdered sugar. Allergens: Contains Wheat, Soy, Milk, Egg",3.49 USD
+14,Bakery,Candy Cookie,"420 Cal. Freshly baked sugar cookie topped with semi-sweet chocolate candies. Allergens: Contains Wheat, Soy, Milk, Egg",2.99 USD
+14,Bakery,Oatmeal Raisin with Berries Cookie,"350 Cal. A chewy oatmeal raisin cookie with sweetened, dried cranberries and infused, dried strawberries and blueberries. Allergens: Contains Wheat, Milk, Egg",2.99 USD
+14,Bakery,Tulip Cookie,"430 Cal. Freshly baked all-butter shortbread cookie shaped like a tulip and decorated for Spring. Allergens: Contains Wheat, Milk",3.49 USD
+14,Bakery,Lemon Drop Cookie,"440 Cal. Freshly baked lemon flavored sugar cookie topped with powdered sugar. Allergens: Contains Wheat, Soy, Milk, Egg",2.99 USD
+14,Bakery,One Dozen Chocolate Chipper Cookies,"4710 Cal. 12 Chocolate Chipper cookies, freshly baked and made with semi-sweet chocolate chunks &amp; milk chocolate flakes. Allergens: Contains Wheat, Soy, Milk, Egg",22.29 USD
+14,Bakery,One Dozen Mixed Cookies,"4660 Cal. 12 freshly baked cookies, made with 6 Chocolate Chipper Cookies, 3 Candy Cookies, and 3 Oatmeal Raisin with Berries Cookies. Allergens: Contains Wheat, Soy, Milk, Egg",22.29 USD
+14,Beverages,NEW Strawberry Lemon Mint - With Guarana &amp; Caffeine,"Regular (270 Cal.), Large (400 Cal.) Signature Craft Agave Lemonade, Caffeine, Coffee Extract, Guarana Extract, Strawberry, Lemon &amp; Mint Flavors. Please note, this beverage is self-serve when ordering In-Cafe Pick-Up or Dine-In. Allergens: none",4.59 USD
+14,Beverages,NEW Fuji Apple Cranberry - With Guarana &amp; Caffeine,"Regular (270 Cal.), Large (400 Cal.) Signature Craft Agave Lemonade, Caffeine, Coffee Extract, Guarana Extract, Fuji Apple and Cranberry Flavors. Please note, this beverage is self-serve when ordering In-Cafe Pick-Up or Dine-In. Allergens: none",4.59 USD
+14,Beverages,NEW Mango Yuzu Citrus - With Guarana &amp; Caffeine,"Regular (330 Cal.), Large (500 Cal.) Signature Craft Agave Lemonade, Caffeine, Coffee Extract, Guarana Extract, Mango, Yuzu and Citrus Flavors. Please note, this beverage is self-serve when ordering In-Cafe Pick-Up or Dine-In. Allergens: none",4.59 USD
+14,Beverages,Diet Pepsi,"Regular (0 Cal.), Large (0 Cal.) Diet Pepsi. Please note, this beverage is self-serve when ordering In-Cafe Pick-Up or Dine-In. Allergens: none",3.19 USD
+14,Beverages,Pepsi,"Regular (250 Cal.), Large (380 Cal.) Pepsi. Please note, this beverage is self-serve when ordering In-Cafe Pick-Up or Dine-In. Allergens: none",3.19 USD
+14,Beverages,Dr. Pepper,"Regular (240 Cal.), Large (360 Cal.) Dr. Pepper. Please note, this beverage is self-serve when ordering In-Cafe Pick-Up or Dine-In. Allergens: none",3.19 USD
+14,Beverages,Mountain Dew,"Regular (280 Cal.), Large (420 Cal.) Mountain Dew. Please note, this beverage is self-serve when ordering In-Cafe Pick-Up or Dine-In. Allergens: none",3.19 USD
+14,Beverages,Sierra Mist,"Regular (260 Cal.), Large (380 Cal.) Sierra Mist. Please note, this beverage is self-serve when ordering In-Cafe Pick-Up or Dine-In. Allergens: none",3.19 USD
+14,Beverages,Bubly Lime,"Regular (0 Cal.), Large (5 Cal.) Bubly Lime Allergens: none",3.19 USD
+14,Beverages,Canada Dry Ginger Ale,"Regular (230 Cal.), Large (340 Cal.) Canada Dry Ginger Ale Allergens: none",3.19 USD
+14,Beverages,Bottled Water,0 Cal. Individual bottle of water. Allergens: none,2.29 USD
+14,Beverages,Iced 100% Colombian Dark Roast,"Regular (10 Cal.), Large (15 Cal.) Rich and bold full body with dark chocolate notes and a nutty, sweet finish. Brewed from beans harvested from volcanic soils in Colombia. Freshly ground in cafes. Please note, this beverage is self-serve when ordering In-Cafe Pick-Up or Dine-In. Allergens: none",3.09 USD
+14,Beverages,Hazelnut Coffee,"Regular (20 Cal.), Large (25 Cal.), Small (15 Cal.) Smooth and sweet with a buttery toasted hazelnut flavor. 100% Arabica coffee balanced with the flavor of buttery, toasted hazelnuts. Please note, this beverage is self-serve when ordering In-Cafe Pick-Up or Dine-In. Allergens: none",2.89 USD
+14,Beverages,100% Colombian Dark Roast Coffee,"Regular (15 Cal.), Large (15 Cal.), Small (10 Cal.) Rich and bold full body with dark chocolate notes and a nutty, sweet finish. Brewed from beans harvested from volcanic soils in Colombia. Freshly ground in cafes. Please note, this beverage is self-serve when ordering In-Cafe Pick-Up or Dine-In. Allergens: none",2.89 USD
+14,Beverages,Cafe Blend Light Roast,"Regular (20 Cal.), Large (25 Cal.), Small (15 Cal.) Soft and smooth with hints of citrus, roasted nut and chocolate. A blend of Central and South American beans. Light bodied with a bright sweetness. Freshly ground in cafes. Please note, this beverage is self-serve when ordering In-Cafe Pick-Up or Dine-In. Allergens: none",2.89 USD
+14,Beverages,Decaf Coffee,"Regular (20 Cal.), Large (25 Cal.), Small (15 Cal.) Medium body with sweet caramel and citrus notes. A smooth and balanced blend from Antioquia, Colombia. Fresh tasting with a clean finish. Please note, this beverage is self-serve when ordering In-Cafe Pick-Up or Dine-In. Allergens: none",2.89 USD
+14,Beverages,Hot Tea,"0 Cal. Hot Teas. Please note, this beverage is self-serve when ordering In-Cafe Pick-Up or Dine-In. Allergens: none",2.99 USD
+14,Beverages,Madagascar Vanilla Cream Cold Brew,"Regular (190 Cal.), Large (260 Cal.) Our dark roast cold brew coffee with Madagascar vanilla syrup and half and half, served over ice. Allergens: Contains Milk",4.29 USD
+14,Beverages,Madagascar Vanilla Almond Cold Brew,"Regular (90 Cal.), Large (120 Cal.) Our dark roast cold brew coffee with Madagascar vanilla syrup and almondmilk, served over ice. Allergens: Contains Tree Nuts",4.29 USD
+14,Beverages,Cold Brew,"Regular (10 Cal.), Large (15 Cal.) Our dark roast cold brew coffee served over ice. Allergens: none",3.69 USD
+14,Beverages,Hot Chocolate,"Regular (430 Cal.), Large (550 Cal.) Bittersweet chocolate flavored syrup mixed with foamed milk and topped with whipped cream and drizzled with caramel syrup. Allergens: Contains Milk",4.29 USD
+14,Beverages,Hazelnut Coffee Tote,"140 Cal. Subtle nutty tones with wonderful coffee flavor. Serves 10. Brewed fresh, so please allow additional 15 min./tote to prepare your order. 120 fl oz per tote. Allergens: none",22.89 USD
+14,Beverages,Cafe Blend Light Roast Coffee Tote,"140 Cal. Carefully roasted from Arabica beans and freshly brewed. Brewed fresh, so please allow additional 15 min./tote to prepare your order. Serves 10. 120 fl oz per tote. Allergens: none",22.89 USD
+14,Beverages,100% Colombian Dark Roast Coffee Tote,"100 Cal. Rich and bold full body with dark chocolate notes and a nutty, sweet finish. Brewed from beans harvested from volcanic soils in Colombia. Brewed fresh, so please allow additional 15 min./tote to prepare your order. Serves 10. 120 fl oz per tote. Allergens: none",22.89 USD
+14,Beverages,Decaf Coffee Tote,"140 Cal. Perfectly balanced with a clean finish. Serves 10. Brewed fresh, so please allow additional 15 min./tote to prepare your order. 120 fl oz per tote. Allergens: none",22.89 USD
+14,Beverages,Iced Unsweet Tea,"Regular (10 Cal.), Large (20 Cal.) Freshly brewed black iced tea. Please note, this beverage is self-serve when ordering In-Cafe Pick-Up or Dine-In. Allergens: none",3.19 USD
+14,Beverages,Passion Papaya Green Tea,"Regular (140 Cal.), Large (210 Cal.) Green iced tea with flavors of passion fruit and ripe papaya. Nutrition reflects beverage with no ice. Please note, this beverage is self-serve when ordering In-Cafe Pick-Up or Dine-In. Allergens: none",3.19 USD
+14,Beverages,Agave Lemonade,"Regular (180 Cal.), Large (260 Cal.) Crisp lemonade made with lemon juice, sugar, agave nectar and water. Please note, this beverage is self-serve when ordering In-Cafe Pick-Up or Dine-In. Allergens: none",3.19 USD
+14,Beverages,Iced Sweet Tea,"Regular (110 Cal.), Large (150 Cal.) Freshly brewed black iced tea. Please note, this beverage is self-serve when ordering In-Cafe Pick-Up or Dine-In. Allergens: none",3.19 USD
+14,Beverages,Brisk Raspberry Tea,"Regular (120 Cal.), Large (120 Cal.) Brisk Raspberry Tea Allergens: none",3.19 USD
+14,Beverages,Frozen Strawberry Lemonade,"130 Cal. Strawberry fruit blend, our Agave Lemonade blend and fresh strawberries blended with ice. Allergens: none",4.19 USD
+14,Beverages,Strawberry Banana Smoothie,"250 Cal. A mix of fruit purees and juice concentrates, blended with a banana and plain Greek yogurt and ice. Allergens: Contains Milk",6.59 USD
+14,Beverages,Green Passion Smoothie,250 Cal. Peach and mango purees and white grape and passionfruit juice concentrates blended with fresh spinach and ice. Allergens: none,6.59 USD
+14,Beverages,Mango Smoothie,300 Cal. Mango fruit base mixed with orange juice and banana puree blended with plain Greek yogurt and ice. Allergens: Contains Milk,6.59 USD
+14,Beverages,Peach &amp; Blueberry Smoothie with Almondmilk,210 Cal. Peach and mango purees and white grape and passionfruit juice concentrates blended with fresh blueberries and almondmilk. Allergens: Contains Tree Nuts,6.59 USD
+14,Beverages,Strawberry Smoothie,"270 Cal. A mix of fruit purees and juice concentrates, blended with plain Greek yogurt and ice. Allergens: Contains Milk",6.59 USD
+14,Beverages,Frozen Caramel Cold Brew,480 Cal. Caramel and an icy cold brew coffee blend topped with whipped cream and caramel syrup. Allergens: Contains Milk,5.69 USD
+14,Beverages,Frozen Chocolate Cold Brew,440 Cal. Chocolate and an icy cold brew coffee blend topped with whipped cream and chocolate syrup. Allergens: Contains Milk,5.69 USD
+14,Beverages,Chai Tea Latte,"290 Cal. Brewed with black tea, honey, vanilla, cardamom, cinnamon, ginger &amp; foamed milk. Allergens: Contains Milk",5.59 USD
+14,Beverages,Caramel Latte,"Regular (410 Cal.), Large (500 Cal.) Espresso, foamed milk &amp; caramel, topped with whipped cream &amp; a drizzle of caramel sauce. Allergens: Contains Milk",5.59 USD
+14,Beverages,Madagascar Vanilla Latte,"Regular (260 Cal.), Large (310 Cal.) Freshly brewed espresso with foamed milk and Madagascar vanilla syrup, topped with whipped cream. Allergens: Contains Milk",5.59 USD
+14,Beverages,Caffe Latte,"Regular (130 Cal.), Large (160 Cal.) Espresso with foamed milk. Allergens: Contains Milk",4.99 USD
+14,Beverages,Chocolate Latte,"Regular (370 Cal.), Large (420 Cal.) Freshly brewed espresso, foamed milk and chocolate topped with whipped cream and a drizzle of chocolate syrup. Allergens: Contains Milk",5.59 USD
+14,Beverages,Cappuccino,"Regular (130 Cal.), Large (160 Cal.) Espresso with steamed milk, topped with a cap of foam. Allergens: Contains Milk",4.99 USD
+14,Beverages,Americano,10 Cal. Two shots of espresso made with our favorite espresso beans combined with hot water. Served hot. Allergens: none,3.69 USD
+14,Beverages,Espresso,10 Cal. A double espresso shot made with our favorite espresso beans. Served hot. Allergens: none,2.69 USD
+14,Beverages,Iced Caramel Latte,"440 Cal. Freshly brewed espresso, milk and caramel served over ice. Allergens: Contains Milk",5.59 USD
+14,Beverages,Iced Chocolate Latte,"400 Cal. Freshly brewed espresso, foamed milk and chocolate flavored syrup served over ice. Allergens: Contains Milk",5.59 USD
+14,Beverages,Iced Chai Tea Latte,"290 Cal. Freshly brewed black tea with honey, vanilla, cardamom, cinnamon, ginger and foamed milk served over ice. Allergens: Contains Milk",5.59 USD
+14,Beverages,Iced Madagascar Vanilla Latte,"290 Cal. Freshly brewed espresso with foamed milk and Madagascar vanilla syrup, served over ice and topped with whipped cream. Allergens: Contains Milk",5.59 USD
+14,Beverages,Iced Caffe Latte,160 Cal. Freshly brewed espresso and milk served over ice. Allergens: Contains Milk,4.99 USD
+14,Beverages,Horizon Reduced Fat Organic White Milk,110 Cal. Organic White Milk. Allergens: Contains Milk,2.19 USD
+14,Beverages,Horizon Reduced Fat Organic Chocolate Milk,150 Cal. Organic Chocolate Milk. Allergens: Contains Milk,2.19 USD
+14,Beverages,Organic Apple Juice,110 Cal. Organic Apple Juice. Allergens: none,2.19 USD
+14,Breakfast,Iced 100% Colombian Dark Roast,"Regular (10 Cal.), Large (15 Cal.) Rich and bold full body with dark chocolate notes and a nutty, sweet finish. Brewed from beans harvested from volcanic soils in Colombia. Freshly ground in cafes. Please note, this beverage is self-serve when ordering In-Cafe Pick-Up or Dine-In. Allergens: none",3.09 USD
+14,Breakfast,Hazelnut Coffee,"Regular (20 Cal.), Large (25 Cal.), Small (15 Cal.) Smooth and sweet with a buttery toasted hazelnut flavor. 100% Arabica coffee balanced with the flavor of buttery, toasted hazelnuts. Please note, this beverage is self-serve when ordering In-Cafe Pick-Up or Dine-In. Allergens: none",2.89 USD
+14,Breakfast,100% Colombian Dark Roast Coffee,"Regular (15 Cal.), Large (15 Cal.), Small (10 Cal.) Rich and bold full body with dark chocolate notes and a nutty, sweet finish. Brewed from beans harvested from volcanic soils in Colombia. Freshly ground in cafes. Please note, this beverage is self-serve when ordering In-Cafe Pick-Up or Dine-In. Allergens: none",2.89 USD
+14,Breakfast,Cafe Blend Light Roast,"Regular (20 Cal.), Large (25 Cal.), Small (15 Cal.) Soft and smooth with hints of citrus, roasted nut and chocolate. A blend of Central and South American beans. Light bodied with a bright sweetness. Freshly ground in cafes. Please note, this beverage is self-serve when ordering In-Cafe Pick-Up or Dine-In. Allergens: none",2.89 USD
+14,Breakfast,Decaf Coffee,"Regular (20 Cal.), Large (25 Cal.), Small (15 Cal.) Medium body with sweet caramel and citrus notes. A smooth and balanced blend from Antioquia, Colombia. Fresh tasting with a clean finish. Please note, this beverage is self-serve when ordering In-Cafe Pick-Up or Dine-In. Allergens: none",2.89 USD
+14,Breakfast,Hot Tea,"0 Cal. Hot Teas. Please note, this beverage is self-serve when ordering In-Cafe Pick-Up or Dine-In. Allergens: none",2.99 USD
+14,Breakfast,Madagascar Vanilla Cream Cold Brew,"Regular (190 Cal.), Large (260 Cal.) Our dark roast cold brew coffee with Madagascar vanilla syrup and half and half, served over ice. Allergens: Contains Milk",4.29 USD
+14,Breakfast,Madagascar Vanilla Almond Cold Brew,"Regular (90 Cal.), Large (120 Cal.) Our dark roast cold brew coffee with Madagascar vanilla syrup and almondmilk, served over ice. Allergens: Contains Tree Nuts",4.29 USD
+14,Breakfast,Cold Brew,"Regular (10 Cal.), Large (15 Cal.) Our dark roast cold brew coffee served over ice. Allergens: none",3.69 USD
+14,Breakfast,Hot Chocolate,"Regular (430 Cal.), Large (550 Cal.) Bittersweet chocolate flavored syrup mixed with foamed milk and topped with whipped cream and drizzled with caramel syrup. Allergens: Contains Milk",4.29 USD
+14,Breakfast,Hazelnut Coffee Tote,"140 Cal. Subtle nutty tones with wonderful coffee flavor. Serves 10. Brewed fresh, so please allow additional 15 min./tote to prepare your order. 120 fl oz per tote. Allergens: none",22.89 USD
+14,Breakfast,Cafe Blend Light Roast Coffee Tote,"140 Cal. Carefully roasted from Arabica beans and freshly brewed. Brewed fresh, so please allow additional 15 min./tote to prepare your order. Serves 10. 120 fl oz per tote. Allergens: none",22.89 USD
+14,Breakfast,100% Colombian Dark Roast Coffee Tote,"100 Cal. Rich and bold full body with dark chocolate notes and a nutty, sweet finish. Brewed from beans harvested from volcanic soils in Colombia. Brewed fresh, so please allow additional 15 min./tote to prepare your order. Serves 10. 120 fl oz per tote. Allergens: none",22.89 USD
+14,Breakfast,Decaf Coffee Tote,"140 Cal. Perfectly balanced with a clean finish. Serves 10. Brewed fresh, so please allow additional 15 min./tote to prepare your order. 120 fl oz per tote. Allergens: none",22.89 USD
+14,Breakfast,Asiago Bagel,"320 Cal. Freshly baked bagel made with chunks of asiago cheese baked inside and topped with more asiago. Allergens: Contains Wheat, Milk",1.79 USD
+14,Breakfast,Half Dozen Bagels,6 freshly baked bagels. Cream Cheese tubs sold separately from the Sides menu.,8.09 USD
+14,Breakfast,Baker's Dozen Bagels,13 freshly baked bagels. Cream Cheese tubs sold separately from the Sides menu.,12.89 USD
+14,Breakfast,Bagel Pack,Your choice of 13 freshly baked bagels served with two tubs of cream cheese spreads. Serves 13.,17.79 USD
+14,Breakfast,Dozen &amp; a Half Bagels,18 freshly baked bagels. Cream Cheese tubs sold separately from the Sides menu.,16.39 USD
+14,Breakfast,One Dozen Chocolate Chipper Cookies,"4710 Cal. 12 Chocolate Chipper cookies, freshly baked and made with semi-sweet chocolate chunks &amp; milk chocolate flakes. Allergens: Contains Wheat, Soy, Milk, Egg",22.29 USD
+14,Breakfast,One Dozen Mixed Cookies,"4660 Cal. 12 freshly baked cookies, made with 6 Chocolate Chipper Cookies, 3 Candy Cookies, and 3 Oatmeal Raisin with Berries Cookies. Allergens: Contains Wheat, Soy, Milk, Egg",22.29 USD
+14,Breakfast,Chai Tea Latte,"290 Cal. Brewed with black tea, honey, vanilla, cardamom, cinnamon, ginger &amp; foamed milk. Allergens: Contains Milk",5.59 USD
+14,Breakfast,Caramel Latte,"Regular (410 Cal.), Large (500 Cal.) Espresso, foamed milk &amp; caramel, topped with whipped cream &amp; a drizzle of caramel sauce. Allergens: Contains Milk",5.59 USD
+14,Breakfast,Madagascar Vanilla Latte,"Regular (260 Cal.), Large (310 Cal.) Freshly brewed espresso with foamed milk and Madagascar vanilla syrup, topped with whipped cream. Allergens: Contains Milk",5.59 USD
+14,Breakfast,Caffe Latte,"Regular (130 Cal.), Large (160 Cal.) Espresso with foamed milk. Allergens: Contains Milk",4.99 USD
+14,Breakfast,Chocolate Latte,"Regular (370 Cal.), Large (420 Cal.) Freshly brewed espresso, foamed milk and chocolate topped with whipped cream and a drizzle of chocolate syrup. Allergens: Contains Milk",5.59 USD
+14,Breakfast,Cappuccino,"Regular (130 Cal.), Large (160 Cal.) Espresso with steamed milk, topped with a cap of foam. Allergens: Contains Milk",4.99 USD
+14,Breakfast,Americano,10 Cal. Two shots of espresso made with our favorite espresso beans combined with hot water. Served hot. Allergens: none,3.69 USD
+14,Breakfast,Espresso,10 Cal. A double espresso shot made with our favorite espresso beans. Served hot. Allergens: none,2.69 USD
+14,Breakfast,Frozen Caramel Cold Brew,480 Cal. Caramel and an icy cold brew coffee blend topped with whipped cream and caramel syrup. Allergens: Contains Milk,5.69 USD
+14,Breakfast,Frozen Chocolate Cold Brew,440 Cal. Chocolate and an icy cold brew coffee blend topped with whipped cream and chocolate syrup. Allergens: Contains Milk,5.69 USD
+14,Breakfast,Iced Caramel Latte,"440 Cal. Freshly brewed espresso, milk and caramel served over ice. Allergens: Contains Milk",5.59 USD
+14,Breakfast,Iced Chocolate Latte,"400 Cal. Freshly brewed espresso, foamed milk and chocolate flavored syrup served over ice. Allergens: Contains Milk",5.59 USD
+14,Breakfast,Iced Chai Tea Latte,"290 Cal. Freshly brewed black tea with honey, vanilla, cardamom, cinnamon, ginger and foamed milk served over ice. Allergens: Contains Milk",5.59 USD
+14,Breakfast,Iced Madagascar Vanilla Latte,"290 Cal. Freshly brewed espresso with foamed milk and Madagascar vanilla syrup, served over ice and topped with whipped cream. Allergens: Contains Milk",5.59 USD
+14,Breakfast,Iced Caffe Latte,160 Cal. Freshly brewed espresso and milk served over ice. Allergens: Contains Milk,4.99 USD
+14,Family Feast Value Meals,2 Flatbread Pizza Family Feast with Vanilla Cinnamon Rolls,"A meal to feed the whole family, including any 2 Flatbread Pizzas, 2 whole salads and 4 Vanilla Cinnamon Rolls. Serves 4-6.",36.39 USD
+14,Family Feast Value Meals,2 Flatbread Pizza Family Feast,"A meal to feed the whole family, including any 2 Flatbread Pizzas and 2 whole salads. Serves 4-6.",28.19 USD
+14,Family Feast Value Meals,3 Flatbread Pizza Family Feast with Vanilla Cinnamon Rolls,"A meal to feed the whole family, including any 3 Flatbread Pizzas, 2 whole salads, and 4 Vanilla Cinnamon Rolls. Serves 4-6.",41.09 USD
+14,Family Feast Value Meals,3 Flatbread Pizza Family Feast,"A meal to feed the whole family, including any 3 Flatbread Pizzas and 2 whole salads. Serves 4-6.",36.39 USD
+14,Family Feast Value Meals,Family Feast with Cookies,"A meal to feed the whole family, including 4 half sandwiches, 1 whole salad, 1 group soup, 1 whole French baguette and 4 Chocolate Chipper Cookies. Serves 4-6.",41.09 USD
+14,Family Feast Value Meals,Family Feast,"A meal to feed the whole family, including 4 half sandwiches, 1 whole salad, 1 group soup and 1 whole French baguette. Serves 4-6.",36.39 USD
+14,Family Feast Value Meals,Family Feast with Soup or Mac &amp; Cookies,"A meal to feed the whole family, including 2 half sandwiches, 2 kids' sandwiches, 1 whole salad, 1 group soup or family Mac &amp; Cheese, 1 whole French baguette and 4 Chocolate Chipper Cookies. Serves 4-6.",41.09 USD
+14,Family Feast Value Meals,Family Feast with Soup or Mac,"A meal to feed the whole family, including 2 half sandwiches, 2 kids' sandwiches, 1 whole salad, 1 group soup or family Mac &amp; Cheese and 1 whole French baguette. Serves 4-6.",36.39 USD
+14,Family Feast Value Meals,Premium Family Feast with Cookies,"A meal to feed the whole family. Includes 4 Half Sandwiches, 1 Whole Salad, 1 Quart of Soup, 1 Whole French Baguette, and 4 Chocolate Chippers. Serves 4-6.",45.79 USD
+14,Family Feast Value Meals,Premium Family Feast,"A meal to feed the whole family. Includes 4 Half Sandwiches, 1 Whole Salad, 1 Quart of Soup, and 1 Whole French Baguette. Serves 4-6.",41.09 USD
+14,Value Duets,Classic Grilled Cheese &amp; Creamy Tomato Soup,A half portion of our Classic Grilled Cheese served alongside a cup of Creamy Tomato Soup.,6.99 USD
+14,Value Duets,Tuna Sandwich &amp; Creamy Tomato Soup,A half portion of our Tuna Sandwich served alongside a cup of Creamy Tomato Soup.,6.99 USD
+14,Value Duets,Caesar Salad &amp; Homestyle Chicken Noodle Soup,A half portion of our Caesar Salad served alongside a cup of  Homestyle Chicken Noodle Soup.,6.99 USD
+14,Value Duets,Greek Salad &amp; Creamy Tomato Soup,A half portion of our Greek Salad served alongside a cup of Creamy Tomato Soup.,6.99 USD
+14,Kids,Kids Signature Mac &amp; Cheese,"460 Cal. Tender shell pasta in a blend of rich cheeses including our tangy aged white cheddar cheese sauce. Allergens: Contains Wheat, Milk, Egg",6.99 USD
+14,Kids,Kids Broccoli Cheddar Mac &amp; Cheese,"370 Cal. Shell pasta in a blend of creamy cheese sauce and tangy white cheddar, simmered with seasoned broccoli and carrots. Allergens: Contains Wheat, Milk, Egg",6.99 USD
+14,Kids,NEW Kids Mexican Street Corn Chowder,"210 Cal. Sweet corn, fire-roasted poblano peppers, russet potatoes, chile powder, lime juice and cilantro in a creamy broth topped with Blue Corn Tortilla Strips. Allergens: Contains Milk",6.99 USD
+14,Kids,Kids Broccoli Cheddar Soup,"230 Cal. Chopped broccoli, shredded carrots and select seasonings simmered in a velvety smooth cheese sauce. Allergens: Contains Wheat, Milk",6.49 USD
+14,Kids,Kids Homestyle Chicken Noodle Soup,"60 Cal. Tender pieces of white-meat chicken simmered in a rich, perfectly seasoned homestyle chicken bone broth with curly egg noodles, sliced carrots, celery and herbs. Allergens: Contains Wheat, Egg",6.49 USD
+14,Kids,Kids Creamy Tomato Soup,"240 Cal. Vine-ripened pear tomatoes pureed with fresh cream for a velvety smooth flavor accented by hints of red pepper and oregano and topped with black pepper focaccia croutons. Allergens: Contains Wheat, Milk",6.49 USD
+14,Kids,Kids Cream of Chicken &amp; Wild Rice Soup,"180 Cal. Diced chicken, long grain and wild rice, celery, onion and carrots simmered in chicken stock with cream and select herbs. Allergens: Contains Wheat, Milk",6.49 USD
+14,Kids,Kids Bistro French Onion Soup,"190 Cal. Sweet caramelized onions in a savory broth with a sherry wine vinegar gastrique,  sea salt, topped with gruyere and  our homemade black pepper focaccia croutons. Allergens: Contains Wheat, Soy, Milk",6.49 USD
+14,Kids,Kids Grilled Cheese,"230 Cal. Sliced American cheese grilled on White Whole Grain Bread. Allergens: Contains Wheat, Milk",5.49 USD
+14,Kids,Kids Turkey Sandwich,"290 Cal. Oven-roasted turkey breast raised without antibiotics and American cheese on White Whole Grain Bread. Allergens: Contains Wheat, Milk",5.49 USD
+14,Kids,Kids Roasted Turkey &amp; Avocado BLT,"470 Cal. Roasted turkey raised without antibiotics, Applewood-smoked bacon, emerald green, vine-ripened tomatoes, fresh avocado, mayo, salt, and pepper on Country Rustic Sourdough. Allergens: Contains Wheat, Egg",9.59 USD
+14,Kids,Kids Grilled Mac &amp; Cheese Sandwich,"430 Cal. Creamy Mac &amp; Cheese with our fontina and mozzarella cheese blend and parmesan crisps on toasted thick-sliced Classic White Miche. Allergens: Contains Wheat, Milk, Egg",8.79 USD
+14,Kids,Kids Toasted Steak &amp; White Cheddar,"470 Cal. Grass fed beef, aged white cheddar, pickled red onions and horseradish sauce on Artisan Ciabatta. Allergens: Contains Wheat, Milk, Egg",9.59 USD
+14,Kids,Kids Tuna Salad Sandwich,"370 Cal. Special recipe tuna salad, emerald greens, vine-ripened tomatoes, red onions, salt and pepper on Black Pepper Foccacia. Allergens: Contains Wheat, Egg, Fish",7.19 USD
+14,Kids,Kids Napa Almond Chicken Sandwich,"310 Cal. Chicken raised without antibiotics tossed with diced celery, seedless grapes, toasted almonds and special dressing, and served with emerald green lettuce, vine-ripened tomatoes, salt, and pepper on Country Rustic Sourdough. Allergens: Contains Wheat, Egg, Tree Nuts",7.19 USD
+14,Kids,NEW Kids Citrus Asian Crunch Salad with Chicken,"320 Cal. Romaine and a blend of chopped broccoli, green cabbage, carrots, and kale tossed with edamame, pickled red onions, and fresh cilantro in tangerine soy ginger dressing and topped with warm seared chicken thigh meat, crispy carrots, and a teriyaki drizzle. Allergens: Contains Wheat, Soy",9.89 USD
+14,Kids,Kids Chicken Caesar Salad,"220 Cal. Chicken raised without antibiotics, romaine, grated Parmesan and homemade black pepper focaccia croutons tossed with Caesar dressing. Allergens: Contains Wheat, Milk, Egg, Fish",8.79 USD
+14,Kids,Kids Green Goddess Cobb Salad with Chicken,"250 Cal. Chicken raised without antibiotics, arugula, romaine, baby kale and red leaf blend, grape tomatoes and pickled red onions tossed in freshly made Green Goddess dressing and topped with fresh avocado, Applewood-smoked bacon and cage-free hard-boiled egg. Allergens: Contains Milk, Egg",9.89 USD
+14,Kids,Kids Greek Salad,"200 Cal. Romaine, grape tomatoes, feta, red onions, kalamata olives, salt and pepper tossed in Greek dressing with a pepperoncini. Allergens: Contains Milk",6.79 USD
+14,Kids,Kids Asian Sesame Chicken Salad,"200 Cal. Chicken raised without antibiotics, mixed greens, cilantro, toasted almonds, sesame seeds and wonton strips tossed in Asian sesame vinaigrette. Allergens: Contains Wheat, Tree Nuts. May contain Egg",8.79 USD
+14,Kids,Kids Caesar Salad,"170 Cal. Romaine, grated Parmesan and homemade black pepper focaccia croutons tossed with Caesar dressing. Allergens: Contains Wheat, Milk, Egg, Fish",6.79 USD
+14,Kids,Kids Fuji Apple Salad with Chicken,"280 Cal. Chicken raised without antibiotics, arugula, romaine, baby kale and red leaf blend, grape tomatoes, red onions, toasted pecan pieces, Gorgonzola and apple chips tossed in sweet white balsamic vinaigrette. Allergens: Contains Milk, Tree Nuts",8.79 USD
+14,Kids,Kids Cheese Flatbread Pizza,"860 Cal. Fontina mozzarella cheese blend and tomato bell pepper sauce on our flatbread. Allergens: Contains Wheat, Milk",9.59 USD
+14,Kids,Horizon Reduced Fat Organic White Milk,110 Cal. Organic White Milk. Allergens: Contains Milk,2.19 USD
+14,Kids,Horizon Reduced Fat Organic Chocolate Milk,150 Cal. Organic Chocolate Milk. Allergens: Contains Milk,2.19 USD
+14,Kids,Organic Apple Juice,110 Cal. Organic Apple Juice. Allergens: none,2.19 USD
+14,Sides &amp; Spreads,French Baguette,180 Cal. Freshly baked bread with a slightly blistered crust and a wine-like aroma. Allergens: Contains Wheat,1.09 USD
+14,Sides &amp; Spreads,Chips,150 Cal. Panera kettle-cooked potato chips. Allergens: none,1.09 USD
+14,Sides &amp; Spreads,Apple,80 Cal. Fresh apple. Allergens: none,1.09 USD
+14,Sides &amp; Spreads,Banana,90 Cal. Banana Allergens: none,1.09 USD
+14,Sides &amp; Spreads,Hard Boiled Eggs - 2 Pack,150 Cal. Hard boiled eggs and emerald greens. Pack of 2. Allergens: Contains Egg,2.49 USD
+14,Sides &amp; Spreads,Strawberry Squeezable Yogurt,50 Cal. Strawberry Squeezable Yogurt. Allergens: Contains Milk,1.49 USD
+14,Sides &amp; Spreads,Mixed Berry Squeezable Yogurt,50 Cal. Mixed Berry Squeezable Yogurt. Allergens: Contains Milk,1.49 USD
+15,Picked for you,Lamb Deluxe Biryani,"Boneless lamb chunks cooked in a special biryani masala curry, layered with imported long grain rice and steamed till cooked and smoked with coal
+",23.53 USD
+15,Picked for you,Death by Samosa,"Filo pastry turnovers, filled with a peas and potatoes stuffing sauteed with cumin, turmeric and chilies",8.35 USD
+15,Picked for you,Crispy Onion Fritters,"Finely chopped onions with thick batter fried in oil and served in a plate.
+",8.35 USD
+15,Picked for you,Smoky Chicken Tikka,"Tender chicken chunks simmered in a thick, tangy tomato and onion masala gravy 
+",20.87 USD
+15,Picked for you,Chicken Deluxe Biryani,"Tender chicken morsels cooked in a special biryani masala curry, layered with imported long grain rice and steamed till cooked and smoked with coal
+",22.26 USD
+15,"Appetizers ",Death by Samosa,"Filo pastry turnovers, filled with a peas and potatoes stuffing sauteed with cumin, turmeric and chilies",8.35 USD
+15,"Appetizers ",Crispy Onion Fritters,"Finely chopped onions with thick batter fried in oil and served in a plate.
+",8.35 USD
+15,"Appetizers ",Tantalizing Tandoori Chicken,"Bone-in spring chicken seasoned in a yogurt tandoori marinade, skewered and grilled in a traditional coal oven",25.05 USD
+15,Vegetarian Entrees,Curried Okra Masala,"Garden fresh okra wok tossed with onions, chilies and whole spice mix 
+",18.09 USD
+15,Vegetarian Entrees,Eggplant Mish Mashed,"Fire roasted and smoked eggplant mashed and tossed in spices
+",18.09 USD
+15,Vegetarian Entrees,Chickpea Curry,"Chickpeas, soaked overnight and simmered to perfection in a gently spiced onion &amp; tomato curry 
+",18.09 USD
+15,Vegetarian Entrees,Black Knight Lentils,"Mixed black lentils, lightly tempered and simmered on a low flame till soft and creamy 
+",16.7 USD
+15,Vegetarian Entrees,Cottage Cheese &amp; Spinach,"Fresh cubes of cottage cheese simmered in a thick, creamy spinach curry",20.87 USD
+15,Vegetarian Entrees,Garnish Paneer Masala,"Fresh cottage cheese cubes simmered in a thick, tangy tomato and onion masala gravy 
+",20.87 USD
+15,Non-Vegetarian Entrees,Lavish Lamb Vindaloo,"Lamb pieces are marinated and cooked with spices and chilies giving an authentic goan style taste.
+",22.26 USD
+15,Non-Vegetarian Entrees,Smoky Chicken Tikka,"Tender chicken chunks simmered in a thick, tangy tomato and onion masala gravy 
+",20.87 USD
+15,Non-Vegetarian Entrees,Chicken &amp; Spinach,"Tender chicken chunks simmered in a thick, creamy spinach curry ",20.87 USD
+15,Breads &amp; Rice,Vegetable Deluxe Biryani,"Seasonal veggies cooked in a special biryani masala curry, layered with imported long grain rice and steamed till cooked and smoked with coal
+",20.87 USD
+15,Breads &amp; Rice,Chicken Deluxe Biryani,"Tender chicken morsels cooked in a special biryani masala curry, layered with imported long grain rice and steamed till cooked and smoked with coal
+",22.26 USD
+15,Breads &amp; Rice,Lamb Deluxe Biryani,"Boneless lamb chunks cooked in a special biryani masala curry, layered with imported long grain rice and steamed till cooked and smoked with coal
+",23.53 USD
+15,Breads &amp; Rice,Butter Naan,"Fresh made leavened dough baked in a traditional coal oven and smothered with butter 
+",5.57 USD
+15,Breads &amp; Rice,Garlic Naan,"Fresh made leavened dough led with garlic and baked in a traditional coal oven
+",5.57 USD
+15,Breads &amp; Rice,Tandoori Roti,"Whole wheat roti, baked in a traditional coal oven 
+",5.57 USD
+15,Desserts &amp; Beverages,"Classic Gulab Jamun ","Village cheese dumplings deep fried and steeped in a cardamom infused sugar syrup 
+",7.26 USD
+15,Desserts &amp; Beverages,Yogurt Smoothie,"A thick smoothie made with fresh churned yogurt, flavored to your taste
+",5.57 USD
+15,Desserts &amp; Beverages,Mango Yogurt Smoothie,"A thick smoothie made with fresh yogurt and flavored with premium mango pulp
+",5.57 USD
+15,Desserts &amp; Beverages,Soda,"The real thirst quencher
+",4.17 USD
+16,Picked for you,Gooey Butter Cake Pint,"Cream cheese ice cream layered with crumbles of soft vanilla cake and swirls of made-from-scratch caramel-butterscotch sauce.
+
+(Pints may come hand-packed if pre-packed pints are sold out.)
+
+Gluten-Free
+Contains: milk, egg",14.0 USD
+16,Picked for you,Brambleberry Crisp Pint,"Oven-toasted oat streusel and a sweet-tart “brambleberry” jam of blackberries and blackcurrants layered throughout vanilla ice cream.
+
+(Pints may come hand-packed if pre-packed pints are sold out.)
+
+Contains: milk, wheat",14.0 USD
+16,Picked for you,Brown Butter Almond Brittle Pint,"Brown-butter-almond candy crushed into buttercream ice cream.
+
+(Pints may come hand-packed if pre-packed pints are sold out.)
+
+Gluten-Free
+Contains: milk, tree nut (almonds)",14.0 USD
+16,Picked for you,Milkiest Chocolate Pint,"An ultra-lush milky chocolate, like a fine Swiss bar. Evaporated milk imparts concentrated milkiness and delightful chewiness.
+
+(Pints may come hand-packed if pre-packed pints are sold out.)
+
+Gluten-Free
+Contains: milk",14.0 USD
+16,Picked for you,Salted Peanut Butter with Chocolate Flecks Pint,"Salted and roasted ground peanuts with grass-grazed milk and crunchy, dark chocolate flecks.
+
+(Pints may come hand-packed if pre-packed pints are sold out.)
+
+Gluten-Free
+Contains: milk, soy, peanut",14.0 USD
+16,Pints,Blackout Chocolate Cake Pint,"A chocolate ice cream quadruple threat with cake, extra-bitter fudge, and chocolate pieces.
+
+(Pints may come hand-packed if pre-packed pints are sold out.)
+
+Contains: milk, soy, wheat",14.0 USD
+16,Pints,Brambleberry Crisp Pint,"Oven-toasted oat streusel and a sweet-tart “brambleberry” jam of blackberries and blackcurrants layered throughout vanilla ice cream.
+
+(Pints may come hand-packed if pre-packed pints are sold out.)
+
+Contains: milk, wheat",14.0 USD
+16,Pints,Brown Butter Almond Brittle Pint,"Brown-butter-almond candy crushed into buttercream ice cream.
+
+(Pints may come hand-packed if pre-packed pints are sold out.)
+
+Gluten-Free
+Contains: milk, tree nut (almonds)",14.0 USD
+16,Pints,Buttercream Birthday Cake Pint,"Buttercream frosting, golden cake, and a rainbow of sprinkles. What every birthday cake should taste like.
+
+(Pints may come hand-packed if pre-packed pints are sold out.)
+
+Gluten-Free
+Contains: milk, egg",14.0 USD
+16,Pints,Caramel Pecan Sticky Buns Pint,"Rich coconut cream loaded with sticky bun pieces, dark caramel, and roasted pecans. 
+
+(Pints may come hand-packed if pre-packed pints are sold out.)
+
+Vegan
+Contains: tree nut (pecans, coconut), peanut, wheat",14.0 USD
+16,Pints,Coffee With Cream &amp; Sugar Pint,"Intelligentsia coffee steeped in cream. The sweet, complex flavor and robust aroma of freshly brewed coffee shines through.
+
+(Pints may come hand-packed if pre-packed pints are sold out.)
+
+Gluten-Free
+Contains: milk",14.0 USD
+16,Pints,Cold Brew With Coconut Cream Pint,"Light and bright Slingshot Coffee cold brew sorbet twisted with lush coconut cream.
+
+(Pints may come hand-packed if pre-packed pints are sold out.)
+
+Gluten-Free
+Vegan
+Contains: tree nut (coconut)",14.0 USD
+16,Pints,Darkest Chocolate Pint,"Mouth-filling and palate-gripping with a pleasingly dry finish. The most amount of Fair Trade cocoa and the least amount of anything else.
+
+(Pints may come hand-packed if pre-packed pints are sold out.)
+
+Gluten-Free
+Contains: milk",14.0 USD
+16,Pints,Frosé Sorbet Pint,"Sangria-style frozen rosé with pear, strawberry, and watermelon. Refreshing and bright with a tinge of tartness.
+
+(Pints may come hand-packed if pre-packed pints are sold out.)
+
+Gluten-Free
+Vegan",14.0 USD
+16,Pints,Gooey Butter Cake Pint,"Cream cheese ice cream layered with crumbles of soft vanilla cake and swirls of made-from-scratch caramel-butterscotch sauce.
+
+(Pints may come hand-packed if pre-packed pints are sold out.)
+
+Gluten-Free
+Contains: milk, egg",14.0 USD
+16,Pints,Honey Vanilla Bean Pint,"A vanilla to end all vanillas. Made with Fair Trade vanilla beans that are warm and complex in flavor and a perfect partner for a touch of honey and grass-grazed milk.
+
+(Pints may come hand-packed if pre-packed pints are sold out.)
+
+Gluten-Free
+Contains: milk",14.0 USD
+16,Pints,Lemon &amp; Blueberries Parfait Buttermilk Frozen Yogurt Pint,"Tart and uber creamy lemon with from-scratch blueberry jam in fresh cultured buttermilk and cream.
+
+(Pints may come hand-packed if pre-packed pints are sold out.)
+
+Gluten-Free
+Contains: milk",14.0 USD
+16,Pints,Milkiest Chocolate Pint,"An ultra-lush milky chocolate, like a fine Swiss bar. Evaporated milk imparts concentrated milkiness and delightful chewiness.
+
+(Pints may come hand-packed if pre-packed pints are sold out.)
+
+Gluten-Free
+Contains: milk",14.0 USD
+16,Pints,Powdered Jelly Donut Pint,"Vanilla custard, raspberry jam, and a brown sugar donut crumble.
+
+(Pints may come hand-packed if pre-packed pints are sold out.)
+
+Contains: milk, egg, wheat ",14.0 USD
+16,Pints,Rainbow BFY Pint,"A smashing combination of tastes and aromas: passion fruit, raspberry, and key lime
+yogurts. Tropical, tart, and uber creamy.
+
+(Pints may come hand-packed if pre-packed pints are sold out.)
+
+Gluten-Free
+Contains: milk",14.0 USD
+16,Pints,Salted Peanut Butter with Chocolate Flecks Pint,"Salted and roasted ground peanuts with grass-grazed milk and crunchy, dark chocolate flecks.
+
+(Pints may come hand-packed if pre-packed pints are sold out.)
+
+Gluten-Free
+Contains: milk, soy, peanut",14.0 USD
+16,Pints,Salty Caramel Pint,"Fire-toasted sugar with sea salt, vanilla, and grass-grazed milk. A perfect balance of salty and sweet.
+
+(Pints may come hand-packed if pre-packed pints are sold out.)
+
+Gluten-Free
+Contains: milk",14.0 USD
+16,Pints,Savannah Buttermint Pint,"A buttery after dinner mint ice cream with white chocolate flecks.
+
+(Pints may come hand-packed if pre-packed pints are sold out.)
+
+Gluten-Free
+Contains: milk, soy",14.0 USD
+16,Pints,Strawberry Buttermilk Pint,"Grown-for-us Ohio strawberries blended with cream and cultured buttermilk for subtle tartness.
+
+(Pints may come hand-packed if pre-packed pints are sold out.)
+
+Gluten-Free
+Contains: milk",14.0 USD
+16,Pints,Sweet Cream Biscuits &amp; Peach Jam Pint,"Buttermilk ice cream, crumbled biscuits, and swirls of peach jam.
+
+(Pints may come hand-packed if pre-packed pints are sold out.)
+
+Contains: milk, wheat",14.0 USD
+16,Pints,Texas Sheet Cake Pint,"Decadent chocolate cake crumbles, bittersweet fudge, and palate-gripping cocoa. Big, bold, beautiful.
+
+(Pints may come hand-packed if pre-packed pints are sold out.)
+
+Vegan
+Contains: wheat, tree nut (coconut)",14.0 USD
+16,Pints,Wildberry Lavender Pint,"Intensely fruity with the brambly berry flavor of pulverized blackcurrants. Scented with sweet orange and lavender essential oils.
+
+(Pints may come hand-packed if pre-packed pints are sold out.)
+
+Gluten-Free
+Contains: milk",14.0 USD
+16,"Cones, Sprinkles &amp; Sauces",Buttercrisp Waffle Cones,"Jeni’s unique recipe! Buttery and nutty with a hint of salt— the perfect flavor pairing for all of our ice creams. (Comes in a set of 5.)
+
+Contains: milk, soy, egg, wheat",11.7 USD
+16,"Cones, Sprinkles &amp; Sauces",Buttercrisp Waffle Wedges,"Jeni’s unique recipe! Buttery and nutty with a hint of salt— the perfect flavor pairing for all of our ice creams. (Comes in a set of  8.)
+
+Contains: milk, soy, egg, wheat",2.35 USD
+16,"Cones, Sprinkles &amp; Sauces",Cake Cones,"Classic, slightly salty cake cones. Made on vintage cast-iron equipment by our friends at Jagger Cone. 
+
+Includes 12 cones carefully packaged in our shops. Please note, cones could chip and crumble a bit during delivery transport.
+
+
+Vegan
+Contains: soy, wheat",5.85 USD
+16,"Cones, Sprinkles &amp; Sauces",Sugar Cones,"Flaky cones with great caramelized flavor. Made on vintage cast-iron equipment by our friends at Jagger Cone. 
+
+Includes 12 cones carefully packaged in our shops. Please note, cones could chip and crumble a bit during delivery transport. 
+
+Vegan
+Contains: soy, wheat",5.85 USD
+17,Combos,Fish &amp; Wings (6 pcs),"2pc fish, fries, and drink.",13.99 USD
+17,Combos,Shrimp &amp; Wings (6 pcs),"Bpc fried shrimp, 6 wings, fries, and drink.",13.99 USD
+17,Combos,Shrimp (10 pcs),"10 pieces fried shrimp, fries, and drink.",11.99 USD
+17,Combos,Burger &amp; Wings (6 pcs),"Served with 6 wings, fries, and drink.",10.99 USD
+17,Combos,Philly &amp; Wings (6 pcs),"Philly steak sandwich, bpc wings, fries, and drink.",12.99 USD
+17,Combos,Fish &amp; Shrimp,"2 pieces fish plus shrimp, fries, and drink.",13.99 USD
+17,Sides,Fries,,2.49 USD
+17,Sides,Okra,,2.99 USD
+17,Sides,Onion Rings,,2.99 USD
+17,Sides,Fries with Cheese,,3.99 USD
+17,Sides,Fries with Ranch,,3.99 USD
+17,Sides,Fries with Cheese and Ranch,,3.99 USD
+17,Fish,Tilapia,Two pieces with one side.,9.99 USD
+17,Fish,Catfish,Two pieces with one side.,9.99 USD
+17,Fish,Whiting,Two pieces with one side.,9.99 USD
+17,Salads,Chef Salad,,9.99 USD
+17,Salads,Grilled Chicken Salad,,10.99 USD
+17,Salads,Side Salad,,3.99 USD
+17,Kid's Meal,Wings (4 pcs),,4.99 USD
+17,Kid's Meal,Tender (1 pc),,4.5 USD
+17,Extras,Slice of Bread,,0.5 USD
+17,Extras,Drink,,2.49 USD
+18,New! Crustless Pizzas - Keto Friendly (Baking Required),Chicken Bacon Artichoke - Keto Friendly (Baking Required),"Creamy Garlic Sauce, Whole-Milk Mozzarella, Grilled Chicken Raised Without Antibiotics, Crispy Bacon, Marinated Artichoke Hearts, Fresh Spinach, Aged Parmesan and Zesty Herbs without the Crust. This recipe is Keto-friendly, but still fully customizable. Macros for this entire tray with the default build are Fats: 89g, Proteins: 91g, Carbs: 21g",10.99 USD
+18,New! Crustless Pizzas - Keto Friendly (Baking Required),Cowboy - Keto Friendly (Baking Required),"Traditional Red Sauce, Whole-Milk Mozzarella, Premium Pepperoni, Italian Sausage, Sliced Mushrooms, Black Olives, Cheddar, and Herb &amp; Cheese Blend without the Crust. 
+
+To make this Keto-friendly, simply change the Traditional Red Sauce to Creamy Garlic Sauce or Olive Oil &amp; Garlic Sauce. Macros for this entire tray with the default build are Fats: 100g, Proteins: 75g, Carbs: 28g",10.99 USD
+18,New! Crustless Pizzas - Keto Friendly (Baking Required),Create Your Own Crustless - Keto Friendly (Baking Required),"Choose your sauce (or no sauce at all!) and add up to 5 toppings for best results.  Toppings that are Keto-friendly are marked with ""KF"".",9.0 USD
+18,New! Crustless Pizzas - Keto Friendly (Baking Required),Gourmet Vegetarian - Keto Friendly (Baking Required),"Creamy Garlic Sauce, Whole-Milk Mozzarella, Fresh Spinach, Sliced Zucchini, Sliced Mushrooms, Marinated Artichoke Hearts, Roma Tomatoes, Mixed Onions, Cheddar, and Herb &amp; Cheese Blend. This recipe is Keto-friendly, but still fully customizable. Macros for this entire tray with the default build are Fats: 79g, Proteins: 57g, Carbs: 23g",10.99 USD
+18,New! Crustless Pizzas - Keto Friendly (Baking Required),Papa's All Meat - Keto Friendly (Baking Required),"Traditional Red Sauce, Whole-Milk Mozzarella, Canadian Bacon, Salami, Premium Pepperoni, Italian Sausage and Ground Beef, and Cheddar. 
+
+To make this Keto-friendly, simply change the Traditional Red Sauce to Creamy Garlic Sauce or Olive Oil &amp; Garlic Sauce. Macros for this entire tray with the default build are Fats: 108g, Proteins: 88g, Carbs: 25g",10.99 USD
+18,New! Crustless Pizzas - Keto Friendly (Baking Required),Papa's Favorite - Keto Friendly (Baking Required),"Traditional Red Sauce, Whole-Milk Mozzarella, Premium Pepperoni, Italian Sausage, Ground Beef, Sliced Mushrooms, Mixed Onions, Green Peppers, Black Olives, and Cheddar. To make this Keto-friendly, simply change the Traditional Red Sauce to Creamy Garlic Sauce or Olive Oil &amp; Garlic Sauce. Macros for this entire tray with the default build are Fats: 104g, Proteins: 77g, Carbs: 33g",10.99 USD
+18,Signature Pizza (Baking Required),Cowboy (Baking Required),"Our Original Crust topped with Traditional Red Sauce, Whole-Milk Mozzarella, Premium Pepperoni, Italian Sausage, Sliced Mushrooms, Black Olives, Cheddar, and Herb &amp; Cheese Blend. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",12.99 USD
+18,Signature Pizza (Baking Required),Papa's Favorite® (Baking Required),"Our Original Crust topped with Traditional Red Sauce, Whole-Milk Mozzarella, Premium Pepperoni, Italian Sausage, Ground Beef, Sliced Mushrooms, Mixed Onions, Green Peppers, Black Olives, and Cheddar. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",12.99 USD
+18,Signature Pizza (Baking Required),Murphy's Combo (Baking Required),"Our Original Crust topped with Traditional Red Sauce, Whole-Milk Mozzarella, Salami, Premium Pepperoni, Italian Sausage, Sliced Mushrooms, Mixed Onions and Black Olives, and Cheddar. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",12.99 USD
+18,Signature Pizza (Baking Required),Chicken Garlic (Baking Required),"Our Original Crust topped with Creamy Garlic Sauce, Whole-Milk Mozzarella, Grilled Chicken Raised Without Antibiotics, Roma Tomatoes, Green Onions, Cheddar, and Herb &amp; Cheese Blend. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",12.99 USD
+18,Signature Pizza (Baking Required),Papa's All Meat (Baking Required),"Our Original Crust topped with Traditional Red Sauce, Whole-Milk Mozzarella, Canadian Bacon, Salami, Premium Pepperoni, Italian Sausage and Ground Beef, and Cheddar. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",12.99 USD
+18,Signature Pizza (Baking Required),Rancher,"Our Original Crust topped with Traditional Red Sauce, Whole-Milk Mozzarella, Canadian Bacon, Premium Pepperoni, Ground Beef, Mixed Onions, and Cheddar.",12.99 USD
+18,Gourmet Delite Pizza (Baking Required),Chicken Bacon Artichoke (Baking Required),"Our Artisan Thin Crust, topped with Creamy Garlic Sauce, Whole-Milk Mozzarella, Grilled Chicken Raised Without Antibiotics, Crispy Bacon, Marinated Artichoke Hearts, Fresh Spinach, Aged Parmesan and Zesty Herbs. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",11.99 USD
+18,Gourmet Delite Pizza (Baking Required),Herb Chicken Mediterranean (Baking Required),"Our Artisan Thin Crust, topped with Olive Oil, Chopped Garlic, Whole-Milk Mozzarella, Grilled Chicken Raised Without Antibiotics, Fresh Spinach, Sun-dried Tomatoes, Crumbled Feta and Zesty Herbs. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",11.99 USD
+18,Gourmet Delite Pizza (Baking Required),Gourmet Vegetarian (Baking Required),"Our Artisan Thin Crust, topped with Creamy Garlic Sauce, Whole-Milk Mozzarella, Fresh Spinach, Sliced Zucchini, Sliced Mushrooms, Marinated Artichoke Hearts, Roma Tomatoes, Mixed Onions, Cheddar, and Herb &amp; Cheese Blend. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",11.99 USD
+18,Gourmet Delite Pizza (Baking Required),Thai Chicken(Baking Required),"Our Artisan Thin Crust topped with Traditional Red Sauce, Whole-Milk Mozzarella, Premium Pepperoni, Fresh Spinach, Black Olives, Roma Tomatoes, Feta Cheese, and Zesty Herbs. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",11.99 USD
+18,Gourmet Delite Pizza (Baking Required),Tuscan Chicken and Sausage ( Baking Required),"Our Artisan Thin Crust topped with Traditional Red Sauce, Whole-Milk Mozzarella, Premium Pepperoni, Fresh Spinach, Black Olives, Roma Tomatoes, Feta Cheese, and Zesty Herbs. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",11.99 USD
+18,Stuffed Pizza (Baking Required),5-Meat Stuffed (Baking Required) Family,"Two layers of our Original Crust stuffed with Traditional Red Sauce, Whole-Milk Mozzarella, Canadian Bacon, Premium Pepperoni, Italian Sausage, Crispy Bacon and topped with Traditional Red Sauce, Ground Beef, Mozzarella and Mild Cheddar.",16.99 USD
+18,Stuffed Pizza (Baking Required),5-Meat Stuffed (Baking Required) Large,"Two layers of our Original Crust stuffed with Traditional Red Sauce, Whole-Milk Mozzarella, Canadian Bacon, Premium Pepperoni, Italian Sausage, Crispy Bacon and topped with Traditional Red Sauce, Ground Beef, Mozzarella and Mild Cheddar.",14.99 USD
+18,Stuffed Pizza (Baking Required),Chicago-Styled Stuffed (Baking Required) Family,"Two layers of our Original Crust stuffed with Traditional Red Sauce, Whole-Milk Mozzarella, Salami, Premium Pepperoni, Italian Sausage, Ground Beef, Mixed Onions and topped with Traditional Red Sauce, Green Onions, Roma Tomatoes, Mozzarella and Mild Cheddar. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",16.99 USD
+18,Stuffed Pizza (Baking Required),Chicago-Styled Stuffed (Baking Required) Large,"Two layers of our Original Crust stuffed with Traditional Red Sauce, Whole-Milk Mozzarella, Salami, Premium Pepperoni, Italian Sausage, Ground Beef, Mixed Onions and topped with Traditional Red Sauce, Green Onions, Roma Tomatoes, Mozzarella and Mild Cheddar. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",14.99 USD
+18,Stuffed Pizza (Baking Required),Big Murphy's Stuffed (Baking Required) Large,"Two layers of our Original Crust stuffed with Traditional Red Sauce, Whole-Milk Mozzarella, Premium Pepperoni, Italian Sausage, Sliced Mushrooms and Black Olives topped with Traditional Red Sauce, Green Peppers, Roma Tomatoes, Mild Cheddar and Herb &amp; Cheese Blend. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",14.99 USD
+18,Stuffed Pizza (Baking Required),Big Murphy's Stuffed (Baking Required) Family,"Two layers of our Original Crust stuffed with Traditional Red Sauce, Whole-Milk Mozzarella, Premium Pepperoni, Italian Sausage, Sliced Mushrooms and Black Olives topped with Traditional Red Sauce, Green Peppers, Roma Tomatoes, Mild Cheddar and Herb &amp; Cheese Blend. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",16.99 USD
+18,Stuffed Pizza (Baking Required),Chicken Bacon Stuffed (Baking Required) Large,"Two layers of our Original Crust stuffed with Creamy Garlic Sauce, Whole-Milk Mozzarella, Grilled Chicken Raised Without Antibiotics, Crispy Bacon, Roma Tomatoes, Mixed Onions and topped with Creamy Garlic Sauce, Roma Tomatoes, Crispy Bacon, Mozzarella and Mild Cheddar. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",14.99 USD
+18,Stuffed Pizza (Baking Required),Chicken Bacon Stuffed (Baking Required) Family,"Two layers of our Original Crust stuffed with Creamy Garlic Sauce, Whole-Milk Mozzarella, Grilled Chicken Raised Without Antibiotics, Crispy Bacon, Roma Tomatoes, Mixed Onions and topped with Creamy Garlic Sauce, Roma Tomatoes, Crispy Bacon, Mozzarella and Mild Cheddar. OUR PIZZA. YOUR OVEN. NOT AS CRAZY AS IT SOUNDS.",16.99 USD
+18,"Starters, Sides, Desserts and Beverages",Scratch-Made 5-Cheese Bread (Baking Required),"Fresh dough topped with our Herb Garlic Spread, ¼ pound of Whole-Milk Mozzarella, Herb &amp; Cheese Blend, and Mild Cheddar Cheese served with a side of Marinara.",5.0 USD
+18,"Starters, Sides, Desserts and Beverages",Chocolate Chip Cookie Dough (Baking Required),Fresh-made in house with Semi-Sweet Chocolate Chips.,5.0 USD
+18,"Starters, Sides, Desserts and Beverages",Cinnamon Wheel (Baking Required),"Our Original Crust topped with Cinnamon Spread, Oatmeal Crisp Topping, served with Cream Cheese Frosting.",5.0 USD
+18,"Starters, Sides, Desserts and Beverages",S’mores Bars,"Chocolate chip cookie dough topped with marshmallows, crisp topping, and even more chocolate chips.",6.0 USD
+18,"Starters, Sides, Desserts and Beverages",Soft Drink (2-Liter Pepsi Product),,2.49 USD
+18,"Starters, Sides, Desserts and Beverages",Garden Salad,"Romaine lettuce topped with green peppers, Roma tomatoes, black olives, whole milk mozzarella, and mild cheddar cheeses.",5.99 USD
+18,"Starters, Sides, Desserts and Beverages",Club Salad,"Romaine lettuce topped with crispy bacon, Canadian bacon, Roma tomatoes, whole milk mozzarella, and mild cheddar cheese.",5.99 USD
+18,"Starters, Sides, Desserts and Beverages",Caesar Salad,Romaine lettuce topped with shredded aged parmesan cheese.,5.99 USD
+18,"Starters, Sides, Desserts and Beverages",Mediterranean  Salad,"Romaine lettuce and fresh spinach topped with black olives, sun dried tomatoes, mixed onions, and crumbled feta cheese.",5.99 USD
+18,"Starters, Sides, Desserts and Beverages",Mini Murph Cheese,Make 'n' Bake Pizza Kit with Red Sauce &amp; Mozzarella.,4.99 USD
+18,"Starters, Sides, Desserts and Beverages",Mini Murph Pepperoni,"Make 'n' Bake Pizza Kit with Red Sauce, Mozzarella &amp; Pepperoni.",4.99 USD
+18,Create Your Own,Create Your Own,"Choose your size and one of our fresh dough options, and then top your pizza with everyone's favorites .",2.49 USD
+19,Picked for you,Make Your Plate,,9.49 USD
+19,Picked for you,Make Your Sandwich,,7.99 USD
+19,Picked for you,Hummus,,4.99 USD
+19,Picked for you,Baba Ghannoug,"small includes 1 pita.
+large includes 2 pitas.",4.99 USD
+19,Picked for you,Jerusalem Salad,,4.99 USD
+19,Main Dishes,Make Your Sandwich,,7.99 USD
+19,Main Dishes,Make Your Plate,,9.49 USD
+19,Sides,Hummus,,4.99 USD
+19,Sides,Jerusalem Salad,,4.99 USD
+19,Sides,Baba Ghannoug,"small includes 1 pita.
+large includes 2 pitas.",4.99 USD
+19,Sides,Chopped Salad,,4.99 USD
+19,Sides,Yogurt Salad,"Served with Cucumber, Mint.",4.99 USD
+19,Sides,White Rice,,4.99 USD
+19,Sides,Fries,,2.99 USD
+19,Sides,Falafel,,0.0 USD
+19,Sides,Pita,,0.0 USD
+19,Beverages,Soda,,1.99 USD
+19,Beverages,Bottled Water,,1.49 USD
+20,Picked for you,Beast Style Burger Combo,"Smashed crispy beef patties with house seasoning, American cheese, pickles, diced white onion, mayo, ketchup, and brown mustard on a soft roll served with your choice of seasoned or Beast style fries and a drink.  ",13.49 USD
+20,Picked for you,Karl's Deluxe,"A patty melt served Karl’s Style with a crispy seasoned beef patty, caramelized onions &amp; cheese on a toasty inverted bun",6.99 USD
+20,Picked for you,Impossible™ Beast Style Combo,"Smashed crispy Impossible™ patties with house seasoning, American cheese, pickles, diced white onion, mayo, ketchup, and brown mustard on a soft roll served with your choice of seasoned or Beast style fries and a drink.  ",16.99 USD
+20,Picked for you,Nashville Hot Chicken Tender Sandwich,"with mayo, ketchup, shredded lettuce and pickles",7.49 USD
+20,Picked for you,"Impossible™ Chandler Style ","Two smashed crispy Impossible™ patties with house seasoning, served plain with American cheese on a bun",11.99 USD
+20,"Combos ",Beast Style Burger Combo,"Smashed crispy beef patties with house seasoning, American cheese, pickles, diced white onion, mayo, ketchup, and brown mustard on a soft roll served with your choice of seasoned or Beast style fries and a drink.  ",13.49 USD
+20,"Combos ",Chicken Sandwich Combo,"A Crispy Chicken Tender Sandwich or Nashville Hot Chicken Tender Sandwich with your choice of seasoned or Beast style fries and a drink. ",12.99 USD
+20,Burgers,Karl's Deluxe,"A patty melt served Karl’s Style with a crispy seasoned beef patty, caramelized onions &amp; cheese on a toasty inverted bun",6.99 USD
+20,Burgers,Beast Style,"Smashed crispy beef patties with house seasoning, American cheese, pickles, diced white onion, mayo, ketchup, and brown mustard on a soft roll",7.99 USD
+20,Burgers,"Chandler Style ","Two smashed crispy beef patties with house seasoning, served plain with American cheese on a bun",7.99 USD
+20,Burgers,"Chris Style  ","Two smashed crispy beef patties with house seasoning, American cheese, bacon, topped with crinkle fries  ",8.99 USD
+20,"Impossible™ Burgers ",Impossible™ Beast Style Combo,"Smashed crispy Impossible™ patties with house seasoning, American cheese, pickles, diced white onion, mayo, ketchup, and brown mustard on a soft roll served with your choice of seasoned or Beast style fries and a drink.  ",16.99 USD
+20,"Impossible™ Burgers ",Impossible™ Karl's Deluxe,"A patty melt served Karl’s Style with a crispy seasoned Impossible™ patty, caramelized onions and cheese on a toasty inverted bun",10.99 USD
+20,"Impossible™ Burgers ","Impossible™ Beast Style ","Smashed crispy Impossible™ patties with house seasoning, American cheese, pickles, diced white onion, mayo, ketchup, and brown mustard on a soft roll",11.99 USD
+20,"Impossible™ Burgers ","Impossible™ Chandler Style ","Two smashed crispy Impossible™ patties with house seasoning, served plain with American cheese on a bun",11.99 USD
+20,"Impossible™ Burgers ","Impossible™ Chris Style  ","Two smashed crispy Impossible™ patties with house seasoning, American cheese, bacon, topped with crinkle fries  ",12.99 USD
+20,Sandwiches,"Karl’s Grilled Cheese ",3 slices of American cheese griddled crisp on an inverted bun,4.99 USD
+20,Sandwiches,Crispy Chicken Tender Sandwich,"with mayo, shredded lettuce and pickles",7.49 USD
+20,Sandwiches,Nashville Hot Chicken Tender Sandwich,"with mayo, ketchup, shredded lettuce and pickles",7.49 USD
+20,Sides,Crinkle Fries,"Crinkle fries seasoned with spicy red pepper, garlic, paprika, sugar, and a hint of lime",3.49 USD
+20,Sides,"Beast Style Fries ","Seasoned crinkle fries loaded with caramelized onions, American cheese, pickles, mayo, ketchup and mustard",5.29 USD
+20,Dessert,Chocolate Chip Cookie,Freshly baked chocolate chip cookie,2.49 USD
+20,Bottled Beverages,Bottled Soda,,2.49 USD
+20,Bottled Beverages,Bottled Water,,2.49 USD
+21,Picked for you,Pink Starburst,"Tropical, pomegranate, wildberry, and whey protein.",9.0 USD
+21,Picked for you,Strawberry Coconut,"Strawberry, lime, lemon, collagen, and coconut.",10.0 USD
+21,Picked for you,Apple Pie Shake,"200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",10.5 USD
+21,Picked for you,Strawberry Icing Shake,"Contains gluten. 200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",10.5 USD
+21,Picked for you,Cherry Limeade,"Cherry, lime, raspberry, and collagen.",10.0 USD
+21,Drinks - Teas,Tropical Paradise,"Tropical fruit, lemon, and mandarin. Clean energy, boosts mood, helps you focus, burns calories, soothes stomach, no sugar, and aids in digestion.",7.0 USD
+21,Drinks - Teas,Lemon Berry,"Pomegranate, lemon, and mango. Clean energy, boosts mood, helps you focus, burns calories, soothes stomach, no sugar, and aids in digestion.",7.0 USD
+21,Drinks - Teas,Ohh Snap,"Pomegranate, raspberry, and cranberry. Clean energy, boosts mood, helps you focus, burns calories, soothes stomach, no sugar, and aids in digestion.",7.0 USD
+21,Drinks - Teas,Tang Good,"Orange, lemon, and mandarin. Clean energy, boosts mood, helps you focus, burns calories, soothes stomach, no sugar, and aids in digestion.",7.0 USD
+21,Drinks - Teas,Peachy Keen,"Orange, peach, and mango. Clean energy, boosts mood, helps you focus, burns calories, soothes stomach, no sugar, and aids in digestion.",7.0 USD
+21,Drinks - Teas,Russian Twist,"Orange, chai, and mango. Clean energy, boosts mood, helps you focus, burns calories, soothes stomach, no sugar, and aids in digestion.",7.0 USD
+21,Drinks - Teas,Pom Pom,"Pomegranate, pomegranate, and mango. Clean energy, boosts mood, helps you focus, burns calories, soothes stomach, no sugar, and aids in digestion.",7.0 USD
+21,Drinks - Teas,Cranberry Limeade,"Lime, lemon, and cranberry. Clean energy, boosts mood, helps you focus, burns calories, soothes stomach, no sugar, and aids in digestion.",7.0 USD
+21,Drinks - Teas,Lime Skittle,"Lime, pomegranate, and cranberry. Clean energy, boosts mood, helps you focus, burns calories, soothes stomach, no sugar, and aids in digestion.",7.0 USD
+21,Drinks - Teas,Hot Tamale,"Pomegranate, cinnamon, and cranberry. Clean energy, boosts mood, helps you focus, burns calories, soothes stomach, no sugar, and aids in digestion.",7.0 USD
+21,Drinks - Teas,Just Peachy,"Pomegranate, peach, and cranberry. Clean energy, boosts mood, helps you focus, burns calories, soothes stomach, no sugar, and aids in digestion.",7.0 USD
+21,Drinks - Mega Teas,Watermelon Sugar,"Watermelon, tropical, raspberry, pomegranate, and collagen.",10.0 USD
+21,Drinks - Mega Teas,What the Melon,"Watermelon, orange, raspberry, mango, and collagen.",10.0 USD
+21,Drinks - Mega Teas,Tropic Like It's Hot,"Strawberry, tropical, lemon, mango, and collagen.",10.0 USD
+21,Drinks - Mega Teas,Peach Ring,"Peach, orange, passion fruit, and collagen.",10.0 USD
+21,Drinks - Mega Teas,Cherry Limeade,"Cherry, lime, raspberry, and collagen.",10.0 USD
+21,Drinks - Mega Teas,Squeeze the Day,"Watermelon, orange, lemon nitric oxide, and collagen.",10.0 USD
+21,Drinks - Mega Teas,Sweet Tart,"Blue razz, lime, lemon nitric oxide, and pomegranate.",10.0 USD
+21,Drinks - Mega Teas,Cool-Aid,"Cucumber, lime, lemon, collagen, and watermelon.",10.0 USD
+21,Drinks - Mega Teas,Strawberry Coconut,"Strawberry, lime, lemon, collagen, and coconut.",10.0 USD
+21,Drinks - Specialty Drinks,Matcha Latte,Matcha and soy protein.,8.0 USD
+21,Drinks - Specialty Drinks,Bluberry Matcha,"Matcha, blueberry syrup, and soy protein.",8.0 USD
+21,Drinks - Specialty Drinks,Horchata,"Fat burner, soy protein, sugar free syrup, cinnamon, and nutmeg.",10.0 USD
+21,Drinks - Specialty Drinks,Lemonayyed,All the flavor without the buzz.,8.0 USD
+21,Drinks - Specialty Drinks,Pink Starburst,"Tropical, pomegranate, wildberry, and whey protein.",9.0 USD
+21,Shakes - Our Favs,Cinnamon Toast Crunch Shake,"200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Our Favs,Oreo Birthday Cake Shake Shake,"200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Our Favs,Chunky Monkey Shake,"Contains gluten. 200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Our Favs,Strawberry Icing Shake,"Contains gluten. 200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",10.5 USD
+21,Shakes - Our Favs,Lemon Pound Cake Shake,"200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Our Favs,Peanut Butter Brownie Shake,"200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Our Favs,Pb Banana Bread Shake,"200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Chocolate,Peanut Butter Brownie Shake,"Contains gluten. 200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Chocolate,Brownie Batter Shake,"Contains gluten. 200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Chocolate,No Bake Cookie Shake,"Contains gluten. 200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Chocolate,Puppy Chow Shake,"Contains gluten. 200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Chocolate,Thin Mint Shake,"Contains gluten. 200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Chocolate,Turtle Cheesecake Shake,"Contains gluten. 200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Chocolate,Snickers Shake,"Contains gluten. 200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Chocolate,Reese's Shake,"Contains gluten. 200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Chocolate,Chocolate Pretzel Shake,"Contains gluten. 200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Vanilla,Almond Wedding Cake Shake,"200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Vanilla,Birthday Cake Shake,"200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Vanilla,Cookies N Cream Shake,"Contains gluten. 200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Vanilla,Cinnamon Roll Shake,"Contains gluten. 200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Vanilla,Cookie Dough Shake,"Contains gluten. 200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Vanilla,Dulce de Leche Shake,"200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Vanilla,Sugar Cookie Shake,"200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Vanilla,Salted Caramel Shake,"200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Vanilla,Matcha Green Tea Shake,"200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Vanilla,PB Cookie Shake,"200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Vanilla,White Chocolate Pretzel Shake,"200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Vanilla,Oatmeal Cream Pie Shake,"Contains gluten. 200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Vanilla,Mint Chocolate Shake,"Contains gluten. 200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Vanilla,Nutter Butter Shake,"Contains gluten. 200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Vanilla,White Chocolate Snickers Shake,"Contains gluten. 200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Vanilla,White Chocolate Reese's Shake,"Contains gluten. 200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Vanilla,Almond Cookie Shake,"Contains gluten. 200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Vanilla,PB Pancake Shake,"200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Fruity,Blueberry Muffin Shake,"Contains gluten. 200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Fruity,Lemon Blueberry Shake,"200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Fruity,Apple Pie Shake,"200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",10.5 USD
+21,Shakes - Fruity,Dreamsicle Shake,"200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Fruity,Orange Sherbet Shake,"200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Fruity,Blueberry Cheesecake Shake,"Contains gluten. 200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Fruity,PB &amp; J Shake,"Contains gluten. 200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Fruity,Fruity Pebbles Shake,"200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Fruity,Cap'n Crunch Shake,"200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Fruity,PB Banana Shake,"200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Fruity,Banana Bread Shake,"200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Fruity,Strawberry Banana Shake,"200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
+21,Shakes - Fruity,Banana Caramel Shake,"200 to 250 calories, 24 to 32 grams protein, 16 to 18 carbs, 9 sugars, and 4 grams fat. Made with soy protein.",8.5 USD
