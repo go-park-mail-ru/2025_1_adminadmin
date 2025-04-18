@@ -46,6 +46,8 @@ func easyjson16134a91DecodeGithubComGoParkMailRu20251AdminadminInternalModels(in
 			out.Description = string(in.String())
 		case "rating":
 			out.Rating = float64(in.Float64())
+		case "image_url":
+			out.ImageURL = string(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -79,6 +81,11 @@ func easyjson16134a91EncodeGithubComGoParkMailRu20251AdminadminInternalModels(ou
 		const prefix string = ",\"rating\":"
 		out.RawString(prefix)
 		out.Float64(float64(in.Rating))
+	}
+	{
+		const prefix string = ",\"image_url\":"
+		out.RawString(prefix)
+		out.String(string(in.ImageURL))
 	}
 	out.RawByte('}')
 }

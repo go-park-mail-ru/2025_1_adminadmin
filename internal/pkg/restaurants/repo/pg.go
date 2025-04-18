@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	getAllRestaurant        = "SELECT id, name, description, rating FROM restaurants LIMIT $1 OFFSET $2;"
+	getAllRestaurant        = "SELECT id, name, description, rating, banner_url FROM restaurants LIMIT $1 OFFSET $2;"
 	getRestaurantByid       = "SELECT id, name, description, rating FROM restaurants WHERE id=$1;"
 	getProductsByRestaurant = "SELECT id, name, banner_url, address, description, rating, rating_count, working_mode_from, working_mode_to, delivery_time_from, delivery_time_to FROM restaurants WHERE id = $1;"
 	getRestaurantTag        = "SELECT rt.name FROM restaurant_tags rt JOIN restaurant_tags_relations rtr ON rtr.tag_id = rt.id WHERE rtr.restaurant_id = $1"
@@ -104,7 +104,7 @@ func (r *RestaurantRepository) GetAll(ctx context.Context, count, offset int) ([
 	var restaurants []models.Restaurant
 	for rows.Next() {
 		var restaurant models.Restaurant
-		if err := rows.Scan(&restaurant.Id, &restaurant.Name, &restaurant.Description, &restaurant.Rating); err != nil {
+		if err := rows.Scan(&restaurant.Id, &restaurant.Name, &restaurant.Description, &restaurant.Rating, &restaurant.ImageURL); err != nil {
 			logger.Error(err.Error())
 			return nil, err
 		}
