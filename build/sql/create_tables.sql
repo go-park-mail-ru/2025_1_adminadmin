@@ -1121,7 +1121,6 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 
 
 
-
 -- Parsed data inserts
 INSERT INTO restaurants (id, name, banner_url, address, rating, rating_count, description, working_mode_from, working_mode_to, delivery_time_from, delivery_time_to)
 VALUES
