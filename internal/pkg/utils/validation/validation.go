@@ -2,6 +2,7 @@ package utils
 
 import (
 	"errors"
+	"strconv"
 	"strings"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
@@ -12,6 +13,7 @@ const (
 	maxAddressLength    = 200
 	maxCommentLength    = 300
 	minFieldLength      = 1
+	maxFloorValue       = 100
 )
 
 const allowedSymbols = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя" +
@@ -70,8 +72,10 @@ func ValidateOrderInput(req *models.OrderInReq) error {
 	if !isValidShortField(req.Entrance) {
 		return errors.New("некорректный подъезд (макс 20 символов)")
 	}
-	if !isValidShortField(req.Floor) {
-		return errors.New("некорректный этаж (макс 20 символов)")
+	if floorNum, err := strconv.Atoi(req.Floor); err == nil {
+		if floorNum > maxFloorValue {
+			return errors.New("этаж не может быть больше 100")
+		}
 	}
 	if req.CourierComment != "" && !isValidComment(req.CourierComment) {
 		return errors.New("некорректный комментарий (макс 300 символов)")
