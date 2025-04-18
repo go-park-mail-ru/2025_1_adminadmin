@@ -270,7 +270,7 @@ VALUES`)
 			priceFloat = 0
 		}
 		menu[productsPerRestaurant-1].ImageURL = "default_product.jpg"
-		menu[productsPerRestaurant-1].Weight = rand.Int()
+		menu[productsPerRestaurant-1].Weight = rand.Intn(400) + 100
 
 		fmt.Fprintf(&sb,
 			`((SELECT id FROM restaurants WHERE name = '%s' ), '%s', %f, '%s', %d, '%s');`,
