@@ -7,6 +7,7 @@
 package gen
 
 import (
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -589,7 +590,7 @@ var File_proto_stat_proto protoreflect.FileDescriptor
 
 const file_proto_stat_proto_rawDesc = "" +
 	"\n" +
-	"\x10proto/stat.proto\x12\x04note\"\x11\n" +
+	"\x10proto/stat.proto\x12\x04note\x1a\x1cgoogle/api/annotations.proto\"\x11\n" +
 	"\x0fGetStatsRequest\"\xa1\x01\n" +
 	"\tStatModel\x12$\n" +
 	"\rQuestionTitle\x18\x01 \x01(\tR\rQuestionTitle\x12\"\n" +
@@ -625,12 +626,13 @@ const file_proto_stat_proto_rawDesc = "" +
 	"\tQuestions\x18\x01 \x03(\v2\x0e.note.QuestionR\tQuestions\"P\n" +
 	"\x13CreateSurveyRequest\x129\n" +
 	"\tQuestions\x18\x01 \x03(\v2\x1b.note.CreateQuestionRequestR\tQuestions\"\x16\n" +
-	"\x14CreateSurveyResponse2\xfd\x01\n" +
-	"\x04Stat\x12>\n" +
-	"\tGetSurvey\x12\x16.note.GetSurveyRequest\x1a\x17.note.GetSurveyResponse\"\x00\x12/\n" +
-	"\x04Vote\x12\x11.note.VoteRequest\x1a\x12.note.VoteResponse\"\x00\x12G\n" +
-	"\fCreateSurvey\x12\x19.note.CreateSurveyRequest\x1a\x1a.note.CreateSurveyResponse\"\x00\x12;\n" +
-	"\bGetStats\x12\x15.note.GetStatsRequest\x1a\x16.note.GetStatsResponse\"\x00B.Z,./internal/pkg/survey/delivery/grpc/gen/;genb\x06proto3"
+	"\x14CreateSurveyResponse2\xcc\x02\n" +
+	"\x04Stat\x12Q\n" +
+	"\tGetSurvey\x12\x16.note.GetSurveyRequest\x1a\x17.note.GetSurveyResponse\"\x13\x82\xd3\xe4\x93\x02\r\x12\v/api/survey\x12C\n" +
+	"\x04Vote\x12\x11.note.VoteRequest\x1a\x12.note.VoteResponse\"\x14\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/api/vote\x12]\n" +
+	"\fCreateSurvey\x12\x19.note.CreateSurveyRequest\x1a\x1a.note.CreateSurveyResponse\"\x16\x82\xd3\xe4\x93\x02\x10:\x01*\"\v/api/survey\x12M\n" +
+	"\bGetStats\x12\x15.note.GetStatsRequest\x1a\x16.note.GetStatsResponse\"\x12\x82\xd3\xe4\x93\x02\f\x12\n" +
+	"/api/statsB.Z,./internal/pkg/survey/delivery/grpc/gen/;genb\x06proto3"
 
 var (
 	file_proto_stat_proto_rawDescOnce sync.Once
