@@ -10,6 +10,6 @@ RUN CGO_ENABLED=0 GOOS=linux go build -mod=readonly -o ./.bin ./cmd/stat/main.go
 ENV TZ="Europe/Moscow"
 ENV ZONEINFO=/zoneinfo.zip
 
-EXPOSE 8083
+EXPOSE 5459
 
 ENTRYPOINT ["./.bin"]
