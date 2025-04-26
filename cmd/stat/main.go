@@ -3,8 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"io"
-	"log/slog"
 	"net"
 	"os"
 	"os/signal"
