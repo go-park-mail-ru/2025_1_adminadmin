@@ -30,6 +30,7 @@ import (
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/redis/go-redis/v9"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 func initRedis() *redis.Client {
@@ -79,7 +80,7 @@ func main() {
 	}
 	defer pool.Close()
 
-	authConn, err := grpc.Dial(fmt.Sprintf("%s:%s", "2025_1_adminadmin-stat", "5459"))
+	authConn, err := grpc.NewClient(fmt.Sprintf("%s:%s", "2025_1_adminadmin-stat", "5459"), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		logger.Error("Ошибка: " + err.Error())
 	}
