@@ -4,33 +4,17 @@ package note;
 
 option go_package = "./internal/pkg/survey/delivery/grpc/gen/;gen";
 
-import "google/api/annotations.proto"; // вот импорт
-
 service Stat {
   rpc GetSurvey(GetSurveyRequest) returns (GetSurveyResponse) {
-    option (google.api.http) = {
-      get: "/api/survey"
-    };
   }
 
   rpc Vote(VoteRequest) returns (VoteResponse) {
-    option (google.api.http) = {
-      post: "/api/vote"
-      body: "*"
-    };
   }
 
   rpc CreateSurvey(CreateSurveyRequest) returns (CreateSurveyResponse) {
-    option (google.api.http) = {
-      post: "/api/survey"
-      body: "*"
-    };
   }
 
   rpc GetStats(GetStatsRequest) returns (GetStatsResponse) {
-    option (google.api.http) = {
-      get: "/api/stats"
-    };
   }
 }
 

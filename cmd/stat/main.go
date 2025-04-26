@@ -6,15 +6,11 @@ import (
 	"net"
 	"net/http"
 	"os"
-	"os/signal"
-	"syscall"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 
 	generatedSurvey "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/survey/delivery/grpc/gen/proto"
-	"github.com/gorilla/mux"
-	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 )
 
 type stubStatServer struct {
@@ -44,50 +40,34 @@ func main() {
 	}
 }
 
-func run() error {
-	grpcPort := "9090"
-	httpPort := "5459"
+func grpcHandlerFunc(grpcServer *grpc.Server, otherHandler http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// TODO(tamird): point to merged gRPC code rather than a PR.
+		// This is a partial recreation of gRPC's internal checks https://github.com/grpc/grpc-go/pull/514/files#diff-95e9a25b738459a2d3030e1e6fa2a718R61
+		if r.Header.Get("Content-Type") != "" && r.Header.Get("Content-Type")[:4] == "grpc" {
+			grpcServer.ServeHTTP(w, r)
+		} else {
+			otherHandler.ServeHTTP(w, r)
+		}
+	})
+}
 
-	lis, err := net.Listen("tcp", ":"+grpcPort)
+func run() error {
+	gr := grpc.NewServer()
+	generatedSurvey.RegisterStatServer(gr, &stubStatServer{})
+	listener, err := net.Listen("tcp", fmt.Sprintf(":%s", "5459"))
 	if err != nil {
 		return err
 	}
-	grpcServer := grpc.NewServer()
-	generatedSurvey.RegisterStatServer(grpcServer, &stubStatServer{})
-
-	go func() {
-		grpcServer.Serve(lis)
-	}()
-	mux := runtime.NewServeMux()
-	httpServer := &http.Server{
-		Addr: ":" + httpPort,
-		Handler: mux,
+	if err := gr.Serve(listener); err != nil {
+		return err
 	}
 
-	go func() {
-		httpServer.ListenAndServe()
-	}()
-
-	stop := make(chan os.Signal, 1)
-	signal.Notify(stop, syscall.SIGINT, syscall.SIGTERM)
-	<-stop
-
-	grpcServer.GracefulStop()
-	httpServer.Shutdown(context.Background())
 	return nil
 }
 
-func setupRouter() *mux.Router {
-	r := mux.NewRouter()
-	r.HandleFunc("/api/survey", GetSurveyHandler).Methods(http.MethodGet)
-	r.HandleFunc("/api/vote", VoteHandler).Methods(http.MethodPost)
-	r.HandleFunc("/api/survey", CreateSurveyHandler).Methods(http.MethodPost)
-	r.HandleFunc("/api/stats", GetStatsHandler).Methods(http.MethodGet)
-	return r
-}
-
 func grpcClient() (generatedSurvey.StatClient, *grpc.ClientConn, error) {
-	conn, err := grpc.Dial("localhost:9090", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial("localhost:5459", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		return nil, nil, err
 	}

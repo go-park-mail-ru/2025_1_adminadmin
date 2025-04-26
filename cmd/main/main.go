@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"net"
 
 	"log/slog"
 	"net/http"
@@ -25,13 +24,13 @@ import (
 	restaurantDelivery "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/delivery/http"
 	restaurantRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/repo"
 	restaurantUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/usecase"
+	generatedSurvey "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/survey/delivery/grpc/gen/proto"
 	gw "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/survey/delivery/grpc/gen/proto"
+	surveyHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/survey/delivery/http"
 	"github.com/gorilla/mux"
-	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/redis/go-redis/v9"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/reflection"
 )
 
 func initRedis() *redis.Client {
@@ -80,6 +79,11 @@ func main() {
 		logger.Error("Ошибка при подключении к PostgreSQL: " + err.Error())
 	}
 	defer pool.Close()
+
+	authConn, err := grpc.Dial(fmt.Sprintf("%s:%s", "stat", "5459"))
+
+	AuthClient := generatedSurvey.NewStatClient(authConn)
+	surveyHandler := surveyHandler.NewSurveyHandler(AuthClient)
 
 	redisClient := initRedis()
 	cartRepoPg := cartPgRepo.NewRestaurantRepository(pool)
@@ -130,6 +134,11 @@ func main() {
 		cart.HandleFunc("/clear", cartHandler.ClearCart).Methods(http.MethodPost, http.MethodOptions)
 	}
 
+	survey := r.PathPrefix("/survey").Subrouter()
+	{
+		survey.HandleFunc("", surveyHandler.GetSurvey).Methods(http.MethodGet, http.MethodOptions)
+	}
+
 	order := r.PathPrefix("/order").Subrouter()
 	{
 		order.HandleFunc("/create", cartHandler.CreateOrder).Methods(http.MethodPost, http.MethodOptions)
@@ -143,52 +152,6 @@ func main() {
 		WriteTimeout:      10 * time.Second,
 		ReadHeaderTimeout: 10 * time.Second,
 	}
-
-	var grpcServer *grpc.Server
-	go func() {
-		grpcAddr := ":9090"
-		lis, err := net.Listen("tcp", grpcAddr)
-		if err != nil {
-			logger.Error("failed to listen grpc: " + err.Error())
-			return
-		}
-
-		grpcServer = grpc.NewServer()
-		gw.RegisterStatServer(grpcServer, &StatServiceServer{})
-		reflection.Register(grpcServer)
-
-		logger.Info("gRPC сервер слушает на " + grpcAddr)
-		if err := grpcServer.Serve(lis); err != nil && err != grpc.ErrServerStopped {
-			logger.Error("failed to serve grpc: " + err.Error())
-		}
-	}()
-
-	// HTTP-gRPC Gateway сервер
-	var gatewayServer *http.Server
-	go func() {
-		ctx := context.Background()
-		ctx, cancel := context.WithCancel(ctx)
-		defer cancel()
-
-		mux := runtime.NewServeMux()
-		opts := []grpc.DialOption{grpc.WithInsecure()} // без TLS
-
-		err := gw.RegisterStatHandlerFromEndpoint(ctx, mux, "localhost:9090", opts)
-		if err != nil {
-			logger.Error("failed to register gateway: " + err.Error())
-			return
-		}
-
-		gatewayServer = &http.Server{
-			Addr:    ":5459",
-			Handler: mux,
-		}
-
-		logger.Info("HTTP-gRPC Gateway сервер слушает на :5459")
-		if err := gatewayServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			logger.Error("failed to serve gateway: " + err.Error())
-		}
-	}()
 
 	go func() {
 		err := srv.ListenAndServe()
