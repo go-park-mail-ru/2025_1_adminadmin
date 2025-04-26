@@ -32,18 +32,9 @@ func main() {
 }
 
 func run() (err error) {
-	logFile, err := os.OpenFile(os.Getenv("STAT_LOG_FILE"), os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
-	if err != nil {
-		fmt.Println("error opening log file: " + err.Error())
-		return
-	}
-	defer logFile.Close()
 
-	logger := slog.New(slog.NewJSONHandler(io.MultiWriter(logFile, os.Stdout), &slog.HandlerOptions{Level: slog.LevelInfo}))
-
-	db, err := pgxpool.Connect(context.Background(), os.Getenv("DATABASE_URL_2"))
+	db, err := pgxpool.Connect(context.Background(), "postgres://admin_test:Admin_test2025$@postgres:5432/adminadmin_v1?sslmode=disable")
 	if err != nil {
-		logger.Error("error connecting to postgres: " + err.Error())
 		return
 	}
 	defer db.Close()
@@ -64,10 +55,10 @@ func run() (err error) {
 	go func() {
 		listener, err := net.Listen("tcp", fmt.Sprintf(":%s", "5459"))
 		if err != nil {
-			logger.Error(err.Error())
+			return
 		}
 		if err := gRPCServer.Serve(listener); err != nil {
-			logger.Error(err.Error())
+			return
 		}
 	}()
 
