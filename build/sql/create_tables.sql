@@ -71,6 +71,27 @@ CREATE TABLE IF NOT EXISTS orders (
     created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
+CREATE TABLE surveys (
+    id UUID PRIMARY KEY,
+    created_at TIMESTAMPTZ NOT NULL
+);
+
+CREATE TABLE questions (
+    id UUID PRIMARY KEY,
+    title TEXT,
+    min_mark INT,
+    skip INT,
+    question_type TEXT,
+    number INT NOT NULL,
+    survey_id UUID REFERENCES surveys (id) ON DELETE CASCADE NOT NULL
+);
+
+CREATE TABLE results (
+    id UUID PRIMARY KEY,
+    question_id UUID REFERENCES questions (id) ON DELETE CASCADE NOT NULL,
+    voice INT NOT NULL
+);
+
 
 INSERT INTO restaurant_tags (id, name)
 VALUES 

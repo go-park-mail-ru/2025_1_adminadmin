@@ -1,0 +1,104 @@
+package usecase
+
+import (
+	"context"
+	"errors"
+	"log/slog"
+	"time"
+
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/survey"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
+	"github.com/satori/uuid"
+)
+
+type SurveyUsecase struct {
+	repo survey.SurveyRepo
+}
+
+func CreateSurveyUsecase(repo survey.SurveyRepo) *SurveyUsecase {
+	return &SurveyUsecase{
+		repo: repo,
+	}
+}
+
+func (uc *SurveyUsecase) CreateSurvey(ctx context.Context, questions models.CreateSurveyRequest) error {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	surveyID := uuid.NewV4()
+	if err := uc.repo.AddSurvey(ctx, surveyID, time.Now().UTC()); err != nil {
+		logger.Error(err.Error())
+		return err
+	}
+
+	for _, question := range questions.Questions {
+		if question.QuestionType != "CSAT" && question.QuestionType != "NPS" {
+			logger.Error("incorrect question type: " + question.QuestionType)
+			return errors.New("incorrect question type: " + question.QuestionType)
+		}
+	}
+
+	for i, question := range questions.Questions {
+		if err := uc.repo.AddQuestion(ctx, models.Question{
+			Id:           uuid.NewV4(),
+			Title:        question.Title,
+			MinMark:      question.MinMark,
+			Skip:         question.Skip,
+			QuestionType: question.QuestionType,
+			Number:       i + 1,
+			SurveyId:     surveyID,
+		}); err != nil {
+			logger.Error(err.Error())
+			return err
+		}
+	}
+
+	logger.Info("success")
+	return nil
+}
+
+func (uc *SurveyUsecase) GetSurvey(ctx context.Context) ([]models.Question, error) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	result, err := uc.repo.GetSurvey(ctx)
+	if err != nil {
+		logger.Error(err.Error())
+		return []models.Question{}, err
+	}
+
+	logger.Info("success")
+	return result, nil
+}
+
+func (uc *SurveyUsecase) Vote(ctx context.Context, vote models.Vote) error {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+	if vote.Voice < 0 || vote.Voice > 10 {
+		return errors.New("not acceptable")
+	}
+	newResult := models.Result{
+		Id:         uuid.NewV4(),
+		QuestionId: vote.QuestionId,
+		Voice:      vote.Voice,
+	}
+
+	if err := uc.repo.AddResult(ctx, newResult); err != nil {
+		logger.Error(err.Error())
+		return err
+	}
+
+	logger.Info("success")
+	return nil
+}
+
+func (uc *SurveyUsecase) GetStats(ctx context.Context) ([]models.Stat, error) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	result, err := uc.repo.GetStats(ctx)
+	if err != nil {
+		logger.Error(err.Error())
+		return []models.Stat{}, err
+	}
+
+	logger.Info("success")
+	return result, nil
+}

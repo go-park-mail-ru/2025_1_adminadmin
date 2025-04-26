@@ -24,8 +24,8 @@ import (
 	restaurantDelivery "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/delivery/http"
 	restaurantRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/repo"
 	restaurantUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/usecase"
-	generatedSurvey "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/survey/delivery/grpc/gen/proto"
-	surveyHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/survey/delivery/http"
+	statDelivery "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/survey/delivery/http"
+	grpcStat "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/survey/delivery/grpc/gen"
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/redis/go-redis/v9"
@@ -80,13 +80,13 @@ func main() {
 	}
 	defer pool.Close()
 
-	authConn, err := grpc.NewClient(fmt.Sprintf("%s:%s", "2025_1_adminadmin-stat", "5459"), grpc.WithTransportCredentials(insecure.NewCredentials()))
+	statConn, err := grpc.NewClient(fmt.Sprintf("%s:%s", "2025_1_adminadmin-stat", "5459"), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		logger.Error("Ошибка: " + err.Error())
 	}
 
-	AuthClient := generatedSurvey.NewStatClient(authConn)
-	surveyHandler := surveyHandler.NewSurveyHandler(AuthClient)
+	StatClient := grpcStat.NewStatClient(statConn)
+	StatDelivery := statDelivery.CreateSurveyHandler(StatClient)
 
 	redisClient := initRedis()
 	cartRepoPg := cartPgRepo.NewRestaurantRepository(pool)
@@ -137,9 +137,12 @@ func main() {
 		cart.HandleFunc("/clear", cartHandler.ClearCart).Methods(http.MethodPost, http.MethodOptions)
 	}
 
-	survey := r.PathPrefix("/survey").Subrouter()
+	stat := r.PathPrefix("/survey").Subrouter()
 	{
-		survey.HandleFunc("", surveyHandler.GetSurvey).Methods(http.MethodGet, http.MethodOptions)
+		stat.Handle("/get", http.HandlerFunc(StatDelivery.GetSurvey)).Methods(http.MethodGet, http.MethodOptions)
+		stat.Handle("/vote", http.HandlerFunc(StatDelivery.Vote)).Methods(http.MethodPost, http.MethodOptions)
+		stat.Handle("/create", http.HandlerFunc(StatDelivery.CreateSurvey)).Methods(http.MethodPost, http.MethodOptions)
+		stat.Handle("/get_stat", http.HandlerFunc(StatDelivery.GetStats)).Methods(http.MethodGet, http.MethodOptions)
 	}
 
 	order := r.PathPrefix("/order").Subrouter()
