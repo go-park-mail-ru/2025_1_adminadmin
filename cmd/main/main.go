@@ -168,31 +168,32 @@ func main() {
 	}
 }
 func startHTTPServer() {
-	ctx := context.Background()
-	ctx, cancel := context.WithCancel(ctx)
-	defer cancel()
+    ctx := context.Background()
+    ctx, cancel := context.WithCancel(ctx)
+    defer cancel()
 
-	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
-	if err != nil {
-		log.Fatalf("Failed to dial gRPC server: %v", err)
-	}
-	defer conn.Close()
-	mux := runtime.NewServeMux()
+    conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
+    if err != nil {
+        log.Fatalf("Failed to dial gRPC server: %v", err)
+    }
+    defer conn.Close()
+    
+    mux := runtime.NewServeMux()
 
-	err = gen.RegisterStatHandler(ctx, mux, conn)
-	if err != nil {
-		log.Fatalf("Failed to register HTTP gateway: %v", err)
-	}
+    err = gen.RegisterStatHandler(ctx, mux, conn)
+    if err != nil {
+        log.Fatalf("Failed to register HTTP gateway: %v", err)
+    }
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		logRequest(w, r)
-		mux.ServeHTTP(w, r)
-	})
+    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+        logRequest(w, r)
+        mux.ServeHTTP(w, r)
+    })
 
-	log.Println("Starting HTTP server on :5459...")
-	if err := http.ListenAndServe(":5459", nil); err != nil {
-		log.Fatalf("Failed to start HTTP server: %v", err)
-	}
+    log.Println("Starting HTTP server on :5459...")
+    if err := http.ListenAndServe(":5459", nil); err != nil {
+        log.Fatalf("Failed to start HTTP server: %v", err)
+    }
 }
 
 func logRequest(w http.ResponseWriter, r *http.Request) {

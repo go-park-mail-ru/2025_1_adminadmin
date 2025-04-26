@@ -18,5 +18,6 @@ ENV TZ="Europe/Moscow"
 ENV ZONEINFO=/zoneinfo.zip
 
 EXPOSE 5458
+EXPOSE 5459
 
 ENTRYPOINT ["./.bin"]
