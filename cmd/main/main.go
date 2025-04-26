@@ -4,8 +4,9 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"log"
+
 	"log/slog"
-	"net"
 	"net/http"
 	"os"
 	"os/signal"
@@ -20,12 +21,13 @@ import (
 	cartRedisRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/redis"
 	cartUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/usecase"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/middleware/cors"
-	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/middleware/log"
+	logs "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/middleware/log"
 	restaurantDelivery "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/delivery/http"
 	restaurantRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/repo"
 	restaurantUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/usecase"
 	gen "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/survey/delivery/grpc/gen/proto"
 	"github.com/gorilla/mux"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/redis/go-redis/v9"
 	"google.golang.org/grpc"
@@ -84,7 +86,7 @@ func main() {
 	cartUsecase := cartUsecase.NewCartUsecase(cartRepoRedis, cartRepoPg)
 	cartHandler := cartHandler.NewCartHandler(cartUsecase)
 
-	logMW := log.CreateLoggerMiddleware(logger)
+	logMW := logs.CreateLoggerMiddleware(logger)
 
 	authRepo := authRepo.CreateAuthRepo(pool)
 	authUsecase := authUsecase.CreateAuthUsecase(authRepo)
@@ -141,8 +143,6 @@ func main() {
 		ReadHeaderTimeout: 10 * time.Second,
 	}
 
-	go startGRPCServer(logger)
-
 	go func() {
 		err := srv.ListenAndServe()
 		if err != nil && err != http.ErrServerClosed {
@@ -167,20 +167,27 @@ func main() {
 	}
 }
 
-func startGRPCServer(logger *slog.Logger) {
-	lis, err := net.Listen("tcp", ":50051")
+func startHTTPServer() {
+	ctx := context.Background()
+	ctx, cancel := context.WithCancel(ctx)
+	defer cancel()
+
+	// Создание gRPC клиента с использованием NewClient
+	conn, err := grpc.NewClient("localhost:50051", grpc.WithInsecure()) // Здесь возвращаются 2 значения: conn и err
 	if err != nil {
-		logger.Error("Ошибка при запуске gRPC сервера: " + err.Error())
-		return
+		log.Fatalf("Failed to dial gRPC server: %v", err)
+	}
+	defer conn.Close()
+
+	// Создание HTTP-шлюза
+	mux := runtime.NewServeMux()
+	err = gen.RegisterStatHandler(ctx, mux, conn)
+	if err != nil {
+		log.Fatalf("Failed to register HTTP gateway: %v", err)
 	}
 
-	grpcServer := grpc.NewServer()
-
-	gen.RegisterStatServer(grpcServer, &server{})
-
-	if err := grpcServer.Serve(lis); err != nil {
-		logger.Error("Ошибка при запуске gRPC сервера: " + err.Error())
-	}
+	// HTTP сервер
+	http.ListenAndServe(":5459", mux)
 }
 
 type server struct {
