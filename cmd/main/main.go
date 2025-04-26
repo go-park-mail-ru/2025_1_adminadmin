@@ -80,7 +80,7 @@ func main() {
 	}
 	defer pool.Close()
 
-	statConn, err := grpc.NewClient(fmt.Sprintf("dns:///2025_1_adminadmin-stat:5459"), grpc.WithTransportCredentials(insecure.NewCredentials()))
+	statConn, err := grpc.NewClient(fmt.Sprintf("%s:%s", "stat", "5459"), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		logger.Error("Ошибка: " + err.Error())
 	}
