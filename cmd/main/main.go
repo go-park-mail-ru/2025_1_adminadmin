@@ -142,6 +142,7 @@ func main() {
 		WriteTimeout:      10 * time.Second,
 		ReadHeaderTimeout: 10 * time.Second,
 	}
+	go startHTTPServer()
 
 	go func() {
 		err := srv.ListenAndServe()
@@ -172,21 +173,18 @@ func startHTTPServer() {
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
 
-	// Создание gRPC клиента с использованием NewClient
-	conn, err := grpc.NewClient("localhost:50051", grpc.WithInsecure()) // Здесь возвращаются 2 значения: conn и err
+	conn, err := grpc.NewClient("localhost:50051", grpc.WithInsecure()) 
 	if err != nil {
 		log.Fatalf("Failed to dial gRPC server: %v", err)
 	}
 	defer conn.Close()
 
-	// Создание HTTP-шлюза
 	mux := runtime.NewServeMux()
 	err = gen.RegisterStatHandler(ctx, mux, conn)
 	if err != nil {
 		log.Fatalf("Failed to register HTTP gateway: %v", err)
 	}
 
-	// HTTP сервер
 	http.ListenAndServe(":5459", mux)
 }
 
