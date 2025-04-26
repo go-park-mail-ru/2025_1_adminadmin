@@ -3,73 +3,78 @@ package main
 import (
 	"context"
 	"fmt"
+	"io"
+	"log/slog"
 	"net"
-	"net/http"
 	"os"
+	"os/signal"
+	"syscall"
 
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
-
+	grpcSurvey "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/survey/delivery/grpc"
 	generatedSurvey "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/survey/delivery/grpc/gen"
+	surveyRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/survey/repo"
+	surveyUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/survey/usecase"
+	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/joho/godotenv"
+	"google.golang.org/grpc"
 )
 
-type stubStatServer struct {
-	generatedSurvey.UnimplementedStatServer
-}
-
-func (s *stubStatServer) GetSurvey(ctx context.Context, req *generatedSurvey.GetSurveyRequest) (*generatedSurvey.GetSurveyResponse, error) {
-	return &generatedSurvey.GetSurveyResponse{Questions: []*generatedSurvey.Question{}}, nil
-}
-
-func (s *stubStatServer) Vote(ctx context.Context, req *generatedSurvey.VoteRequest) (*generatedSurvey.VoteResponse, error) {
-	return &generatedSurvey.VoteResponse{}, nil
-}
-
-func (s *stubStatServer) CreateSurvey(ctx context.Context, req *generatedSurvey.CreateSurveyRequest) (*generatedSurvey.CreateSurveyResponse, error) {
-	return &generatedSurvey.CreateSurveyResponse{}, nil
-}
-
-func (s *stubStatServer) GetStats(ctx context.Context, req *generatedSurvey.GetStatsRequest) (*generatedSurvey.GetStatsResponse, error) {
-	return &generatedSurvey.GetStatsResponse{Stats: []*generatedSurvey.StatModel{}}, nil
+func init() {
+	if err := godotenv.Load(); err != nil {
+		fmt.Println(err)
+	}
 }
 
 func main() {
 	if err := run(); err != nil {
-		fmt.Println("main exited with error:", err)
 		os.Exit(1)
 	}
 }
 
-func grpcHandlerFunc(grpcServer *grpc.Server, otherHandler http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// TODO(tamird): point to merged gRPC code rather than a PR.
-		// This is a partial recreation of gRPC's internal checks https://github.com/grpc/grpc-go/pull/514/files#diff-95e9a25b738459a2d3030e1e6fa2a718R61
-		if r.Header.Get("Content-Type") != "" && r.Header.Get("Content-Type")[:4] == "grpc" {
-			grpcServer.ServeHTTP(w, r)
-		} else {
-			otherHandler.ServeHTTP(w, r)
+func run() (err error) {
+	logFile, err := os.OpenFile(os.Getenv("STAT_LOG_FILE"), os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
+	if err != nil {
+		fmt.Println("error opening log file: " + err.Error())
+		return
+	}
+	defer logFile.Close()
+
+	logger := slog.New(slog.NewJSONHandler(io.MultiWriter(logFile, os.Stdout), &slog.HandlerOptions{Level: slog.LevelInfo}))
+
+	db, err := pgxpool.Connect(context.Background(), os.Getenv("DATABASE_URL_2"))
+	if err != nil {
+		logger.Error("error connecting to postgres: " + err.Error())
+		return
+	}
+	defer db.Close()
+
+	//tlsCredentials, err := loadtls.LoadTLSCredentials(cfg.Grpc.NoteIP)
+	//if err != nil {
+	//	logger.Error(err.Error())
+	//	return
+	//}
+
+	SurveyRepo := surveyRepo.CreateSurveyRepo(db)
+	SurveyUsecase := surveyUsecase.CreateSurveyUsecase(SurveyRepo)
+	SurveyDelivery := grpcSurvey.NewGrpcSurveyHandler(SurveyUsecase)
+
+	gRPCServer := grpc.NewServer()
+	generatedSurvey.RegisterStatServer(gRPCServer, SurveyDelivery)
+
+	go func() {
+		listener, err := net.Listen("tcp", fmt.Sprintf(":%s", "5459"))
+		if err != nil {
+			logger.Error(err.Error())
 		}
-	})
-}
+		if err := gRPCServer.Serve(listener); err != nil {
+			logger.Error(err.Error())
+		}
+	}()
 
-func run() error {
-	gr := grpc.NewServer()
-	generatedSurvey.RegisterStatServer(gr, &stubStatServer{})
-	listener, err := net.Listen("tcp", fmt.Sprintf(":%s", "5459"))
-	if err != nil {
-		return err
-	}
-	if err := gr.Serve(listener); err != nil {
-		return err
-	}
+	stop := make(chan os.Signal, 1)
+	signal.Notify(stop, syscall.SIGTERM, syscall.SIGINT)
 
+	<-stop
+	gRPCServer.GracefulStop()
 	return nil
-}
-
-func grpcClient() (generatedSurvey.StatClient, *grpc.ClientConn, error) {
-	conn, err := grpc.Dial("localhost:5459", grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err != nil {
-		return nil, nil, err
-	}
-	return generatedSurvey.NewStatClient(conn), conn, nil
 }
