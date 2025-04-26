@@ -18,7 +18,7 @@ const (
 	addSurvey   = "INSERT INTO surveys(id, created_at) VALUES ($1, $2);"
 	addQuestion = "INSERT INTO questions(id, title, min_mark, skip, question_type, number, survey_id) VALUES ($1, $2, $3, $4, $5, $6, $7);"
 
-	getSurvey = "SELECT id, title, min_mark, skip, question_type, number, survey_id FROM questions WHERE survey_id = (SELECT id FROM surveys ORDER BY created_at DESC LIMIT 1) ORDER BY number ASC;"
+	getSurvey = "SELECT id, title, min_mark, skip, question_type, number, survey_id FROM questions ORDER BY number ASC;"
 
 	getStats = `
 	SELECT q.id, q.title, q.question_type, r.voice, COUNT(r.voice) from results r

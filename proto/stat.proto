@@ -5,41 +5,38 @@ package note;
 option go_package = "./internal/pkg/survey/delivery/grpc/gen/;gen";
 
 service Stat {
-  rpc GetSurvey(GetSurveyRequest) returns (GetSurveyResponse) {
-  }
-
-  rpc Vote(VoteRequest) returns (VoteResponse) {
-  }
-
-  rpc CreateSurvey(CreateSurveyRequest) returns (CreateSurveyResponse) {
-  }
-
-  rpc GetStats(GetStatsRequest) returns (GetStatsResponse) {
-  }
+  rpc GetSurvey(GetSurveyRequest) returns (GetSurveyResponse) {}
+  rpc Vote(VoteRequest) returns (VoteResponse){}
+  rpc CreateSurvey(CreateSurveyRequest) returns (CreateSurveyResponse) {}
+  rpc GetStats(GetStatsRequest) returns (GetStatsResponse){}
 }
 
-message GetStatsRequest {}
+message GetStatsRequest {
 
-message StatModel {
+}
+
+message StatModel{
   string QuestionTitle = 1;
   string QuestionType = 2;
+  
+
   string Label = 3;
   int32 Value = 4;
   string QuestionId = 5;
-}
 
+}
 message GetStatsResponse {
-  repeated StatModel Stats = 1;
+    repeated StatModel Stats = 1; 
 }
-
 message VoteRequest {
   string QuestionId = 1;
   int32 Vote = 2;
 }
 
-message GetSurveyRequest {}
 
-message VoteResponse {}
+message GetSurveyRequest {}
+message VoteResponse {
+}
 
 message Question {
   string Id = 1;
