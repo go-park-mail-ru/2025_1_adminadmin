@@ -44,7 +44,7 @@ message Question {
   int64 MinMark = 3;
   int64 Skip = 4;
   string QuestionType = 5;
-  int64 number = 6;
+  int64 Number = 6;
   string SurveyId = 7;
 }
 

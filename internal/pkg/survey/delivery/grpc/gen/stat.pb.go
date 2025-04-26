@@ -308,7 +308,7 @@ type Question struct {
 	MinMark       int64                  `protobuf:"varint,3,opt,name=MinMark,proto3" json:"MinMark,omitempty"`
 	Skip          int64                  `protobuf:"varint,4,opt,name=Skip,proto3" json:"Skip,omitempty"`
 	QuestionType  string                 `protobuf:"bytes,5,opt,name=QuestionType,proto3" json:"QuestionType,omitempty"`
-	Number        int64                  `protobuf:"varint,6,opt,name=number,proto3" json:"number,omitempty"`
+	Number        int64                  `protobuf:"varint,6,opt,name=Number,proto3" json:"Number,omitempty"`
 	SurveyId      string                 `protobuf:"bytes,7,opt,name=SurveyId,proto3" json:"SurveyId,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -614,7 +614,7 @@ const file_proto_stat_proto_rawDesc = "" +
 	"\aMinMark\x18\x03 \x01(\x03R\aMinMark\x12\x12\n" +
 	"\x04Skip\x18\x04 \x01(\x03R\x04Skip\x12\"\n" +
 	"\fQuestionType\x18\x05 \x01(\tR\fQuestionType\x12\x16\n" +
-	"\x06number\x18\x06 \x01(\x03R\x06number\x12\x1a\n" +
+	"\x06Number\x18\x06 \x01(\x03R\x06Number\x12\x1a\n" +
 	"\bSurveyId\x18\a \x01(\tR\bSurveyId\"\x7f\n" +
 	"\x15CreateQuestionRequest\x12\x14\n" +
 	"\x05Title\x18\x01 \x01(\tR\x05Title\x12\x18\n" +
