@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"log/slog"
+	"net"
 	"net/http"
 	"os"
 	"os/signal"
@@ -23,9 +24,11 @@ import (
 	restaurantDelivery "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/delivery/http"
 	restaurantRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/repo"
 	restaurantUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/usecase"
+	gen "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/survey/delivery/grpc/gen/proto"
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/redis/go-redis/v9"
+	"google.golang.org/grpc"
 )
 
 func initRedis() *redis.Client {
@@ -138,6 +141,8 @@ func main() {
 		ReadHeaderTimeout: 10 * time.Second,
 	}
 
+	go startGRPCServer(logger)
+
 	go func() {
 		err := srv.ListenAndServe()
 		if err != nil && err != http.ErrServerClosed {
@@ -160,4 +165,24 @@ func main() {
 	} else {
 		logger.Info("Сервер успешно остановлен")
 	}
+}
+
+func startGRPCServer(logger *slog.Logger) {
+	lis, err := net.Listen("tcp", ":50051")
+	if err != nil {
+		logger.Error("Ошибка при запуске gRPC сервера: " + err.Error())
+		return
+	}
+
+	grpcServer := grpc.NewServer()
+
+	gen.RegisterStatServer(grpcServer, &server{})
+
+	if err := grpcServer.Serve(lis); err != nil {
+		logger.Error("Ошибка при запуске gRPC сервера: " + err.Error())
+	}
+}
+
+type server struct {
+	gen.UnimplementedStatServer
 }
