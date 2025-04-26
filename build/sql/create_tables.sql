@@ -92,6 +92,20 @@ CREATE TABLE results (
     voice INT NOT NULL
 );
 
+INSERT INTO surveys (id, created_at) VALUES
+('7fa85f64-5717-4562-b3fc-2c963f66afa6', NOW());
+
+INSERT INTO questions (id, title, min_mark, skip, question_type, number, survey_id) VALUES
+('3c2a3b8a-1bfc-4d74-917e-6de1e7f91c7e', 'Насколько вы довольны нашей службой поддержки?', 4, 1, 'CSAT', 1, '7fa85f64-5717-4562-b3fc-2c963f66afa6'),
+('9b2c4b8b-2cbc-4c4a-8b7f-889de4fce553', 'Оцените вероятность, что вы порекомендуете нас другу', 0, 0, 'NPS', 2, '7fa85f64-5717-4562-b3fc-2c963f66afa6');
+
+INSERT INTO results (id, question_id, voice) VALUES
+('63c6e2ad-4058-48c1-b9a2-6cb40c2e2dd5', '3c2a3b8a-1bfc-4d74-917e-6de1e7f91c7e', 5),
+('b3d1e29c-9df5-41a0-a314-c3b3d2445cc6', '3c2a3b8a-1bfc-4d74-917e-6de1e7f91c7e', 4),
+('86a5a1f7-c7d8-4de0-8ba8-3dbd4051c945', '3c2a3b8a-1bfc-4d74-917e-6de1e7f91c7e', 3),
+('e4c07cf8-b22d-49fa-b011-ef9aee0b94c1', '9b2c4b8b-2cbc-4c4a-8b7f-889de4fce553', 9),
+('0c85b181-741e-4f2d-b4df-7342e1d07001', '9b2c4b8b-2cbc-4c4a-8b7f-889de4fce553', 7),
+('b6fcb7b3-d58e-4e52-b02c-7c88c6e4b529', '9b2c4b8b-2cbc-4c4a-8b7f-889de4fce553', 2);
 
 INSERT INTO restaurant_tags (id, name)
 VALUES 
