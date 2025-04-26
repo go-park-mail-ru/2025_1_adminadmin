@@ -14,6 +14,7 @@ import (
 
 	generatedSurvey "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/survey/delivery/grpc/gen/proto"
 	"github.com/gorilla/mux"
+	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 )
 
 type stubStatServer struct {
@@ -57,10 +58,10 @@ func run() error {
 	go func() {
 		grpcServer.Serve(lis)
 	}()
-
+	mux := runtime.NewServeMux()
 	httpServer := &http.Server{
-		Addr:    ":" + httpPort,
-		Handler: setupRouter(),
+		Addr: ":" + httpPort,
+		Handler: mux,
 	}
 
 	go func() {
