@@ -25,7 +25,6 @@ import (
 	restaurantRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/repo"
 	restaurantUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/usecase"
 	generatedSurvey "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/survey/delivery/grpc/gen/proto"
-	gw "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/survey/delivery/grpc/gen/proto"
 	surveyHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/survey/delivery/http"
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
@@ -80,7 +79,10 @@ func main() {
 	}
 	defer pool.Close()
 
-	authConn, err := grpc.Dial(fmt.Sprintf("%s:%s", "stat", "5459"))
+	authConn, err := grpc.Dial(fmt.Sprintf("%s:%s", "2025_1_adminadmin-stat", "5459"))
+	if err != nil {
+		logger.Error("Ошибка: " + err.Error())
+	}
 
 	AuthClient := generatedSurvey.NewStatClient(authConn)
 	surveyHandler := surveyHandler.NewSurveyHandler(AuthClient)
@@ -175,24 +177,4 @@ func main() {
 	} else {
 		logger.Info("Сервер успешно остановлен")
 	}
-}
-
-type StatServiceServer struct {
-	gw.UnimplementedStatServer
-}
-
-func (s *StatServiceServer) GetSurvey(ctx context.Context, req *gw.GetSurveyRequest) (*gw.GetSurveyResponse, error) {
-	return &gw.GetSurveyResponse{}, nil
-}
-
-func (s *StatServiceServer) Vote(ctx context.Context, req *gw.VoteRequest) (*gw.VoteResponse, error) {
-	return &gw.VoteResponse{}, nil
-}
-
-func (s *StatServiceServer) CreateSurvey(ctx context.Context, req *gw.CreateSurveyRequest) (*gw.CreateSurveyResponse, error) {
-	return &gw.CreateSurveyResponse{}, nil
-}
-
-func (s *StatServiceServer) GetStats(ctx context.Context, req *gw.GetStatsRequest) (*gw.GetStatsResponse, error) {
-	return &gw.GetStatsResponse{}, nil
 }

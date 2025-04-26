@@ -21,6 +21,8 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+      stat:
+        condition: service_started
     networks:
       - adminadmin-network
   stat:
