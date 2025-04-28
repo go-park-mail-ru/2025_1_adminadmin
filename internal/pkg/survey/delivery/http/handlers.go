@@ -52,6 +52,7 @@ func (h *SurveyHandler) Vote(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	w.Header().Set("Content-Type", "application/json")
 	log.LogHandlerInfo(logger, "Success", http.StatusOK)
 }
 
@@ -151,6 +152,7 @@ func (h *SurveyHandler) GetSurvey(w http.ResponseWriter, r *http.Request) {
 		utils.SendError(w, "ошибка формирования JSON", http.StatusInternalServerError)
 	}
 
+	w.Header().Set("Content-Type", "application/json")
 	log.LogHandlerInfo(logger, "Success", http.StatusOK)
 }
 
@@ -251,5 +253,6 @@ func (h *SurveyHandler) GetStats(w http.ResponseWriter, r *http.Request) {
 		utils.SendError(w, "ошибка формирования JSON", http.StatusInternalServerError)
 	}
 
+	w.Header().Set("Content-Type", "application/json")
 	log.LogHandlerInfo(logger, "Success", http.StatusOK)
 }
