@@ -30,6 +30,16 @@ CREATE TABLE IF NOT EXISTS restaurants (
     delivery_time_to INT DEFAULT 60                                       
 );
 
+CREATE TABLE IF NOT EXISTS reviews (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    restaurant_id UUID NOT NULL REFERENCES restaurants(id) ON DELETE CASCADE,
+    review_text TEXT NOT NULL CHECK (char_length(review_text) <= 300),
+    rating INT NOT NULL CHECK (rating >= 1 AND rating <= 5),
+    created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT now()
+);
+
+
 CREATE TABLE IF NOT EXISTS restaurant_tags_relations (
     restaurant_id UUID REFERENCES restaurants(id) ON DELETE CASCADE,
     tag_id UUID REFERENCES restaurant_tags(id) ON DELETE CASCADE,   
@@ -70,6 +80,24 @@ CREATE TABLE IF NOT EXISTS orders (
     final_price NUMERIC(10, 2) NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+CREATE OR REPLACE FUNCTION update_restaurant_rating()
+RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE restaurants
+    SET 
+        rating = COALESCE((rating * rating_count + NEW.rating) / (rating_count + 1), NEW.rating),
+        rating_count = rating_count + 1
+    WHERE id = NEW.restaurant_id;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER after_review_insert
+AFTER INSERT ON reviews
+FOR EACH ROW
+EXECUTE FUNCTION update_restaurant_rating();
 
 
 INSERT INTO restaurant_tags (id, name)
