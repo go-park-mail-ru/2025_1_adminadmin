@@ -327,12 +327,6 @@ func (h *CartHandler) GetOrders(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if orders == nil {
-		log.LogHandlerError(logger, fmt.Errorf("заказы не найдены: %w", err), http.StatusNotFound)
-		w.WriteHeader(http.StatusNotFound)
-		return
-	}
-
 	data, err := json.Marshal(orders)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
