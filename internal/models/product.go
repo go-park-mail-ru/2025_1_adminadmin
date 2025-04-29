@@ -44,6 +44,12 @@ type Review struct {
 }
 
 // easyjson:json
+type ReviewInReq struct {
+	ReviewText string    `json:"review_text"`
+	Rating     int       `json:"rating"`
+}
+
+// easyjson:json
 type RestaurantFull struct {
 	Id           uuid.UUID    `json:"id"`
 	Name         string       `json:"name"`
@@ -66,6 +72,10 @@ func (p *Product) Sanitize() {
 
 func (r *Review) Sanitize() {
 	r.User = html.EscapeString(r.User)
+	r.ReviewText = html.EscapeString(r.ReviewText)
+}
+
+func (r *ReviewInReq) Sanitize() {
 	r.ReviewText = html.EscapeString(r.ReviewText)
 }
 

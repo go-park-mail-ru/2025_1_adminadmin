@@ -22,6 +22,8 @@ const (
 								INNER JOIN users u ON r.user_id = u.id
 								WHERE r.restaurant_id = $1
 								LIMIT $2 OFFSET $3;`
+	insertReview = "INSERT INTO reviews (id, user_id, restaurant_id, review_text, rating, created_at) VALUES ($1, $2, $3, $4, $5, $6)"
+
 )
 
 type RestaurantRepository struct {
@@ -153,4 +155,16 @@ func (r *RestaurantRepository) GetReviews(ctx context.Context, restaurantID uuid
 
 	logger.Info("Successful")
 	return reviews, rows.Err()
+}
+
+func (repo *RestaurantRepository) CreateReviews(ctx context.Context, req models.Review, id uuid.UUID, restaurantID uuid.UUID) error {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	_, err := repo.db.Exec(ctx, insertReview, req.Id, id, restaurantID, req.ReviewText, req.Rating, req.CreatedAt)
+	if err != nil {
+		logger.Error(err.Error())
+		return err
+	}
+	logger.Info("Successful")
+	return nil
 }

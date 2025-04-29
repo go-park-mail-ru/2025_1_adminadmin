@@ -6,12 +6,17 @@ import (
 	"fmt"
 	"log/slog"
 	"net/http"
+	"os"
 	"strconv"
 
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	interfaces "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants"
+	jwtUtils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/jwt"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/send_error"
+	"github.com/golang-jwt/jwt"
 	"github.com/gorilla/mux"
+	"github.com/mailru/easyjson"
 	"github.com/satori/uuid"
 )
 
@@ -90,7 +95,7 @@ func (h *RestaurantHandler) GetProductsByRestaurant(w http.ResponseWriter, r *ht
 // @Router /restaurants/list [get]
 func (h *RestaurantHandler) RestaurantList(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
-	
+
 	countStr := r.URL.Query().Get("count")
 	offsetStr := r.URL.Query().Get("offset")
 
@@ -179,3 +184,63 @@ func (h *RestaurantHandler) ReviewsList(w http.ResponseWriter, r *http.Request) 
 	log.LogHandlerInfo(logger, "Success", http.StatusOK)
 }
 
+func (h *RestaurantHandler) CreateReview(w http.ResponseWriter, r *http.Request) {
+	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+	vars := mux.Vars(r)
+	restaurantIDStr := vars["id"]
+	restaurantID := uuid.FromStringOrNil(restaurantIDStr)
+	if restaurantID == uuid.Nil {
+		log.LogHandlerError(logger, errors.New("неверный формат id ресторана"), http.StatusBadRequest)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	var req models.ReviewInReq
+	err := easyjson.UnmarshalFromReader(r.Body, &req)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("Ошибка парсинга JSON: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
+		return
+	}
+	req.Sanitize()
+	cookieJWT, err := r.Cookie("AdminJWT")
+	if err != nil {
+		if err == http.ErrNoCookie {
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	JWTStr := cookieJWT.Value
+
+	claims := jwt.MapClaims{}
+
+	idS, ok := jwtUtils.GetIdFromJWT(JWTStr, claims, os.Getenv("JWT_SECRET"))
+	if !ok || idS == "" {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+	id, err := uuid.FromString(idS)
+	if err != nil {
+		logger.Error(err.Error())
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
+	login, ok := jwtUtils.GetLoginFromJWT(JWTStr, claims, os.Getenv("JWT_SECRET"))
+	if !ok || idS == "" {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
+	review, err := h.restaurantUsecase.CreateReview(r.Context(), req, id, restaurantID, login)
+
+	w.Header().Set("Content-Type", "application/json")
+
+	if err := json.NewEncoder(w).Encode(review); err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("Ошибка формирования JSON: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
+	}
+}
