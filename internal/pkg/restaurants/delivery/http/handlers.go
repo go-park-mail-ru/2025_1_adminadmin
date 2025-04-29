@@ -42,7 +42,7 @@ func (h *RestaurantHandler) GetProductsByRestaurant(w http.ResponseWriter, r *ht
 	restaurantIDStr := vars["id"]
 	restaurantID := uuid.FromStringOrNil(restaurantIDStr)
 	if restaurantID == uuid.Nil {
-		log.LogHandlerError(logger, errors.New("Неверный формат id ресторана"), http.StatusBadRequest)
+		log.LogHandlerError(logger, errors.New("неверный формат id ресторана"), http.StatusBadRequest)
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -62,15 +62,15 @@ func (h *RestaurantHandler) GetProductsByRestaurant(w http.ResponseWriter, r *ht
 
 	products, err := h.restaurantUsecase.GetProductsByRestaurant(r.Context(), restaurantID, count, offset)
 	if err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка уровнем ниже (usecase): %w", err), http.StatusInternalServerError)
+		log.LogHandlerError(logger, fmt.Errorf("ошибка уровнем ниже (usecase): %w", err), http.StatusInternalServerError)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
 	data, err := json.Marshal(products)
 	if err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("Не удалось сериализовать данные: %w", err), http.StatusInternalServerError)
-		utils.SendError(w, "Не удалось сериализовать данные", http.StatusInternalServerError)
+		log.LogHandlerError(logger, fmt.Errorf("не удалось сериализовать данные: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
@@ -90,7 +90,7 @@ func (h *RestaurantHandler) GetProductsByRestaurant(w http.ResponseWriter, r *ht
 // @Router /restaurants/list [get]
 func (h *RestaurantHandler) RestaurantList(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
-
+	
 	countStr := r.URL.Query().Get("count")
 	offsetStr := r.URL.Query().Get("offset")
 
@@ -106,7 +106,7 @@ func (h *RestaurantHandler) RestaurantList(w http.ResponseWriter, r *http.Reques
 
 	restaurants, err := h.restaurantUsecase.GetAll(r.Context(), count, offset)
 	if err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка уровнем ниже (usecase): %w", err), http.StatusInternalServerError)
+		log.LogHandlerError(logger, fmt.Errorf("ошибка уровнем ниже (usecase): %w", err), http.StatusInternalServerError)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -119,8 +119,58 @@ func (h *RestaurantHandler) RestaurantList(w http.ResponseWriter, r *http.Reques
 
 	data, err := json.Marshal(restaurants)
 	if err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка маршалинга: %w", err), http.StatusInternalServerError)
-		utils.SendError(w, "Не удалось сериализовать данные", http.StatusInternalServerError)
+		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(data)
+	log.LogHandlerInfo(logger, "Success", http.StatusOK)
+}
+
+func (h *RestaurantHandler) ReviewsList(w http.ResponseWriter, r *http.Request) {
+	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+	countStr := r.URL.Query().Get("count")
+	offsetStr := r.URL.Query().Get("offset")
+
+	count, err := strconv.Atoi(countStr)
+	if err != nil {
+		count = 1
+	}
+
+	offset, err := strconv.Atoi(offsetStr)
+	if err != nil {
+		offset = 0
+	}
+
+	vars := mux.Vars(r)
+	restaurantIDStr := vars["id"]
+	restaurantID := uuid.FromStringOrNil(restaurantIDStr)
+	if restaurantID == uuid.Nil {
+		log.LogHandlerError(logger, errors.New("неверный формат id ресторана"), http.StatusBadRequest)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	reviews, err := h.restaurantUsecase.GetReviews(r.Context(), restaurantID, count, offset)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка уровнем ниже (usecase): %w", err), http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	if reviews == nil {
+		log.LogHandlerError(logger, fmt.Errorf("отзывы не найдены: %w", err), http.StatusNotFound)
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	data, err := json.Marshal(reviews)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)
 		return
 	}
 

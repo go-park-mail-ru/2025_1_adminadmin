@@ -10,9 +10,13 @@ import (
 type RestaurantRepo interface {
 	GetAll(ctx context.Context, count, offset int) ([]models.Restaurant, error)
 	GetProductsByRestaurant(ctx context.Context, restaurantID uuid.UUID, count, offset int) (*models.RestaurantFull, error)
+	GetReviews(ctx context.Context, restaurantID uuid.UUID, count, offset int) ([]models.Review, error) 
+
 }
 
 type RestaurantUsecase interface {
 	GetAll(ctx context.Context, count, offset int) ([]models.Restaurant, error)
 	GetProductsByRestaurant(ctx context.Context, restaurantID uuid.UUID, count, offset int) (*models.RestaurantFull, error)
+	GetReviews(ctx context.Context, restaurantID uuid.UUID, count, offset int) ([]models.Review, error)
+
 }

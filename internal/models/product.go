@@ -2,6 +2,7 @@ package models
 
 import (
 	"html"
+	"time"
 
 	"github.com/satori/uuid"
 )
@@ -34,6 +35,15 @@ type Category struct {
 }
 
 // easyjson:json
+type Review struct {
+	Id         uuid.UUID `json:"id"`
+	User       string    `json:"user"`
+	ReviewText string    `json:"review_text"`
+	Rating     int       `json:"rating"`
+	CreatedAt  time.Time `json:"created_at"`
+}
+
+// easyjson:json
 type RestaurantFull struct {
 	Id           uuid.UUID    `json:"id"`
 	Name         string       `json:"name"`
@@ -46,11 +56,17 @@ type RestaurantFull struct {
 	DeliveryTime DeliveryTime `json:"delivery_time"`
 	Tags         []string     `json:"tags"`
 	Categories   []Category   `json:"categories"`
+	Reviews      []Review     `json:"reviews"`
 }
 
 func (p *Product) Sanitize() {
 	p.Name = html.EscapeString(p.Name)
 	p.ImageURL = html.EscapeString(p.ImageURL)
+}
+
+func (r *Review) Sanitize() {
+	r.User = html.EscapeString(r.User)
+	r.ReviewText = html.EscapeString(r.ReviewText)
 }
 
 func (c *Category) Sanitize() {
@@ -66,9 +82,9 @@ func (r *RestaurantFull) Sanitize() {
 	r.Address = html.EscapeString(r.Address)
 	r.Description = html.EscapeString(r.Description)
 	for i := range r.Tags {
-		r.Tags[i] = html.EscapeString(r.Tags[i]) 
+		r.Tags[i] = html.EscapeString(r.Tags[i])
 	}
 	for i := range r.Categories {
-		r.Categories[i].Sanitize() 
+		r.Categories[i].Sanitize()
 	}
 }
