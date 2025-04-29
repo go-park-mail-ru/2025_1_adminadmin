@@ -6,16 +6,24 @@ import (
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
+	"github.com/jackc/pgconn"
 	"github.com/jackc/pgtype/pgxtype"
 	"github.com/satori/uuid"
 )
 
 const (
 	getAllRestaurant        = "SELECT id, name, description, rating, banner_url FROM restaurants LIMIT $1 OFFSET $2;"
-	getRestaurantByid       = "SELECT id, name, description, rating FROM restaurants WHERE id=$1;"
+	getRestaurantByid       = "SELECT id, name, description, rating FROM restaurants WHERE id = $1;"
 	getProductsByRestaurant = "SELECT id, name, banner_url, address, description, rating, rating_count, working_mode_from, working_mode_to, delivery_time_from, delivery_time_to FROM restaurants WHERE id = $1;"
 	getRestaurantTag        = "SELECT rt.name FROM restaurant_tags rt JOIN restaurant_tags_relations rtr ON rtr.tag_id = rt.id WHERE rtr.restaurant_id = $1"
 	getRestaurantProduct    = "SELECT id, name, price, image_url, weight, category FROM products WHERE restaurant_id = $1 ORDER BY category LIMIT $2 OFFSET $3"
+	getAllReview            = `SELECT r.id, u.login, r.review_text, r.rating, r.created_at
+								FROM reviews r
+								INNER JOIN users u ON r.user_id = u.id
+								WHERE r.restaurant_id = $1
+								LIMIT $2 OFFSET $3;`
+	insertReview = "INSERT INTO reviews (id, user_id, restaurant_id, review_text, rating, created_at) VALUES ($1, $2, $3, $4, $5, $6)"
+
 )
 
 type RestaurantRepository struct {
@@ -26,7 +34,7 @@ func NewRestaurantRepository(db pgxtype.Querier) *RestaurantRepository {
 	return &RestaurantRepository{db: db}
 }
 
-func (r *RestaurantRepository) GetProductsByRestaurant(ctx context.Context, restaurantID uuid.UUID, count, offset int) (*models.RestaurantFull, error) {
+func (r *RestaurantRepository) GetProductsByRestaurant(ctx context.Context, restaurantID uuid.UUID, count int, offset int) (*models.RestaurantFull, error) {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 
 	row := r.db.QueryRow(ctx, getProductsByRestaurant, restaurantID)
@@ -91,7 +99,7 @@ func (r *RestaurantRepository) GetProductsByRestaurant(ctx context.Context, rest
 	return &rest, nil
 }
 
-func (r *RestaurantRepository) GetAll(ctx context.Context, count, offset int) ([]models.Restaurant, error) {
+func (r *RestaurantRepository) GetAll(ctx context.Context, count int, offset int) ([]models.Restaurant, error) {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 
 	rows, err := r.db.Query(ctx, getAllRestaurant, count, offset)
@@ -114,4 +122,49 @@ func (r *RestaurantRepository) GetAll(ctx context.Context, count, offset int) ([
 
 	logger.Info("Successful")
 	return restaurants, rows.Err()
+}
+
+func (r *RestaurantRepository) GetReviews(ctx context.Context, restaurantID uuid.UUID, count int, offset int) ([]models.Review, error) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	rows, err := r.db.Query(ctx, getAllReview, restaurantID, count, offset)
+	if err != nil {
+		if pgErr, ok := err.(*pgconn.PgError); ok && pgErr.Code == "42P01" {
+			logger.Warn("Таблица reviews не существует, возвращаем пустой массив.")
+			return []models.Review{}, nil
+		}
+		logger.Error(err.Error())
+		return nil, err
+	}
+	defer rows.Close()
+
+	var reviews []models.Review
+	for rows.Next() {
+		var review models.Review
+		if err := rows.Scan(&review.Id, &review.User, &review.ReviewText, &review.Rating, &review.CreatedAt); err != nil {
+			logger.Error(err.Error())
+			return nil, err
+		}
+		reviews = append(reviews, review)
+		review.Sanitize()
+	}
+
+	if len(reviews) == 0 {
+		return []models.Review{}, nil
+	}
+
+	logger.Info("Successful")
+	return reviews, rows.Err()
+}
+
+func (repo *RestaurantRepository) CreateReviews(ctx context.Context, req models.Review, id uuid.UUID, restaurantID uuid.UUID) error {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	_, err := repo.db.Exec(ctx, insertReview, req.Id, id, restaurantID, req.ReviewText, req.Rating, req.CreatedAt)
+	if err != nil {
+		logger.Error(err.Error())
+		return err
+	}
+	logger.Info("Successful")
+	return nil
 }
