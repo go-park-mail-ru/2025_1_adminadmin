@@ -7,6 +7,7 @@ import (
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	"github.com/jackc/pgtype/pgxtype"
+	"github.com/lib/pq"
 	"github.com/satori/uuid"
 )
 
@@ -126,6 +127,10 @@ func (r *RestaurantRepository) GetReviews(ctx context.Context, restaurantID uuid
 
 	rows, err := r.db.Query(ctx, getAllReview, restaurantID, count, offset)
 	if err != nil {
+		if isTableNotExistError(err) {
+			logger.Error("Таблица reviews не существует, возвращаем пустой массив.")
+			return []models.Review{}, nil
+		}
 		logger.Error(err.Error())
 		return nil, err
 	}
@@ -143,9 +148,18 @@ func (r *RestaurantRepository) GetReviews(ctx context.Context, restaurantID uuid
 	}
 
 	if len(reviews) == 0 {
-        return []models.Review{}, nil
-    }
+		return []models.Review{}, nil
+	}
 
 	logger.Info("Successful")
 	return reviews, rows.Err()
+}
+
+func isTableNotExistError(err error) bool {
+	if err != nil {
+		if pgErr, ok := err.(*pq.Error); ok && pgErr.Code == "42P01" {
+			return true
+		}
+	}
+	return false
 }
