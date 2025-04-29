@@ -86,7 +86,7 @@ RETURNS TRIGGER AS $$
 BEGIN
     UPDATE restaurants
     SET 
-        rating = COALESCE((rating * rating_count + NEW.rating) / (rating_count + 1), NEW.rating),
+        rating = ROUND(COALESCE((rating * rating_count + NEW.rating) / (rating_count + 1), NEW.rating),1),
         rating_count = rating_count + 1
     WHERE id = NEW.restaurant_id;
 
