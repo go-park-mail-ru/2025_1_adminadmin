@@ -133,12 +133,7 @@ func main() {
 		order.HandleFunc("/{orderID}/update", cartHandler.UpdateOrderStatus).Methods(http.MethodPost)
 		order.HandleFunc("/create", cartHandler.CreateOrder).Methods(http.MethodPost, http.MethodOptions)
 	}
-	reviews := r.PathPrefix("/reviews").Subrouter()
-	{
-		reviews.HandleFunc("", cartHandler.CreateOrder).Methods(http.MethodGet, http.MethodOptions)
-		reviews.HandleFunc("", cartHandler.CreateOrder).Methods(http.MethodPost, http.MethodOptions)
-	}
-
+	
 	http.Handle("/", r)
 	srv := http.Server{
 		Handler:           r,
