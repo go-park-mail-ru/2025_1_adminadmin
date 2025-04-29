@@ -142,6 +142,10 @@ func (r *RestaurantRepository) GetReviews(ctx context.Context, restaurantID uuid
 		review.Sanitize()
 	}
 
+	if len(reviews) == 0 {
+        return []models.Review{}, nil
+    }
+
 	logger.Info("Successful")
 	return reviews, rows.Err()
 }
