@@ -2,6 +2,7 @@ package pg
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log/slog"
 
@@ -18,6 +19,41 @@ const (
 		apartment_or_office, intercom, entrance, floor,
 		courier_comment, leave_at_door, created_at, final_price) 
 		VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`
+	getAllOrders = `SELECT
+    o.id,
+    o.user_id,
+    o.status,
+    a.address AS address,
+    o.order_products,
+    o.apartment_or_office,
+    o.intercom,
+    o.entrance,
+    o.floor,
+    o.courier_comment,
+    o.leave_at_door,
+    o.final_price,
+    o.created_at
+FROM orders o
+LEFT JOIN addresses a ON o.address_id = a.id
+WHERE o.user_id = $1 LIMIT $2 OFFSET $3;`
+	getOrderById = `SELECT
+    o.id,
+    o.user_id,
+    o.status,
+    a.address AS address,
+    o.order_products,
+    o.apartment_or_office,
+    o.intercom,
+    o.entrance,
+    o.floor,
+    o.courier_comment,
+    o.leave_at_door,
+    o.final_price,
+    o.created_at
+FROM orders o
+LEFT JOIN addresses a ON o.address_id = a.id
+WHERE o.id = $1;`
+	updateOrderStatus = `UPDATE orders SET status = $1 WHERE id = $2;`
 )
 
 type RestaurantRepository struct {
@@ -105,5 +141,74 @@ func (r *RestaurantRepository) Save(ctx context.Context, order models.Order, use
 
 	logger.Info("Заказ успешно сохранен", slog.String("order_id", order.ID.String()))
 
+	return nil
+}
+
+func (r *RestaurantRepository) GetOrders(ctx context.Context, user_id uuid.UUID, count, offset int) ([]models.Order, error) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	rows, err := r.db.Query(ctx, getAllOrders, user_id, count, offset)
+	if err != nil {
+		logger.Error(err.Error())
+		return nil, err
+	}
+	defer rows.Close()
+
+	var orders []models.Order
+	for rows.Next() {
+		var order models.Order
+		var orderProductsJSON string
+		if err := rows.Scan(&order.ID, &order.UserID, &order.Status, &order.Address, &orderProductsJSON,
+			&order.ApartmentOrOffice, &order.Intercom, &order.Entrance, &order.Floor, &order.CourierComment,
+			&order.LeaveAtDoor, &order.FinalPrice, &order.CreatedAt); err != nil {
+			logger.Error(err.Error())
+			return nil, err
+		}
+		if err := json.Unmarshal([]byte(orderProductsJSON), &order.OrderProducts); err != nil {
+			logger.Error("ошибка анмаршалинга JSON: " + err.Error())
+			return nil, err
+		}
+		order.Sanitize()
+		orders = append(orders, order)
+	}
+	logger.Info("Successful")
+	return orders, rows.Err()
+}
+
+func (r *RestaurantRepository) GetOrderById(ctx context.Context, order_id uuid.UUID) (models.Order, error) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	var order models.Order
+	var orderProductsJSON string
+
+	err := r.db.QueryRow(ctx, getOrderById, order_id).Scan(&order.ID, &order.UserID, &order.Status, &order.Address, &orderProductsJSON,
+		&order.ApartmentOrOffice, &order.Intercom, &order.Entrance, &order.Floor, &order.CourierComment,
+		&order.LeaveAtDoor, &order.FinalPrice, &order.CreatedAt)
+	if err != nil {
+		logger.Error("Ошибка при получении заказа", slog.String("error", err.Error()))
+		return models.Order{}, fmt.Errorf("не удалось получить заказ: %w", err)
+	}
+
+	if err = json.Unmarshal([]byte(orderProductsJSON), &order.OrderProducts); err != nil {
+		logger.Error("ошибка анмаршалинга JSON: " + err.Error())
+		return models.Order{}, err
+	}
+	logger.Info("Successful")
+	return order, nil
+}
+
+func (r *RestaurantRepository) UpdateOrderStatus(ctx context.Context, order_id uuid.UUID, status string) error {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	res, err := r.db.Exec(ctx, updateOrderStatus, status, order_id)
+	if err != nil {
+		logger.Error("Ошибка при обновлении статуса заказа", slog.String("error", err.Error()))
+		return err
+	}
+	if rows := res.RowsAffected(); rows == 0 {
+		return fmt.Errorf("заказ с id %s не найден", order_id)
+	}
+
+	logger.Info("Successful")
 	return nil
 }

@@ -11,5 +11,10 @@ test:
 view-coverage:
 	open $(COVERAGE_HTML)
 
+generate-mocks:
+	mockgen -source=internal/pkg/restaurants/interfaces.go -destination=internal/pkg/restaurants/mocks/mocks.go -package=mocks
+	mockgen -source=internal/pkg/cart/interfaces.go -destination=internal/pkg/cart/mocks/mocks.go -package=mocks
+	mockgen -source=internal/pkg/auth/interfaces.go -destination=internal/pkg/auth/mocks/mocks.go -package=mocks
+
 clean:
 	rm -f $(COVERAGE_FILE) $(COVERAGE_HTML) ${COVERPROFILE_TMP} 

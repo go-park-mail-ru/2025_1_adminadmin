@@ -104,3 +104,25 @@ func (u *CartUsecase) CreateOrder(ctx context.Context, userID string, req models
 	logger.Info("заказ успешно создан", slog.String("orderID", order.ID.String()))
 	return order, nil
 }
+
+func (u *CartUsecase) GetOrders(ctx context.Context, user_id uuid.UUID, count, offset int) ([]models.Order, error) {
+	return u.restaurantRepo.GetOrders(ctx, user_id, count, offset)
+}
+
+func (u *CartUsecase) GetOrderById(ctx context.Context, order_id uuid.UUID) (models.Order, error) {
+	return u.restaurantRepo.GetOrderById(ctx, order_id)
+}
+
+func (u *CartUsecase) UpdateOrderStatus(ctx context.Context, order_id uuid.UUID) error {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	status := "paid"
+	err := u.restaurantRepo.UpdateOrderStatus(ctx, order_id, status)
+	if err != nil{
+		logger.Error(err.Error())
+		return err
+	}
+
+	logger.Info("success")
+	return nil
+}

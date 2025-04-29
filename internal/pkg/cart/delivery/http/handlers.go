@@ -8,9 +8,11 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart"
+	"github.com/satori/uuid"
 
 	jwtUtils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/jwt"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
@@ -63,7 +65,7 @@ func (h *CartHandler) getCartData(r *http.Request) (models.Cart, string, error, 
 }
 
 func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
-	logger := log.GetLoggerFromContext(r.Context())
+	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
 	cart, _, err, full_cart := h.getCartData(r)
 	if err != nil {
@@ -98,7 +100,7 @@ func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Request) {
-	logger := log.GetLoggerFromContext(r.Context())
+	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
 	_, login, err, _ := h.getCartData(r)
 	if err != nil {
@@ -174,10 +176,9 @@ func (h *CartHandler) ClearCart(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		log.LogHandlerError(logger, fmt.Errorf("ошибка при чтении куки: %w", err), http.StatusBadRequest)
-		utils.SendError(w, "Bad request", http.StatusBadRequest) 
+		utils.SendError(w, "Bad request", http.StatusBadRequest)
 		return
 	}
-
 
 	JWTStr := cookie.Value
 	claims := jwt.MapClaims{}
@@ -207,7 +208,7 @@ func (h *CartHandler) ClearCart(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *CartHandler) CreateOrder(w http.ResponseWriter, r *http.Request) {
-	logger := log.GetLoggerFromContext(r.Context())
+	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
 	cart, userID, err, full_cart := h.getCartData(r)
 	if err != nil {
@@ -267,4 +268,167 @@ func (h *CartHandler) CreateOrder(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Write(data)
+}
+
+func (h *CartHandler) GetOrders(w http.ResponseWriter, r *http.Request) {
+	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+	cookie, err := r.Cookie("AdminJWT")
+	if err != nil {
+		if err == http.ErrNoCookie {
+			log.LogHandlerError(logger, fmt.Errorf("токен отсутствует: %w", err), http.StatusUnauthorized)
+			utils.SendError(w, "Токен отсутствует", http.StatusUnauthorized)
+			return
+		}
+		log.LogHandlerError(logger, fmt.Errorf("ошибка при чтении куки: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "Ошибка при чтении куки", http.StatusBadRequest)
+		return
+	}
+	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
+		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
+		utils.SendError(w, "некорректный CSRF-токен", http.StatusForbidden)
+		return
+	}
+
+	JWTStr := cookie.Value
+
+	claims := jwt.MapClaims{}
+
+	idStr, ok := jwtUtils.GetIdFromJWT(JWTStr, claims, h.secret)
+	if !ok || idStr == "" {
+		log.LogHandlerError(logger, errors.New("недействительный токен: id отсутствует"), http.StatusUnauthorized)
+		utils.SendError(w, "Недействительный токен: id отсутствует", http.StatusUnauthorized)
+		return
+	}
+	id, err := uuid.FromString(idStr)
+	if err != nil {
+		log.LogHandlerError(logger, err, http.StatusInternalServerError)
+		utils.SendError(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	countStr := r.URL.Query().Get("count")
+	offsetStr := r.URL.Query().Get("offset")
+
+	count, err := strconv.Atoi(countStr)
+	if err != nil {
+		count = 15
+	}
+
+	offset, err := strconv.Atoi(offsetStr)
+	if err != nil {
+		offset = 0
+	}
+
+	orders, err := h.cartUsecase.GetOrders(r.Context(), id, count, offset)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка уровнем ниже (usecase): %w", err), http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	if orders == nil {
+		log.LogHandlerError(logger, fmt.Errorf("заказы не найдены: %w", err), http.StatusNotFound)
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	data, err := json.Marshal(orders)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "Не удалось сериализовать данные", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(data)
+	log.LogHandlerInfo(logger, "Success", http.StatusOK)
+}
+
+func (h *CartHandler) GetOrderById(w http.ResponseWriter, r *http.Request) {
+	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+	_, err := r.Cookie("AdminJWT")
+	if err != nil {
+		if err == http.ErrNoCookie {
+			log.LogHandlerError(logger, fmt.Errorf("токен отсутствует: %w", err), http.StatusUnauthorized)
+			utils.SendError(w, "Токен отсутствует", http.StatusUnauthorized)
+			return
+		}
+		log.LogHandlerError(logger, fmt.Errorf("ошибка при чтении куки: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "Ошибка при чтении куки", http.StatusBadRequest)
+		return
+	}
+	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
+		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
+		utils.SendError(w, "некорректный CSRF-токен", http.StatusForbidden)
+		return
+	}
+
+	vars := mux.Vars(r)
+	orderIDStr := vars["orderID"]
+	orderID, err := uuid.FromString(orderIDStr)
+	if err != nil {
+		log.LogHandlerError(logger, errors.New("невалидный id заказа"), http.StatusBadRequest)
+		utils.SendError(w, "невалидный id заказа", http.StatusBadRequest)
+		return
+	}
+
+	order, err := h.cartUsecase.GetOrderById(r.Context(), orderID)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("не удалось получить заказ: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "не удалось получить заказ", http.StatusInternalServerError)
+		return
+	}
+
+	data, err := json.Marshal(order)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "Не удалось сериализовать данные", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(data)
+	log.LogHandlerInfo(logger, "Success", http.StatusOK)
+}
+
+func (h *CartHandler) UpdateOrderStatus(w http.ResponseWriter, r *http.Request) {
+	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+	_, err := r.Cookie("AdminJWT")
+	if err != nil {
+		if err == http.ErrNoCookie {
+			log.LogHandlerError(logger, fmt.Errorf("токен отсутствует: %w", err), http.StatusUnauthorized)
+			utils.SendError(w, "Токен отсутствует", http.StatusUnauthorized)
+			return
+		}
+		log.LogHandlerError(logger, fmt.Errorf("ошибка при чтении куки: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "Ошибка при чтении куки", http.StatusBadRequest)
+		return
+	}
+	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
+		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
+		utils.SendError(w, "некорректный CSRF-токен", http.StatusForbidden)
+		return
+	}
+
+	vars := mux.Vars(r)
+	orderIDStr := vars["orderID"]
+	orderID, err := uuid.FromString(orderIDStr)
+	if err != nil {
+		log.LogHandlerError(logger, errors.New("невалидный id заказа"), http.StatusBadRequest)
+		utils.SendError(w, "невалидный id заказа", http.StatusBadRequest)
+		return
+	}
+
+	err = h.cartUsecase.UpdateOrderStatus(r.Context(), orderID)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("не удалось получить заказ: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "не удалось получить заказ", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	log.LogHandlerInfo(logger, "Success", http.StatusOK)
 }

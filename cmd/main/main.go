@@ -126,6 +126,9 @@ func main() {
 
 	order := r.PathPrefix("/order").Subrouter()
 	{
+		order.HandleFunc("", cartHandler.GetOrders).Methods(http.MethodGet)
+		order.HandleFunc("/{orderID}", cartHandler.GetOrderById).Methods(http.MethodGet)
+		order.HandleFunc("/{orderID}/update", cartHandler.UpdateOrderStatus).Methods(http.MethodPost)
 		order.HandleFunc("/create", cartHandler.CreateOrder).Methods(http.MethodPost, http.MethodOptions)
 	}
 
