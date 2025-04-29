@@ -20,39 +20,35 @@ const (
 		courier_comment, leave_at_door, created_at, final_price) 
 		VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`
 	getAllOrders = `SELECT
-    o.id,
-    o.user_id,
-    o.status,
-    a.address AS address,
-    o.order_products,
-    o.apartment_or_office,
-    o.intercom,
-    o.entrance,
-    o.floor,
-    o.courier_comment,
-    o.leave_at_door,
-    o.final_price,
-    o.created_at
-FROM orders o
-LEFT JOIN addresses a ON o.address_id = a.id
-WHERE o.user_id = $1 LIMIT $2 OFFSET $3;`
+    id,
+    user_id,
+    status,
+    address_id,
+    order_products,
+    apartment_or_office,
+    intercom,
+    entrance,
+    floor,
+    courier_comment,
+    leave_at_door,
+    final_price,
+    created_at
+FROM orders WHERE user_id = $1 LIMIT $2 OFFSET $3;`
 	getOrderById = `SELECT
-    o.id,
-    o.user_id,
-    o.status,
-    a.address AS address,
-    o.order_products,
-    o.apartment_or_office,
-    o.intercom,
-    o.entrance,
-    o.floor,
-    o.courier_comment,
-    o.leave_at_door,
-    o.final_price,
-    o.created_at
-FROM orders o
-LEFT JOIN addresses a ON o.address_id = a.id
-WHERE o.id = $1;`
+    id,
+    user_id,
+    status,
+    address_id,
+    order_products,
+    apartment_or_office,
+    intercom,
+    entrance,
+    floor,
+    courier_comment,
+    leave_at_door,
+    final_price,
+    created_at
+FROM orders WHERE id = $1;`
 	updateOrderStatus = `UPDATE orders SET status = $1 WHERE id = $2;`
 )
 
