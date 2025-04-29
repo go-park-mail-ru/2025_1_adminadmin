@@ -1,11 +1,12 @@
 FROM golang:1.24.2-alpine AS builder
 
-COPY . /github.com/go-park-mail-ru/2025_1_adminadmin
+COPY go.mod go.sum /github.com/go-park-mail-ru/2025_1_adminadmin/
 WORKDIR /github.com/go-park-mail-ru/2025_1_adminadmin
 
 RUN go mod download
+COPY . /github.com/go-park-mail-ru/2025_1_adminadmin
+
 RUN CGO_ENABLED=0 GOOS=linux go build -mod=readonly -o ./.bin ./cmd/main/main.go
-RUN go clean --modcache
 
 FROM scratch AS runner
 
