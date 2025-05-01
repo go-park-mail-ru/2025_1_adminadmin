@@ -43,6 +43,10 @@ type Review struct {
 	CreatedAt  time.Time `json:"created_at"`
 }
 
+type ReviewUser struct {
+	Id         uuid.UUID `json:"id"`
+}
+
 // easyjson:json
 type ReviewInReq struct {
 	ReviewText string    `json:"review_text,omitempty"`

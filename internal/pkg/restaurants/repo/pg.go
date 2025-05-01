@@ -22,8 +22,9 @@ const (
 								INNER JOIN users u ON r.user_id = u.id
 								WHERE r.restaurant_id = $1 ORDER BY r.created_at DESC, r.id ASC
 								LIMIT $2 OFFSET $3;`
-	insertReview = "INSERT INTO reviews (id, user_id, restaurant_id, review_text, rating, created_at) VALUES ($1, $2, $3, NULLIF($4, ''), $5, $6)"
+	insertReview           = "INSERT INTO reviews (id, user_id, restaurant_id, review_text, rating, created_at) VALUES ($1, $2, $3, NULLIF($4, ''), $5, $6)"
 	checkReviewExistsQuery = `SELECT EXISTS(SELECT 1 FROM reviews WHERE user_id = $1 AND restaurant_id = $2)`
+	getIdByLogin           = "SELECT id FROM users WHERE user_id = $1 AND restaurant_id = $2;"
 )
 
 type RestaurantRepository struct {
@@ -87,16 +88,16 @@ func (r *RestaurantRepository) GetProductsByRestaurant(ctx context.Context, rest
 		}
 		p.Sanitize()
 		if _, exists := categoryMap[category]; !exists {
-            categoriesOrder = append(categoriesOrder, category)
-        }
+			categoriesOrder = append(categoriesOrder, category)
+		}
 		categoryMap[category] = append(categoryMap[category], p)
 	}
 	for _, categoryName := range categoriesOrder {
-        rest.Categories = append(rest.Categories, models.Category{
-            Name:     categoryName,
-            Products: categoryMap[categoryName],
-        })
-    }
+		rest.Categories = append(rest.Categories, models.Category{
+			Name:     categoryName,
+			Products: categoryMap[categoryName],
+		})
+	}
 
 	logger.Info("Successfully built RestaurantFull model")
 	return &rest, nil
@@ -173,14 +174,39 @@ func (repo *RestaurantRepository) CreateReviews(ctx context.Context, req models.
 }
 
 func (repo *RestaurantRepository) ReviewExists(ctx context.Context, userID, restaurantID uuid.UUID) (bool, error) {
-    logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 
-    var exists bool
-    err := repo.db.QueryRow(ctx, checkReviewExistsQuery, userID, restaurantID).Scan(&exists)
-    if err != nil {
-        logger.Error(err.Error())
-        return false, err
-    }
+	var exists bool
+	err := repo.db.QueryRow(ctx, checkReviewExistsQuery, userID, restaurantID).Scan(&exists)
+	if err != nil {
+		logger.Error(err.Error())
+		return false, err
+	}
 
-    return exists, nil
+	return exists, nil
+}
+
+func (repo *RestaurantRepository) ReviewExistsReturn(ctx context.Context, userID, restaurantID uuid.UUID) (models.ReviewUser, error) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	var exists bool
+	err := repo.db.QueryRow(ctx, checkReviewExistsQuery, userID, restaurantID).Scan(&exists)
+	if err != nil {
+		logger.Error(err.Error())
+		return models.ReviewUser{}, err
+	}
+	if !exists {
+		return models.ReviewUser{}, nil
+	}
+
+	row := repo.db.QueryRow(ctx, getIdByLogin, userID, restaurantID)
+
+	var rev models.ReviewUser
+	err = row.Scan(&rev.Id)
+	if err != nil {
+		logger.Error("failed to scan user: " + err.Error())
+		return models.ReviewUser{}, err
+	}
+
+	return rev, nil
 }
