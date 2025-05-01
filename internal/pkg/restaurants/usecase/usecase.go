@@ -62,3 +62,4 @@ func (u *RestaurantUsecase) ReviewExists(ctx context.Context, userID, restaurant
     return u.repo.ReviewExists(ctx, userID, restaurantID)
 }
 
+

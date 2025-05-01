@@ -266,3 +266,54 @@ func (h *RestaurantHandler) CreateReview(w http.ResponseWriter, r *http.Request)
 		utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
 	}
 }
+
+
+func (h *RestaurantHandler) CheckReviews(w http.ResponseWriter, r *http.Request) {
+	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+	vars := mux.Vars(r)
+	restaurantIDStr := vars["id"]
+	restaurantID := uuid.FromStringOrNil(restaurantIDStr)
+	if restaurantID == uuid.Nil {
+		log.LogHandlerError(logger, errors.New("неверный формат id ресторана"), http.StatusBadRequest)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	cookieJWT, err := r.Cookie("AdminJWT")
+	if err != nil {
+		if err == http.ErrNoCookie {
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	JWTStr := cookieJWT.Value
+
+	claims := jwt.MapClaims{}
+
+	idS, ok := jwtUtils.GetIdFromJWT(JWTStr, claims, os.Getenv("JWT_SECRET"))
+	if !ok || idS == "" {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+	id, err := uuid.FromString(idS)
+	if err != nil {
+		logger.Error(err.Error())
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
+	exists, err := h.restaurantUsecase.ReviewExists(r.Context(), id, restaurantID)
+    if err != nil {
+        log.LogHandlerError(logger, fmt.Errorf("ошибка проверки отзыва: %w", err), http.StatusInternalServerError)
+        utils.SendError(w, "ошибка проверки отзыва", http.StatusInternalServerError)
+        return
+    }
+    if exists {
+        log.LogHandlerError(logger, errors.New("пользователь уже оставил отзыв для этого ресторана"), http.StatusBadRequest)
+        utils.SendError(w, "вы уже оставляли отзыв для этого ресторана", http.StatusBadRequest)
+        return
+    }
+}
