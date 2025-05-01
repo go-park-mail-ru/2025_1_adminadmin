@@ -324,7 +324,18 @@ VALUES (
     '',
     'default_user.jpg',
     decode('a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6', 'hex')
+),
+VALUES (
+    uuid_generate_v4(), 
+    'test205', 
+    'Сергей',  
+    'Сироткин', 
+    '88005553535', 
+    '',
+    'default_user.jpg',
+    decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
 );
+
 
 
 -- Generated data inserts
