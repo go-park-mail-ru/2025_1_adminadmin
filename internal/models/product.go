@@ -38,7 +38,7 @@ type Category struct {
 type Review struct {
 	Id         uuid.UUID `json:"id"`
 	User       string    `json:"user"`
-	ReviewText string    `json:"review_text"`
+	ReviewText string    `json:"review_text,omitempty"`
 	Rating     int       `json:"rating"`
 	CreatedAt  time.Time `json:"created_at"`
 }

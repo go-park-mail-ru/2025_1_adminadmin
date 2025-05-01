@@ -12,18 +12,18 @@ import (
 )
 
 const (
-	getAllRestaurant        = "SELECT id, name, description, rating, banner_url FROM restaurants LIMIT $1 OFFSET $2;"
+	getAllRestaurant        = "SELECT id, name, description, rating, banner_url FROM restaurants ORDER BY id ASC LIMIT $1 OFFSET $2;"
 	getRestaurantByid       = "SELECT id, name, description, rating FROM restaurants WHERE id = $1;"
-	getProductsByRestaurant = "SELECT id, name, banner_url, address, description, rating, rating_count, working_mode_from, working_mode_to, delivery_time_from, delivery_time_to FROM restaurants WHERE id = $1;"
-	getRestaurantTag        = "SELECT rt.name FROM restaurant_tags rt JOIN restaurant_tags_relations rtr ON rtr.tag_id = rt.id WHERE rtr.restaurant_id = $1"
-	getRestaurantProduct    = "SELECT id, name, price, image_url, weight, category FROM products WHERE restaurant_id = $1 ORDER BY category LIMIT $2 OFFSET $3"
+	getProductsByRestaurant = "SELECT id, name, banner_url, address, description, rating, rating_count, working_mode_from, working_mode_to, delivery_time_from, delivery_time_to FROM restaurants WHERE id = $1 ORDER BY id ASC;"
+	getRestaurantTag        = "SELECT rt.name FROM restaurant_tags rt JOIN restaurant_tags_relations rtr ON rtr.tag_id = rt.id WHERE rtr.restaurant_id = $1 ORDER BY rt.name ASC;"
+	getRestaurantProduct    = "SELECT id, name, price, image_url, weight, category FROM products WHERE restaurant_id = $1 ORDER BY category ORDER BY category ASC, id ASC LIMIT $2 OFFSET $3"
 	getAllReview            = `SELECT r.id, u.login, r.review_text, r.rating, r.created_at
 								FROM reviews r
 								INNER JOIN users u ON r.user_id = u.id
-								WHERE r.restaurant_id = $1
+								WHERE r.restaurant_id = $1 ORDER BY r.created_at DESC, r.id ASC
 								LIMIT $2 OFFSET $3;`
 	insertReview = "INSERT INTO reviews (id, user_id, restaurant_id, review_text, rating, created_at) VALUES ($1, $2, $3, NULLIF($4, ''), $5, $6)"
-
+	checkReviewExistsQuery = `SELECT EXISTS(SELECT 1 FROM reviews WHERE user_id = $1 AND restaurant_id = $2)`
 )
 
 type RestaurantRepository struct {
@@ -167,4 +167,17 @@ func (repo *RestaurantRepository) CreateReviews(ctx context.Context, req models.
 	}
 	logger.Info("Successful")
 	return nil
+}
+
+func (repo *RestaurantRepository) ReviewExists(ctx context.Context, userID, restaurantID uuid.UUID) (bool, error) {
+    logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+    var exists bool
+    err := repo.db.QueryRow(ctx, checkReviewExistsQuery, userID, restaurantID).Scan(&exists)
+    if err != nil {
+        logger.Error(err.Error())
+        return false, err
+    }
+
+    return exists, nil
 }

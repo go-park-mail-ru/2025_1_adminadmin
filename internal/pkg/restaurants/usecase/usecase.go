@@ -58,3 +58,7 @@ func (u *RestaurantUsecase) CreateReview(ctx context.Context, req models.ReviewI
 	return newReview, nil
 }
 
+func (u *RestaurantUsecase) ReviewExists(ctx context.Context, userID, restaurantID uuid.UUID) (bool, error) {
+    return u.repo.ReviewExists(ctx, userID, restaurantID)
+}
+

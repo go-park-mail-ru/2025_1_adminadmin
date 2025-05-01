@@ -235,17 +235,34 @@ func (h *RestaurantHandler) CreateReview(w http.ResponseWriter, r *http.Request)
 	}
 
 	login, ok := jwtUtils.GetLoginFromJWT(JWTStr, claims, os.Getenv("JWT_SECRET"))
-	if !ok || idS == "" {
+	if !ok || login == "" {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
 
+	exists, err := h.restaurantUsecase.ReviewExists(r.Context(), id, restaurantID)
+    if err != nil {
+        log.LogHandlerError(logger, fmt.Errorf("ошибка проверки отзыва: %w", err), http.StatusInternalServerError)
+        utils.SendError(w, "ошибка проверки отзыва", http.StatusInternalServerError)
+        return
+    }
+    if exists {
+        log.LogHandlerError(logger, errors.New("пользователь уже оставил отзыв для этого ресторана"), http.StatusBadRequest)
+        utils.SendError(w, "вы уже оставляли отзыв для этого ресторана", http.StatusBadRequest)
+        return
+    }
+
 	review, err := h.restaurantUsecase.CreateReview(r.Context(), req, id, restaurantID, login)
+	if err != nil {
+        log.LogHandlerError(logger, fmt.Errorf("ошибка создания отзыва: %w", err), http.StatusInternalServerError)
+        utils.SendError(w, "ошибка создания отзыва", http.StatusInternalServerError)
+        return
+    }
 
 	w.Header().Set("Content-Type", "application/json")
 
 	if err := json.NewEncoder(w).Encode(review); err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка формирования JSON: %w", err), http.StatusInternalServerError)
+		log.LogHandlerError(logger, fmt.Errorf("ошибка формирования JSON: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
 	}
 }
