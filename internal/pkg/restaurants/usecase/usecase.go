@@ -62,4 +62,9 @@ func (u *RestaurantUsecase) ReviewExists(ctx context.Context, userID, restaurant
     return u.repo.ReviewExists(ctx, userID, restaurantID)
 }
 
+func (u *RestaurantUsecase) ReviewExistsReturn(ctx context.Context, userID, restaurantID uuid.UUID) (models.ReviewUser, error) {
+    return u.repo.ReviewExistsReturn(ctx, userID, restaurantID)
+}
+
+
 

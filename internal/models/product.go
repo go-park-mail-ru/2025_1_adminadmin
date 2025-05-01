@@ -38,15 +38,20 @@ type Category struct {
 type Review struct {
 	Id         uuid.UUID `json:"id"`
 	User       string    `json:"user"`
+	UserPic    string    `json:"user_pic_path"`
 	ReviewText string    `json:"review_text,omitempty"`
 	Rating     int       `json:"rating"`
 	CreatedAt  time.Time `json:"created_at"`
 }
 
+type ReviewUser struct {
+	Id uuid.UUID `json:"id"`
+}
+
 // easyjson:json
 type ReviewInReq struct {
-	ReviewText string    `json:"review_text,omitempty"`
-	Rating     int       `json:"rating"`
+	ReviewText string `json:"review_text,omitempty"`
+	Rating     int    `json:"rating"`
 }
 
 // easyjson:json

@@ -305,15 +305,21 @@ func (h *RestaurantHandler) CheckReviews(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	exists, err := h.restaurantUsecase.ReviewExists(r.Context(), id, restaurantID)
+	exists, err := h.restaurantUsecase.ReviewExistsReturn(r.Context(), id, restaurantID)
     if err != nil {
         log.LogHandlerError(logger, fmt.Errorf("ошибка проверки отзыва: %w", err), http.StatusInternalServerError)
         utils.SendError(w, "ошибка проверки отзыва", http.StatusInternalServerError)
         return
     }
-    if exists {
-        log.LogHandlerError(logger, errors.New("пользователь уже оставил отзыв для этого ресторана"), http.StatusBadRequest)
-        utils.SendError(w, "вы уже оставляли отзыв для этого ресторана", http.StatusBadRequest)
-        return
-    }
+
+	if exists != (models.ReviewUser{}) {
+		data, err := json.Marshal(exists)
+		if err != nil {
+			log.LogHandlerError(logger, fmt.Errorf("не удалось сериализовать данные: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(data)
+	}
 }

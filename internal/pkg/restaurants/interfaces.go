@@ -13,6 +13,7 @@ type RestaurantRepo interface {
 	GetReviews(ctx context.Context, restaurantID uuid.UUID, count, offset int) ([]models.Review, error) 
 	CreateReviews(ctx context.Context, req models.Review, id uuid.UUID, restaurantID uuid.UUID) error
 	ReviewExists(ctx context.Context, userID, restaurantID uuid.UUID) (bool, error) 
+	ReviewExistsReturn(ctx context.Context, userID, restaurantID uuid.UUID) (models.ReviewUser, error)
 
 }
 
@@ -22,5 +23,6 @@ type RestaurantUsecase interface {
 	GetReviews(ctx context.Context, restaurantID uuid.UUID, count, offset int) ([]models.Review, error)
 	CreateReview(ctx context.Context, req models.ReviewInReq, id uuid.UUID, restaurantID uuid.UUID, login string) (models.Review, error)
 	ReviewExists(ctx context.Context, userID, restaurantID uuid.UUID) (bool, error)
+	ReviewExistsReturn(ctx context.Context, userID, restaurantID uuid.UUID) (models.ReviewUser, error)
 
 }
