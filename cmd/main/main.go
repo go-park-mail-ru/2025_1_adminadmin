@@ -83,7 +83,7 @@ func main() {
 
 	logMW := log.CreateLoggerMiddleware(logger)
 
-	conn, err := grpc.Dial(os.Getenv("auth:5459"), grpc.WithInsecure())
+	conn, err := grpc.Dial("auth:5459", grpc.WithInsecure())
 	if err != nil {
 		logger.Error("Ошибка подключения к gRPC Auth-сервису: " + err.Error())
 		return
