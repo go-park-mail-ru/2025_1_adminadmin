@@ -75,6 +75,7 @@ func (r *RestaurantRepository) GetProductsByRestaurant(ctx context.Context, rest
 	defer prodRows.Close()
 
 	categoryMap := make(map[string][]models.Product)
+	var categoriesOrder []string
 
 	for prodRows.Next() {
 		var p models.Product
@@ -85,15 +86,17 @@ func (r *RestaurantRepository) GetProductsByRestaurant(ctx context.Context, rest
 			return nil, err
 		}
 		p.Sanitize()
+		if _, exists := categoryMap[category]; !exists {
+            categoriesOrder = append(categoriesOrder, category)
+        }
 		categoryMap[category] = append(categoryMap[category], p)
 	}
-
-	for categoryName, products := range categoryMap {
-		rest.Categories = append(rest.Categories, models.Category{
-			Name:     categoryName,
-			Products: products,
-		})
-	}
+	for _, categoryName := range categoriesOrder {
+        rest.Categories = append(rest.Categories, models.Category{
+            Name:     categoryName,
+            Products: categoryMap[categoryName],
+        })
+    }
 
 	logger.Info("Successfully built RestaurantFull model")
 	return &rest, nil
