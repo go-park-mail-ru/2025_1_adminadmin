@@ -16,7 +16,7 @@ const (
 	getRestaurantByid       = "SELECT id, name, description, rating FROM restaurants WHERE id = $1;"
 	getProductsByRestaurant = "SELECT id, name, banner_url, address, description, rating, rating_count, working_mode_from, working_mode_to, delivery_time_from, delivery_time_to FROM restaurants WHERE id = $1 ORDER BY id ASC;"
 	getRestaurantTag        = "SELECT rt.name FROM restaurant_tags rt JOIN restaurant_tags_relations rtr ON rtr.tag_id = rt.id WHERE rtr.restaurant_id = $1 ORDER BY rt.name ASC;"
-	getRestaurantProduct    = "SELECT id, name, price, image_url, weight, category FROM products WHERE restaurant_id = $1 ORDER BY category ORDER BY category ASC, id ASC LIMIT $2 OFFSET $3"
+	getRestaurantProduct    = "SELECT id, name, price, image_url, weight, category FROM products WHERE restaurant_id = $1 ORDER BY category ASC, id ASC LIMIT $2 OFFSET $3"
 	getAllReview            = `SELECT r.id, u.login, r.review_text, r.rating, r.created_at
 								FROM reviews r
 								INNER JOIN users u ON r.user_id = u.id
