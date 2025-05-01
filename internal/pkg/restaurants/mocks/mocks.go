@@ -95,21 +95,6 @@ func (mr *MockRestaurantRepoMockRecorder) GetReviews(ctx, restaurantID, count, o
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetReviews", reflect.TypeOf((*MockRestaurantRepo)(nil).GetReviews), ctx, restaurantID, count, offset)
 }
 
-// ReviewExists mocks base method.
-func (m *MockRestaurantRepo) ReviewExists(ctx context.Context, userID, restaurantID uuid.UUID) (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ReviewExists", ctx, userID, restaurantID)
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// ReviewExists indicates an expected call of ReviewExists.
-func (mr *MockRestaurantRepoMockRecorder) ReviewExists(ctx, userID, restaurantID interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReviewExists", reflect.TypeOf((*MockRestaurantRepo)(nil).ReviewExists), ctx, userID, restaurantID)
-}
-
 // MockRestaurantUsecase is a mock of RestaurantUsecase interface.
 type MockRestaurantUsecase struct {
 	ctrl     *gomock.Controller
@@ -191,19 +176,4 @@ func (m *MockRestaurantUsecase) GetReviews(ctx context.Context, restaurantID uui
 func (mr *MockRestaurantUsecaseMockRecorder) GetReviews(ctx, restaurantID, count, offset interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetReviews", reflect.TypeOf((*MockRestaurantUsecase)(nil).GetReviews), ctx, restaurantID, count, offset)
-}
-
-// ReviewExists mocks base method.
-func (m *MockRestaurantUsecase) ReviewExists(ctx context.Context, userID, restaurantID uuid.UUID) (bool, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ReviewExists", ctx, userID, restaurantID)
-	ret0, _ := ret[0].(bool)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// ReviewExists indicates an expected call of ReviewExists.
-func (mr *MockRestaurantUsecaseMockRecorder) ReviewExists(ctx, userID, restaurantID interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReviewExists", reflect.TypeOf((*MockRestaurantUsecase)(nil).ReviewExists), ctx, userID, restaurantID)
 }
