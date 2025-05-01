@@ -325,7 +325,7 @@ VALUES (
     'default_user.jpg',
     decode('a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6', 'hex')
 ),
-VALUES (
+(
     uuid_generate_v4(), 
     'test205', 
     'Сергей',  
