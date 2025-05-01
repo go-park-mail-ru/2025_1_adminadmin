@@ -204,6 +204,11 @@ func (h *RestaurantHandler) CreateReview(w http.ResponseWriter, r *http.Request)
 		return
 	}
 	req.Sanitize()
+	if req.Rating < 1 || req.Rating > 5 {
+		log.LogHandlerError(logger, fmt.Errorf("рейтинг должен быть от 1 до 5"), http.StatusBadRequest)
+		utils.SendError(w, "рейтинг должен быть от 1 до 5", http.StatusBadRequest)
+		return 
+	}
 	cookieJWT, err := r.Cookie("AdminJWT")
 	if err != nil {
 		if err == http.ErrNoCookie {

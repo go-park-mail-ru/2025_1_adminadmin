@@ -22,7 +22,7 @@ const (
 								INNER JOIN users u ON r.user_id = u.id
 								WHERE r.restaurant_id = $1
 								LIMIT $2 OFFSET $3;`
-	insertReview = "INSERT INTO reviews (id, user_id, restaurant_id, review_text, rating, created_at) VALUES ($1, $2, $3, $4, $5, $6)"
+	insertReview = "INSERT INTO reviews (id, user_id, restaurant_id, review_text, rating, created_at) VALUES ($1, $2, $3, NULLIF($4, ''), $5, $6)"
 
 )
 

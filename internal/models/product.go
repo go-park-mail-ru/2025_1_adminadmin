@@ -45,7 +45,7 @@ type Review struct {
 
 // easyjson:json
 type ReviewInReq struct {
-	ReviewText string    `json:"review_text"`
+	ReviewText string    `json:"review_text,omitempty"`
 	Rating     int       `json:"rating"`
 }
 

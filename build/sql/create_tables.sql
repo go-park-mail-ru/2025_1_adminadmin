@@ -34,9 +34,9 @@ CREATE TABLE IF NOT EXISTS reviews (
     id UUID PRIMARY KEY,
     user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     restaurant_id UUID NOT NULL REFERENCES restaurants(id) ON DELETE CASCADE,
-    review_text TEXT NOT NULL CHECK (char_length(review_text) <= 300),
+    review_text TEXT CHECK (char_length(review_text) <= 300),
     rating INT NOT NULL CHECK (rating >= 1 AND rating <= 5),
-    created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL
 );
 
 
