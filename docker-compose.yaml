@@ -24,6 +24,22 @@ services:
     networks:
       - adminadmin-network
 
+  auth:
+    container_name: stat
+    build:
+      context: .
+      dockerfile: ./build/auth.Dockerfile
+    env_file:
+      - .env
+    depends_on:
+      postgres:
+        condition: service_started
+    restart: always
+    ports:
+      - "5459:5459"
+    networks:
+      - adminadmin-network
+
   postgres:
     env_file:
       - .env
