@@ -24,7 +24,7 @@ const (
 								LIMIT $2 OFFSET $3;`
 	insertReview           = "INSERT INTO reviews (id, user_id, restaurant_id, review_text, rating, created_at) VALUES ($1, $2, $3, NULLIF($4, ''), $5, $6)"
 	checkReviewExistsQuery = `SELECT EXISTS(SELECT 1 FROM reviews WHERE user_id = $1 AND restaurant_id = $2)`
-	getIdByLogin           = "SELECT id FROM users WHERE user_id = $1 AND restaurant_id = $2;"
+	getIdByLogin           = "SELECT id FROM reviews WHERE user_id = $1 AND restaurant_id = $2;"
 )
 
 type RestaurantRepository struct {
