@@ -135,7 +135,7 @@ func main() {
 		order.HandleFunc("/create", cartHandler.CreateOrder).Methods(http.MethodPost, http.MethodOptions)
 	}
 	
-	r.HandleFunc("/payment", cartHandler.Payment).Methods(http.MethodPost)
+	r.HandleFunc("/payment", cartHandler.UpdateOrderStatus).Methods(http.MethodPost)
 	http.Handle("/", r)
 	srv := http.Server{
 		Handler:           r,
