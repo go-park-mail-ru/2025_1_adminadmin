@@ -11,7 +11,7 @@ type RestaurantRepo interface {
 	GetAll(ctx context.Context, count, offset int) ([]models.Restaurant, error)
 	GetProductsByRestaurant(ctx context.Context, restaurantID uuid.UUID, count, offset int) (*models.RestaurantFull, error)
 	GetReviews(ctx context.Context, restaurantID uuid.UUID, count, offset int) ([]models.Review, error) 
-	CreateReviews(ctx context.Context, req models.Review, id uuid.UUID, restaurantID uuid.UUID) error
+	CreateReviews(ctx context.Context, req models.Review, id uuid.UUID, restaurantID uuid.UUID) (models.Review, error)
 	ReviewExists(ctx context.Context, userID, restaurantID uuid.UUID) (bool, error) 
 	ReviewExistsReturn(ctx context.Context, userID, restaurantID uuid.UUID) (models.ReviewUser, error)
 

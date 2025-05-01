@@ -50,12 +50,12 @@ func (u *RestaurantUsecase) CreateReview(ctx context.Context, req models.ReviewI
 		Rating:     req.Rating,
 		CreatedAt:  time.Now(),
 	}
-	err := u.repo.CreateReviews(ctx, newReview, id, restaurantID)
+	review, err := u.repo.CreateReviews(ctx, newReview, id, restaurantID)
 	if err != nil {
 		return models.Review{}, fmt.Errorf("ошибка при получении данных о ресторане: %w", err)
 	}
 
-	return newReview, nil
+	return review, nil
 }
 
 func (u *RestaurantUsecase) ReviewExists(ctx context.Context, userID, restaurantID uuid.UUID) (bool, error) {
