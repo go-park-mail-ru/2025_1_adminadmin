@@ -25,7 +25,7 @@ services:
       - adminadmin-network
 
   auth:
-    container_name: stat
+    container_name: auth
     build:
       context: .
       dockerfile: ./build/auth.Dockerfile
