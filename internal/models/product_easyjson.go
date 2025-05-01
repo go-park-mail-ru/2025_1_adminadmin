@@ -127,14 +127,20 @@ func easyjsonCf3f67efEncodeGithubComGoParkMailRu20251AdminadminInternalModels1(o
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
+	if in.ReviewText != "" {
 		const prefix string = ",\"review_text\":"
+		first = false
 		out.RawString(prefix[1:])
 		out.String(string(in.ReviewText))
 	}
 	{
 		const prefix string = ",\"rating\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.Int(int(in.Rating))
 	}
 	out.RawByte('}')
@@ -220,7 +226,7 @@ func easyjsonCf3f67efEncodeGithubComGoParkMailRu20251AdminadminInternalModels2(o
 		out.RawString(prefix)
 		out.String(string(in.User))
 	}
-	{
+	if in.ReviewText != "" {
 		const prefix string = ",\"review_text\":"
 		out.RawString(prefix)
 		out.String(string(in.ReviewText))
