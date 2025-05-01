@@ -262,6 +262,8 @@ func easyjsonCf3f67efDecodeGithubComGoParkMailRu20251AdminadminInternalModels3(i
 			}
 		case "user":
 			out.User = string(in.String())
+		case "path":
+			out.UserPic = string(in.String())
 		case "review_text":
 			out.ReviewText = string(in.String())
 		case "rating":
@@ -293,6 +295,11 @@ func easyjsonCf3f67efEncodeGithubComGoParkMailRu20251AdminadminInternalModels3(o
 		const prefix string = ",\"user\":"
 		out.RawString(prefix)
 		out.String(string(in.User))
+	}
+	{
+		const prefix string = ",\"path\":"
+		out.RawString(prefix)
+		out.String(string(in.UserPic))
 	}
 	if in.ReviewText != "" {
 		const prefix string = ",\"review_text\":"
