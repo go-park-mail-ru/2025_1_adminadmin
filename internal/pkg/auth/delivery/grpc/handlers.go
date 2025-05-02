@@ -2,6 +2,7 @@ package grpc
 
 import (
 	"context"
+	"errors"
 	"os"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
@@ -48,21 +49,76 @@ func (h *AuthHandler) SignIn(ctx context.Context, in *gen.SignInRequest) (*gen.U
 	}
 
 	return &gen.UserResponse{
-		Login:  user.Login,
-		Token:  token,
-		Token2: csrfToken,
+		Login:       user.Login,
+		FirstName:   user.FirstName,
+		LastName:    user.LastName,
+		PhoneNumber: user.PhoneNumber,
+		Token:       token,
+		CsrfToken:   csrfToken,
 	}, nil
 }
 
-func (h *AuthHandler) SignUp(context.Context, *gen.SignUpRequest) (*gen.UserResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SignUp not implemented")
+func (h *AuthHandler) SignUp(ctx context.Context, in *gen.SignUpRequest) (*gen.UserResponse, error) {
+	//logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+	req := models.SignUpReq{
+		Login:       in.Login,
+		FirstName:   in.FirstName,
+		LastName:    in.LastName,
+		PhoneNumber: in.PhoneNumber,
+		Password:    in.Password,
+	}
+	req.Sanitize()
+
+	user, token, csrfToken, err := h.uc.SignUp(ctx, req)
+
+	if err != nil {
+		switch err {
+		case auth.ErrInvalidLogin, auth.ErrInvalidPassword:
+			//log.LogHandlerError(logger, fmt.Errorf("Неправильный логин или пароль: %w", err), http.StatusBadRequest)
+			return nil, status.Errorf(codes.InvalidArgument, err.Error())
+		case auth.ErrInvalidName, auth.ErrInvalidPhone, auth.ErrCreatingUser:
+			//log.LogHandlerError(logger, err, http.StatusBadRequest)
+			return nil, status.Errorf(codes.InvalidArgument, err.Error())
+		default:
+			//log.LogHandlerError(logger, fmt.Errorf("Неизвестная ошибка: %w", err), http.StatusInternalServerError)
+			return nil, status.Errorf(codes.Internal, err.Error())
+		}
+	}
+	return &gen.UserResponse{
+		Login:       user.Login,
+		FirstName:   user.FirstName,
+		LastName:    user.LastName,
+		PhoneNumber: user.PhoneNumber,
+		Token:       token,
+		CsrfToken:   csrfToken,
+	}, nil
+
 }
-func (h *AuthHandler) Check(context.Context, *emptypb.Empty) (*gen.UserResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Check not implemented")
+
+func (h *AuthHandler) Check(ctx context.Context, in *gen.CheckRequest) (*gen.UserResponse, error) {
+	//logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+	user, err := h.uc.Check(ctx, in.Login)
+
+	if err != nil {
+		if errors.Is(err, auth.ErrUserNotFound) {
+			return nil, status.Errorf(codes.InvalidArgument, err.Error())
+		}
+	}
+
+	return &gen.UserResponse{
+		Login:       user.Login,
+		FirstName:   user.FirstName,
+		LastName:    user.LastName,
+		PhoneNumber: user.PhoneNumber,
+	}, nil
 }
+
 func (h *AuthHandler) UpdateUser(context.Context, *gen.UpdateUserRequest) (*gen.UserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
 }
+
 func (h *AuthHandler) UpdateUserPic(context.Context, *gen.UpdateUserPicRequest) (*gen.UserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserPic not implemented")
 }
