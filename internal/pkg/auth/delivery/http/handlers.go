@@ -147,7 +147,7 @@ func (h *AuthHandler) SignUp(w http.ResponseWriter, r *http.Request) {
 			utils.SendError(w, err.Error(), http.StatusBadRequest)
 		default:
 			log.LogHandlerError(logger, fmt.Errorf("неизвестная ошибка: %w", err), http.StatusInternalServerError)
-			utils.SendError(w, "неизвестная ошибка", http.StatusInternalServerError)
+			utils.SendError(w, "пользователь с таким логином уже существует", http.StatusInternalServerError)
 		}
 		return
 	}
