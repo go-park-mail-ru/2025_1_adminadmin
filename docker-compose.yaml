@@ -31,6 +31,8 @@ services:
       dockerfile: ./build/auth.Dockerfile
     environment:
       USER_IMAGE_BASE_PATH: ${USER_IMAGE_BASE_PATH}
+    volumes:
+      - /home/ubuntu/deploy_user/tp_code/images_user/:${USER_IMAGE_BASE_PATH}
     depends_on:
       postgres:
         condition: service_started
