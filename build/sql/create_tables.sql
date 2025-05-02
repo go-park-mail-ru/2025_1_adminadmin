@@ -540,27 +540,44 @@ DO $$
 DECLARE 
     user_record RECORD;
     restaurant_record RECORD;
+    review_texts TEXT[] := ARRAY[
+        'Отличное место! Все очень понравилось.',
+        'Хорошее обслуживание, но еда могла бы быть лучше.',
+        'Приятная атмосфера, но слишком долго ждали заказ.',
+        'Очень вкусная еда! Обязательно вернусь.',
+        'Не понравилось. Ожидал большего.',
+        'Очень уютно, но не хватило разнообразия в меню.',
+        'Лучший ресторан в городе!',
+        'Хорошее соотношение цены и качества.',
+        'Еда была на высшем уровне!',
+        'Неудачный опыт, к сожалению.'
+    ];
+    random_review TEXT;
 BEGIN
+    -- Перебираем всех пользователей
     FOR user_record IN 
         SELECT id FROM users
     LOOP
+        -- Перебираем все рестораны
         FOR restaurant_record IN 
             SELECT id FROM restaurants
         LOOP
-            
+            -- Случайным образом выбираем один комментарий из массива
+            random_review := review_texts[(random() * array_length(review_texts, 1) + 1)::int];
+
+            -- Добавляем отзыв для текущего пользователя и ресторана
             INSERT INTO reviews (id, user_id, restaurant_id, review_text, rating, created_at)
             VALUES (
-                uuid_generate_v4(), 
-                user_record.id,    
-                restaurant_record.id, 
-                'Отличное место!',  
-                5,                 
-                NOW()               
+                uuid_generate_v4(), -- генерируем уникальный id отзыва
+                user_record.id,     -- id пользователя
+                restaurant_record.id, -- id ресторана
+                random_review,      -- случайно выбранный текст отзыва
+                5,                  -- рейтинг (можно варьировать)
+                NOW()               -- текущая дата и время
             );
         END LOOP;
     END LOOP;
 END $$;
-
 
 
 -- Generated data inserts
