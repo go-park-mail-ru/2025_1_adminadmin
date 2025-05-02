@@ -15,6 +15,7 @@ import (
 	jwtUtils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/jwt"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/send_error"
+	"github.com/satori/uuid"
 	"github.com/golang-jwt/jwt"
 	"github.com/mailru/easyjson"
 )
@@ -88,12 +89,20 @@ func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("X-CSRF-Token", user.CsrfToken)
 	w.Header().Set("Content-Type", "application/json")
 
+	parsedUUID, err := uuid.FromString(user.Id)
+	if err != nil {
+    	log.LogHandlerError(logger, fmt.Errorf("Некорректный id: %w", err), http.StatusUnauthorized)
+		utils.SendError(w, "Некорректный id", http.StatusUnauthorized)
+	}
+
 	newModel := models.User{
 		Login:       user.Login,
 		PhoneNumber: user.PhoneNumber,
+		Id:          parsedUUID,
 		FirstName:   user.FirstName,
 		LastName:    user.LastName,
 		Description: user.Description,
+		UserPic:     user.UserPic,
 	}
 
 	data, err := json.Marshal(newModel)
@@ -165,12 +174,20 @@ func (h *AuthHandler) SignUp(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("X-CSRF-Token", user.CsrfToken)
 	w.Header().Set("Content-Type", "application/json")
 
+	parsedUUID, err := uuid.FromString(user.Id)
+	if err != nil {
+    	log.LogHandlerError(logger, fmt.Errorf("Некорректный id: %w", err), http.StatusUnauthorized)
+		utils.SendError(w, "Некорректный id", http.StatusUnauthorized)
+	}
+
 	newModel := models.User{
 		Login:       user.Login,
 		PhoneNumber: user.PhoneNumber,
+		Id:          parsedUUID,
 		FirstName:   user.FirstName,
 		LastName:    user.LastName,
 		Description: user.Description,
+		UserPic:     user.UserPic,
 	}
 
 	data, err := json.Marshal(newModel)
@@ -235,12 +252,20 @@ func (h *AuthHandler) Check(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 
+	parsedUUID, err := uuid.FromString(user.Id)
+	if err != nil {
+    	log.LogHandlerError(logger, fmt.Errorf("Некорректный id: %w", err), http.StatusUnauthorized)
+		utils.SendError(w, "Некорректный id", http.StatusUnauthorized)
+	}
+
 	newModel := models.User{
 		Login:       user.Login,
 		PhoneNumber: user.PhoneNumber,
+		Id:          parsedUUID,
 		FirstName:   user.FirstName,
 		LastName:    user.LastName,
 		Description: user.Description,
+		UserPic:     user.UserPic,
 	}
 
 	data, err := json.Marshal(newModel)

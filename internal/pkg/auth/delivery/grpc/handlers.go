@@ -50,9 +50,12 @@ func (h *AuthHandler) SignIn(ctx context.Context, in *gen.SignInRequest) (*gen.U
 
 	return &gen.UserResponse{
 		Login:       user.Login,
+		PhoneNumber: user.PhoneNumber,
+		Id: user.Id.String(),
 		FirstName:   user.FirstName,
 		LastName:    user.LastName,
-		PhoneNumber: user.PhoneNumber,
+		Description: user.Description,
+		UserPic: user.UserPic,
 		Token:       token,
 		CsrfToken:   csrfToken,
 	}, nil
@@ -87,9 +90,12 @@ func (h *AuthHandler) SignUp(ctx context.Context, in *gen.SignUpRequest) (*gen.U
 	}
 	return &gen.UserResponse{
 		Login:       user.Login,
+		PhoneNumber: user.PhoneNumber,
+		Id: user.Id.String(),
 		FirstName:   user.FirstName,
 		LastName:    user.LastName,
-		PhoneNumber: user.PhoneNumber,
+		Description: user.Description,
+		UserPic: user.UserPic,
 		Token:       token,
 		CsrfToken:   csrfToken,
 	}, nil
@@ -109,9 +115,12 @@ func (h *AuthHandler) Check(ctx context.Context, in *gen.CheckRequest) (*gen.Use
 
 	return &gen.UserResponse{
 		Login:       user.Login,
+		PhoneNumber: user.PhoneNumber,
+		Id: user.Id.String(),
 		FirstName:   user.FirstName,
 		LastName:    user.LastName,
-		PhoneNumber: user.PhoneNumber,
+		Description: user.Description,
+		UserPic: user.UserPic,
 	}, nil
 }
 

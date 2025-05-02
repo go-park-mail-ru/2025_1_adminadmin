@@ -4,6 +4,7 @@ go 1.24.0
 
 require (
 	github.com/gocarina/gocsv v0.0.0-20240520201108-78e41c74b4b1
+	github.com/gofrs/uuid v4.0.0+incompatible
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/golang/mock v1.6.0
 	github.com/gorilla/mux v1.8.1
