@@ -11,9 +11,8 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/grpc/gen"
 	authHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/http"
-	authRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/repo"
-	authUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/usecase"
 	cartHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/http"
 	cartPgRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/pg"
 	cartRedisRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/redis"
@@ -26,6 +25,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/redis/go-redis/v9"
+	"google.golang.org/grpc"
 )
 
 func initRedis() *redis.Client {
@@ -83,9 +83,16 @@ func main() {
 
 	logMW := log.CreateLoggerMiddleware(logger)
 
-	authRepo := authRepo.CreateAuthRepo(pool)
-	authUsecase := authUsecase.CreateAuthUsecase(authRepo)
-	authHandler := authHandler.CreateAuthHandler(authUsecase)
+	conn, err := grpc.Dial("auth:5459", grpc.WithInsecure())
+	if err != nil {
+		logger.Error("Ошибка подключения к gRPC Auth-сервису: " + err.Error())
+		return
+	}
+	defer conn.Close()
+
+	authGRPCClient := gen.NewAuthServiceClient(conn)
+
+	authHandler := authHandler.CreateAuthHandler(authGRPCClient)
 
 	restaurantRepo := restaurantRepo.NewRestaurantRepository(pool)
 	restaurantUsecase := restaurantUsecase.NewRestaurantsUsecase(restaurantRepo)
@@ -102,15 +109,9 @@ func main() {
 
 	auth := r.PathPrefix("/auth").Subrouter()
 	{
-		auth.HandleFunc("/signup", authHandler.SignUp).Methods(http.MethodPost, http.MethodOptions)
+
 		auth.HandleFunc("/signin", authHandler.SignIn).Methods(http.MethodPost, http.MethodOptions)
-		auth.HandleFunc("/check", authHandler.Check).Methods(http.MethodGet, http.MethodOptions)
-		auth.HandleFunc("/logout", authHandler.LogOut).Methods(http.MethodGet, http.MethodOptions)
-		auth.HandleFunc("/update_user", authHandler.UpdateUser).Methods(http.MethodPost, http.MethodOptions)
-		auth.HandleFunc("/update_userpic", authHandler.UpdateUserPic).Methods(http.MethodPost, http.MethodOptions)
-		auth.HandleFunc("/address", authHandler.GetUserAddresses).Methods(http.MethodGet, http.MethodOptions)
-		auth.HandleFunc("/address", authHandler.DeleteAddress).Methods(http.MethodDelete, http.MethodOptions)
-		auth.HandleFunc("/address", authHandler.AddAddress).Methods(http.MethodPost, http.MethodOptions)
+
 	}
 	restaurants := r.PathPrefix("/restaurants").Subrouter()
 	{
@@ -135,7 +136,7 @@ func main() {
 		order.HandleFunc("/create", cartHandler.CreateOrder).Methods(http.MethodPost, http.MethodOptions)
 	}
 
-	r.HandleFunc("/payment", cartHandler.UpdateOrderStatus).Methods(http.MethodPost)
+	r.HandleFunc("/payment", cartHandler.Payment).Methods(http.MethodPost)
 	http.Handle("/", r)
 	srv := http.Server{
 		Handler:           r,
