@@ -13,8 +13,15 @@ import (
 	authRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/repo"
 	authUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/usecase"
 	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/joho/godotenv"
 	"google.golang.org/grpc"
 )
+
+func init() {
+	if err := godotenv.Load(); err != nil {
+		fmt.Println(err)
+	}
+}
 
 func main() {
 	if err := run(); err != nil {
