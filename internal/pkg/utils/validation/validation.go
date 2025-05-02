@@ -10,7 +10,7 @@ import (
 
 const (
 	maxShortFieldLength = 20
-	maxAddressLength    = 200
+	maxAddressLength    = 300
 	maxCommentLength    = 300
 	minFieldLength      = 1
 	maxFloorValue       = 100
@@ -18,7 +18,7 @@ const (
 
 const allowedSymbols = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя" +
 	"АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" +
-	"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -_#*,."
+	"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -_#*,./"
 
 func isValidShortField(s string) bool {
 	if len(s) < minFieldLength || len(s) > maxShortFieldLength {

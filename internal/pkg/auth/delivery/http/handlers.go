@@ -399,12 +399,12 @@ func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("AdminJWT")
 	if err != nil {
 		if err == http.ErrNoCookie {
-			log.LogHandlerError(logger, fmt.Errorf("Токен отсутствует: %w", err), http.StatusUnauthorized)
-			utils.SendError(w, "Токен отсутствует", http.StatusUnauthorized)
+			log.LogHandlerError(logger, fmt.Errorf("токен отсутствует: %w", err), http.StatusUnauthorized)
+			utils.SendError(w, "токен отсутствует", http.StatusUnauthorized)
 			return
 		}
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка при чтении куки: %w", err), http.StatusBadRequest)
-		utils.SendError(w, "Ошибка при чтении куки", http.StatusBadRequest)
+		log.LogHandlerError(logger, fmt.Errorf("ошибка при чтении куки: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "ошибка при чтении куки", http.StatusBadRequest)
 		return
 	}
 	JWTStr := cookie.Value
@@ -413,8 +413,8 @@ func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) {
 
 	login, ok := jwtUtils.GetLoginFromJWT(JWTStr, claims, h.secret)
 	if !ok || login == "" {
-		log.LogHandlerError(logger, errors.New("Недействительный токен: login отсутствует"), http.StatusUnauthorized)
-		utils.SendError(w, "Недействительный токен: login отсутствует", http.StatusUnauthorized)
+		log.LogHandlerError(logger, errors.New("недействительный токен: login отсутствует"), http.StatusUnauthorized)
+		utils.SendError(w, "недействительный токен: login отсутствует", http.StatusUnauthorized)
 		return
 	}
 
@@ -428,11 +428,11 @@ func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) {
 
 	if err := r.ParseMultipartForm(maxRequestBodySize); err != nil {
 		if errors.As(err, new(*http.MaxBytesError)) {
-			log.LogHandlerError(logger, fmt.Errorf("Превышен допустимый размер файла: %w", err), http.StatusRequestEntityTooLarge)
-			utils.SendError(w, "Превышен допустимый размер файла", http.StatusRequestEntityTooLarge)
+			log.LogHandlerError(logger, fmt.Errorf("превышен допустимый размер файла: %w", err), http.StatusRequestEntityTooLarge)
+			utils.SendError(w, "превышен допустимый размер файла", http.StatusRequestEntityTooLarge)
 		} else {
-			log.LogHandlerError(logger, fmt.Errorf("Невозможно обработать файл: %w", err), http.StatusBadRequest)
-			utils.SendError(w, "Невозможно обработать файл", http.StatusBadRequest)
+			log.LogHandlerError(logger, fmt.Errorf("невозможно обработать файл: %w", err), http.StatusBadRequest)
+			utils.SendError(w, "невозможно обработать файл", http.StatusBadRequest)
 		}
 		return
 	}
@@ -445,23 +445,23 @@ func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) {
 
 	file, _, err := r.FormFile("user_pic")
 	if err != nil {
-		utils.SendError(w, "Файл не найден в запросе", http.StatusBadRequest)
+		utils.SendError(w, "файл не найден в запросе", http.StatusBadRequest)
 		return
 	}
 	defer file.Close()
 
 	buffer := make([]byte, 512)
 	if _, err := file.Read(buffer); err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка при чтении файла: %w", err), http.StatusBadRequest)
-		utils.SendError(w, "Ошибка при чтении файла", http.StatusBadRequest)
+		log.LogHandlerError(logger, fmt.Errorf("ошибка при чтении файла: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "ошибка при чтении файла", http.StatusBadRequest)
 		return
 	}
 	file.Seek(0, io.SeekStart)
 
 	mimeType := http.DetectContentType(buffer)
 	if _, ok := allowedMimeTypes[mimeType]; !ok {
-		log.LogHandlerError(logger, fmt.Errorf("Недопустимый формат файла: %w", err), http.StatusBadRequest)
-		utils.SendError(w, "Недопустимый формат файла.", http.StatusBadRequest)
+		log.LogHandlerError(logger, fmt.Errorf("недопустимый формат файла: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "недопустимый формат файла.", http.StatusBadRequest)
 		return
 	}
 
@@ -483,11 +483,11 @@ func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) {
 			log.LogHandlerError(logger, err, http.StatusInternalServerError)
 			utils.SendError(w, err.Error(), http.StatusInternalServerError)
 		case auth.ErrFileCreation, auth.ErrFileSaving, auth.ErrFileDeletion:
-			log.LogHandlerError(logger, fmt.Errorf("Ошибка при работе с файлом: %w", err), http.StatusInternalServerError)
-			utils.SendError(w, "Ошибка при работе с файлом", http.StatusInternalServerError)
+			log.LogHandlerError(logger, fmt.Errorf("ошибка при работе с файлом: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "ошибка при работе с файлом", http.StatusInternalServerError)
 		default:
-			log.LogHandlerError(logger, fmt.Errorf("Ошибка при обновлении аватарки: %w", err), http.StatusInternalServerError)
-			utils.SendError(w, "Ошибка при обновлении аватарки", http.StatusInternalServerError)
+			log.LogHandlerError(logger, fmt.Errorf("ошибка при обновлении аватарки: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "ошибка при обновлении аватарки", http.StatusInternalServerError)
 		}
 		return
 	}
