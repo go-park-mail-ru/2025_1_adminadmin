@@ -66,6 +66,50 @@ func (x *CheckRequest) GetLogin() string {
 	return ""
 }
 
+type AddressRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Login         string                 `protobuf:"bytes,1,opt,name=Login,proto3" json:"Login,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddressRequest) Reset() {
+	*x = AddressRequest{}
+	mi := &file_proto_auth_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddressRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddressRequest) ProtoMessage() {}
+
+func (x *AddressRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_auth_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddressRequest.ProtoReflect.Descriptor instead.
+func (*AddressRequest) Descriptor() ([]byte, []int) {
+	return file_proto_auth_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *AddressRequest) GetLogin() string {
+	if x != nil {
+		return x.Login
+	}
+	return ""
+}
+
 type SignInRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Login         string                 `protobuf:"bytes,1,opt,name=Login,proto3" json:"Login,omitempty"`
@@ -76,7 +120,7 @@ type SignInRequest struct {
 
 func (x *SignInRequest) Reset() {
 	*x = SignInRequest{}
-	mi := &file_proto_auth_proto_msgTypes[1]
+	mi := &file_proto_auth_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -88,7 +132,7 @@ func (x *SignInRequest) String() string {
 func (*SignInRequest) ProtoMessage() {}
 
 func (x *SignInRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_auth_proto_msgTypes[1]
+	mi := &file_proto_auth_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -101,7 +145,7 @@ func (x *SignInRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SignInRequest.ProtoReflect.Descriptor instead.
 func (*SignInRequest) Descriptor() ([]byte, []int) {
-	return file_proto_auth_proto_rawDescGZIP(), []int{1}
+	return file_proto_auth_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *SignInRequest) GetLogin() string {
@@ -131,7 +175,7 @@ type SignUpRequest struct {
 
 func (x *SignUpRequest) Reset() {
 	*x = SignUpRequest{}
-	mi := &file_proto_auth_proto_msgTypes[2]
+	mi := &file_proto_auth_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -143,7 +187,7 @@ func (x *SignUpRequest) String() string {
 func (*SignUpRequest) ProtoMessage() {}
 
 func (x *SignUpRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_auth_proto_msgTypes[2]
+	mi := &file_proto_auth_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -156,7 +200,7 @@ func (x *SignUpRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SignUpRequest.ProtoReflect.Descriptor instead.
 func (*SignUpRequest) Descriptor() ([]byte, []int) {
-	return file_proto_auth_proto_rawDescGZIP(), []int{2}
+	return file_proto_auth_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *SignUpRequest) GetLogin() string {
@@ -208,7 +252,7 @@ type UpdateUserRequest struct {
 
 func (x *UpdateUserRequest) Reset() {
 	*x = UpdateUserRequest{}
-	mi := &file_proto_auth_proto_msgTypes[3]
+	mi := &file_proto_auth_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -220,7 +264,7 @@ func (x *UpdateUserRequest) String() string {
 func (*UpdateUserRequest) ProtoMessage() {}
 
 func (x *UpdateUserRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_auth_proto_msgTypes[3]
+	mi := &file_proto_auth_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -233,7 +277,7 @@ func (x *UpdateUserRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateUserRequest.ProtoReflect.Descriptor instead.
 func (*UpdateUserRequest) Descriptor() ([]byte, []int) {
-	return file_proto_auth_proto_rawDescGZIP(), []int{3}
+	return file_proto_auth_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *UpdateUserRequest) GetLogin() string {
@@ -287,7 +331,7 @@ type UpdateUserPicRequest struct {
 
 func (x *UpdateUserPicRequest) Reset() {
 	*x = UpdateUserPicRequest{}
-	mi := &file_proto_auth_proto_msgTypes[4]
+	mi := &file_proto_auth_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -299,7 +343,7 @@ func (x *UpdateUserPicRequest) String() string {
 func (*UpdateUserPicRequest) ProtoMessage() {}
 
 func (x *UpdateUserPicRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_auth_proto_msgTypes[4]
+	mi := &file_proto_auth_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -312,7 +356,7 @@ func (x *UpdateUserPicRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateUserPicRequest.ProtoReflect.Descriptor instead.
 func (*UpdateUserPicRequest) Descriptor() ([]byte, []int) {
-	return file_proto_auth_proto_rawDescGZIP(), []int{4}
+	return file_proto_auth_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *UpdateUserPicRequest) GetUserPic() []byte {
@@ -331,7 +375,7 @@ type DeleteAddressRequest struct {
 
 func (x *DeleteAddressRequest) Reset() {
 	*x = DeleteAddressRequest{}
-	mi := &file_proto_auth_proto_msgTypes[5]
+	mi := &file_proto_auth_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -343,7 +387,7 @@ func (x *DeleteAddressRequest) String() string {
 func (*DeleteAddressRequest) ProtoMessage() {}
 
 func (x *DeleteAddressRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_auth_proto_msgTypes[5]
+	mi := &file_proto_auth_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -356,7 +400,7 @@ func (x *DeleteAddressRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteAddressRequest.ProtoReflect.Descriptor instead.
 func (*DeleteAddressRequest) Descriptor() ([]byte, []int) {
-	return file_proto_auth_proto_rawDescGZIP(), []int{5}
+	return file_proto_auth_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *DeleteAddressRequest) GetId() string {
@@ -377,7 +421,7 @@ type Address struct {
 
 func (x *Address) Reset() {
 	*x = Address{}
-	mi := &file_proto_auth_proto_msgTypes[6]
+	mi := &file_proto_auth_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -389,7 +433,7 @@ func (x *Address) String() string {
 func (*Address) ProtoMessage() {}
 
 func (x *Address) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_auth_proto_msgTypes[6]
+	mi := &file_proto_auth_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -402,7 +446,7 @@ func (x *Address) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Address.ProtoReflect.Descriptor instead.
 func (*Address) Descriptor() ([]byte, []int) {
-	return file_proto_auth_proto_rawDescGZIP(), []int{6}
+	return file_proto_auth_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *Address) GetId() string {
@@ -443,7 +487,7 @@ type UserResponse struct {
 
 func (x *UserResponse) Reset() {
 	*x = UserResponse{}
-	mi := &file_proto_auth_proto_msgTypes[7]
+	mi := &file_proto_auth_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -455,7 +499,7 @@ func (x *UserResponse) String() string {
 func (*UserResponse) ProtoMessage() {}
 
 func (x *UserResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_auth_proto_msgTypes[7]
+	mi := &file_proto_auth_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -468,7 +512,7 @@ func (x *UserResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UserResponse.ProtoReflect.Descriptor instead.
 func (*UserResponse) Descriptor() ([]byte, []int) {
-	return file_proto_auth_proto_rawDescGZIP(), []int{7}
+	return file_proto_auth_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *UserResponse) GetLogin() string {
@@ -543,7 +587,7 @@ type AddressListResponse struct {
 
 func (x *AddressListResponse) Reset() {
 	*x = AddressListResponse{}
-	mi := &file_proto_auth_proto_msgTypes[8]
+	mi := &file_proto_auth_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -555,7 +599,7 @@ func (x *AddressListResponse) String() string {
 func (*AddressListResponse) ProtoMessage() {}
 
 func (x *AddressListResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_auth_proto_msgTypes[8]
+	mi := &file_proto_auth_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -568,7 +612,7 @@ func (x *AddressListResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddressListResponse.ProtoReflect.Descriptor instead.
 func (*AddressListResponse) Descriptor() ([]byte, []int) {
-	return file_proto_auth_proto_rawDescGZIP(), []int{8}
+	return file_proto_auth_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *AddressListResponse) GetAddresses() []*Address {
@@ -584,6 +628,8 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\n" +
 	"\x10proto/auth.proto\x12\x04auth\x1a\x1bgoogle/protobuf/empty.proto\"$\n" +
 	"\fCheckRequest\x12\x14\n" +
+	"\x05Login\x18\x01 \x01(\tR\x05Login\"&\n" +
+	"\x0eAddressRequest\x12\x14\n" +
 	"\x05Login\x18\x01 \x01(\tR\x05Login\"A\n" +
 	"\rSignInRequest\x12\x14\n" +
 	"\x05Login\x18\x01 \x01(\tR\x05Login\x12\x1a\n" +
@@ -620,15 +666,15 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\x05Token\x18\b \x01(\tR\x05Token\x12\x1c\n" +
 	"\tCsrfToken\x18\t \x01(\tR\tCsrfToken\"B\n" +
 	"\x13AddressListResponse\x12+\n" +
-	"\tAddresses\x18\x01 \x03(\v2\r.auth.AddressR\tAddresses2\xf1\x03\n" +
+	"\tAddresses\x18\x01 \x03(\v2\r.auth.AddressR\tAddresses2\xef\x03\n" +
 	"\vAuthService\x123\n" +
 	"\x06SignIn\x12\x13.auth.SignInRequest\x1a\x12.auth.UserResponse\"\x00\x123\n" +
 	"\x06SignUp\x12\x13.auth.SignUpRequest\x1a\x12.auth.UserResponse\"\x00\x121\n" +
 	"\x05Check\x12\x12.auth.CheckRequest\x1a\x12.auth.UserResponse\"\x00\x12;\n" +
 	"\n" +
 	"UpdateUser\x12\x17.auth.UpdateUserRequest\x1a\x12.auth.UserResponse\"\x00\x12A\n" +
-	"\rUpdateUserPic\x12\x1a.auth.UpdateUserPicRequest\x1a\x12.auth.UserResponse\"\x00\x12G\n" +
-	"\x10GetUserAddresses\x12\x16.google.protobuf.Empty\x1a\x19.auth.AddressListResponse\"\x00\x12E\n" +
+	"\rUpdateUserPic\x12\x1a.auth.UpdateUserPicRequest\x1a\x12.auth.UserResponse\"\x00\x12E\n" +
+	"\x10GetUserAddresses\x12\x14.auth.AddressRequest\x1a\x19.auth.AddressListResponse\"\x00\x12E\n" +
 	"\rDeleteAddress\x12\x1a.auth.DeleteAddressRequest\x1a\x16.google.protobuf.Empty\"\x00\x125\n" +
 	"\n" +
 	"AddAddress\x12\r.auth.Address\x1a\x16.google.protobuf.Empty\"\x00B'Z%./internal/pkg/auth/delivery/grpc/genb\x06proto3"
@@ -645,42 +691,43 @@ func file_proto_auth_proto_rawDescGZIP() []byte {
 	return file_proto_auth_proto_rawDescData
 }
 
-var file_proto_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_proto_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_proto_auth_proto_goTypes = []any{
 	(*CheckRequest)(nil),         // 0: auth.CheckRequest
-	(*SignInRequest)(nil),        // 1: auth.SignInRequest
-	(*SignUpRequest)(nil),        // 2: auth.SignUpRequest
-	(*UpdateUserRequest)(nil),    // 3: auth.UpdateUserRequest
-	(*UpdateUserPicRequest)(nil), // 4: auth.UpdateUserPicRequest
-	(*DeleteAddressRequest)(nil), // 5: auth.DeleteAddressRequest
-	(*Address)(nil),              // 6: auth.Address
-	(*UserResponse)(nil),         // 7: auth.UserResponse
-	(*AddressListResponse)(nil),  // 8: auth.AddressListResponse
-	(*emptypb.Empty)(nil),        // 9: google.protobuf.Empty
+	(*AddressRequest)(nil),       // 1: auth.AddressRequest
+	(*SignInRequest)(nil),        // 2: auth.SignInRequest
+	(*SignUpRequest)(nil),        // 3: auth.SignUpRequest
+	(*UpdateUserRequest)(nil),    // 4: auth.UpdateUserRequest
+	(*UpdateUserPicRequest)(nil), // 5: auth.UpdateUserPicRequest
+	(*DeleteAddressRequest)(nil), // 6: auth.DeleteAddressRequest
+	(*Address)(nil),              // 7: auth.Address
+	(*UserResponse)(nil),         // 8: auth.UserResponse
+	(*AddressListResponse)(nil),  // 9: auth.AddressListResponse
+	(*emptypb.Empty)(nil),        // 10: google.protobuf.Empty
 }
 var file_proto_auth_proto_depIdxs = []int32{
-	6, // 0: auth.AddressListResponse.Addresses:type_name -> auth.Address
-	1, // 1: auth.AuthService.SignIn:input_type -> auth.SignInRequest
-	2, // 2: auth.AuthService.SignUp:input_type -> auth.SignUpRequest
-	0, // 3: auth.AuthService.Check:input_type -> auth.CheckRequest
-	3, // 4: auth.AuthService.UpdateUser:input_type -> auth.UpdateUserRequest
-	4, // 5: auth.AuthService.UpdateUserPic:input_type -> auth.UpdateUserPicRequest
-	9, // 6: auth.AuthService.GetUserAddresses:input_type -> google.protobuf.Empty
-	5, // 7: auth.AuthService.DeleteAddress:input_type -> auth.DeleteAddressRequest
-	6, // 8: auth.AuthService.AddAddress:input_type -> auth.Address
-	7, // 9: auth.AuthService.SignIn:output_type -> auth.UserResponse
-	7, // 10: auth.AuthService.SignUp:output_type -> auth.UserResponse
-	7, // 11: auth.AuthService.Check:output_type -> auth.UserResponse
-	7, // 12: auth.AuthService.UpdateUser:output_type -> auth.UserResponse
-	7, // 13: auth.AuthService.UpdateUserPic:output_type -> auth.UserResponse
-	8, // 14: auth.AuthService.GetUserAddresses:output_type -> auth.AddressListResponse
-	9, // 15: auth.AuthService.DeleteAddress:output_type -> google.protobuf.Empty
-	9, // 16: auth.AuthService.AddAddress:output_type -> google.protobuf.Empty
-	9, // [9:17] is the sub-list for method output_type
-	1, // [1:9] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	7,  // 0: auth.AddressListResponse.Addresses:type_name -> auth.Address
+	2,  // 1: auth.AuthService.SignIn:input_type -> auth.SignInRequest
+	3,  // 2: auth.AuthService.SignUp:input_type -> auth.SignUpRequest
+	0,  // 3: auth.AuthService.Check:input_type -> auth.CheckRequest
+	4,  // 4: auth.AuthService.UpdateUser:input_type -> auth.UpdateUserRequest
+	5,  // 5: auth.AuthService.UpdateUserPic:input_type -> auth.UpdateUserPicRequest
+	1,  // 6: auth.AuthService.GetUserAddresses:input_type -> auth.AddressRequest
+	6,  // 7: auth.AuthService.DeleteAddress:input_type -> auth.DeleteAddressRequest
+	7,  // 8: auth.AuthService.AddAddress:input_type -> auth.Address
+	8,  // 9: auth.AuthService.SignIn:output_type -> auth.UserResponse
+	8,  // 10: auth.AuthService.SignUp:output_type -> auth.UserResponse
+	8,  // 11: auth.AuthService.Check:output_type -> auth.UserResponse
+	8,  // 12: auth.AuthService.UpdateUser:output_type -> auth.UserResponse
+	8,  // 13: auth.AuthService.UpdateUserPic:output_type -> auth.UserResponse
+	9,  // 14: auth.AuthService.GetUserAddresses:output_type -> auth.AddressListResponse
+	10, // 15: auth.AuthService.DeleteAddress:output_type -> google.protobuf.Empty
+	10, // 16: auth.AuthService.AddAddress:output_type -> google.protobuf.Empty
+	9,  // [9:17] is the sub-list for method output_type
+	1,  // [1:9] is the sub-list for method input_type
+	1,  // [1:1] is the sub-list for extension type_name
+	1,  // [1:1] is the sub-list for extension extendee
+	0,  // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_proto_auth_proto_init() }
@@ -694,7 +741,7 @@ func file_proto_auth_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_auth_proto_rawDesc), len(file_proto_auth_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   9,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

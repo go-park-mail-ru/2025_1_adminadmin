@@ -17,7 +17,7 @@ service AuthService {
   
   rpc UpdateUserPic (UpdateUserPicRequest) returns (UserResponse) {}
   
-  rpc GetUserAddresses (google.protobuf.Empty) returns (AddressListResponse) {}
+  rpc GetUserAddresses (AddressRequest) returns (AddressListResponse) {}
   
   rpc DeleteAddress (DeleteAddressRequest) returns (google.protobuf.Empty) {}
   
@@ -25,6 +25,10 @@ service AuthService {
 }
 
 message CheckRequest {
+  string Login = 1;
+}
+
+message AddressRequest {
   string Login = 1;
 }
 
