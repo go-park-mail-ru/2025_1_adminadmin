@@ -1,6 +1,7 @@
 package grpc
 
 import (
+	"bytes"
 	"context"
 	"errors"
 	"os"
@@ -161,7 +162,36 @@ func (h *AuthHandler) UpdateUser(ctx context.Context, in *gen.UpdateUserRequest)
 }
 
 func (h *AuthHandler) UpdateUserPic(ctx context.Context, in *gen.UpdateUserPicRequest) (*gen.UserResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserPic not implemented")
+	//logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+	reader := bytes.NewReader(in.UserPic)
+	user, err := h.uc.UpdateUserPic(ctx, in.Login, reader, in.FileExtension)
+	if err != nil {
+		switch err {
+		case auth.ErrUserNotFound:
+			//log.LogHandlerError(logger, err, http.StatusNotFound)
+			return nil, status.Errorf(codes.NotFound, err.Error())
+		case auth.ErrBasePath:
+			//log.LogHandlerError(logger, err, http.StatusInternalServerError)
+			return nil, status.Errorf(codes.Internal, err.Error())
+		case auth.ErrFileCreation, auth.ErrFileSaving, auth.ErrFileDeletion:
+			//log.LogHandlerError(logger, fmt.Errorf("Ошибка при работе с файлом: %w", err), http.StatusInternalServerError)
+			return nil, status.Errorf(codes.Internal, err.Error())
+		default:
+			//log.LogHandlerError(logger, fmt.Errorf("Ошибка при обновлении аватарки: %w", err), http.StatusInternalServerError)
+			return nil, status.Errorf(codes.Internal, err.Error())
+		}
+	}
+	return &gen.UserResponse{
+		Login:       user.Login,
+		PhoneNumber: user.PhoneNumber,
+		Id:          user.Id.String(),
+		FirstName:   user.FirstName,
+		LastName:    user.LastName,
+		Description: user.Description,
+		UserPic:     user.UserPic,
+	}, nil
+
 }
 
 func (h *AuthHandler) GetUserAddresses(ctx context.Context, in *gen.AddressRequest) (*gen.AddressListResponse, error) {
@@ -219,9 +249,9 @@ func (h *AuthHandler) AddAddress(ctx context.Context, in *gen.Address) (*emptypb
 		return nil, status.Errorf(codes.InvalidArgument, err.Error())
 	}
 	address := models.Address{
-		Id: parsedUUIDa,
+		Id:      parsedUUIDa,
 		Address: in.Address,
-		UserId: parsedUUIDu,
+		UserId:  parsedUUIDu,
 	}
 
 	err = h.uc.AddAddress(ctx, address)

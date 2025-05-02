@@ -324,7 +324,9 @@ func (x *UpdateUserRequest) GetPassword() string {
 
 type UpdateUserPicRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	UserPic       []byte                 `protobuf:"bytes,1,opt,name=UserPic,proto3" json:"UserPic,omitempty"`
+	Login         string                 `protobuf:"bytes,1,opt,name=login,proto3" json:"login,omitempty"`
+	UserPic       []byte                 `protobuf:"bytes,2,opt,name=user_pic,json=userPic,proto3" json:"user_pic,omitempty"`
+	FileExtension string                 `protobuf:"bytes,3,opt,name=file_extension,json=fileExtension,proto3" json:"file_extension,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -359,11 +361,25 @@ func (*UpdateUserPicRequest) Descriptor() ([]byte, []int) {
 	return file_proto_auth_proto_rawDescGZIP(), []int{5}
 }
 
+func (x *UpdateUserPicRequest) GetLogin() string {
+	if x != nil {
+		return x.Login
+	}
+	return ""
+}
+
 func (x *UpdateUserPicRequest) GetUserPic() []byte {
 	if x != nil {
 		return x.UserPic
 	}
 	return nil
+}
+
+func (x *UpdateUserPicRequest) GetFileExtension() string {
+	if x != nil {
+		return x.FileExtension
+	}
+	return ""
 }
 
 type DeleteAddressRequest struct {
@@ -646,9 +662,11 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\tFirstName\x18\x03 \x01(\tR\tFirstName\x12\x1a\n" +
 	"\bLastName\x18\x04 \x01(\tR\bLastName\x12 \n" +
 	"\vPhoneNumber\x18\x05 \x01(\tR\vPhoneNumber\x12\x1a\n" +
-	"\bPassword\x18\x06 \x01(\tR\bPassword\"0\n" +
-	"\x14UpdateUserPicRequest\x12\x18\n" +
-	"\aUserPic\x18\x01 \x01(\fR\aUserPic\"&\n" +
+	"\bPassword\x18\x06 \x01(\tR\bPassword\"n\n" +
+	"\x14UpdateUserPicRequest\x12\x14\n" +
+	"\x05login\x18\x01 \x01(\tR\x05login\x12\x19\n" +
+	"\buser_pic\x18\x02 \x01(\fR\auserPic\x12%\n" +
+	"\x0efile_extension\x18\x03 \x01(\tR\rfileExtension\"&\n" +
 	"\x14DeleteAddressRequest\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\"K\n" +
 	"\aAddress\x12\x0e\n" +

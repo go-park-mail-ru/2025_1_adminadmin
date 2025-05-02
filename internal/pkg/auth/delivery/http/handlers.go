@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"log/slog"
 	"net/http"
 	"os"
@@ -380,7 +381,133 @@ func (h *AuthHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 		UserPic:     user.UserPic,
 	}
 
+	data, err := json.Marshal(newModel)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)
+		return
+	}
+
 	w.Header().Set("Content-Type", "application/json")
+	w.Write(data)
+	log.LogHandlerInfo(logger, "Success", http.StatusOK)
+}
+
+func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) {
+	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+	cookie, err := r.Cookie("AdminJWT")
+	if err != nil {
+		if err == http.ErrNoCookie {
+			log.LogHandlerError(logger, fmt.Errorf("Токен отсутствует: %w", err), http.StatusUnauthorized)
+			utils.SendError(w, "Токен отсутствует", http.StatusUnauthorized)
+			return
+		}
+		log.LogHandlerError(logger, fmt.Errorf("Ошибка при чтении куки: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "Ошибка при чтении куки", http.StatusBadRequest)
+		return
+	}
+	JWTStr := cookie.Value
+
+	claims := jwt.MapClaims{}
+
+	login, ok := jwtUtils.GetLoginFromJWT(JWTStr, claims, h.secret)
+	if !ok || login == "" {
+		log.LogHandlerError(logger, errors.New("Недействительный токен: login отсутствует"), http.StatusUnauthorized)
+		utils.SendError(w, "Недействительный токен: login отсутствует", http.StatusUnauthorized)
+		return
+	}
+
+	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
+		utils.SendError(w, "некорректный CSRF-токен", http.StatusForbidden)
+		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
+		return
+	}
+
+	r.Body = http.MaxBytesReader(w, r.Body, maxRequestBodySize)
+
+	if err := r.ParseMultipartForm(maxRequestBodySize); err != nil {
+		if errors.As(err, new(*http.MaxBytesError)) {
+			log.LogHandlerError(logger, fmt.Errorf("Превышен допустимый размер файла: %w", err), http.StatusRequestEntityTooLarge)
+			utils.SendError(w, "Превышен допустимый размер файла", http.StatusRequestEntityTooLarge)
+		} else {
+			log.LogHandlerError(logger, fmt.Errorf("Невозможно обработать файл: %w", err), http.StatusBadRequest)
+			utils.SendError(w, "Невозможно обработать файл", http.StatusBadRequest)
+		}
+		return
+	}
+
+	defer func() {
+		if r.MultipartForm != nil {
+			r.MultipartForm.RemoveAll()
+		}
+	}()
+
+	file, _, err := r.FormFile("user_pic")
+	if err != nil {
+		utils.SendError(w, "Файл не найден в запросе", http.StatusBadRequest)
+		return
+	}
+	defer file.Close()
+
+	buffer := make([]byte, 512)
+	if _, err := file.Read(buffer); err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("Ошибка при чтении файла: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "Ошибка при чтении файла", http.StatusBadRequest)
+		return
+	}
+	file.Seek(0, io.SeekStart)
+
+	mimeType := http.DetectContentType(buffer)
+	if _, ok := allowedMimeTypes[mimeType]; !ok {
+		log.LogHandlerError(logger, fmt.Errorf("Недопустимый формат файла: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "Недопустимый формат файла.", http.StatusBadRequest)
+		return
+	}
+
+	ext := allowedMimeTypes[mimeType]
+
+	picBytes, _ := io.ReadAll(file)
+
+	user, err := h.client.UpdateUserPic(r.Context(), &gen.UpdateUserPicRequest{
+		Login: login,
+		UserPic: picBytes,
+		FileExtension: ext,
+	})
+	if err != nil {
+		switch err {
+		case auth.ErrUserNotFound:
+			log.LogHandlerError(logger, err, http.StatusNotFound)
+			utils.SendError(w, err.Error(), http.StatusNotFound)
+		case auth.ErrBasePath:
+			log.LogHandlerError(logger, err, http.StatusInternalServerError)
+			utils.SendError(w, err.Error(), http.StatusInternalServerError)
+		case auth.ErrFileCreation, auth.ErrFileSaving, auth.ErrFileDeletion:
+			log.LogHandlerError(logger, fmt.Errorf("Ошибка при работе с файлом: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "Ошибка при работе с файлом", http.StatusInternalServerError)
+		default:
+			log.LogHandlerError(logger, fmt.Errorf("Ошибка при обновлении аватарки: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "Ошибка при обновлении аватарки", http.StatusInternalServerError)
+		}
+		return
+	}
+
+	parsedUUID, err := uuid.FromString(user.Id)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("некорректный id: %w", err), http.StatusUnauthorized)
+		utils.SendError(w, "некорректный id", http.StatusUnauthorized)
+	}
+
+	newModel := models.User{
+		Login:       user.Login,
+		PhoneNumber: user.PhoneNumber,
+		Id:          parsedUUID,
+		FirstName:   user.FirstName,
+		LastName:    user.LastName,
+		Description: user.Description,
+		UserPic:     user.UserPic,
+	}
+
 	data, err := json.Marshal(newModel)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
@@ -541,9 +668,9 @@ func (h *AuthHandler) AddAddress(w http.ResponseWriter, r *http.Request) {
 	address.Sanitize()
 
 	_, err = h.client.AddAddress(r.Context(), &gen.Address{
-		Id: address.Id.String(),
+		Id:      address.Id.String(),
 		Address: address.Address,
-		UserId: address.UserId.String(),
+		UserId:  address.UserId.String(),
 	})
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка на уровне ниже (usecase): %w", err), http.StatusInternalServerError)

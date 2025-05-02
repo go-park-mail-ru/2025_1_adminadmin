@@ -55,7 +55,9 @@ message UpdateUserRequest {
 }
 
 message UpdateUserPicRequest {
-  bytes UserPic = 1; 
+  string login = 1;
+  bytes user_pic = 2; 
+  string file_extension = 3;
 }
 
 message DeleteAddressRequest {
