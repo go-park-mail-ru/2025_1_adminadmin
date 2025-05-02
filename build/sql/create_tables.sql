@@ -327,14 +327,239 @@ VALUES (
 ),
 (
     uuid_generate_v4(), 
-    'test205', 
+    'test2025', 
     'Сергей',  
     'Сироткин', 
     '88005553535', 
     '',
     'default_user.jpg',
     decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'maxim-kuzmin',
+	'Максим',
+	'Кузьмин',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'kuzmin_artyom',
+	'Артём',
+	'Кузьмин',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'melnikov580',
+	'Максим',
+	'Мельников',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'fedor92',
+	'Фёдор',
+	'Тарасов',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'fedor79',
+	'Фёдор',
+	'Тарасов',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'vkuzmin',
+	'Владимир',
+	'Кузьмин',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'fedor62',
+	'Фёдор',
+	'Громов',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'fedor19',
+	'Фёдор',
+	'Иванов',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'smelnikov',
+	'Сергей',
+	'Мельников',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'oleg34',
+	'Олег',
+	'Шаров',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'semenov-nikita',
+	'Никита',
+	'Семенов',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'fedor_gromov',
+	'Фёдор',
+	'Громов',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'igor26',
+	'Игорь',
+	'Мельников',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'semenov648',
+	'Фёдор',
+	'Семенов',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'nsharov',
+	'Никита',
+	'Шаров',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'artyom92',
+	'Артём',
+	'Сироткин',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'tarasov786',
+	'Никита',
+	'Тарасов',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'tarasov-fedor',
+	'Фёдор',
+	'Тарасов',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'egor44',
+	'Егор',
+	'Тарасов',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'maxim-tarasov',
+	'Максим',
+	'Тарасов',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
 );
+
+DO $$ 
+DECLARE 
+    user_record RECORD;
+    restaurant_record RECORD;
+BEGIN
+    FOR user_record IN 
+        SELECT id FROM users
+    LOOP
+        FOR restaurant_record IN 
+            SELECT id FROM restaurants
+        LOOP
+            
+            INSERT INTO reviews (id, user_id, restaurant_id, review_text, rating, created_at)
+            VALUES (
+                uuid_generate_v4(), 
+                user_record.id,    
+                restaurant_record.id, 
+                'Отличное место!',  
+                5,                 
+                NOW()               
+            );
+        END LOOP;
+    END LOOP;
+END $$;
 
 
 
