@@ -124,8 +124,39 @@ func (h *AuthHandler) Check(ctx context.Context, in *gen.CheckRequest) (*gen.Use
 	}, nil
 }
 
-func (h *AuthHandler) UpdateUser(context.Context, *gen.UpdateUserRequest) (*gen.UserResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
+func (h *AuthHandler) UpdateUser(ctx context.Context, in *gen.UpdateUserRequest) (*gen.UserResponse, error) {
+	//logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+	req := models.UpdateUserReq{
+		Description: in.Description,
+		FirstName: in.FirstName,
+		LastName: in.LastName,
+		PhoneNumber: in.PhoneNumber,
+		Password: in.Password,
+	}
+	req.Sanitize()
+
+	user, err := h.uc.UpdateUser(ctx, in.Login, req)
+	if err != nil {
+		switch err {
+		case auth.ErrInvalidPassword, auth.ErrInvalidName, auth.ErrInvalidPhone, auth.ErrSamePassword:
+			//log.LogHandlerError(logger, err, http.StatusBadRequest)
+			return nil, status.Errorf(codes.InvalidArgument, err.Error())
+		default:
+			//log.LogHandlerError(logger, fmt.Errorf("Ошибка обновления данных пользователя: %w", err), http.StatusInternalServerError)
+			return nil, status.Errorf(codes.Internal, err.Error())
+		}
+	}
+	return &gen.UserResponse{
+		Login:       user.Login,
+		PhoneNumber: user.PhoneNumber,
+		Id: user.Id.String(),
+		FirstName:   user.FirstName,
+		LastName:    user.LastName,
+		Description: user.Description,
+		UserPic: user.UserPic,
+	}, nil
+	
 }
 
 func (h *AuthHandler) UpdateUserPic(context.Context, *gen.UpdateUserPicRequest) (*gen.UserResponse, error) {

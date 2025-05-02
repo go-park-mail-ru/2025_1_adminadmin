@@ -42,8 +42,8 @@ func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) {
 
 	var req models.SignInReq
 	if err := easyjson.UnmarshalFromReader(r.Body, &req); err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка парсинга JSON: %w", err), http.StatusBadRequest)
-		utils.SendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
+		log.LogHandlerError(logger, fmt.Errorf("ошибка парсинга JSON: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "ошибка парсинга JSON", http.StatusBadRequest)
 		return
 	}
 	req.Sanitize()
@@ -61,8 +61,8 @@ func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) {
 			log.LogHandlerError(logger, err, http.StatusUnauthorized)
 			utils.SendError(w, err.Error(), http.StatusUnauthorized)
 		default:
-			log.LogHandlerError(logger, fmt.Errorf("Неизвестная ошибка: %w", err), http.StatusInternalServerError)
-			utils.SendError(w, "Неизвестная ошибка", http.StatusInternalServerError)
+			log.LogHandlerError(logger, fmt.Errorf("неизвестная ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "неизвестная ошибка", http.StatusInternalServerError)
 		}
 		return
 	}
@@ -91,8 +91,8 @@ func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) {
 
 	parsedUUID, err := uuid.FromString(user.Id)
 	if err != nil {
-    	log.LogHandlerError(logger, fmt.Errorf("Некорректный id: %w", err), http.StatusUnauthorized)
-		utils.SendError(w, "Некорректный id", http.StatusUnauthorized)
+    	log.LogHandlerError(logger, fmt.Errorf("некорректный id: %w", err), http.StatusUnauthorized)
+		utils.SendError(w, "некорректный id", http.StatusUnauthorized)
 	}
 
 	newModel := models.User{
@@ -123,8 +123,8 @@ func (h *AuthHandler) SignUp(w http.ResponseWriter, r *http.Request) {
 	var req models.SignUpReq
 	err := easyjson.UnmarshalFromReader(r.Body, &req)
 	if err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка парсинга JSON: %w", err), http.StatusBadRequest)
-		utils.SendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
+		log.LogHandlerError(logger, fmt.Errorf("ошибка парсинга JSON: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "ошибка парсинга JSON", http.StatusBadRequest)
 		return
 	}
 	req.Sanitize()
@@ -141,13 +141,13 @@ func (h *AuthHandler) SignUp(w http.ResponseWriter, r *http.Request) {
 		switch err {
 		case auth.ErrInvalidLogin, auth.ErrInvalidPassword:
 			log.LogHandlerError(logger, fmt.Errorf("неправильный логин или пароль: %w", err), http.StatusBadRequest)
-			utils.SendError(w, "Неправильный логин или пароль", http.StatusBadRequest)
+			utils.SendError(w, "неправильный логин или пароль", http.StatusBadRequest)
 		case auth.ErrInvalidName, auth.ErrInvalidPhone, auth.ErrCreatingUser:
 			log.LogHandlerError(logger, err, http.StatusBadRequest)
 			utils.SendError(w, err.Error(), http.StatusBadRequest)
 		default:
 			log.LogHandlerError(logger, fmt.Errorf("неизвестная ошибка: %w", err), http.StatusInternalServerError)
-			utils.SendError(w, "Неизвестная ошибка", http.StatusInternalServerError)
+			utils.SendError(w, "неизвестная ошибка", http.StatusInternalServerError)
 		}
 		return
 	}
@@ -176,8 +176,8 @@ func (h *AuthHandler) SignUp(w http.ResponseWriter, r *http.Request) {
 
 	parsedUUID, err := uuid.FromString(user.Id)
 	if err != nil {
-    	log.LogHandlerError(logger, fmt.Errorf("Некорректный id: %w", err), http.StatusUnauthorized)
-		utils.SendError(w, "Некорректный id", http.StatusUnauthorized)
+    	log.LogHandlerError(logger, fmt.Errorf("некорректный id: %w", err), http.StatusUnauthorized)
+		utils.SendError(w, "некорректный id", http.StatusUnauthorized)
 	}
 
 	newModel := models.User{
@@ -254,8 +254,8 @@ func (h *AuthHandler) Check(w http.ResponseWriter, r *http.Request) {
 
 	parsedUUID, err := uuid.FromString(user.Id)
 	if err != nil {
-    	log.LogHandlerError(logger, fmt.Errorf("Некорректный id: %w", err), http.StatusUnauthorized)
-		utils.SendError(w, "Некорректный id", http.StatusUnauthorized)
+    	log.LogHandlerError(logger, fmt.Errorf("некорректный id: %w", err), http.StatusUnauthorized)
+		utils.SendError(w, "некорректный id", http.StatusUnauthorized)
 	}
 
 	newModel := models.User{
@@ -269,6 +269,107 @@ func (h *AuthHandler) Check(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data, err := json.Marshal(newModel)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(data)
+	log.LogHandlerInfo(logger, "Success", http.StatusOK)
+}
+
+func (h *AuthHandler) LogOut(w http.ResponseWriter, r *http.Request) {
+	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+	cookie, err := r.Cookie("AdminJWT")
+	if err != nil || cookie.Value == "" {
+		log.LogHandlerError(logger, fmt.Errorf("пользователь уже разлогинен: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "пользователь уже разлогинен", http.StatusBadRequest)
+		return
+	}
+	http.SetCookie(w, &http.Cookie{
+		Name:     "AdminJWT",
+		Value:    "",
+		Expires:  time.Unix(0, 0),
+		HttpOnly: true,
+		Path:     "/",
+	})
+
+	http.SetCookie(w, &http.Cookie{
+		Name:     "CSRF-Token",
+		Value:    "",
+		Expires:  time.Unix(0, 0),
+		HttpOnly: false,
+		SameSite: http.SameSiteStrictMode,
+		Path:     "/",
+	})
+
+	log.LogHandlerInfo(logger, "Successful", http.StatusOK)
+}
+
+func (h *AuthHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
+	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+	cookie, err := r.Cookie("AdminJWT")
+	if err != nil {
+		if err == http.ErrNoCookie {
+			log.LogHandlerError(logger, fmt.Errorf("токен отсутствует: %w", err), http.StatusUnauthorized)
+			utils.SendError(w, "токен отсутствует", http.StatusUnauthorized)
+			return
+		}
+		log.LogHandlerError(logger, fmt.Errorf("ошибка при чтении куки: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "ошибка при чтении куки", http.StatusBadRequest)
+		return
+	}
+	JWTStr := cookie.Value
+
+	claims := jwt.MapClaims{}
+
+	login, ok := jwtUtils.GetLoginFromJWT(JWTStr, claims, h.secret)
+	if !ok || login == "" {
+		log.LogHandlerError(logger, errors.New("недействительный токен: login отсутствует"), http.StatusUnauthorized)
+		utils.SendError(w, "недействительный токен: login отсутствует", http.StatusUnauthorized)
+		return
+	}
+
+	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
+		utils.SendError(w, "некорректный CSRF-токен", http.StatusForbidden)
+		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
+		return
+	}
+
+	var updateData models.UpdateUserReq
+	if err := easyjson.UnmarshalFromReader(r.Body, &updateData); err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка парсинга JSON: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "ошибка парсинга JSON", http.StatusBadRequest)
+		return
+	}
+	updateData.Sanitize()
+
+	updatedUser, err := h.client.UpdateUser(r.Context(), &gen.UpdateUserRequest{
+		Login: login,
+		Description: updateData.Description,
+		FirstName: updateData.FirstName,
+		LastName: updateData.LastName,
+		PhoneNumber: updateData.PhoneNumber,
+		Password: updateData.Password,
+	})
+	if err != nil {
+		switch err {
+		case auth.ErrInvalidPassword, auth.ErrInvalidName, auth.ErrInvalidPhone, auth.ErrSamePassword:
+			log.LogHandlerError(logger, err, http.StatusBadRequest)
+			utils.SendError(w, err.Error(), http.StatusBadRequest)
+		default:
+			log.LogHandlerError(logger, fmt.Errorf("ошибка обновления данных пользователя: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "ошибка обновления данных пользователя", http.StatusInternalServerError)
+		}
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	data, err := json.Marshal(updatedUser)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)

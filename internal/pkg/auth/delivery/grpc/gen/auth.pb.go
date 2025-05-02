@@ -196,11 +196,12 @@ func (x *SignUpRequest) GetPassword() string {
 
 type UpdateUserRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Description   string                 `protobuf:"bytes,1,opt,name=Description,proto3" json:"Description,omitempty"`
-	FirstName     string                 `protobuf:"bytes,2,opt,name=FirstName,proto3" json:"FirstName,omitempty"`
-	LastName      string                 `protobuf:"bytes,3,opt,name=LastName,proto3" json:"LastName,omitempty"`
-	PhoneNumber   string                 `protobuf:"bytes,4,opt,name=PhoneNumber,proto3" json:"PhoneNumber,omitempty"`
-	Password      string                 `protobuf:"bytes,5,opt,name=Password,proto3" json:"Password,omitempty"`
+	Login         string                 `protobuf:"bytes,1,opt,name=Login,proto3" json:"Login,omitempty"`
+	Description   string                 `protobuf:"bytes,2,opt,name=Description,proto3" json:"Description,omitempty"`
+	FirstName     string                 `protobuf:"bytes,3,opt,name=FirstName,proto3" json:"FirstName,omitempty"`
+	LastName      string                 `protobuf:"bytes,4,opt,name=LastName,proto3" json:"LastName,omitempty"`
+	PhoneNumber   string                 `protobuf:"bytes,5,opt,name=PhoneNumber,proto3" json:"PhoneNumber,omitempty"`
+	Password      string                 `protobuf:"bytes,6,opt,name=Password,proto3" json:"Password,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -233,6 +234,13 @@ func (x *UpdateUserRequest) ProtoReflect() protoreflect.Message {
 // Deprecated: Use UpdateUserRequest.ProtoReflect.Descriptor instead.
 func (*UpdateUserRequest) Descriptor() ([]byte, []int) {
 	return file_proto_auth_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *UpdateUserRequest) GetLogin() string {
+	if x != nil {
+		return x.Login
+	}
+	return ""
 }
 
 func (x *UpdateUserRequest) GetDescription() string {
@@ -585,13 +593,14 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\tFirstName\x18\x02 \x01(\tR\tFirstName\x12\x1a\n" +
 	"\bLastName\x18\x03 \x01(\tR\bLastName\x12 \n" +
 	"\vPhoneNumber\x18\x04 \x01(\tR\vPhoneNumber\x12\x1a\n" +
-	"\bPassword\x18\x05 \x01(\tR\bPassword\"\xad\x01\n" +
-	"\x11UpdateUserRequest\x12 \n" +
-	"\vDescription\x18\x01 \x01(\tR\vDescription\x12\x1c\n" +
-	"\tFirstName\x18\x02 \x01(\tR\tFirstName\x12\x1a\n" +
-	"\bLastName\x18\x03 \x01(\tR\bLastName\x12 \n" +
-	"\vPhoneNumber\x18\x04 \x01(\tR\vPhoneNumber\x12\x1a\n" +
-	"\bPassword\x18\x05 \x01(\tR\bPassword\"0\n" +
+	"\bPassword\x18\x05 \x01(\tR\bPassword\"\xc3\x01\n" +
+	"\x11UpdateUserRequest\x12\x14\n" +
+	"\x05Login\x18\x01 \x01(\tR\x05Login\x12 \n" +
+	"\vDescription\x18\x02 \x01(\tR\vDescription\x12\x1c\n" +
+	"\tFirstName\x18\x03 \x01(\tR\tFirstName\x12\x1a\n" +
+	"\bLastName\x18\x04 \x01(\tR\bLastName\x12 \n" +
+	"\vPhoneNumber\x18\x05 \x01(\tR\vPhoneNumber\x12\x1a\n" +
+	"\bPassword\x18\x06 \x01(\tR\bPassword\"0\n" +
 	"\x14UpdateUserPicRequest\x12\x18\n" +
 	"\aUserPic\x18\x01 \x01(\fR\aUserPic\"&\n" +
 	"\x14DeleteAddressRequest\x12\x0e\n" +
