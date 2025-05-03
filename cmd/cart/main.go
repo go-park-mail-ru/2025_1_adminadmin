@@ -16,8 +16,6 @@ import (
 	cartPgRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/pg"
 	cartRedisRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/redis"
 	cartUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/usecase"
-	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/metrics"
-	metricsmw "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/middleware/metrics"
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -67,13 +65,13 @@ func run() (err error) {
 	CartUsecase := cartUsecase.NewCartUsecase(cartRepoRedis, CartRepoPg)
 	CartDelivery := grpcCart.CreateCartHandler(CartUsecase)
 
-	grpcMetrics, err := metrics.NewGrpcMetrics("cart")
+	//grpcMetrics, err := metrics.NewGrpcMetrics("cart")
 	if err != nil {
 		logger.Error("can't create metrics")
 	}
-	metricsMw := metricsmw.NewGrpcMw(*grpcMetrics)
+	//metricsMw := metricsmw.NewGrpcMw(*grpcMetrics)
 
-	gRPCServer := grpc.NewServer(grpc.ChainUnaryInterceptor(metricsMw.ServerMetricsInterceptor))
+	gRPCServer := grpc.NewServer()
 	generatedCart.RegisterCartServiceServer(gRPCServer, CartDelivery)
 
 	r := mux.NewRouter().PathPrefix("/api").Subrouter()
