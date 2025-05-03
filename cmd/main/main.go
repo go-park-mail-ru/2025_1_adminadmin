@@ -88,7 +88,7 @@ func main() {
 
 	Metrics, err := metrics.NewHttpMetrics("main")
 	if err != nil {
-		logger.Error("cant create metrics")
+		logger.Error("can't create metrics")
 	}
 	MetricsMiddleware := metricsmw.CreateHttpMetricsMiddleware(Metrics, logger)
 	logMW := log.CreateLoggerMiddleware(logger)

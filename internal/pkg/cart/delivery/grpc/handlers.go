@@ -2,7 +2,6 @@ package grpc
 
 import (
 	"context"
-	"fmt"
 	"os"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
@@ -29,7 +28,7 @@ func (h *CartHandler) GetCart(ctx context.Context, in *gen.GetCartRequest) (*gen
 	cart, err, full_cart := h.uc.GetCart(ctx, in.Login)
 
 	if err != nil {
-		return &gen.CartResponse{}, fmt.Errorf("ошибка получения корзины")
+		return &gen.CartResponse{}, status.Errorf(codes.Internal, "ошибка получения корзины")
 	}
 
 	return &gen.CartResponse{
