@@ -144,11 +144,6 @@ func ProtoToOrder(grpcOrder *gen.OrderResponse) (models.Order, error) {
 		return models.Order{}, fmt.Errorf("invalid order ID: %v", err)
 	}
 
-	userID, err := uuid.FromString(grpcOrder.UserId)
-	if err != nil {
-		return models.Order{}, fmt.Errorf("invalid user ID: %v", err)
-	}
-
 	var createdAt time.Time
 	if grpcOrder.CreatedAt != nil {
 		if err := grpcOrder.CreatedAt.CheckValid(); err != nil {
@@ -164,7 +159,7 @@ func ProtoToOrder(grpcOrder *gen.OrderResponse) (models.Order, error) {
 
 	return models.Order{
 		ID:                orderID,
-		UserID:            userID.String(),
+		UserID:            grpcOrder.UserId,
 		Status:            grpcOrder.Status,
 		Address:           grpcOrder.Address,
 		OrderProducts:     cart,
