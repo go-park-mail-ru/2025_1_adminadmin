@@ -61,9 +61,9 @@ services:
     networks:
       - adminadmin-network
     volumes:
-      - ./build/sql/create_tables.sql:/docker-entrypoint-initdb.d/initdb.sql
+      - ./build/sql/:/docker-entrypoint-initdb.d/
       - adminadmin-db-data:/var/lib/postgresql/data
-      - /home/ubuntu/deploy_user/tp_code:/usr/share/postgresql/tsearch_data
+      - /home/ubuntu/deploy_user/tp_code/dict:/usr/share/postgresql/15/tsearch_data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 10s
