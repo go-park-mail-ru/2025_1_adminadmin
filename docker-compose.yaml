@@ -61,7 +61,7 @@ services:
     networks:
       - adminadmin-network
     volumes:
-      - ./build/sql/:/docker-entrypoint-initdb.d/
+      - ./build/sql/create_tables.sql:/docker-entrypoint-initdb.d/initdb.sql
       - adminadmin-db-data:/var/lib/postgresql/data
       - .build/sql/dictionary:/usr/share/postgresql/15/tsearch_data
     healthcheck:
