@@ -81,12 +81,6 @@ CREATE TABLE IF NOT EXISTS orders (
     created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
-CREATE INDEX idx_restaurant_name ON restaurants USING GIN (to_tsvector('russian', name));
-
-CREATE INDEX idx_product_name ON products USING GIN (to_tsvector('russian', name));
-
-
-
 INSERT INTO restaurant_tags (id, name)
 VALUES 
   (gen_random_uuid(), 'Итальянский'),
