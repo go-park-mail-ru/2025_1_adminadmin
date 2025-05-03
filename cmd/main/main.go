@@ -83,7 +83,7 @@ func main() {
 
 	logMW := log.CreateLoggerMiddleware(logger)
 
-	conn, err := grpc.Dial(os.Getenv("auth:5459"), grpc.WithInsecure())
+	conn, err := grpc.Dial("auth:5459", grpc.WithInsecure())
 	if err != nil {
 		logger.Error("Ошибка подключения к gRPC Auth-сервису: " + err.Error())
 		return
@@ -111,6 +111,14 @@ func main() {
 	{
 
 		auth.HandleFunc("/signin", authHandler.SignIn).Methods(http.MethodPost, http.MethodOptions)
+		auth.HandleFunc("/signup", authHandler.SignUp).Methods(http.MethodPost, http.MethodOptions)
+		auth.HandleFunc("/check", authHandler.Check).Methods(http.MethodGet, http.MethodOptions)
+		auth.HandleFunc("/logout", authHandler.LogOut).Methods(http.MethodGet, http.MethodOptions)
+		auth.HandleFunc("/update_user", authHandler.UpdateUser).Methods(http.MethodPost, http.MethodOptions)
+		auth.HandleFunc("/update_userpic", authHandler.UpdateUserPic).Methods(http.MethodPost, http.MethodOptions)
+		auth.HandleFunc("/address", authHandler.GetUserAddresses).Methods(http.MethodGet, http.MethodOptions)
+		auth.HandleFunc("/address", authHandler.DeleteAddress).Methods(http.MethodDelete, http.MethodOptions)
+		auth.HandleFunc("/address", authHandler.AddAddress).Methods(http.MethodPost, http.MethodOptions)
 
 	}
 	restaurants := r.PathPrefix("/restaurants").Subrouter()

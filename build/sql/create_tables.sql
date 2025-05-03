@@ -81,26 +81,6 @@ CREATE TABLE IF NOT EXISTS orders (
     created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
-CREATE OR REPLACE FUNCTION update_restaurant_rating()
-RETURNS TRIGGER AS $$
-BEGIN
-    UPDATE restaurants
-    SET 
-        rating = ROUND(
-            COALESCE((rating * rating_count + NEW.rating) / (rating_count + 1), NEW.rating)::numeric,1)::float,
-        rating_count = COALESCE(rating_count, 0) + 1
-    WHERE id = NEW.restaurant_id;
-
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER after_review_insert
-AFTER INSERT ON reviews
-FOR EACH ROW
-EXECUTE FUNCTION update_restaurant_rating();
-
-
 INSERT INTO restaurant_tags (id, name)
 VALUES 
   (gen_random_uuid(), 'Итальянский'),
@@ -327,16 +307,254 @@ VALUES (
 ),
 (
     uuid_generate_v4(), 
-    'test205', 
+    'test2025', 
     'Сергей',  
     'Сироткин', 
     '88005553535', 
     '',
     'default_user.jpg',
     decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'maxim-kuzmin',
+	'Максим',
+	'Кузьмин',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'kuzmin_artyom',
+	'Артём',
+	'Кузьмин',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'melnikov580',
+	'Максим',
+	'Мельников',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'fedor92',
+	'Фёдор',
+	'Тарасов',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'fedor79',
+	'Фёдор',
+	'Тарасов',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'vkuzmin',
+	'Владимир',
+	'Кузьмин',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'fedor62',
+	'Фёдор',
+	'Громов',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'fedor19',
+	'Фёдор',
+	'Иванов',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'smelnikov',
+	'Сергей',
+	'Мельников',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'oleg34',
+	'Олег',
+	'Шаров',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'semenov-nikita',
+	'Никита',
+	'Семенов',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'fedor_gromov',
+	'Фёдор',
+	'Громов',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'igor26',
+	'Игорь',
+	'Мельников',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'semenov648',
+	'Фёдор',
+	'Семенов',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'nsharov',
+	'Никита',
+	'Шаров',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'artyom92',
+	'Артём',
+	'Сироткин',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'tarasov786',
+	'Никита',
+	'Тарасов',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'tarasov-fedor',
+	'Фёдор',
+	'Тарасов',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'egor44',
+	'Егор',
+	'Тарасов',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
+),
+(
+	uuid_generate_v4(),
+	'maxim-tarasov',
+	'Максим',
+	'Тарасов',
+	'88005553535',
+	'',
+	'default_user.jpg',
+	decode('19a17a41b2eeec9bdc639de99975112cedd98a2735462ed188c26c852e73669341f7b4e792b0b826', 'hex')
 );
 
-
+DO $$ 
+DECLARE 
+    user_record RECORD;
+    restaurant_record RECORD;
+    review_texts TEXT[] := ARRAY[
+        'Отличное место! Все очень понравилось.',
+        'Хорошее обслуживание, но еда могла бы быть лучше.',
+        'Приятная атмосфера, но слишком долго ждали заказ.',
+        'Очень вкусная еда! Обязательно вернусь.',
+        'Не понравилось. Ожидал большего.',
+        'Очень уютно, но не хватило разнообразия в меню.',
+        'Лучший ресторан в городе!',
+        'Хорошее соотношение цены и качества.',
+        'Еда была на высшем уровне!',
+        'Неудачный опыт, к сожалению.'
+    ];
+    random_review TEXT;
+    random_rating INT;
+BEGIN
+    FOR user_record IN
+        SELECT id FROM users
+    LOOP
+        FOR restaurant_record IN
+            SELECT id FROM restaurants
+        LOOP
+            random_review := review_texts[(random() * array_length(review_texts, 1) + 1)::int];
+            random_rating := (floor(random() * 4) + 2)::int; 
+            INSERT INTO reviews (id, user_id, restaurant_id, review_text, rating, created_at)
+            VALUES (
+                uuid_generate_v4(), 
+                user_record.id,     
+                restaurant_record.id, 
+                random_review,      
+                random_rating,      
+                NOW()               
+            );
+        END LOOP;
+    END LOOP;
+END $$;
 
 -- Generated data inserts
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
@@ -2165,3 +2383,21 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 	((SELECT id FROM restaurants WHERE name = 'Томаты и Паста' ), 'Кофе капучино', 350, 'cappuccino_coffee.jpg', 200, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Томаты и Паста' ), 'Какао', 280, 'cacao.jpg', 200, 'Напитки');
 
+CREATE OR REPLACE FUNCTION update_restaurant_rating()
+RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE restaurants
+    SET 
+        rating = ROUND(
+            COALESCE((rating * rating_count + NEW.rating) / (rating_count + 1), NEW.rating)::numeric,1)::float,
+        rating_count = COALESCE(rating_count, 0) + 1
+    WHERE id = NEW.restaurant_id;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER after_review_insert
+AFTER INSERT ON reviews
+FOR EACH ROW
+EXECUTE FUNCTION update_restaurant_rating();

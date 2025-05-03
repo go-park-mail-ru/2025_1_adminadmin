@@ -36,10 +36,10 @@ const (
 type AuthServiceClient interface {
 	SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*UserResponse, error)
 	SignUp(ctx context.Context, in *SignUpRequest, opts ...grpc.CallOption) (*UserResponse, error)
-	Check(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*UserResponse, error)
+	Check(ctx context.Context, in *CheckRequest, opts ...grpc.CallOption) (*UserResponse, error)
 	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UserResponse, error)
 	UpdateUserPic(ctx context.Context, in *UpdateUserPicRequest, opts ...grpc.CallOption) (*UserResponse, error)
-	GetUserAddresses(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*AddressListResponse, error)
+	GetUserAddresses(ctx context.Context, in *AddressRequest, opts ...grpc.CallOption) (*AddressListResponse, error)
 	DeleteAddress(ctx context.Context, in *DeleteAddressRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	AddAddress(ctx context.Context, in *Address, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
@@ -72,7 +72,7 @@ func (c *authServiceClient) SignUp(ctx context.Context, in *SignUpRequest, opts 
 	return out, nil
 }
 
-func (c *authServiceClient) Check(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*UserResponse, error) {
+func (c *authServiceClient) Check(ctx context.Context, in *CheckRequest, opts ...grpc.CallOption) (*UserResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(UserResponse)
 	err := c.cc.Invoke(ctx, AuthService_Check_FullMethodName, in, out, cOpts...)
@@ -102,7 +102,7 @@ func (c *authServiceClient) UpdateUserPic(ctx context.Context, in *UpdateUserPic
 	return out, nil
 }
 
-func (c *authServiceClient) GetUserAddresses(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*AddressListResponse, error) {
+func (c *authServiceClient) GetUserAddresses(ctx context.Context, in *AddressRequest, opts ...grpc.CallOption) (*AddressListResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(AddressListResponse)
 	err := c.cc.Invoke(ctx, AuthService_GetUserAddresses_FullMethodName, in, out, cOpts...)
@@ -138,10 +138,10 @@ func (c *authServiceClient) AddAddress(ctx context.Context, in *Address, opts ..
 type AuthServiceServer interface {
 	SignIn(context.Context, *SignInRequest) (*UserResponse, error)
 	SignUp(context.Context, *SignUpRequest) (*UserResponse, error)
-	Check(context.Context, *emptypb.Empty) (*UserResponse, error)
+	Check(context.Context, *CheckRequest) (*UserResponse, error)
 	UpdateUser(context.Context, *UpdateUserRequest) (*UserResponse, error)
 	UpdateUserPic(context.Context, *UpdateUserPicRequest) (*UserResponse, error)
-	GetUserAddresses(context.Context, *emptypb.Empty) (*AddressListResponse, error)
+	GetUserAddresses(context.Context, *AddressRequest) (*AddressListResponse, error)
 	DeleteAddress(context.Context, *DeleteAddressRequest) (*emptypb.Empty, error)
 	AddAddress(context.Context, *Address) (*emptypb.Empty, error)
 	mustEmbedUnimplementedAuthServiceServer()
@@ -160,7 +160,7 @@ func (UnimplementedAuthServiceServer) SignIn(context.Context, *SignInRequest) (*
 func (UnimplementedAuthServiceServer) SignUp(context.Context, *SignUpRequest) (*UserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SignUp not implemented")
 }
-func (UnimplementedAuthServiceServer) Check(context.Context, *emptypb.Empty) (*UserResponse, error) {
+func (UnimplementedAuthServiceServer) Check(context.Context, *CheckRequest) (*UserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Check not implemented")
 }
 func (UnimplementedAuthServiceServer) UpdateUser(context.Context, *UpdateUserRequest) (*UserResponse, error) {
@@ -169,7 +169,7 @@ func (UnimplementedAuthServiceServer) UpdateUser(context.Context, *UpdateUserReq
 func (UnimplementedAuthServiceServer) UpdateUserPic(context.Context, *UpdateUserPicRequest) (*UserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserPic not implemented")
 }
-func (UnimplementedAuthServiceServer) GetUserAddresses(context.Context, *emptypb.Empty) (*AddressListResponse, error) {
+func (UnimplementedAuthServiceServer) GetUserAddresses(context.Context, *AddressRequest) (*AddressListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserAddresses not implemented")
 }
 func (UnimplementedAuthServiceServer) DeleteAddress(context.Context, *DeleteAddressRequest) (*emptypb.Empty, error) {
@@ -236,7 +236,7 @@ func _AuthService_SignUp_Handler(srv interface{}, ctx context.Context, dec func(
 }
 
 func _AuthService_Check_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
+	in := new(CheckRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -248,7 +248,7 @@ func _AuthService_Check_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: AuthService_Check_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServiceServer).Check(ctx, req.(*emptypb.Empty))
+		return srv.(AuthServiceServer).Check(ctx, req.(*CheckRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -290,7 +290,7 @@ func _AuthService_UpdateUserPic_Handler(srv interface{}, ctx context.Context, de
 }
 
 func _AuthService_GetUserAddresses_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
+	in := new(AddressRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -302,7 +302,7 @@ func _AuthService_GetUserAddresses_Handler(srv interface{}, ctx context.Context,
 		FullMethod: AuthService_GetUserAddresses_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServiceServer).GetUserAddresses(ctx, req.(*emptypb.Empty))
+		return srv.(AuthServiceServer).GetUserAddresses(ctx, req.(*AddressRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

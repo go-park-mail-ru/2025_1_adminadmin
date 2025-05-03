@@ -1,0 +1,119 @@
+syntax = "proto3";
+
+package cart;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/grpc/gen";
+
+service CartService {
+  // Получение корзины
+  rpc GetCart (google.protobuf.Empty) returns (CartResponse) {}
+  
+  // Обновление количества товара в корзине
+  rpc UpdateQuantity (UpdateQuantityRequest) returns (CartResponse) {}
+  
+  // Очистка корзины
+  rpc ClearCart (google.protobuf.Empty) returns (google.protobuf.Empty) {}
+  
+  // Создание заказа
+  rpc CreateOrder (CreateOrderRequest) returns (OrderResponse) {}
+  
+  // Получение списка заказов
+  rpc GetOrders (GetOrdersRequest) returns (OrderListResponse) {}
+  
+  // Получение заказа по ID
+  rpc GetOrderById (GetOrderByIdRequest) returns (OrderResponse) {}
+  
+  // Обновление статуса заказа
+  rpc UpdateOrderStatus (UpdateOrderStatusRequest) returns (google.protobuf.Empty) {}
+  
+  // Обработка платежа
+  rpc Payment (PaymentRequest) returns (PaymentResponse) {}
+}
+
+// Запрос на обновление количества товара
+message UpdateQuantityRequest {
+  string product_id = 1;
+  string restaurant_id = 2;
+  int32 quantity = 3;
+}
+
+// Запрос на создание заказа
+message CreateOrderRequest {
+  string status = 1;
+  string address = 2;
+  string apartment_or_office = 3;
+  string intercom = 4;
+  string entrance = 5;
+  string floor = 6;
+  string courier_comment = 7;
+  bool leave_at_door = 8;
+  double final_price = 9;
+}
+
+// Запрос на получение списка заказов
+message GetOrdersRequest {
+  int32 count = 1;
+  int32 offset = 2;
+}
+
+// Запрос на получение заказа по ID
+message GetOrderByIdRequest {
+  string order_id = 1;
+}
+
+// Запрос на обновление статуса заказа
+message UpdateOrderStatusRequest {
+  string order_id = 1;
+}
+
+// Запрос на оплату
+message PaymentRequest {
+  bytes body = 1;
+}
+
+// Ответ с данными корзины
+message CartResponse {
+  string restaurant_id = 1;
+  string restaurant_name = 2;
+  repeated CartItem products = 3;
+}
+
+// Элемент корзины
+message CartItem {
+  string id = 1;
+  string name = 2;
+  double price = 3;
+  string image_url = 4;
+  int32 weight = 5;
+  int32 amount = 6;
+}
+
+// Ответ с данными заказа
+message OrderResponse {
+  string id = 1;
+  string user_id = 2;
+  string status = 3;
+  string address = 4;
+  CartResponse order_products = 5;
+  string apartment_or_office = 6;
+  string intercom = 7;
+  string entrance = 8;
+  string floor = 9;
+  string courier_comment = 10;
+  bool leave_at_door = 11;
+  google.protobuf.Timestamp created_at = 12;
+  double final_price = 13;
+}
+
+// Ответ со списком заказов
+message OrderListResponse {
+  repeated OrderResponse orders = 1;
+}
+
+// Ответ на оплату
+message PaymentResponse {
+  string result = 1;
+}

@@ -11,17 +11,25 @@ service AuthService {
   
   rpc SignUp (SignUpRequest) returns (UserResponse) {}
   
-  rpc Check (google.protobuf.Empty) returns (UserResponse) {}
+  rpc Check (CheckRequest) returns (UserResponse) {}
     
   rpc UpdateUser (UpdateUserRequest) returns (UserResponse) {}
   
   rpc UpdateUserPic (UpdateUserPicRequest) returns (UserResponse) {}
   
-  rpc GetUserAddresses (google.protobuf.Empty) returns (AddressListResponse) {}
+  rpc GetUserAddresses (AddressRequest) returns (AddressListResponse) {}
   
   rpc DeleteAddress (DeleteAddressRequest) returns (google.protobuf.Empty) {}
   
   rpc AddAddress (Address) returns (google.protobuf.Empty) {}
+}
+
+message CheckRequest {
+  string Login = 1;
+}
+
+message AddressRequest {
+  string Login = 1;
 }
 
 message SignInRequest {
@@ -38,15 +46,18 @@ message SignUpRequest {
 }
 
 message UpdateUserRequest {
-  string Description = 1;
-  string FirstName = 2;
-  string LastName = 3;
-  string PhoneNumber = 4;
-  string Password = 5;
+  string Login = 1;
+  string Description = 2;
+  string FirstName = 3;
+  string LastName = 4;
+  string PhoneNumber = 5;
+  string Password = 6;
 }
 
 message UpdateUserPicRequest {
-  bytes UserPic = 1; 
+  string login = 1;
+  bytes user_pic = 2; 
+  string file_extension = 3;
 }
 
 message DeleteAddressRequest {
@@ -67,8 +78,8 @@ message UserResponse {
   string LastName = 5;
   string Description = 6;
   string UserPic = 7; 
-  string token = 8;
-  string token2 = 9;
+  string Token = 8;
+  string CsrfToken = 9;
 }
 
 message AddressListResponse {
