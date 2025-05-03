@@ -12,3 +12,4 @@ ALTER MAPPING FOR hword, hword_part, word
 WITH russian_ispell, russian_stem;
 
 ALTER SYSTEM SET default_text_search_config = 'ru';
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
