@@ -63,7 +63,7 @@ services:
     volumes:
       - ./build/sql/:/docker-entrypoint-initdb.d/
       - adminadmin-db-data:/var/lib/postgresql/data
-      - .build/sql/dictionary:/usr/share/postgresql/16/tsearch_data
+      - .build/sql/dictionary:/usr/share/postgresql/17/tsearch_data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 10s
@@ -104,9 +104,72 @@ services:
     networks:
       - adminadmin-network
 
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    user: root
+    env_file:
+      - ./.env
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    hostname: prometheus
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+    environment:
+      TZ: "Europe/Moscow"
+    networks:
+      - adminadmin-network
+
+  node_exporter:
+    depends_on:
+      - prometheus
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node_exporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - --path.procfs=/host/proc
+      - --path.sysfs=/host/sys
+      - --collector.filesystem.ignored-mount-points
+      - ^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)
+    hostname: node_exporter
+    ports:
+      - "9100:9100"
+    restart: unless-stopped
+    environment:
+      TZ: "Europe/Moscow"
+    networks:
+      - adminadmin-network
+    
+  grafana:
+    depends_on:
+      - prometheus
+    image: grafana/grafana-enterprise
+    user: root
+    container_name: grafana
+    env_file:
+      - ./.env
+    volumes:
+      - adminadmin-grafana-data:/var/lib/grafana/
+    hostname: grafana
+    ports:
+      - "8052:3000"
+    restart: unless-stopped
+    environment:
+      TZ: "Europe/Moscow"
+    networks:
+      - adminadmin-network
+
+
 volumes:
   redis-data:
   adminadmin-db-data:
+  adminadmin-grafana-data:
 
 networks:
   adminadmin-network:
