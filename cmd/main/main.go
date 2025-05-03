@@ -11,10 +11,8 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/grpc/gen"
 	authHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/http"
-	authRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/repo"
-	authUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/usecase"
-	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/grpc/gen"
 	cartHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/http"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/metrics"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/middleware/cors"
@@ -26,8 +24,18 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/redis/go-redis/v9"
 	"google.golang.org/grpc"
 )
+
+func initRedis() *redis.Client {
+	client := redis.NewClient(&redis.Options{
+		Addr:     os.Getenv("REDIS_ADDR"),
+		Password: "",
+		DB:       0,
+	})
+	return client
+}
 
 func initDB(logger *slog.Logger) (*pgxpool.Pool, error) {
 	connStr := os.Getenv("POSTGRES_CONN")
@@ -84,9 +92,16 @@ func main() {
 	MetricsMiddleware := metricsmw.CreateHttpMetricsMiddleware(Metrics, logger)
 	logMW := log.CreateLoggerMiddleware(logger)
 
-	authRepo := authRepo.CreateAuthRepo(pool)
-	authUsecase := authUsecase.CreateAuthUsecase(authRepo)
-	authHandler := authHandler.CreateAuthHandler(authUsecase)
+	conn, err := grpc.Dial("auth:5459", grpc.WithInsecure())
+	if err != nil {
+		logger.Error("Ошибка подключения к gRPC Auth-сервису: " + err.Error())
+		return
+	}
+	defer conn.Close()
+
+	authGRPCClient := gen.NewAuthServiceClient(conn)
+
+	authHandler := authHandler.CreateAuthHandler(authGRPCClient)
 
 	restaurantRepo := restaurantRepo.NewRestaurantRepository(pool)
 	restaurantUsecase := restaurantUsecase.NewRestaurantsUsecase(restaurantRepo)
@@ -104,8 +119,9 @@ func main() {
 
 	auth := r.PathPrefix("/auth").Subrouter()
 	{
-		auth.HandleFunc("/signup", authHandler.SignUp).Methods(http.MethodPost, http.MethodOptions)
+
 		auth.HandleFunc("/signin", authHandler.SignIn).Methods(http.MethodPost, http.MethodOptions)
+		auth.HandleFunc("/signup", authHandler.SignUp).Methods(http.MethodPost, http.MethodOptions)
 		auth.HandleFunc("/check", authHandler.Check).Methods(http.MethodGet, http.MethodOptions)
 		auth.HandleFunc("/logout", authHandler.LogOut).Methods(http.MethodGet, http.MethodOptions)
 		auth.HandleFunc("/update_user", authHandler.UpdateUser).Methods(http.MethodPost, http.MethodOptions)
@@ -113,6 +129,7 @@ func main() {
 		auth.HandleFunc("/address", authHandler.GetUserAddresses).Methods(http.MethodGet, http.MethodOptions)
 		auth.HandleFunc("/address", authHandler.DeleteAddress).Methods(http.MethodDelete, http.MethodOptions)
 		auth.HandleFunc("/address", authHandler.AddAddress).Methods(http.MethodPost, http.MethodOptions)
+
 	}
 	restaurants := r.PathPrefix("/restaurants").Subrouter()
 	{

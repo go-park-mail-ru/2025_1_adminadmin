@@ -3,75 +3,85 @@ syntax = "proto3";
 package auth;
 
 import "google/protobuf/empty.proto";
-import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/grpc/gen";
+option go_package = "./internal/pkg/auth/delivery/grpc/gen";
 
 service AuthService {
   rpc SignIn (SignInRequest) returns (UserResponse) {}
   
   rpc SignUp (SignUpRequest) returns (UserResponse) {}
   
-  rpc Check (google.protobuf.Empty) returns (UserResponse) {}
-  
-  rpc LogOut (google.protobuf.Empty) returns (google.protobuf.Empty) {}
-  
+  rpc Check (CheckRequest) returns (UserResponse) {}
+    
   rpc UpdateUser (UpdateUserRequest) returns (UserResponse) {}
   
   rpc UpdateUserPic (UpdateUserPicRequest) returns (UserResponse) {}
   
-  rpc GetUserAddresses (google.protobuf.Empty) returns (AddressListResponse) {}
+  rpc GetUserAddresses (AddressRequest) returns (AddressListResponse) {}
   
   rpc DeleteAddress (DeleteAddressRequest) returns (google.protobuf.Empty) {}
   
   rpc AddAddress (Address) returns (google.protobuf.Empty) {}
 }
 
+message CheckRequest {
+  string Login = 1;
+}
+
+message AddressRequest {
+  string Login = 1;
+}
+
 message SignInRequest {
-  string login = 1;
-  string password = 2;
+  string Login = 1;
+  string Password = 2;
 }
 
 message SignUpRequest {
-  string login = 1;
-  string first_name = 2;
-  string last_name = 3;
-  string phone_number = 4;
-  string password = 5;
+  string Login = 1;
+  string FirstName = 2;
+  string LastName = 3;
+  string PhoneNumber = 4;
+  string Password = 5;
 }
 
 message UpdateUserRequest {
-  string description = 1;
-  string first_name = 2;
-  string last_name = 3;
-  string phone_number = 4;
-  string password = 5;
+  string Login = 1;
+  string Description = 2;
+  string FirstName = 3;
+  string LastName = 4;
+  string PhoneNumber = 5;
+  string Password = 6;
 }
 
 message UpdateUserPicRequest {
-  bytes user_pic = 1; 
+  string login = 1;
+  bytes user_pic = 2; 
+  string file_extension = 3;
 }
 
 message DeleteAddressRequest {
-  string id = 1; 
+  string Id = 1; 
 }
 
 message Address {
-  string id = 1; 
-  string address = 2;
-  string user_id = 3; 
+  string Id = 1; 
+  string Address = 2;
+  string UserId = 3; 
 }
 
 message UserResponse {
-  string login = 1;
-  string phone_number = 2;
-  string id = 3; 
-  string first_name = 4;
-  string last_name = 5;
-  string description = 6;
-  string user_pic = 7; 
+  string Login = 1;
+  string PhoneNumber = 2;
+  string Id = 3; 
+  string FirstName = 4;
+  string LastName = 5;
+  string Description = 6;
+  string UserPic = 7; 
+  string Token = 8;
+  string CsrfToken = 9;
 }
 
 message AddressListResponse {
-  repeated Address addresses = 1;
+  repeated Address Addresses = 1;
 }

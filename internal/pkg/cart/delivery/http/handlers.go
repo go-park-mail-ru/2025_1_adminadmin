@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"log/slog"
 	"net/http"
 	"os"
@@ -479,4 +480,19 @@ func (h *CartHandler) UpdateOrderStatus(w http.ResponseWriter, r *http.Request) 
 
 	w.Header().Set("Content-Type", "application/json")
 	log.LogHandlerInfo(logger, "Success", http.StatusOK)
+}
+
+func (h *CartHandler) Payment(w http.ResponseWriter, r *http.Request) {
+	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		log.LogHandlerError(logger, err, http.StatusInternalServerError)
+		utils.SendError(w, "не удалось прочитать тело запроса", http.StatusInternalServerError)
+		return
+	}
+	defer r.Body.Close()
+
+	log.LogHandlerInfo(logger, fmt.Sprintf("Получен запрос в DeliveryHandler: %s", string(body)), http.StatusOK)
+	w.Write([]byte("OK"))
 }

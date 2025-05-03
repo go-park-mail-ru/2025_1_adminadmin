@@ -24,6 +24,29 @@ services:
     networks:
       - adminadmin-network
 
+  auth:
+    container_name: auth
+    build:
+      context: .
+      dockerfile: ./build/auth.Dockerfile
+    environment:
+      POSTGRES_CONN: ${POSTGRES_CONN}
+      JWT_SECRET: ${JWT_SECRET}
+      REDIS_ADDR: ${REDIS_ADDR}
+      MAIN_LOG_FILE: ${MAIN_LOG_FILE}
+      USER_IMAGE_BASE_PATH: ${USER_IMAGE_BASE_PATH}
+      RESTAURANT_IMAGE_BASE_PATH: ${RESTAURANT_IMAGE_BASE_PATH}
+    volumes:
+      - /home/ubuntu/deploy_user/tp_code/images_user/:${USER_IMAGE_BASE_PATH}
+    depends_on:
+      postgres:
+        condition: service_started
+    restart: always
+    ports:
+      - "5459:5459"
+    networks:
+      - adminadmin-network
+
   cart:
     container_name: cart
     build:
@@ -48,10 +71,12 @@ services:
       - adminadmin-network
 
   postgres:
+    build:
+      context: .
+      dockerfile: ./build/pg.Dockerfile
     env_file:
       - .env
     container_name: postgres
-    image: postgres:15.0
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -59,8 +84,9 @@ services:
     networks:
       - adminadmin-network
     volumes:
-      - ./build/sql/create_tables.sql:/docker-entrypoint-initdb.d/initdb.sql
+      - ./build/sql/:/docker-entrypoint-initdb.d/
       - adminadmin-db-data:/var/lib/postgresql/data
+      - ./build/sql/dictionary:/usr/share/postgresql/15/tsearch_data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 10s
@@ -101,9 +127,72 @@ services:
     networks:
       - adminadmin-network
 
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    user: root
+    env_file:
+      - ./.env
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    hostname: prometheus
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+    environment:
+      TZ: "Europe/Moscow"
+    networks:
+      - adminadmin-network
+
+  node_exporter:
+    depends_on:
+      - prometheus
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node_exporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - --path.procfs=/host/proc
+      - --path.sysfs=/host/sys
+      - --collector.filesystem.ignored-mount-points
+      - ^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)
+    hostname: node_exporter
+    ports:
+      - "9100:9100"
+    restart: unless-stopped
+    environment:
+      TZ: "Europe/Moscow"
+    networks:
+      - adminadmin-network
+    
+  grafana:
+    depends_on:
+      - prometheus
+    image: grafana/grafana-enterprise
+    user: root
+    container_name: grafana
+    env_file:
+      - ./.env
+    volumes:
+      - adminadmin-grafana-data:/var/lib/grafana/
+    hostname: grafana
+    ports:
+      - "8052:3000"
+    restart: unless-stopped
+    environment:
+      TZ: "Europe/Moscow"
+    networks:
+      - adminadmin-network
+
+
 volumes:
   redis-data:
   adminadmin-db-data:
+  adminadmin-grafana-data:
 
 networks:
   adminadmin-network:
