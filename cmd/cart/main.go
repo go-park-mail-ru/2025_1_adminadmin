@@ -79,13 +79,6 @@ func run() (err error) {
 	r := mux.NewRouter().PathPrefix("/api").Subrouter()
 	r.PathPrefix("/metrics").Handler(promhttp.Handler())
 	http.Handle("/", r)
-	httpSrv := http.Server{Handler: r, Addr: fmt.Sprintf(":%s", "5460")}
-	go func() {
-		if err := httpSrv.ListenAndServe(); err != nil {
-			logger.Error("fail httpSrv.ListenAndServe")
-		}
-	}()
-
 	go func() {
 		listener, err := net.Listen("tcp", fmt.Sprintf(":%s", "5460"))
 		if err != nil {
