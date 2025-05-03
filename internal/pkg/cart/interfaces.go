@@ -20,7 +20,7 @@ type CartUsecase interface {
 
 	CreateOrder(ctx context.Context, userID string, details models.OrderInReq, cart models.Cart) (models.Order, error)
 	GetOrders(ctx context.Context, user_id uuid.UUID, count, offset int) ([]models.Order, error)
-	GetOrderById(ctx context.Context, order_id uuid.UUID) (models.Order, error)
+	GetOrderById(ctx context.Context, order_id, user_id uuid.UUID) (models.Order, error)
 	UpdateOrderStatus(ctx context.Context, order_id uuid.UUID) error
 }
 
@@ -29,6 +29,6 @@ type RestaurantRepo interface {
 
 	Save(ctx context.Context, order models.Order, userLogin string) error
 	GetOrders(ctx context.Context, user_id uuid.UUID, count, offset int) ([]models.Order, error)
-	GetOrderById(ctx context.Context, order_id uuid.UUID) (models.Order, error)
+	GetOrderById(ctx context.Context, order_id, user_id uuid.UUID) (models.Order, error)
 	UpdateOrderStatus(ctx context.Context, order_id uuid.UUID, status string) error
 }

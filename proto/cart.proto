@@ -5,115 +5,100 @@ package cart;
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/grpc/gen";
+option go_package = "./internal/pkg/cart/delivery/grpc/gen";
 
 service CartService {
-  // Получение корзины
-  rpc GetCart (google.protobuf.Empty) returns (CartResponse) {}
-  
-  // Обновление количества товара в корзине
-  rpc UpdateQuantity (UpdateQuantityRequest) returns (CartResponse) {}
-  
-  // Очистка корзины
-  rpc ClearCart (google.protobuf.Empty) returns (google.protobuf.Empty) {}
-  
-  // Создание заказа
+  rpc GetCart (GetCartRequest) returns (CartResponse) {}
+
+  rpc UpdateItemQuantity (UpdateQuantityRequest) returns (google.protobuf.Empty) {}
+
+  rpc ClearCart (ClearCartRequest) returns (google.protobuf.Empty) {}
+
   rpc CreateOrder (CreateOrderRequest) returns (OrderResponse) {}
   
-  // Получение списка заказов
   rpc GetOrders (GetOrdersRequest) returns (OrderListResponse) {}
   
-  // Получение заказа по ID
   rpc GetOrderById (GetOrderByIdRequest) returns (OrderResponse) {}
   
-  // Обновление статуса заказа
   rpc UpdateOrderStatus (UpdateOrderStatusRequest) returns (google.protobuf.Empty) {}
-  
-  // Обработка платежа
-  rpc Payment (PaymentRequest) returns (PaymentResponse) {}
 }
 
-// Запрос на обновление количества товара
+message GetCartRequest {
+    string Login = 1;
+}
+
 message UpdateQuantityRequest {
-  string product_id = 1;
-  string restaurant_id = 2;
-  int32 quantity = 3;
+  string Login = 1;
+  string ProductId = 2;
+  string RestaurantId = 3;
+  int32 Quantity = 4;
 }
 
-// Запрос на создание заказа
+message ClearCartRequest {
+    string Login = 1;
+}
+
 message CreateOrderRequest {
-  string status = 1;
-  string address = 2;
-  string apartment_or_office = 3;
-  string intercom = 4;
-  string entrance = 5;
-  string floor = 6;
-  string courier_comment = 7;
-  bool leave_at_door = 8;
-  double final_price = 9;
+  string Status = 1;
+  string Address = 2;
+  string ApartmentOrOffice = 3;
+  string Intercom = 4;
+  string Entrance = 5;
+  string Floor = 6;
+  string CourierComment = 7;
+  bool LeaveAtDoor = 8;
+  double FinalPrice = 9;
+  CartResponse Cart = 10;
+  string Login = 11;
 }
 
-// Запрос на получение списка заказов
 message GetOrdersRequest {
-  int32 count = 1;
-  int32 offset = 2;
+  string UserId = 1;
+  int32 Count = 2;
+  int32 Offset = 3;
 }
 
-// Запрос на получение заказа по ID
 message GetOrderByIdRequest {
-  string order_id = 1;
+  string OrderId = 1;
+  string UserId = 2;
 }
 
-// Запрос на обновление статуса заказа
 message UpdateOrderStatusRequest {
-  string order_id = 1;
+  string OrderId = 1;
 }
 
-// Запрос на оплату
-message PaymentRequest {
-  bytes body = 1;
-}
-
-// Ответ с данными корзины
 message CartResponse {
-  string restaurant_id = 1;
-  string restaurant_name = 2;
-  repeated CartItem products = 3;
+  string RestaurantId = 1;
+  string RestaurantName = 2;
+  repeated CartItem Products = 3;
+  bool FullCart = 4;
 }
 
-// Элемент корзины
 message CartItem {
-  string id = 1;
-  string name = 2;
-  double price = 3;
-  string image_url = 4;
-  int32 weight = 5;
-  int32 amount = 6;
+  string Id = 1;
+  string Name = 2;
+  double Price = 3;
+  string ImageUrl = 4;
+  int32 Weight = 5;
+  int32 Amount = 6;
 }
 
-// Ответ с данными заказа
 message OrderResponse {
-  string id = 1;
-  string user_id = 2;
-  string status = 3;
-  string address = 4;
-  CartResponse order_products = 5;
-  string apartment_or_office = 6;
-  string intercom = 7;
-  string entrance = 8;
-  string floor = 9;
-  string courier_comment = 10;
-  bool leave_at_door = 11;
-  google.protobuf.Timestamp created_at = 12;
-  double final_price = 13;
+  string Id = 1;
+  string UserId = 2;
+  string Status = 3;
+  string Address = 4;
+  CartResponse OrderProducts = 5;
+  string ApartmentOrOffice = 6;
+  string Intercom = 7;
+  string Entrance = 8;
+  string Floor = 9;
+  string CourierComment = 10;
+  bool LeaveAtDoor = 11;
+  google.protobuf.Timestamp CreatedAt = 12;
+  double FinalPrice = 13;
 }
 
-// Ответ со списком заказов
 message OrderListResponse {
-  repeated OrderResponse orders = 1;
-}
-
-// Ответ на оплату
-message PaymentResponse {
-  string result = 1;
+  repeated OrderResponse Orders = 1;
 }

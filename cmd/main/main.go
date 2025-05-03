@@ -14,28 +14,20 @@ import (
 	authHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/http"
 	authRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/repo"
 	authUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/usecase"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/grpc/gen"
 	cartHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/http"
-	cartPgRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/pg"
-	cartRedisRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/redis"
-	cartUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/usecase"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/metrics"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/middleware/cors"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/middleware/log"
+	metricsmw "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/middleware/metrics"
 	restaurantDelivery "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/delivery/http"
 	restaurantRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/repo"
 	restaurantUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/usecase"
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
-	"github.com/redis/go-redis/v9"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"google.golang.org/grpc"
 )
-
-func initRedis() *redis.Client {
-	client := redis.NewClient(&redis.Options{
-		Addr:     os.Getenv("REDIS_ADDR"),
-		Password: "",
-		DB:       0,
-	})
-	return client
-}
 
 func initDB(logger *slog.Logger) (*pgxpool.Pool, error) {
 	connStr := os.Getenv("POSTGRES_CONN")
@@ -75,12 +67,21 @@ func main() {
 	}
 	defer pool.Close()
 
-	redisClient := initRedis()
-	cartRepoPg := cartPgRepo.NewRestaurantRepository(pool)
-	cartRepoRedis := cartRedisRepo.NewCartRepository(redisClient)
-	cartUsecase := cartUsecase.NewCartUsecase(cartRepoRedis, cartRepoPg)
-	cartHandler := cartHandler.NewCartHandler(cartUsecase)
+	cartConn, err := grpc.Dial("cart:5460", grpc.WithInsecure())
+	if err != nil {
+		logger.Error("Ошибка подключения к gRPC Cart-сервису: " + err.Error())
+		return
+	}
+	defer cartConn.Close()
 
+	cartGRPCClient := gen.NewCartServiceClient(cartConn)
+	cartHandler := cartHandler.NewCartHandler(cartGRPCClient)
+
+	Metrics, err := metrics.NewHttpMetrics("main")
+	if err != nil {
+		logger.Error("cant create metrics")
+	}
+	MetricsMiddleware := metricsmw.CreateHttpMetricsMiddleware(Metrics, logger)
 	logMW := log.CreateLoggerMiddleware(logger)
 
 	authRepo := authRepo.CreateAuthRepo(pool)
@@ -98,6 +99,7 @@ func main() {
 
 	r.Use(
 		logMW,
+		MetricsMiddleware,
 		cors.CorsMiddleware)
 
 	auth := r.PathPrefix("/auth").Subrouter()
@@ -136,6 +138,7 @@ func main() {
 	}
 
 	r.HandleFunc("/payment", cartHandler.UpdateOrderStatus).Methods(http.MethodPost)
+	r.PathPrefix("/metrics").Handler(promhttp.Handler())
 	http.Handle("/", r)
 	srv := http.Server{
 		Handler:           r,

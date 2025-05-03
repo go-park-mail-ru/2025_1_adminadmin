@@ -48,7 +48,7 @@ FROM orders WHERE user_id = $1 LIMIT $2 OFFSET $3;`
     leave_at_door,
     final_price,
     created_at
-FROM orders WHERE id = $1;`
+FROM orders WHERE id = $1 AND user_id = $2;`
 	updateOrderStatus = `UPDATE orders SET status = $1 WHERE id = $2;`
 )
 
@@ -171,13 +171,13 @@ func (r *RestaurantRepository) GetOrders(ctx context.Context, user_id uuid.UUID,
 	return orders, rows.Err()
 }
 
-func (r *RestaurantRepository) GetOrderById(ctx context.Context, order_id uuid.UUID) (models.Order, error) {
+func (r *RestaurantRepository) GetOrderById(ctx context.Context, order_id, user_id uuid.UUID) (models.Order, error) {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 
 	var order models.Order
 	var orderProductsJSON string
 
-	err := r.db.QueryRow(ctx, getOrderById, order_id).Scan(&order.ID, &order.UserID, &order.Status, &order.Address, &orderProductsJSON,
+	err := r.db.QueryRow(ctx, getOrderById, order_id, user_id).Scan(&order.ID, &order.UserID, &order.Status, &order.Address, &orderProductsJSON,
 		&order.ApartmentOrOffice, &order.Intercom, &order.Entrance, &order.Floor, &order.CourierComment,
 		&order.LeaveAtDoor, &order.FinalPrice, &order.CreatedAt)
 	if err != nil {
