@@ -1,8 +1,7 @@
-
 CREATE TEXT SEARCH DICTIONARY russian_ispell (
     TEMPLATE = ispell,
-    DictFile = russian,
-    AffFile = russian,
+    DictFile = '/usr/share/postgresql/15/tsearch_data/russian.dict',
+    AffFile = '/usr/share/postgresql/15/tsearch_data/russian.affix',
     StopWords = russian
 );
 
