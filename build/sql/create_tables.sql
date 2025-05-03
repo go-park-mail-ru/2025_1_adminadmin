@@ -81,6 +81,32 @@ CREATE TABLE IF NOT EXISTS orders (
     created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
+CREATE INDEX idx_restaurant_name ON restaurants USING GIN (to_tsvector('russian', name));
+
+CREATE INDEX idx_product_name ON products USING GIN (to_tsvector('russian', name));
+
+CREATE OR REPLACE FUNCTION make_restaurant_tsvector(name TEXT, description TEXT)
+    RETURNS tsvector AS
+$$
+BEGIN
+    RETURN (
+            setweight(to_tsvector('russian', name), 'A') ||
+            setweight(to_tsvector('russian', description), 'B')
+        );
+END
+$$ LANGUAGE 'plpgsql' IMMUTABLE;
+
+CREATE OR REPLACE FUNCTION make_product_tsvector(name TEXT, category TEXT)
+    RETURNS tsvector AS
+$$
+BEGIN
+    RETURN (
+            setweight(to_tsvector('russian', name), 'A') ||
+            setweight(to_tsvector('russian', category), 'B')
+        );
+END
+$$ LANGUAGE 'plpgsql' IMMUTABLE;
+
 INSERT INTO restaurant_tags (id, name)
 VALUES 
   (gen_random_uuid(), 'Итальянский'),
