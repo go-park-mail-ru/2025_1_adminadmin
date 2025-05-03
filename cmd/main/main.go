@@ -11,7 +11,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/grpc/gen"
+	authGen "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/grpc/gen"
+	cartGen "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/grpc/gen"
 	authHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/http"
 	cartHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/http"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/metrics"
@@ -82,7 +83,7 @@ func main() {
 	}
 	defer cartConn.Close()
 
-	cartGRPCClient := gen.NewCartServiceClient(cartConn)
+	cartGRPCClient := cartGen.NewCartServiceClient(cartConn)
 	cartHandler := cartHandler.NewCartHandler(cartGRPCClient)
 
 	Metrics, err := metrics.NewHttpMetrics("main")
@@ -99,7 +100,7 @@ func main() {
 	}
 	defer conn.Close()
 
-	authGRPCClient := gen.NewAuthServiceClient(conn)
+	authGRPCClient := authGen.NewAuthServiceClient(conn)
 
 	authHandler := authHandler.CreateAuthHandler(authGRPCClient)
 

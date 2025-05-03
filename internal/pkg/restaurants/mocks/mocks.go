@@ -110,6 +110,21 @@ func (mr *MockRestaurantRepoMockRecorder) ReviewExists(ctx, userID, restaurantID
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReviewExists", reflect.TypeOf((*MockRestaurantRepo)(nil).ReviewExists), ctx, userID, restaurantID)
 }
 
+// ReviewExistsReturn mocks base method.
+func (m *MockRestaurantRepo) ReviewExistsReturn(ctx context.Context, userID, restaurantID uuid.UUID) (models.ReviewUser, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ReviewExistsReturn", ctx, userID, restaurantID)
+	ret0, _ := ret[0].(models.ReviewUser)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ReviewExistsReturn indicates an expected call of ReviewExistsReturn.
+func (mr *MockRestaurantRepoMockRecorder) ReviewExistsReturn(ctx, userID, restaurantID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReviewExistsReturn", reflect.TypeOf((*MockRestaurantRepo)(nil).ReviewExistsReturn), ctx, userID, restaurantID)
+}
+
 // MockRestaurantUsecase is a mock of RestaurantUsecase interface.
 type MockRestaurantUsecase struct {
 	ctrl     *gomock.Controller
@@ -206,4 +221,19 @@ func (m *MockRestaurantUsecase) ReviewExists(ctx context.Context, userID, restau
 func (mr *MockRestaurantUsecaseMockRecorder) ReviewExists(ctx, userID, restaurantID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReviewExists", reflect.TypeOf((*MockRestaurantUsecase)(nil).ReviewExists), ctx, userID, restaurantID)
+}
+
+// ReviewExistsReturn mocks base method.
+func (m *MockRestaurantUsecase) ReviewExistsReturn(ctx context.Context, userID, restaurantID uuid.UUID) (models.ReviewUser, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ReviewExistsReturn", ctx, userID, restaurantID)
+	ret0, _ := ret[0].(models.ReviewUser)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ReviewExistsReturn indicates an expected call of ReviewExistsReturn.
+func (mr *MockRestaurantUsecaseMockRecorder) ReviewExistsReturn(ctx, userID, restaurantID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReviewExistsReturn", reflect.TypeOf((*MockRestaurantUsecase)(nil).ReviewExistsReturn), ctx, userID, restaurantID)
 }
