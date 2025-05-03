@@ -161,7 +161,7 @@ func (h *AuthHandler) SignUp(w http.ResponseWriter, r *http.Request) {
 			if strings.Contains(st.Message(), "логин") || strings.Contains(st.Message(), "пароль") {
 				utils.SendError(w, "неправильный логин или пароль", http.StatusBadRequest)
 			} else {
-				utils.SendError(w, st.Message(), http.StatusBadRequest)
+				utils.SendError(w, "пользователь с таким логином уже существует", http.StatusBadRequest)
 			}
 		case codes.Internal:
 			log.LogHandlerError(logger, err, http.StatusInternalServerError)
