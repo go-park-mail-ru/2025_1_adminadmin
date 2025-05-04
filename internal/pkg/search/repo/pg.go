@@ -21,21 +21,26 @@ ORDER BY category, name;
 	WITH matched_restaurants AS (
     SELECT r.id, 1 AS priority
     FROM restaurants r
-    WHERE r.tsvector_column @@ plainto_tsquery('ru', $1) 
+    WHERE r.tsvector_column @@ plainto_tsquery('ru', $1)
     
     UNION
     
     SELECT r.id, 2 AS priority
     FROM restaurants r
     JOIN products p ON r.id = p.restaurant_id
-    WHERE p.tsvector_column @@ plainto_tsquery('ru', $1) 
+    WHERE p.tsvector_column @@ plainto_tsquery('ru', $1)
 ),
 products_limited AS (
     SELECT *,
            ROW_NUMBER() OVER (PARTITION BY restaurant_id ORDER BY id) AS rn
     FROM products
     WHERE restaurant_id IN (SELECT id FROM matched_restaurants)
-      AND tsvector_column @@ plainto_tsquery('ru', $1) 
+      AND tsvector_column @@ plainto_tsquery('ru', $1)
+),
+fallback_products AS (
+    SELECT * FROM products
+    WHERE restaurant_id IN (SELECT id FROM matched_restaurants)
+    LIMIT 5
 ),
 restaurants_limited AS (
     SELECT id, priority
@@ -44,10 +49,16 @@ restaurants_limited AS (
 )
 SELECT 
     r.id, r.name, r.banner_url, r.address, r.rating, r.rating_count, r.description,
-    p.id AS product_id, p.name AS product_name, p.price, p.image_url, p.weight, p.category
+    COALESCE(p.id, f.id) AS product_id,
+    COALESCE(p.name, f.name) AS product_name,
+    COALESCE(p.price, f.price) AS price,
+    COALESCE(p.image_url, f.image_url) AS image_url,
+    COALESCE(p.weight, f.weight) AS weight,
+    COALESCE(p.category, f.category) AS category
 FROM restaurants_limited mr
 JOIN restaurants r ON r.id = mr.id
-LEFT JOIN products_limited p ON r.id = p.restaurant_id AND p.rn <= 5  
+LEFT JOIN products_limited p ON r.id = p.restaurant_id AND p.rn <= 5
+LEFT JOIN fallback_products f ON r.id = f.restaurant_id
 ORDER BY mr.priority ASC, r.rating DESC;
 	`
 )
