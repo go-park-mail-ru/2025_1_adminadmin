@@ -40,7 +40,7 @@ func (h *SearchHandler) SearchRestaurantWithProducts(w http.ResponseWriter, r *h
         fmt.Sscanf(offset, "%d", &offsetInt)
     }
 
-    restaurants, _, err := h.uc.SearchRestaurantWithProducts(r.Context(), query, countInt, offsetInt)
+    restaurants, err := h.uc.SearchRestaurantWithProducts(r.Context(), query, countInt, offsetInt)
     if err != nil {
         utils.SendError(w, "Ошибка поиска ресторанов с продуктами", http.StatusInternalServerError)
         return
