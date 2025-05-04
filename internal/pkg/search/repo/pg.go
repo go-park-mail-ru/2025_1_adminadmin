@@ -32,56 +32,10 @@ ORDER BY category, name;
 	WHERE ts1 >= 0.3 OR ts2 >= 0.3
 	ORDER BY ts1 DESC, ts2 DESC
 	LIMIT $2 OFFSET $3;`
+
 	searchRestaurantWithProducts2 = `
-	SELECT id, name, price, image_url, weight, category, ts_rank(p.tsvector_column, plainto_tsquery('ru', $1)) AS ts FROM products
+	SELECT id, name, price, image_url, weight, category, ts_rank(tsvector_column, plainto_tsquery('ru', $1)) AS ts FROM products
 	WHERE restaurant_id = $2 ORDER BY ts DESC LIMIT 5;`
-
-	searchRestaurantWithProducts = ` 
-WITH matched_restaurants AS (
-    -- Шаг 1: находим рестораны, которые соответствуют запросу по названию или продуктам
-    SELECT r.id, 
-           1 AS priority
-    FROM restaurants r
-    WHERE r.tsvector_column @@ plainto_tsquery('ru', $1)
-    
-    UNION
-    
-    SELECT r.id, 
-           2 AS priority
-    FROM restaurants r
-    JOIN products p ON r.id = p.restaurant_id
-    WHERE p.tsvector_column @@ plainto_tsquery('ru', $1)
-),
-restaurants_limited AS (
-    -- Шаг 2: лимитируем количество ресторанов по запросу
-    SELECT r.id, r.name, r.banner_url, r.address, r.rating, r.rating_count, r.description, mr.priority
-    FROM matched_restaurants mr
-    JOIN restaurants r ON r.id = mr.id
-    LIMIT $2 OFFSET $3
-),
-products_limited AS (
-    -- Шаг 3: находим продукты для ресторанов, которые соответствуют запросу
-    SELECT p.restaurant_id, p.id AS product_id, p.name AS product_name, p.price, p.image_url, p.weight, p.category,
-           ROW_NUMBER() OVER (PARTITION BY p.restaurant_id ORDER BY p.id) AS rn
-    FROM products p
-    WHERE p.restaurant_id IN (SELECT id FROM restaurants_limited)
-      AND p.tsvector_column @@ plainto_tsquery('ru', $1)
-)
--- Основной запрос: выбираем рестораны и их продукты (или 5 любых продуктов, если нет подходящих)
-SELECT 
-    r.id, r.name, r.banner_url, r.address, r.rating, r.rating_count, r.description,
-    COALESCE(p.product_id, f.product_id) AS product_id,
-    COALESCE(p.product_name, f.product_name) AS product_name,
-    COALESCE(p.price, f.price) AS price,
-    COALESCE(p.image_url, f.image_url) AS image_url,
-    COALESCE(p.weight, f.weight) AS weight,
-    COALESCE(p.category, f.category) AS category
-FROM restaurants_limited r
-LEFT JOIN products_limited p ON r.id = p.restaurant_id AND p.rn <= 5
-LEFT JOIN products f ON r.id = f.restaurant_id
-ORDER BY r.priority ASC, r.rating DESC;
-
-	`
 )
 
 type SearchRepo struct {
