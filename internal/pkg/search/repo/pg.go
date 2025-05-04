@@ -19,6 +19,7 @@ ORDER BY category, name;
 
 	searchRestaurantWithProducts = ` 
 	WITH matched_restaurants AS (
+    -- Шаг 1: находим рестораны, которые соответствуют запросу по названию или продуктам
     SELECT r.id, 1 AS priority
     FROM restaurants r
     WHERE r.tsvector_column @@ plainto_tsquery('ru', $1)
@@ -31,6 +32,7 @@ ORDER BY category, name;
     WHERE p.tsvector_column @@ plainto_tsquery('ru', $1)
 ),
 products_limited AS (
+    -- Шаг 2: находим продукты, которые соответствуют запросу для каждого ресторана
     SELECT *,
            ROW_NUMBER() OVER (PARTITION BY restaurant_id ORDER BY id) AS rn
     FROM products
@@ -38,15 +40,18 @@ products_limited AS (
       AND tsvector_column @@ plainto_tsquery('ru', $1)
 ),
 fallback_products AS (
+    -- Шаг 3: если у ресторана нет подходящих продуктов, возвращаем 5 любых продуктов
     SELECT * FROM products
     WHERE restaurant_id IN (SELECT id FROM matched_restaurants)
     LIMIT 5
 ),
 restaurants_limited AS (
+    -- Шаг 4: лимитируем количество ресторанов по запросу
     SELECT id, priority
     FROM matched_restaurants
     LIMIT $2 OFFSET $3  
 )
+-- Основной запрос: выбираем рестораны и их продукты (или 5 любых продуктов, если нет подходящих)
 SELECT 
     r.id, r.name, r.banner_url, r.address, r.rating, r.rating_count, r.description,
     COALESCE(p.id, f.id) AS product_id,
@@ -136,6 +141,7 @@ func (r *SearchRepo) SearchRestaurantWithProducts(ctx context.Context, query str
 
     return restaurants, totalCount, nil
 }
+
 
 
 
