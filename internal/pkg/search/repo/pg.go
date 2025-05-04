@@ -10,19 +10,19 @@ import (
 )
 
 const (
-	searchRestaurantWithProducts = `
+	searchRestaurantWithProducts = ` 
 		SELECT r.id, r.name, r.banner_url, r.address, r.rating, r.rating_count, r.description,
 			   p.id, p.name, p.price, p.image_url, p.weight, p.category
 		FROM restaurants r
 		LEFT JOIN products p ON r.id = p.restaurant_id
-		WHERE r.tsvector_column @@ plainto_tsquery('russian', $1) OR p.tsvector_column @@ plainto_tsquery('russian', $1)
+		WHERE r.tsvector_column @@ plainto_tsquery('ru', $1) OR p.tsvector_column @@ plainto_tsquery('ru', $1)
 		LIMIT 5;
 	`
 
-	searchProductsInRestaurant = `
+	searchProductsInRestaurant = ` 
 		SELECT id, name, price, image_url, weight, category
 		FROM products
-		WHERE restaurant_id = $1 AND tsvector_column @@ plainto_tsquery('russian', $2)
+		WHERE restaurant_id = $1 AND tsvector_column @@ plainto_tsquery('ru', $2)
 		LIMIT 5;
 	`
 )

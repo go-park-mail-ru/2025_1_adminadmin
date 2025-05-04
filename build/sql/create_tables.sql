@@ -2402,7 +2402,6 @@ AFTER INSERT ON reviews
 FOR EACH ROW
 EXECUTE FUNCTION update_restaurant_rating();
 
--- Создание словаря и конфигурации для русского языка
 CREATE TEXT SEARCH DICTIONARY russian_ispell (
     TEMPLATE = ispell,
     DictFile = russian,
@@ -2452,19 +2451,18 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
--- Обновление данных в таблицах restaurants и products
 UPDATE restaurants SET tsvector_column = make_restaurant_tsvector(name, description);
 UPDATE products SET tsvector_column = make_product_tsvector(name, category);
 
--- Триггеры для автообновления tsvector
-CREATE OR REPLACE FUNCTION update_restaurant_tsvector() RETURNS trigger AS $$
+CREATE OR REPLACE FUNCTION update_restaurant_tsvector() RETURNS trigger AS $$ 
 BEGIN
     NEW.tsvector_column := make_restaurant_tsvector(NEW.name, NEW.description);
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION update_product_tsvector() RETURNS trigger AS $$
+-- Функция обновления tsvector для продуктов
+CREATE OR REPLACE FUNCTION update_product_tsvector() RETURNS trigger AS $$ 
 BEGIN
     NEW.tsvector_column := make_product_tsvector(NEW.name, NEW.category);
     RETURN NEW;
