@@ -42,7 +42,7 @@ func easyjson16134a91DecodeGithubComGoParkMailRu20251AdminadminInternalModels(in
 			}
 		case "name":
 			out.Name = string(in.String())
-		case "banner_url":
+		case "image_url":
 			out.BannerURL = string(in.String())
 		case "address":
 			out.Address = string(in.String())
@@ -100,7 +100,7 @@ func easyjson16134a91EncodeGithubComGoParkMailRu20251AdminadminInternalModels(ou
 		out.String(string(in.Name))
 	}
 	{
-		const prefix string = ",\"banner_url\":"
+		const prefix string = ",\"image_url\":"
 		out.RawString(prefix)
 		out.String(string(in.BannerURL))
 	}
