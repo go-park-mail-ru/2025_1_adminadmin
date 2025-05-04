@@ -22,16 +22,14 @@ ORDER BY category, name;
     -- Шаг 1: находим рестораны, которые соответствуют запросу по названию или продуктам
     SELECT r.id, 1 AS priority
     FROM restaurants r
-    WHERE similarity(r.name, $1) > 0.2
-    OR similarity(r.description, $1) > 0.1
-
+    WHERE r.tsvector_column @@ plainto_tsquery('ru', $1)
+    
     UNION
     
     SELECT r.id, 2 AS priority
     FROM restaurants r
     JOIN products p ON r.id = p.restaurant_id
-    WHERE similarity(p.name, $1) > 0.1
-    OR similarity(p.description, $1) > 0.04
+    WHERE p.tsvector_column @@ plainto_tsquery('ru', $1)
 ),
 products_limited AS (
     -- Шаг 2: находим продукты, которые соответствуют запросу для каждого ресторана
@@ -39,7 +37,7 @@ products_limited AS (
            ROW_NUMBER() OVER (PARTITION BY restaurant_id ORDER BY id) AS rn
     FROM products
     WHERE restaurant_id IN (SELECT id FROM matched_restaurants)
-      AND (similarity(name, $1) > 0.1 OR similarity(description, $1) > 0.04)
+      AND tsvector_column @@ plainto_tsquery('ru', $1)
 ),
 fallback_products AS (
     -- Шаг 3: если у ресторана нет подходящих продуктов, возвращаем 5 любых продуктов
@@ -67,6 +65,7 @@ JOIN restaurants r ON r.id = mr.id
 LEFT JOIN products_limited p ON r.id = p.restaurant_id AND p.rn <= 5
 LEFT JOIN fallback_products f ON r.id = f.restaurant_id
 ORDER BY mr.priority ASC, r.rating DESC;
+
 	`
 )
 
@@ -132,7 +131,7 @@ func (r *SearchRepo) SearchRestaurantWithProducts(ctx context.Context, query str
     }
 
     var totalCount int
-    err = r.db.QueryRow(ctx, "SELECT COUNT(*) FROM restaurants r WHERE similarity(r.name, $1) > 0.2 OR similarity(r.description, $1) > 0.1", query).Scan(&totalCount)
+    err = r.db.QueryRow(ctx, "SELECT COUNT(*) FROM restaurants r WHERE r.tsvector_column @@ plainto_tsquery('ru', $1)", query).Scan(&totalCount)
     if err != nil {
         return nil, 0, fmt.Errorf("error in count query: %w", err)
     }
