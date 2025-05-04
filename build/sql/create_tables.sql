@@ -2402,32 +2402,11 @@ AFTER INSERT ON reviews
 FOR EACH ROW
 EXECUTE FUNCTION update_restaurant_rating();
 
-
--- 1. Создание расширений и конфигураций
-CREATE EXTENSION IF NOT EXISTS pg_trgm;
-CREATE EXTENSION IF NOT EXISTS ispell;
-
--- 2. Настройка русской конфигурации
-CREATE TEXT SEARCH DICTIONARY russian_ispell (
-    TEMPLATE = ispell,
-    DictFile = russian,
-    AffFile = russian,
-    StopWords = russian
-);
-
-CREATE TEXT SEARCH CONFIGURATION ru (COPY = russian);
-
-ALTER TEXT SEARCH CONFIGURATION ru
-ALTER MAPPING FOR hword, hword_part, word
-WITH russian_ispell, russian_stem;
-
-ALTER SYSTEM SET default_text_search_config = 'ru';
-
--- 3. Добавляем недостающие колонки
+-- Добавление колонок для tsvector
 ALTER TABLE restaurants ADD COLUMN IF NOT EXISTS tsvector_column tsvector;
 ALTER TABLE products ADD COLUMN IF NOT EXISTS tsvector_column tsvector;
 
--- 4. Функции генерации tsvector
+-- Функция генерации tsvector для ресторанов
 CREATE OR REPLACE FUNCTION make_restaurant_tsvector(name TEXT, description TEXT)
 RETURNS tsvector AS
 $$
@@ -2439,6 +2418,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
+-- Функция генерации tsvector для продуктов
 CREATE OR REPLACE FUNCTION make_product_tsvector(name TEXT, category TEXT)
 RETURNS tsvector AS
 $$
@@ -2450,11 +2430,11 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
--- 5. Обновляем текущие строки
+-- Обновление данных
 UPDATE restaurants SET tsvector_column = make_restaurant_tsvector(name, description);
 UPDATE products SET tsvector_column = make_product_tsvector(name, category);
 
--- 6. Триггерные функции для автоматического обновления
+-- Триггеры для автообновления
 CREATE OR REPLACE FUNCTION update_restaurant_tsvector() RETURNS trigger AS $$
 BEGIN
     NEW.tsvector_column := make_restaurant_tsvector(NEW.name, NEW.description);
@@ -2469,7 +2449,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- 7. Добавление триггеров
+-- Добавление триггеров
 DROP TRIGGER IF EXISTS trg_update_restaurant_tsv ON restaurants;
 CREATE TRIGGER trg_update_restaurant_tsv
 BEFORE INSERT OR UPDATE ON restaurants
@@ -2480,6 +2460,6 @@ CREATE TRIGGER trg_update_product_tsv
 BEFORE INSERT OR UPDATE ON products
 FOR EACH ROW EXECUTE FUNCTION update_product_tsvector();
 
--- 8. Индексы по tsvector колонкам
+-- Индексы для ускорения поиска
 CREATE INDEX IF NOT EXISTS idx_restaurants_tsv ON restaurants USING GIN (tsvector_column);
 CREATE INDEX IF NOT EXISTS idx_products_tsv ON products USING GIN (tsvector_column);
