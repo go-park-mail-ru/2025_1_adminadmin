@@ -2402,7 +2402,7 @@ AFTER INSERT ON reviews
 FOR EACH ROW
 EXECUTE FUNCTION update_restaurant_rating();
 
--- Создание словаря и конфигурации
+-- Создание словаря и конфигурации для русского языка
 CREATE TEXT SEARCH DICTIONARY russian_ispell (
     TEMPLATE = ispell,
     DictFile = russian,
@@ -2410,19 +2410,21 @@ CREATE TEXT SEARCH DICTIONARY russian_ispell (
     StopWords = russian
 );
 
+-- Создание конфигурации для русского языка
 CREATE TEXT SEARCH CONFIGURATION ru (COPY = russian);
 
+-- Настройка маппинга для русского языка
 ALTER TEXT SEARCH CONFIGURATION ru
 ALTER MAPPING FOR hword, hword_part, word
 WITH russian_ispell, russian_stem;
 
--- Установка конфигурации по умолчанию
+-- Установка конфигурации поиска по умолчанию
 ALTER SYSTEM SET default_text_search_config = 'ru';
 
--- Расширения
+-- Создание расширения pg_trgm для работы с текстом
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
 
--- Добавление колонок для tsvector
+-- Добавление колонок для хранения tsvector
 ALTER TABLE restaurants ADD COLUMN IF NOT EXISTS tsvector_column tsvector;
 ALTER TABLE products ADD COLUMN IF NOT EXISTS tsvector_column tsvector;
 
@@ -2450,11 +2452,11 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
 
--- Обновление данных
+-- Обновление данных в таблицах restaurants и products
 UPDATE restaurants SET tsvector_column = make_restaurant_tsvector(name, description);
 UPDATE products SET tsvector_column = make_product_tsvector(name, category);
 
--- Триггеры для автообновления
+-- Триггеры для автообновления tsvector
 CREATE OR REPLACE FUNCTION update_restaurant_tsvector() RETURNS trigger AS $$
 BEGIN
     NEW.tsvector_column := make_restaurant_tsvector(NEW.name, NEW.description);
@@ -2469,7 +2471,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Добавление триггеров
+-- Добавление триггеров для обновления tsvector
 DROP TRIGGER IF EXISTS trg_update_restaurant_tsv ON restaurants;
 CREATE TRIGGER trg_update_restaurant_tsv
 BEFORE INSERT OR UPDATE ON restaurants
@@ -2480,6 +2482,6 @@ CREATE TRIGGER trg_update_product_tsv
 BEFORE INSERT OR UPDATE ON products
 FOR EACH ROW EXECUTE FUNCTION update_product_tsvector();
 
--- Индексы для ускорения поиска
+-- Создание индексов для ускорения поиска
 CREATE INDEX IF NOT EXISTS idx_restaurants_tsv ON restaurants USING GIN (tsvector_column);
 CREATE INDEX IF NOT EXISTS idx_products_tsv ON products USING GIN (tsvector_column);
