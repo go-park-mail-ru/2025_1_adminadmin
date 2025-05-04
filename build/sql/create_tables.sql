@@ -2402,6 +2402,7 @@ AFTER INSERT ON reviews
 FOR EACH ROW
 EXECUTE FUNCTION update_restaurant_rating();
 
+-- Создание словаря и конфигурации
 CREATE TEXT SEARCH DICTIONARY russian_ispell (
     TEMPLATE = ispell,
     DictFile = russian,
@@ -2415,7 +2416,10 @@ ALTER TEXT SEARCH CONFIGURATION ru
 ALTER MAPPING FOR hword, hword_part, word
 WITH russian_ispell, russian_stem;
 
+-- Установка конфигурации по умолчанию
 ALTER SYSTEM SET default_text_search_config = 'ru';
+
+-- Расширения
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
 
 -- Добавление колонок для tsvector
@@ -2428,8 +2432,8 @@ RETURNS tsvector AS
 $$
 BEGIN
     RETURN (
-        setweight(to_tsvector('russian', coalesce(name, '')), 'A') ||
-        setweight(to_tsvector('russian', coalesce(description, '')), 'B')
+        setweight(to_tsvector('ru', coalesce(name, '')), 'A') ||
+        setweight(to_tsvector('ru', coalesce(description, '')), 'B')
     );
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
@@ -2440,8 +2444,8 @@ RETURNS tsvector AS
 $$
 BEGIN
     RETURN (
-        setweight(to_tsvector('russian', coalesce(name, '')), 'A') ||
-        setweight(to_tsvector('russian', coalesce(category, '')), 'B')
+        setweight(to_tsvector('ru', coalesce(name, '')), 'A') ||
+        setweight(to_tsvector('ru', coalesce(category, '')), 'B')
     );
 END;
 $$ LANGUAGE plpgsql IMMUTABLE;
