@@ -19,7 +19,7 @@ type Restaurant struct {
 type RestaurantSearch struct {
 	ID          uuid.UUID       `json:"id"`
 	Name        string          `json:"name"`
-	BannerURL   string          `json:"banner_url"`
+	BannerURL   string          `json:"image_url"`
 	Address     string          `json:"address"`
 	Rating      float64         `json:"rating"`
 	RatingCount float64         `json:"rating_count"`
