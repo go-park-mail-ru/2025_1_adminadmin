@@ -2403,6 +2403,12 @@ FOR EACH ROW
 EXECUTE FUNCTION update_restaurant_rating();
 
 
+-- 1. Создание расширений и конфигураций
+CREATE EXTENSION IF NOT EXISTS unaccent;
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+CREATE EXTENSION IF NOT EXISTS ispell;
+
+-- 2. Настройка русской конфигурации
 CREATE TEXT SEARCH DICTIONARY russian_ispell (
     TEMPLATE = ispell,
     DictFile = russian,
@@ -2417,37 +2423,64 @@ ALTER MAPPING FOR hword, hword_part, word
 WITH russian_ispell, russian_stem;
 
 ALTER SYSTEM SET default_text_search_config = 'ru';
-CREATE EXTENSION IF NOT EXISTS pg_trgm;
 
-CREATE INDEX idx_restaurant_name ON restaurants USING GIN (to_tsvector('russian', name));
+-- 3. Добавляем недостающие колонки
+ALTER TABLE restaurants ADD COLUMN IF NOT EXISTS tsvector_column tsvector;
+ALTER TABLE products ADD COLUMN IF NOT EXISTS tsvector_column tsvector;
 
-CREATE INDEX idx_product_name ON products USING GIN (to_tsvector('russian', name));
-
+-- 4. Функции генерации tsvector
 CREATE OR REPLACE FUNCTION make_restaurant_tsvector(name TEXT, description TEXT)
-    RETURNS tsvector AS
+RETURNS tsvector AS
 $$
 BEGIN
     RETURN (
-            setweight(to_tsvector('russian', name), 'A') ||
-            setweight(to_tsvector('russian', description), 'B')
-        );
-END
-$$ LANGUAGE 'plpgsql' IMMUTABLE;
+        setweight(to_tsvector('russian', coalesce(name, '')), 'A') ||
+        setweight(to_tsvector('russian', coalesce(description, '')), 'B')
+    );
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
 
 CREATE OR REPLACE FUNCTION make_product_tsvector(name TEXT, category TEXT)
-    RETURNS tsvector AS
+RETURNS tsvector AS
 $$
 BEGIN
     RETURN (
-            setweight(to_tsvector('russian', name), 'A') ||
-            setweight(to_tsvector('russian', category), 'B')
-        );
-END
-$$ LANGUAGE 'plpgsql' IMMUTABLE;
+        setweight(to_tsvector('russian', coalesce(name, '')), 'A') ||
+        setweight(to_tsvector('russian', coalesce(category, '')), 'B')
+    );
+END;
+$$ LANGUAGE plpgsql IMMUTABLE;
 
-UPDATE restaurants
-SET tsvector_column = make_restaurant_tsvector(name, description);
+-- 5. Обновляем текущие строки
+UPDATE restaurants SET tsvector_column = make_restaurant_tsvector(name, description);
+UPDATE products SET tsvector_column = make_product_tsvector(name, category);
 
-UPDATE products
-SET tsvector_column = make_product_tsvector(name, category);
+-- 6. Триггерные функции для автоматического обновления
+CREATE OR REPLACE FUNCTION update_restaurant_tsvector() RETURNS trigger AS $$
+BEGIN
+    NEW.tsvector_column := make_restaurant_tsvector(NEW.name, NEW.description);
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION update_product_tsvector() RETURNS trigger AS $$
+BEGIN
+    NEW.tsvector_column := make_product_tsvector(NEW.name, NEW.category);
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- 7. Добавление триггеров
+DROP TRIGGER IF EXISTS trg_update_restaurant_tsv ON restaurants;
+CREATE TRIGGER trg_update_restaurant_tsv
+BEFORE INSERT OR UPDATE ON restaurants
+FOR EACH ROW EXECUTE FUNCTION update_restaurant_tsvector();
+
+DROP TRIGGER IF EXISTS trg_update_product_tsv ON products;
+CREATE TRIGGER trg_update_product_tsv
+BEFORE INSERT OR UPDATE ON products
+FOR EACH ROW EXECUTE FUNCTION update_product_tsvector();
+
+-- 8. Индексы по tsvector колонкам
+CREATE INDEX IF NOT EXISTS idx_restaurants_tsv ON restaurants USING GIN (tsvector_column);
+CREATE INDEX IF NOT EXISTS idx_products_tsv ON products USING GIN (tsvector_column);
