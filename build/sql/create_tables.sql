@@ -2401,3 +2401,53 @@ CREATE TRIGGER after_review_insert
 AFTER INSERT ON reviews
 FOR EACH ROW
 EXECUTE FUNCTION update_restaurant_rating();
+
+
+CREATE TEXT SEARCH DICTIONARY russian_ispell (
+    TEMPLATE = ispell,
+    DictFile = russian,
+    AffFile = russian,
+    StopWords = russian
+);
+
+CREATE TEXT SEARCH CONFIGURATION ru (COPY = russian);
+
+ALTER TEXT SEARCH CONFIGURATION ru
+ALTER MAPPING FOR hword, hword_part, word
+WITH russian_ispell, russian_stem;
+
+ALTER SYSTEM SET default_text_search_config = 'ru';
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
+CREATE INDEX idx_restaurant_name ON restaurants USING GIN (to_tsvector('russian', name));
+
+CREATE INDEX idx_product_name ON products USING GIN (to_tsvector('russian', name));
+
+CREATE OR REPLACE FUNCTION make_restaurant_tsvector(name TEXT, description TEXT)
+    RETURNS tsvector AS
+$$
+BEGIN
+    RETURN (
+            setweight(to_tsvector('russian', name), 'A') ||
+            setweight(to_tsvector('russian', description), 'B')
+        );
+END
+$$ LANGUAGE 'plpgsql' IMMUTABLE;
+
+CREATE OR REPLACE FUNCTION make_product_tsvector(name TEXT, category TEXT)
+    RETURNS tsvector AS
+$$
+BEGIN
+    RETURN (
+            setweight(to_tsvector('russian', name), 'A') ||
+            setweight(to_tsvector('russian', category), 'B')
+        );
+END
+$$ LANGUAGE 'plpgsql' IMMUTABLE;
+
+UPDATE restaurants
+SET tsvector_column = make_restaurant_tsvector(name, description);
+
+UPDATE products
+SET tsvector_column = make_product_tsvector(name, category);
+

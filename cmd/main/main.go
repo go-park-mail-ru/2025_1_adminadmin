@@ -22,6 +22,9 @@ import (
 	restaurantDelivery "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/delivery/http"
 	restaurantRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/repo"
 	restaurantUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/usecase"
+	searchDelivery "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/search/delivery/http"
+	searchRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/search/repo"
+	searchUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/search/usecase"
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -108,6 +111,10 @@ func main() {
 	restaurantUsecase := restaurantUsecase.NewRestaurantsUsecase(restaurantRepo)
 	restaurantDelivery := restaurantDelivery.NewRestaurantHandler(restaurantUsecase)
 
+	searchRep := searchRepo.NewSearchRepo(pool)
+	searchUsecase := searchUsecase.NewSearchUsecase(searchRep)
+	searchDelivery := searchDelivery.NewSearchHandler(searchUsecase)
+
 	r := mux.NewRouter().PathPrefix("/api").Subrouter()
 	r.NotFoundHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Не найдено", http.StatusTeapot)
@@ -153,6 +160,12 @@ func main() {
 		order.HandleFunc("/{orderID}", cartHandler.GetOrderById).Methods(http.MethodGet)
 		order.HandleFunc("/{orderID}/update", cartHandler.UpdateOrderStatus).Methods(http.MethodPost)
 		order.HandleFunc("/create", cartHandler.CreateOrder).Methods(http.MethodPost, http.MethodOptions)
+	}
+
+	search := r.PathPrefix("/search").Subrouter()
+	{
+		search.HandleFunc("/restaurants", searchDelivery.SearchRestaurantWithProducts).Methods(http.MethodGet)
+		search.HandleFunc("/products", searchDelivery.SearchProductsInRestaurant).Methods(http.MethodGet)
 	}
 
 	r.HandleFunc("/payment", cartHandler.UpdateOrderStatus).Methods(http.MethodPost)
