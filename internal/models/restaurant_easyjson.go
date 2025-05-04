@@ -295,10 +295,6 @@ func easyjson16134a91DecodeGithubComGoParkMailRu20251AdminadminInternalModels2(i
 			out.Weight = int(in.Int())
 		case "category":
 			out.Category = string(in.String())
-		case "restaurant_id":
-			if data := in.UnsafeBytes(); in.Ok() {
-				in.AddError((out.RestaurantID).UnmarshalText(data))
-			}
 		default:
 			in.SkipRecursive()
 		}
@@ -342,11 +338,6 @@ func easyjson16134a91EncodeGithubComGoParkMailRu20251AdminadminInternalModels2(o
 		const prefix string = ",\"category\":"
 		out.RawString(prefix)
 		out.String(string(in.Category))
-	}
-	{
-		const prefix string = ",\"restaurant_id\":"
-		out.RawString(prefix)
-		out.RawText((in.RestaurantID).MarshalText())
 	}
 	out.RawByte('}')
 }

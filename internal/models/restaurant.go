@@ -35,7 +35,6 @@ type ProductSearch struct {
 	ImageURL     string    `json:"image_url"`
 	Weight       int       `json:"weight"`
 	Category     string    `json:"category"`
-	RestaurantID uuid.UUID `json:"restaurant_id"`
 }
 
 func (r *Restaurant) Sanitize() {

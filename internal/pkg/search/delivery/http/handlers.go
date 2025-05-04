@@ -2,6 +2,7 @@ package http
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log/slog"
 	"net/http"
@@ -9,6 +10,7 @@ import (
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/search"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/send_error"
+	"github.com/gorilla/mux"
 	"github.com/satori/uuid"
 )
 
@@ -44,9 +46,12 @@ func (h *SearchHandler) SearchRestaurantWithProducts(w http.ResponseWriter, r *h
 
 func (h *SearchHandler) SearchProductsInRestaurant(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
-	restaurantID, err := uuid.FromString(r.URL.Query().Get("restaurant_id"))
-	if err != nil {
-		utils.SendError(w, "Некорректный ID ресторана", http.StatusBadRequest)
+	vars := mux.Vars(r)
+	restaurantIDStr := vars["id"]
+	restaurantID := uuid.FromStringOrNil(restaurantIDStr)
+	if restaurantID == uuid.Nil {
+		log.LogHandlerError(logger, errors.New("неверный формат id ресторана"), http.StatusBadRequest)
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 	query := r.URL.Query().Get("query")

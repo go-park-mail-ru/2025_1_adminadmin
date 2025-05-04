@@ -146,6 +146,7 @@ func main() {
 		restaurants.HandleFunc("/{id}/reviews", restaurantDelivery.ReviewsList).Methods(http.MethodGet, http.MethodOptions)
 		restaurants.HandleFunc("/{id}/reviews", restaurantDelivery.CreateReview).Methods(http.MethodPost, http.MethodOptions)
 		restaurants.HandleFunc("/{id}/check", restaurantDelivery.CheckReviews).Methods(http.MethodGet, http.MethodOptions)
+		restaurants.HandleFunc("/{id}/search", searchDelivery.SearchProductsInRestaurant).Methods(http.MethodGet)
 	}
 	cart := r.PathPrefix("/cart").Subrouter()
 	{
@@ -164,8 +165,7 @@ func main() {
 
 	search := r.PathPrefix("/search").Subrouter()
 	{
-		search.HandleFunc("/restaurants", searchDelivery.SearchRestaurantWithProducts).Methods(http.MethodGet)
-		search.HandleFunc("/products", searchDelivery.SearchProductsInRestaurant).Methods(http.MethodGet)
+		search.HandleFunc("", searchDelivery.SearchRestaurantWithProducts).Methods(http.MethodGet)
 	}
 
 	r.HandleFunc("/payment", cartHandler.UpdateOrderStatus).Methods(http.MethodPost)
