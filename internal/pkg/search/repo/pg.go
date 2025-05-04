@@ -31,18 +31,16 @@ ORDER BY category, name;
     WHERE p.tsvector_column @@ plainto_tsquery('ru', $1)
 ),
 products_limited AS (
-    SELECT *,
-           ROW_NUMBER() OVER (PARTITION BY restaurant_id ORDER BY id) AS rn
-    FROM products
+    SELECT * FROM products
+    WHERE restaurant_id IN (SELECT id FROM matched_restaurants)
+    LIMIT 5 
 )
 SELECT 
     r.id, r.name, r.banner_url, r.address, r.rating, r.rating_count, r.description,
     p.id AS product_id, p.name AS product_name, p.price, p.image_url, p.weight, p.category
 FROM matched_restaurants mr
 JOIN restaurants r ON r.id = mr.id
-LEFT JOIN products_limited p ON r.id = p.restaurant_id AND p.rn <= 5  -- Обновлено на 5 продуктов
-WHERE r.tsvector_column @@ plainto_tsquery('ru', $1)
-    OR p.tsvector_column @@ plainto_tsquery('ru', $1)
+LEFT JOIN products_limited p ON r.id = p.restaurant_id
 ORDER BY mr.priority ASC, r.rating DESC
 LIMIT $2 OFFSET $3;
 	`
