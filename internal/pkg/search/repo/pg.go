@@ -22,27 +22,32 @@ ORDER BY category, name;
     SELECT r.id, 1 AS priority
     FROM restaurants r
     WHERE r.tsvector_column @@ plainto_tsquery('ru', $1)
-
+    
     UNION
-
+    
     SELECT r.id, 2 AS priority
     FROM restaurants r
     JOIN products p ON r.id = p.restaurant_id
     WHERE p.tsvector_column @@ plainto_tsquery('ru', $1)
 ),
 products_limited AS (
-    SELECT * FROM products
+    SELECT *,
+           ROW_NUMBER() OVER (PARTITION BY restaurant_id ORDER BY id) AS rn
+    FROM products
     WHERE restaurant_id IN (SELECT id FROM matched_restaurants)
-    LIMIT 5 
+),
+restaurants_limited AS (
+    SELECT id, priority
+    FROM matched_restaurants
+    LIMIT $2 OFFSET $3  
 )
 SELECT 
     r.id, r.name, r.banner_url, r.address, r.rating, r.rating_count, r.description,
     p.id AS product_id, p.name AS product_name, p.price, p.image_url, p.weight, p.category
-FROM matched_restaurants mr
+FROM restaurants_limited mr
 JOIN restaurants r ON r.id = mr.id
-LEFT JOIN products_limited p ON r.id = p.restaurant_id
-ORDER BY mr.priority ASC, r.rating DESC
-LIMIT $2 OFFSET $3;
+LEFT JOIN products_limited p ON r.id = p.restaurant_id AND p.rn <= 5  
+ORDER BY mr.priority ASC, r.rating DESC;
 	`
 )
 
@@ -119,6 +124,7 @@ func (r *SearchRepo) SearchRestaurantWithProducts(ctx context.Context, query str
 
     return restaurants, totalCount, nil
 }
+
 
 
 
