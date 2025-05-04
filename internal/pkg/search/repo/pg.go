@@ -22,12 +22,12 @@ ORDER BY category, name;
 	WITH ranked AS (
 		SELECT 
 			r.id AS restaurant_id,
-			name,
-			banner_url,
-			address, 
-			rating,
-			rating_count,
-			description,
+			r.name,
+			r.banner_url,
+			r.address, 
+			r.rating,
+			r.rating_count,
+			r.description,
 			ts_rank(r.tsvector_column, plainto_tsquery('ru', $1)) AS ts1, 
 			ts_rank(p.tsvector_column, plainto_tsquery('ru', $1)) AS ts2
 		FROM restaurants r 
