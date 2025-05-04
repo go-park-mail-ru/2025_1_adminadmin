@@ -10,10 +10,10 @@ import (
 )
 
 type GrpcMiddleware struct {
-	metrics metrics.GrpcMetrics
+	metrics *metrics.GrpcMetrics
 }
 
-func NewGrpcMw(metrics metrics.GrpcMetrics) *GrpcMiddleware {
+func NewGrpcMw(metrics *metrics.GrpcMetrics) *GrpcMiddleware {
 	return &GrpcMiddleware{
 		metrics: metrics,
 	}
@@ -30,20 +30,23 @@ func mapStatusCodes(Err string) int { //TODO: add more errors
 
 	}
 }
-func (m *GrpcMiddleware) ServerMetricsInterceptor(ctx context.Context,
-	req interface{},
-	info *grpc.UnaryServerInfo,
-	handler grpc.UnaryHandler) (interface{}, error) {
 
-	start := time.Now()
-	h, err := handler(ctx, req)
-	status := http.StatusOK
-	if err != nil {
-		m.metrics.IncreaseErrors(info.FullMethod)
-		status = mapStatusCodes(err.Error())
+func (m *GrpcMiddleware) UnaryServerInterceptor() grpc.UnaryServerInterceptor {
+	return func(ctx context.Context,
+		req interface{},
+		info *grpc.UnaryServerInfo,
+		handler grpc.UnaryHandler) (interface{}, error) {
 
+		start := time.Now()
+		h, err := handler(ctx, req)
+		status := http.StatusOK
+		if err != nil {
+			m.metrics.IncreaseErrors(info.FullMethod)
+			status = mapStatusCodes(err.Error())
+
+		}
+		m.metrics.IncreaseHits(info.FullMethod)
+		m.metrics.ObserveResponseTime(status, info.FullMethod, time.Since(start).Seconds())
+		return h, err
 	}
-	m.metrics.IncreaseHits(info.FullMethod)
-	m.metrics.ObserveResponseTime(status, info.FullMethod, time.Since(start).Seconds())
-	return h, err
 }

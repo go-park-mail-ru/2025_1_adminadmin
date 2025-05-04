@@ -21,7 +21,13 @@ ORDER BY category, name;
 	searchRestaurantWithProducts1 = `
 	WITH ranked AS (
 		SELECT 
-			r.id AS restaurant_id, 
+			r.id AS restaurant_id,
+			name,
+			banner_url,
+			address, 
+			rating,
+			rating_count,
+			description
 			ts_rank(r.tsvector_column, plainto_tsquery('ru', $1)) AS ts1, 
 			ts_rank(p.tsvector_column, plainto_tsquery('ru', $1)) AS ts2
 		FROM restaurants r 
@@ -65,9 +71,16 @@ func (r *SearchRepo) SearchRestaurantWithProducts(ctx context.Context, query str
 		var ts2 interface{}
 		err = rows.Scan(
 			&restaurant.ID,
+			&restaurant.Name,
+			&restaurant.BannerURL,
+			&restaurant.Address,
+			&restaurant.Rating,
+			&restaurant.RatingCount,
+			&restaurant.Description,
 			&ts1,
 			&ts2,
 		)
+
 		if err != nil {
 			logger.Error("Ошибка при сканировании", slog.String("error", err.Error()))
 			return nil, fmt.Errorf("error in rows.Scan: %w", err)
