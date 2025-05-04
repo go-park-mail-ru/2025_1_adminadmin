@@ -18,24 +18,27 @@ const (
 	`
 	searchRestaurantWithProducts = ` 
 	WITH matched_restaurants AS (
-		SELECT DISTINCT r.id
-		FROM restaurants r
-		WHERE r.tsvector_column @@ plainto_tsquery('ru', $1)
-		UNION
-		SELECT DISTINCT r.id
-		FROM restaurants r
-		JOIN products p ON r.id = p.restaurant_id
-		WHERE p.tsvector_column @@ plainto_tsquery('ru', $1)
-	)
-	SELECT 
-		r.id, r.name, r.banner_url, r.address, r.rating, r.rating_count, r.description,
-		p.id, p.name, p.price, p.image_url, p.weight, p.category
-	FROM matched_restaurants mr
-	JOIN restaurants r ON r.id = mr.id
-	LEFT JOIN products p ON r.id = p.restaurant_id
-	WHERE r.tsvector_column @@ plainto_tsquery('ru', $1)
-	   OR p.tsvector_column @@ plainto_tsquery('ru', $1)
-	LIMIT 20;
+    SELECT r.id, 1 AS priority
+    FROM restaurants r
+    WHERE r.tsvector_column @@ plainto_tsquery('ru', $1)
+    
+    UNION
+
+    SELECT r.id, 2 AS priority
+    FROM restaurants r
+    JOIN products p ON r.id = p.restaurant_id
+    WHERE p.tsvector_column @@ plainto_tsquery('ru', $1)
+)
+SELECT 
+    r.id, r.name, r.banner_url, r.address, r.rating, r.rating_count, r.description,
+    p.id, p.name, p.price, p.image_url, p.weight, p.category
+FROM matched_restaurants mr
+JOIN restaurants r ON r.id = mr.id
+LEFT JOIN products p ON r.id = p.restaurant_id
+WHERE r.tsvector_column @@ plainto_tsquery('ru', $1)
+   OR p.tsvector_column @@ plainto_tsquery('ru', $1)
+ORDER BY mr.priority ASC, r.rating DESC
+LIMIT 40;
 `
 )
 
