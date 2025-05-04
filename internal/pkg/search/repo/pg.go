@@ -37,10 +37,10 @@ products_limited AS (
 )
 SELECT 
     r.id, r.name, r.banner_url, r.address, r.rating, r.rating_count, r.description,
-    p.id, p.name, p.price, p.image_url, p.weight, p.category
+    p.id AS product_id, p.name AS product_name, p.price, p.image_url, p.weight, p.category
 FROM matched_restaurants mr
 JOIN restaurants r ON r.id = mr.id
-LEFT JOIN products_limited p ON r.id = p.restaurant_id AND p.rn <= 5  -- Изменили на 5 товаров
+LEFT JOIN products_limited p ON r.id = p.restaurant_id AND p.rn <= 5  -- Обновлено на 5 продуктов
 WHERE r.tsvector_column @@ plainto_tsquery('ru', $1)
     OR p.tsvector_column @@ plainto_tsquery('ru', $1)
 ORDER BY mr.priority ASC, r.rating DESC
@@ -121,6 +121,7 @@ func (r *SearchRepo) SearchRestaurantWithProducts(ctx context.Context, query str
 
     return restaurants, totalCount, nil
 }
+
 
 
 func (r *SearchRepo) SearchProductsInRestaurant(ctx context.Context, restaurantID uuid.UUID, query string) ([]models.ProductCategory, error) {

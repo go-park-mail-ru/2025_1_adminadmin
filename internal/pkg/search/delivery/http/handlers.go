@@ -25,37 +25,38 @@ func NewSearchHandler(uc search.SearchUsecase) *SearchHandler {
 }
 
 func (h *SearchHandler) SearchRestaurantWithProducts(w http.ResponseWriter, r *http.Request) {
-	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+    logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
-	query := r.URL.Query().Get("query")
+    query := r.URL.Query().Get("query")
 
-	count := r.URL.Query().Get("count")
-	offset := r.URL.Query().Get("offset")
+    count := r.URL.Query().Get("count")
+    offset := r.URL.Query().Get("offset")
 
-	countInt, offsetInt := 30, 0
-	if count != "" {
-		fmt.Sscanf(count, "%d", &countInt)
-	}
-	if offset != "" {
-		fmt.Sscanf(offset, "%d", &offsetInt)
-	}
+    countInt, offsetInt := 30, 0
+    if count != "" {
+        fmt.Sscanf(count, "%d", &countInt)
+    }
+    if offset != "" {
+        fmt.Sscanf(offset, "%d", &offsetInt)
+    }
 
-	restaurants, _, err := h.uc.SearchRestaurantWithProducts(r.Context(), query, countInt, offsetInt)
-	if err != nil {
-		utils.SendError(w, "Ошибка поиска ресторанов с продуктами", http.StatusInternalServerError)
-		return
-	}
+    restaurants, _, err := h.uc.SearchRestaurantWithProducts(r.Context(), query, countInt, offsetInt)
+    if err != nil {
+        utils.SendError(w, "Ошибка поиска ресторанов с продуктами", http.StatusInternalServerError)
+        return
+    }
 
-	data, err := json.Marshal(restaurants)
-	if err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
-		utils.SendError(w, "Не удалось сериализовать результат", http.StatusInternalServerError)
-		return
-	}
+    data, err := json.Marshal(restaurants)
+    if err != nil {
+        log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
+        utils.SendError(w, "Не удалось сериализовать результат", http.StatusInternalServerError)
+        return
+    }
 
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(data)
+    w.Header().Set("Content-Type", "application/json")
+    w.Write(data)
 }
+
 
 func (h *SearchHandler) SearchProductsInRestaurant(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
