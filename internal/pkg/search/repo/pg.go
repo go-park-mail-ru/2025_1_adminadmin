@@ -22,14 +22,14 @@ ORDER BY category, name;
     -- Шаг 1: находим рестораны, которые соответствуют запросу по названию или продуктам
     SELECT r.id, 1 AS priority
     FROM restaurants r
-    WHERE r.tsvector_column @@ plainto_tsquery('ru', $1)
+    WHERE r.tsvector_column @@ to_tsquery('ru', $1 || ':*')  -- Используем :* для частичного поиска по имени ресторана
     
     UNION
     
     SELECT r.id, 2 AS priority
     FROM restaurants r
     JOIN products p ON r.id = p.restaurant_id
-    WHERE p.tsvector_column @@ plainto_tsquery('ru', $1)
+    WHERE p.tsvector_column @@ to_tsquery('ru', $1 || ':*')  -- Используем :* для поиска по продуктам
 ),
 products_limited AS (
     -- Шаг 2: находим продукты, которые соответствуют запросу для каждого ресторана
@@ -37,7 +37,7 @@ products_limited AS (
            ROW_NUMBER() OVER (PARTITION BY restaurant_id ORDER BY id) AS rn
     FROM products
     WHERE restaurant_id IN (SELECT id FROM matched_restaurants)
-      AND tsvector_column @@ plainto_tsquery('ru', $1)
+      AND p.tsvector_column @@ to_tsquery('ru', $1 || ':*')  -- Используем :* для частичного поиска по продуктам
 ),
 fallback_products AS (
     -- Шаг 3: если у ресторана нет подходящих продуктов, возвращаем 5 любых продуктов
