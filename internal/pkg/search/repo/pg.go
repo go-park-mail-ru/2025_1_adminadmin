@@ -27,7 +27,7 @@ ORDER BY category, name;
 			address, 
 			rating,
 			rating_count,
-			description
+			description,
 			ts_rank(r.tsvector_column, plainto_tsquery('ru', $1)) AS ts1, 
 			ts_rank(p.tsvector_column, plainto_tsquery('ru', $1)) AS ts2
 		FROM restaurants r 
