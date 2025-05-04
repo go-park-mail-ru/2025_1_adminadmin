@@ -12,40 +12,40 @@ import (
 const (
 	searchProductsInRestaurant = ` 
 		SELECT id, name, price, image_url, weight, category
-		FROM products
-		WHERE restaurant_id = $1 AND tsvector_column @@ plainto_tsquery('ru', $2)
-		LIMIT 5;
+FROM products
+WHERE restaurant_id = $1 AND tsvector_column @@ plainto_tsquery('ru', $2)
+ORDER BY category, name;
 	`
+
 	searchRestaurantWithProducts = ` 
 	WITH matched_restaurants AS (
-    SELECT r.id, 1 AS priority
-    FROM restaurants r
-    WHERE r.tsvector_column @@ plainto_tsquery('ru', $1)
+		SELECT r.id, 1 AS priority
+		FROM restaurants r
+		WHERE r.tsvector_column @@ plainto_tsquery('ru', $1)
 
-    UNION
+		UNION
 
-    SELECT r.id, 2 AS priority
-    FROM restaurants r
-    JOIN products p ON r.id = p.restaurant_id
-    WHERE p.tsvector_column @@ plainto_tsquery('ru', $1)
-),
-products_limited AS (
-    SELECT *,
-           ROW_NUMBER() OVER (PARTITION BY restaurant_id ORDER BY id) AS rn
-    FROM products
-)
-SELECT 
-    r.id, r.name, r.banner_url, r.address, r.rating, r.rating_count, r.description,
-    p.id, p.name, p.price, p.image_url, p.weight, p.category
-FROM matched_restaurants mr
-JOIN restaurants r ON r.id = mr.id
-LEFT JOIN products_limited p ON r.id = p.restaurant_id AND p.rn <= 4
-WHERE r.tsvector_column @@ plainto_tsquery('ru', $1)
-   OR p.tsvector_column @@ plainto_tsquery('ru', $1)
-ORDER BY mr.priority ASC, r.rating DESC
-LIMIT 30;
-
-`
+		SELECT r.id, 2 AS priority
+		FROM restaurants r
+		JOIN products p ON r.id = p.restaurant_id
+		WHERE p.tsvector_column @@ plainto_tsquery('ru', $1)
+	),
+	products_limited AS (
+		SELECT *,
+			   ROW_NUMBER() OVER (PARTITION BY restaurant_id ORDER BY id) AS rn
+		FROM products
+	)
+	SELECT 
+		r.id, r.name, r.banner_url, r.address, r.rating, r.rating_count, r.description,
+		p.id, p.name, p.price, p.image_url, p.weight, p.category
+	FROM matched_restaurants mr
+	JOIN restaurants r ON r.id = mr.id
+	LEFT JOIN products_limited p ON r.id = p.restaurant_id AND p.rn <= 4
+	WHERE r.tsvector_column @@ plainto_tsquery('ru', $1)
+		OR p.tsvector_column @@ plainto_tsquery('ru', $1)
+	ORDER BY mr.priority ASC, r.rating DESC
+	LIMIT $2 OFFSET $3;
+	`
 )
 
 type SearchRepo struct {
@@ -58,10 +58,10 @@ func NewSearchRepo(db pgxtype.Querier) *SearchRepo {
 	}
 }
 
-func (r *SearchRepo) SearchRestaurantWithProducts(ctx context.Context, query string) ([]models.RestaurantSearch, error) {
-	rows, err := r.db.Query(ctx, searchRestaurantWithProducts, query)
+func (r *SearchRepo) SearchRestaurantWithProducts(ctx context.Context, query string, count, offset int) ([]models.RestaurantSearch, int, error) {
+	rows, err := r.db.Query(ctx, searchRestaurantWithProducts, query, count, offset)
 	if err != nil {
-		return nil, fmt.Errorf("error in db.Query: %w", err)
+		return nil, 0, fmt.Errorf("error in db.Query: %w", err)
 	}
 	defer rows.Close()
 
@@ -90,17 +90,15 @@ func (r *SearchRepo) SearchRestaurantWithProducts(ctx context.Context, query str
 			&product.Category,
 		)
 		if err != nil {
-			return nil, fmt.Errorf("error in rows.Scan: %w", err)
+			return nil, 0, fmt.Errorf("error in rows.Scan: %w", err)
 		}
 
-		// Инициализация ресторана, если он ещё не добавлен
 		if _, exists := restaurantMap[restaurantID]; !exists {
 			restaurant.ID = restaurantID
 			restaurant.Products = []models.ProductSearch{}
 			restaurantMap[restaurantID] = &restaurant
 		}
 
-		// Пропускаем пустой продукт (в случае LEFT JOIN без продуктов)
 		if productID != uuid.Nil {
 			product.ID = productID
 			restaurantMap[restaurantID].Products = append(restaurantMap[restaurantID].Products, product)
@@ -111,22 +109,28 @@ func (r *SearchRepo) SearchRestaurantWithProducts(ctx context.Context, query str
 		restaurants = append(restaurants, *rest)
 	}
 
-	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("rows iteration error: %w", err)
+	var totalCount int
+	err = r.db.QueryRow(ctx, "SELECT COUNT(*) FROM restaurants r WHERE r.tsvector_column @@ plainto_tsquery('ru', $1)", query).Scan(&totalCount)
+	if err != nil {
+		return nil, 0, fmt.Errorf("error in count query: %w", err)
 	}
 
-	return restaurants, nil
+	if err := rows.Err(); err != nil {
+		return nil, 0, fmt.Errorf("rows iteration error: %w", err)
+	}
+
+	return restaurants, totalCount, nil
 }
 
-
-func (r *SearchRepo) SearchProductsInRestaurant(ctx context.Context, restaurantID uuid.UUID, query string) ([]models.ProductSearch, error) {
+func (r *SearchRepo) SearchProductsInRestaurant(ctx context.Context, restaurantID uuid.UUID, query string) ([]models.ProductCategory, error) {
 	rows, err := r.db.Query(ctx, searchProductsInRestaurant, restaurantID, query)
 	if err != nil {
 		return nil, fmt.Errorf("error in db.Query: %w", err)
 	}
 	defer rows.Close()
 
-	var products []models.ProductSearch
+	categoryMap := make(map[string][]models.ProductSearch)
+
 	for rows.Next() {
 		var product models.ProductSearch
 		err = rows.Scan(
@@ -140,12 +144,21 @@ func (r *SearchRepo) SearchProductsInRestaurant(ctx context.Context, restaurantI
 		if err != nil {
 			return nil, fmt.Errorf("error in rows.Scan: %w", err)
 		}
-		products = append(products, product)
+
+		categoryMap[product.Category] = append(categoryMap[product.Category], product)
+	}
+
+	var productCategories []models.ProductCategory
+	for category, products := range categoryMap {
+		productCategories = append(productCategories, models.ProductCategory{
+			Name:     category,
+			Products: products,
+		})
 	}
 
 	if err := rows.Err(); err != nil {
 		return nil, fmt.Errorf("rows iteration error: %w", err)
 	}
 
-	return products, nil
+	return productCategories, nil
 }

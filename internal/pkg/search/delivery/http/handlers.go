@@ -7,6 +7,7 @@ import (
 	"log/slog"
 	"net/http"
 
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/search"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/send_error"
@@ -26,21 +27,42 @@ func NewSearchHandler(uc search.SearchUsecase) *SearchHandler {
 
 func (h *SearchHandler) SearchRestaurantWithProducts(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
 	query := r.URL.Query().Get("query")
-	restaurants, err := h.uc.SearchRestaurantWithProducts(r.Context(), query)
+
+	count := r.URL.Query().Get("count")
+	offset := r.URL.Query().Get("offset")
+
+	countInt, offsetInt := 30, 0
+	if count != "" {
+		fmt.Sscanf(count, "%d", &countInt)
+	}
+	if offset != "" {
+		fmt.Sscanf(offset, "%d", &offsetInt)
+	}
+
+	restaurants, totalCount, err := h.uc.SearchRestaurantWithProducts(r.Context(), query, countInt, offsetInt)
 	if err != nil {
-		utils.SendError(w, "Ошибка поиска ресторанов и продуктов", http.StatusInternalServerError)
+		utils.SendError(w, "Ошибка поиска ресторанов с продуктами", http.StatusInternalServerError)
 		return
 	}
-	w.Header().Set("Content-Type", "application/json")
 
-	data, err := json.Marshal(restaurants)
+	response := struct {
+		Restaurants []models.RestaurantSearch `json:"restaurants"`
+		TotalCount  int                       `json:"total_count"`
+	}{
+		Restaurants: restaurants,
+		TotalCount:  totalCount,
+	}
+
+	data, err := json.Marshal(response)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
-		utils.SendError(w, "Не удалось сериализовать корзину", http.StatusInternalServerError)
+		utils.SendError(w, "Не удалось сериализовать результат", http.StatusInternalServerError)
 		return
 	}
 
+	w.Header().Set("Content-Type", "application/json")
 	w.Write(data)
 }
 
@@ -55,12 +77,13 @@ func (h *SearchHandler) SearchProductsInRestaurant(w http.ResponseWriter, r *htt
 		return
 	}
 	query := r.URL.Query().Get("query")
-	products, err := h.uc.SearchProductsInRestaurant(r.Context(), restaurantID, query)
+	productCategories, err := h.uc.SearchProductsInRestaurant(r.Context(), restaurantID, query)
 	if err != nil {
 		utils.SendError(w, "Ошибка поиска продуктов", http.StatusInternalServerError)
 		return
 	}
-	data, err := json.Marshal(products)
+
+	data, err := json.Marshal(productCategories)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "Не удалось сериализовать корзину", http.StatusInternalServerError)

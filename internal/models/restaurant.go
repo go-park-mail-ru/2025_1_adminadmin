@@ -28,6 +28,12 @@ type RestaurantSearch struct {
 }
 
 // easyjson:json
+type ProductCategory struct {
+	Name     string          `json:"name"`
+	Products []ProductSearch `json:"products"`
+}
+
+// easyjson:json
 type ProductSearch struct {
 	ID           uuid.UUID `json:"id"`
 	Name         string    `json:"name"`

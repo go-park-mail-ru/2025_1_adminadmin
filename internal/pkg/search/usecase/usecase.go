@@ -19,18 +19,18 @@ func NewSearchUsecase(repoSearch search.SearchRepo) *SearchUsecase {
 	}
 }
 
-func (uc *SearchUsecase) SearchRestaurantWithProducts(ctx context.Context, query string) ([]models.RestaurantSearch, error) {
-	restaurants, err := uc.repoSearch.SearchRestaurantWithProducts(ctx, query)
+func (uc *SearchUsecase) SearchRestaurantWithProducts(ctx context.Context, query string, count, offset int) ([]models.RestaurantSearch, int, error) {
+	restaurants, totalCount, err := uc.repoSearch.SearchRestaurantWithProducts(ctx, query, count, offset)
 	if err != nil {
-		return nil, fmt.Errorf("error in SearchRestaurantWithProducts: %w", err)
+		return nil, 0, fmt.Errorf("error in SearchRestaurantWithProducts: %w", err)
 	}
-	return restaurants, nil
+	return restaurants, totalCount, nil
 }
 
-func (uc *SearchUsecase) SearchProductsInRestaurant(ctx context.Context, restaurantID uuid.UUID, query string) ([]models.ProductSearch, error) {
-	products, err := uc.repoSearch.SearchProductsInRestaurant(ctx, restaurantID, query)
+func (uc *SearchUsecase) SearchProductsInRestaurant(ctx context.Context, restaurantID uuid.UUID, query string) ([]models.ProductCategory, error) {
+	productCategories, err := uc.repoSearch.SearchProductsInRestaurant(ctx, restaurantID, query)
 	if err != nil {
 		return nil, fmt.Errorf("error in SearchProductsInRestaurant: %w", err)
 	}
-	return products, nil
+	return productCategories, nil
 }

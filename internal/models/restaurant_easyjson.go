@@ -365,3 +365,108 @@ func (v *ProductSearch) UnmarshalJSON(data []byte) error {
 func (v *ProductSearch) UnmarshalEasyJSON(l *jlexer.Lexer) {
 	easyjson16134a91DecodeGithubComGoParkMailRu20251AdminadminInternalModels2(l, v)
 }
+func easyjson16134a91DecodeGithubComGoParkMailRu20251AdminadminInternalModels3(in *jlexer.Lexer, out *ProductCategory) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "name":
+			out.Name = string(in.String())
+		case "products":
+			if in.IsNull() {
+				in.Skip()
+				out.Products = nil
+			} else {
+				in.Delim('[')
+				if out.Products == nil {
+					if !in.IsDelim(']') {
+						out.Products = make([]ProductSearch, 0, 0)
+					} else {
+						out.Products = []ProductSearch{}
+					}
+				} else {
+					out.Products = (out.Products)[:0]
+				}
+				for !in.IsDelim(']') {
+					var v4 ProductSearch
+					(v4).UnmarshalEasyJSON(in)
+					out.Products = append(out.Products, v4)
+					in.WantComma()
+				}
+				in.Delim(']')
+			}
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjson16134a91EncodeGithubComGoParkMailRu20251AdminadminInternalModels3(out *jwriter.Writer, in ProductCategory) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	{
+		const prefix string = ",\"name\":"
+		out.RawString(prefix[1:])
+		out.String(string(in.Name))
+	}
+	{
+		const prefix string = ",\"products\":"
+		out.RawString(prefix)
+		if in.Products == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+			out.RawString("null")
+		} else {
+			out.RawByte('[')
+			for v5, v6 := range in.Products {
+				if v5 > 0 {
+					out.RawByte(',')
+				}
+				(v6).MarshalEasyJSON(out)
+			}
+			out.RawByte(']')
+		}
+	}
+	out.RawByte('}')
+}
+
+// MarshalJSON supports json.Marshaler interface
+func (v ProductCategory) MarshalJSON() ([]byte, error) {
+	w := jwriter.Writer{}
+	easyjson16134a91EncodeGithubComGoParkMailRu20251AdminadminInternalModels3(&w, v)
+	return w.Buffer.BuildBytes(), w.Error
+}
+
+// MarshalEasyJSON supports easyjson.Marshaler interface
+func (v ProductCategory) MarshalEasyJSON(w *jwriter.Writer) {
+	easyjson16134a91EncodeGithubComGoParkMailRu20251AdminadminInternalModels3(w, v)
+}
+
+// UnmarshalJSON supports json.Unmarshaler interface
+func (v *ProductCategory) UnmarshalJSON(data []byte) error {
+	r := jlexer.Lexer{Data: data}
+	easyjson16134a91DecodeGithubComGoParkMailRu20251AdminadminInternalModels3(&r, v)
+	return r.Error()
+}
+
+// UnmarshalEasyJSON supports easyjson.Unmarshaler interface
+func (v *ProductCategory) UnmarshalEasyJSON(l *jlexer.Lexer) {
+	easyjson16134a91DecodeGithubComGoParkMailRu20251AdminadminInternalModels3(l, v)
+}

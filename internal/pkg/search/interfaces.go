@@ -8,14 +8,11 @@ import (
 )
 
 type SearchRepo interface {
-	SearchRestaurantWithProducts(ctx context.Context, query string) ([]models.RestaurantSearch, error)
-	SearchProductsInRestaurant(ctx context.Context, restaurantID uuid.UUID, query string) ([]models.ProductSearch, error) 
-
-
-}
+	SearchRestaurantWithProducts(ctx context.Context, query string, count, offset int) ([]models.RestaurantSearch, int, error)
+	SearchProductsInRestaurant(ctx context.Context, restaurantID uuid.UUID, query string) ([]models.ProductCategory, error) 
+	}
 
 type SearchUsecase interface {
-	SearchRestaurantWithProducts(ctx context.Context, query string) ([]models.RestaurantSearch, error)
-	SearchProductsInRestaurant(ctx context.Context, restaurantID uuid.UUID, query string) ([]models.ProductSearch, error)
-
-}
+	SearchRestaurantWithProducts(ctx context.Context, query string, count, offset int) ([]models.RestaurantSearch, int, error)
+	SearchProductsInRestaurant(ctx context.Context, restaurantID uuid.UUID, query string) ([]models.ProductCategory, error) 
+	}
