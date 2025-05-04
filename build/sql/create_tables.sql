@@ -2404,7 +2404,6 @@ EXECUTE FUNCTION update_restaurant_rating();
 
 
 -- 1. Создание расширений и конфигураций
-CREATE EXTENSION IF NOT EXISTS unaccent;
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
 CREATE EXTENSION IF NOT EXISTS ispell;
 
