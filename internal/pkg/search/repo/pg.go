@@ -21,24 +21,30 @@ const (
     SELECT r.id, 1 AS priority
     FROM restaurants r
     WHERE r.tsvector_column @@ plainto_tsquery('ru', $1)
-    
+
     UNION
 
     SELECT r.id, 2 AS priority
     FROM restaurants r
     JOIN products p ON r.id = p.restaurant_id
     WHERE p.tsvector_column @@ plainto_tsquery('ru', $1)
+),
+products_limited AS (
+    SELECT *,
+           ROW_NUMBER() OVER (PARTITION BY restaurant_id ORDER BY id) AS rn
+    FROM products
 )
 SELECT 
     r.id, r.name, r.banner_url, r.address, r.rating, r.rating_count, r.description,
     p.id, p.name, p.price, p.image_url, p.weight, p.category
 FROM matched_restaurants mr
 JOIN restaurants r ON r.id = mr.id
-LEFT JOIN products p ON r.id = p.restaurant_id
+LEFT JOIN products_limited p ON r.id = p.restaurant_id AND p.rn <= 4
 WHERE r.tsvector_column @@ plainto_tsquery('ru', $1)
    OR p.tsvector_column @@ plainto_tsquery('ru', $1)
 ORDER BY mr.priority ASC, r.rating DESC
-LIMIT 40;
+LIMIT 30;
+
 `
 )
 
@@ -64,6 +70,7 @@ func (r *SearchRepo) SearchRestaurantWithProducts(ctx context.Context, query str
 
 	for rows.Next() {
 		var restaurantID uuid.UUID
+		var productID uuid.UUID
 		var restaurant models.RestaurantSearch
 		var product models.ProductSearch
 
@@ -75,7 +82,7 @@ func (r *SearchRepo) SearchRestaurantWithProducts(ctx context.Context, query str
 			&restaurant.Rating,
 			&restaurant.RatingCount,
 			&restaurant.Description,
-			&product.ID,
+			&productID,
 			&product.Name,
 			&product.Price,
 			&product.ImageURL,
@@ -86,13 +93,16 @@ func (r *SearchRepo) SearchRestaurantWithProducts(ctx context.Context, query str
 			return nil, fmt.Errorf("error in rows.Scan: %w", err)
 		}
 
-		if _, ok := restaurantMap[restaurantID]; !ok {
+		// Инициализация ресторана, если он ещё не добавлен
+		if _, exists := restaurantMap[restaurantID]; !exists {
 			restaurant.ID = restaurantID
 			restaurant.Products = []models.ProductSearch{}
 			restaurantMap[restaurantID] = &restaurant
 		}
 
-		if product.ID != uuid.Nil {
+		// Пропускаем пустой продукт (в случае LEFT JOIN без продуктов)
+		if productID != uuid.Nil {
+			product.ID = productID
 			restaurantMap[restaurantID].Products = append(restaurantMap[restaurantID].Products, product)
 		}
 	}
@@ -107,6 +117,7 @@ func (r *SearchRepo) SearchRestaurantWithProducts(ctx context.Context, query str
 
 	return restaurants, nil
 }
+
 
 func (r *SearchRepo) SearchProductsInRestaurant(ctx context.Context, restaurantID uuid.UUID, query string) ([]models.ProductSearch, error) {
 	rows, err := r.db.Query(ctx, searchProductsInRestaurant, restaurantID, query)
