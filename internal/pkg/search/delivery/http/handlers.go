@@ -67,7 +67,7 @@ func (h *SearchHandler) SearchProductsInRestaurant(w http.ResponseWriter, r *htt
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	query := r.URL.Query().Get("query")
+	query, _ := url.QueryUnescape(r.URL.Query().Get("query"))
 	productCategories, err := h.uc.SearchProductsInRestaurant(r.Context(), restaurantID, query)
 	if err != nil {
 		utils.SendError(w, "Ошибка поиска продуктов", http.StatusInternalServerError)

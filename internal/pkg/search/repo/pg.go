@@ -33,7 +33,7 @@ ORDER BY category, name;
 		FROM restaurants r 
 		JOIN products p ON r.id = p.restaurant_id
 	)
-	SELECT DISTINCT restaurant_id, ts1, ts2
+	SELECT DISTINCT(restaurant_id), name, banner_url, address, rating, rating_count, description, ts1, ts2
 	FROM ranked 
 	WHERE ts1 >= 0.3 OR ts2 >= 0.3
 	ORDER BY ts1 DESC, ts2 DESC
