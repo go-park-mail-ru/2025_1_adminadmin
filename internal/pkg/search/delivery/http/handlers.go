@@ -7,7 +7,6 @@ import (
 	"log/slog"
 	"net/http"
 
-	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/search"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/send_error"
@@ -41,21 +40,13 @@ func (h *SearchHandler) SearchRestaurantWithProducts(w http.ResponseWriter, r *h
 		fmt.Sscanf(offset, "%d", &offsetInt)
 	}
 
-	restaurants, totalCount, err := h.uc.SearchRestaurantWithProducts(r.Context(), query, countInt, offsetInt)
+	restaurants, _, err := h.uc.SearchRestaurantWithProducts(r.Context(), query, countInt, offsetInt)
 	if err != nil {
 		utils.SendError(w, "Ошибка поиска ресторанов с продуктами", http.StatusInternalServerError)
 		return
 	}
 
-	response := struct {
-		Restaurants []models.RestaurantSearch `json:"restaurants"`
-		TotalCount  int                       `json:"total_count"`
-	}{
-		Restaurants: restaurants,
-		TotalCount:  totalCount,
-	}
-
-	data, err := json.Marshal(response)
+	data, err := json.Marshal(restaurants)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "Не удалось сериализовать результат", http.StatusInternalServerError)
