@@ -80,6 +80,7 @@ func (h *SearchHandler) SearchProductsInRestaurant(w http.ResponseWriter, r *htt
 		utils.SendError(w, "Не удалось сериализовать корзину", http.StatusInternalServerError)
 		return
 	}
-
+	
+	w.Header().Set("Content-Type", "application/json")
 	w.Write(data)
 }

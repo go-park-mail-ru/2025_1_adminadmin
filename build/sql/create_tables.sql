@@ -101,23 +101,23 @@ VALUES
 INSERT INTO restaurants (id, name, banner_url, address, rating, rating_count, description, working_mode_from, working_mode_to, delivery_time_from, delivery_time_to)
 VALUES
 (uuid_generate_v4(), 'Клод Моне', 'claude_monet.jpg', 'Москва, улица Спиридоновка дом 25.1', 4.9, 833, 'Ресторан Клод Моне, вершина французской кулинарии.', 11, 20, 47, 63),
-(uuid_generate_v4(), 'Аркобалено', 'Аркобалено.jpg', 'Москва, улица Спиридоновка дом 27', 4.3, 965, 'Ресторан Аркобалено, уютная атмосфера и вкусная еда.', 9, 22, 41, 65),
+(uuid_generate_v4(), 'Аркобалено', 'arcobaleno.jpg', 'Москва, улица Спиридоновка дом 27', 4.3, 965, 'Ресторан Аркобалено, уютная атмосфера и вкусная еда.', 9, 22, 41, 65),
 (uuid_generate_v4(), 'Виктор', 'hotel_eleon.jpg', 'Москва, ул. Большая Якиманка, д. 1', 4.7, 770, 'Ресторан Виктор, мишленовский ресторан.', 8, 22, 51, 66),
 (uuid_generate_v4(), 'Вкусно и точка', 'vkusno_i_tochka.jpeg', 'Никольская ул., 10, Москва', 4.3, 1978, 'Ресторан Вкусно и точка, фастфуд, бургеры', 7, 23, 25, 35),
-(uuid_generate_v4(), 'Ростикс', 'Ростикс.jpeg', 'Театральный пр-д, 5, строение 1, Москва', 4.1, 201, 'Ресторан Ростикс, бургеры, курица.', 10, 22, 45, 55),
-(uuid_generate_v4(), 'Сабвей', 'Сабвей.jpg', 'Нижний Сусальный пер., 5, строение 2, Москва', 4.5, 85, 'Ресторан Сабвей, фастфуд, сэндвичи.', 8, 23, 30, 40),
+(uuid_generate_v4(), 'Ростикс', 'rostics.jpeg', 'Театральный пр-д, 5, строение 1, Москва', 4.1, 201, 'Ресторан Ростикс, бургеры, курица.', 10, 22, 45, 55),
+(uuid_generate_v4(), 'Сабвей', 'subway.jpg', 'Нижний Сусальный пер., 5, строение 2, Москва', 4.5, 85, 'Ресторан Сабвей, фастфуд, сэндвичи.', 8, 23, 30, 40),
 (uuid_generate_v4(), 'Джонджоли', 'djondjoli.jpg', 'Новослободская ул., 14/19с1, Москва', 4.7, 132, 'Ресторан Джонджоли, грузинская кухня, шашлык, хачапури.', 11, 0, 40, 60),
 (uuid_generate_v4(), 'Бургер Кинг', 'burger_king.jpg', 'пр-т Мира, 39с2, Москва', 3.9, 30, 'Ресторан Бургер Кинг, фастфуд, бургеры из говядины.', 6, 3, 45, 55),
 (uuid_generate_v4(), 'Папа Джонс', 'papa_jones.jpg', 'Чистопрудный бул., 1а, Москва', 3.8, 72, 'Ресторан Папа Джонс, пиццы разных сортов и вкусов.', 10, 23, 80, 90),
 (uuid_generate_v4(), 'Блэк Стар Бургер', 'black_star_burger.jpg', 'Москва, ул. Мира, д. 49', 4.5, 858, 'Ресторан Блэк Стар Бургер, высококачественные бургеры.', 11, 23, 45, 55),
 (uuid_generate_v4(), 'Шоколадница', 'shokoladnitsa.jpg', 'ул. Большая Якиманка, 58/2, Москва', 4.6, 196, 'Кофейня Шоколадница, кофе и различные дессерты.', 6, 4, 30, 40),
 (uuid_generate_v4(), 'Сыто Пьяно', 'sito_pyano.jpg', 'Страстной б-р, 4с3, Москва', 4.3, 32, 'Ресторан Сыто Пьяно, уютная атмосфера и вкусная еда.', 11, 23, 75, 85),
-(uuid_generate_v4(), 'ФудБанд', 'ФудБанд.jpg', 'Большая Татарская ул., 5, Москва', 4.5, 1331, 'Ресторан ФудБанд, пиццы, суши и роллы.', 11, 23, 45, 55),
+(uuid_generate_v4(), 'ФудБанд', 'foodband.jpg', 'Большая Татарская ул., 5, Москва', 4.5, 1331, 'Ресторан ФудБанд, пиццы, суши и роллы.', 11, 23, 45, 55),
 (uuid_generate_v4(), 'Таколэнд', 'taso.jpg', 'Большая Татарская ул., Москва', 4.9, 651, 'Ресторан Таколэнд, вкуснейшие тако', 7, 5, 65, 75),
 (uuid_generate_v4(), 'Достаевский', 'dostayevskiy.jpg', 'ул. Иловайская, д. 2Б, строение 6, Москва', 4.6, 255, 'Ресторан Достаевский, комфортная пиццерия', 10, 23, 60, 70),
 (uuid_generate_v4(), 'Синнабон', 'cinnabon.jpg', 'Театральный пр-д, 5, строение 1, Москва', 4.7, 183, 'Вкуснейшие булочки с корицей.', 10, 22, 45, 55),
-(uuid_generate_v4(), 'Стардогс', 'Стардогс.jpg', 'ул. Арбат, 18/1, Москва, 119002', 4.6, 429, 'Первоклассные хот-доги со свежими колбасками.', 8, 22, 50, 60),
-(uuid_generate_v4(), 'Оллис', 'Оллис.jpg', 'Новоалексеевская улица, 12с1, Москва', 4.1, 192, 'Пиццы, суши, осетинские пироги', 10, 22, 65, 75),
+(uuid_generate_v4(), 'Стардогс', 'stardogs.jpg', 'ул. Арбат, 18/1, Москва, 119002', 4.6, 429, 'Первоклассные хот-доги со свежими колбасками.', 8, 22, 50, 60),
+(uuid_generate_v4(), 'Оллис', 'ollis.jpg', 'Новоалексеевская улица, 12с1, Москва', 4.1, 192, 'Пиццы, суши, осетинские пироги', 10, 22, 65, 75),
 (uuid_generate_v4(), 'Такси еды', 'food_taxi.png', 'Ферганская ул., 12, Москва', 3.9, 9, 'Пиццерия', 9, 21, 65, 75),
 (uuid_generate_v4(), 'Вилла Паста', 'villa_pasta.jpg', 'ул. Большая Дмитровка, 32, Москва', 4.7, 144, 'Итальянская кухня.', 10, 23, 50, 60),
 (uuid_generate_v4(), 'Итальянская ривьера', 'default_restaurant.jpg', 'Санкт-Петербург, ул. Карла Маркса, д. 91', 4.7, 534, 'Ресторан Итальянская ривьера, уютная атмосфера и вкусная еда.', 12, 23, 35, 67),
@@ -581,7 +581,7 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 	((SELECT id FROM restaurants WHERE name = 'Клод Моне' ), 'Лимонад клубнично-имбирный', 650, 'strawberry_ginger_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Клод Моне' ), 'Лимонад манго-мята', 650, 'mango_mint_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Клод Моне' ), 'Кофе капучино', 350, 'cappuccino_coffee.jpg', 200, 'Напитки'),
-	((SELECT id FROM restaurants WHERE name = 'Клод Моне' ), 'Салфетка', 1, 'salf.jpg', 5, 'Прочее'),
+	((SELECT id FROM restaurants WHERE name = 'Клод Моне' ), 'Салфетка', 6, 'salf.png', 5, 'Прочее'),
 	((SELECT id FROM restaurants WHERE name = 'Клод Моне' ), 'Какао', 280, 'cacao.jpg', 200, 'Напитки');
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
 	((SELECT id FROM restaurants WHERE name = 'Аркобалено' ), 'Телятина по-бургундски', 1140, 'veal_bourguignon.jpg', 350, 'Горячие блюда'),
@@ -607,6 +607,7 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 	((SELECT id FROM restaurants WHERE name = 'Аркобалено' ), 'Лимонад клубнично-имбирный', 650, 'strawberry_ginger_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Аркобалено' ), 'Лимонад манго-мята', 650, 'mango_mint_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Аркобалено' ), 'Кофе капучино', 350, 'cappuccino_coffee.jpg', 200, 'Напитки'),
+	((SELECT id FROM restaurants WHERE name = 'Аркобалено' ), 'Салфетка', 6, 'salf.png', 5, 'Прочее'),
 	((SELECT id FROM restaurants WHERE name = 'Аркобалено' ), 'Какао', 280, 'cacao.jpg', 200, 'Напитки');
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
 	((SELECT id FROM restaurants WHERE name = 'Виктор' ), 'Телятина по-бургундски', 1140, 'veal_bourguignon.jpg', 350, 'Горячие блюда'),
@@ -632,6 +633,7 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 	((SELECT id FROM restaurants WHERE name = 'Виктор' ), 'Лимонад клубнично-имбирный', 650, 'strawberry_ginger_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Виктор' ), 'Лимонад манго-мята', 650, 'mango_mint_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Виктор' ), 'Кофе капучино', 350, 'cappuccino_coffee.jpg', 200, 'Напитки'),
+	((SELECT id FROM restaurants WHERE name = 'Виктор' ), 'Салфетка', 6, 'salf.png', 5, 'Прочее'),
 	((SELECT id FROM restaurants WHERE name = 'Виктор' ), 'Какао', 280, 'cacao.jpg', 200, 'Напитки');
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
 	((SELECT id FROM restaurants WHERE name = 'Вкусно и точка' ), 'Телятина по-бургундски', 1140, 'veal_bourguignon.jpg', 350, 'Горячие блюда'),
@@ -657,6 +659,7 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 	((SELECT id FROM restaurants WHERE name = 'Вкусно и точка' ), 'Лимонад клубнично-имбирный', 650, 'strawberry_ginger_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Вкусно и точка' ), 'Лимонад манго-мята', 650, 'mango_mint_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Вкусно и точка' ), 'Кофе капучино', 350, 'cappuccino_coffee.jpg', 200, 'Напитки'),
+	((SELECT id FROM restaurants WHERE name = 'Вкусно и точка' ), 'Салфетка', 6, 'salf.png', 5, 'Прочее'),
 	((SELECT id FROM restaurants WHERE name = 'Вкусно и точка' ), 'Какао', 280, 'cacao.jpg', 200, 'Напитки');
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
 	((SELECT id FROM restaurants WHERE name = 'Ростикс' ), 'Телятина по-бургундски', 1140, 'veal_bourguignon.jpg', 350, 'Горячие блюда'),
@@ -682,6 +685,7 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 	((SELECT id FROM restaurants WHERE name = 'Ростикс' ), 'Лимонад клубнично-имбирный', 650, 'strawberry_ginger_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Ростикс' ), 'Лимонад манго-мята', 650, 'mango_mint_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Ростикс' ), 'Кофе капучино', 350, 'cappuccino_coffee.jpg', 200, 'Напитки'),
+	((SELECT id FROM restaurants WHERE name = 'Ростикс' ), 'Салфетка', 6, 'salf.png', 5, 'Прочее'),
 	((SELECT id FROM restaurants WHERE name = 'Ростикс' ), 'Какао', 280, 'cacao.jpg', 200, 'Напитки');
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
 	((SELECT id FROM restaurants WHERE name = 'Сабвей' ), 'Телятина по-бургундски', 1140, 'veal_bourguignon.jpg', 350, 'Горячие блюда'),
@@ -707,6 +711,7 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 	((SELECT id FROM restaurants WHERE name = 'Сабвей' ), 'Лимонад клубнично-имбирный', 650, 'strawberry_ginger_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Сабвей' ), 'Лимонад манго-мята', 650, 'mango_mint_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Сабвей' ), 'Кофе капучино', 350, 'cappuccino_coffee.jpg', 200, 'Напитки'),
+	((SELECT id FROM restaurants WHERE name = 'Сабвей' ), 'Салфетка', 6, 'salf.png', 5, 'Прочее'),
 	((SELECT id FROM restaurants WHERE name = 'Сабвей' ), 'Какао', 280, 'cacao.jpg', 200, 'Напитки');
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
 	((SELECT id FROM restaurants WHERE name = 'Джонджоли' ), 'Телятина по-бургундски', 1140, 'veal_bourguignon.jpg', 350, 'Горячие блюда'),
@@ -732,6 +737,7 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 	((SELECT id FROM restaurants WHERE name = 'Джонджоли' ), 'Лимонад клубнично-имбирный', 650, 'strawberry_ginger_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Джонджоли' ), 'Лимонад манго-мята', 650, 'mango_mint_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Джонджоли' ), 'Кофе капучино', 350, 'cappuccino_coffee.jpg', 200, 'Напитки'),
+	((SELECT id FROM restaurants WHERE name = 'Джонджоли' ), 'Салфетка', 6, 'salf.png', 5, 'Прочее'),
 	((SELECT id FROM restaurants WHERE name = 'Джонджоли' ), 'Какао', 280, 'cacao.jpg', 200, 'Напитки');
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
 	((SELECT id FROM restaurants WHERE name = 'Бургер Кинг' ), 'Телятина по-бургундски', 1140, 'veal_bourguignon.jpg', 350, 'Горячие блюда'),
@@ -757,6 +763,7 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 	((SELECT id FROM restaurants WHERE name = 'Бургер Кинг' ), 'Лимонад клубнично-имбирный', 650, 'strawberry_ginger_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Бургер Кинг' ), 'Лимонад манго-мята', 650, 'mango_mint_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Бургер Кинг' ), 'Кофе капучино', 350, 'cappuccino_coffee.jpg', 200, 'Напитки'),
+	((SELECT id FROM restaurants WHERE name = 'Бургер Кинг' ), 'Салфетка', 6, 'salf.png', 5, 'Прочее'),
 	((SELECT id FROM restaurants WHERE name = 'Бургер Кинг' ), 'Какао', 280, 'cacao.jpg', 200, 'Напитки');
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
 	((SELECT id FROM restaurants WHERE name = 'Папа Джонс' ), 'Телятина по-бургундски', 1140, 'veal_bourguignon.jpg', 350, 'Горячие блюда'),
@@ -782,6 +789,7 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 	((SELECT id FROM restaurants WHERE name = 'Папа Джонс' ), 'Лимонад клубнично-имбирный', 650, 'strawberry_ginger_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Папа Джонс' ), 'Лимонад манго-мята', 650, 'mango_mint_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Папа Джонс' ), 'Кофе капучино', 350, 'cappuccino_coffee.jpg', 200, 'Напитки'),
+	((SELECT id FROM restaurants WHERE name = 'Папа Джонс' ), 'Салфетка', 6, 'salf.png', 5, 'Прочее'),
 	((SELECT id FROM restaurants WHERE name = 'Папа Джонс' ), 'Какао', 280, 'cacao.jpg', 200, 'Напитки');
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
 	((SELECT id FROM restaurants WHERE name = 'Блэк Стар Бургер' ), 'Телятина по-бургундски', 1140, 'veal_bourguignon.jpg', 350, 'Горячие блюда'),
@@ -807,6 +815,7 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 	((SELECT id FROM restaurants WHERE name = 'Блэк Стар Бургер' ), 'Лимонад клубнично-имбирный', 650, 'strawberry_ginger_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Блэк Стар Бургер' ), 'Лимонад манго-мята', 650, 'mango_mint_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Блэк Стар Бургер' ), 'Кофе капучино', 350, 'cappuccino_coffee.jpg', 200, 'Напитки'),
+	((SELECT id FROM restaurants WHERE name = 'Блэк Стар Бургер' ), 'Салфетка', 6, 'salf.png', 5, 'Прочее'),
 	((SELECT id FROM restaurants WHERE name = 'Блэк Стар Бургер' ), 'Какао', 280, 'cacao.jpg', 200, 'Напитки');
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
 	((SELECT id FROM restaurants WHERE name = 'Шоколадница' ), 'Телятина по-бургундски', 1140, 'veal_bourguignon.jpg', 350, 'Горячие блюда'),
@@ -832,6 +841,7 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 	((SELECT id FROM restaurants WHERE name = 'Шоколадница' ), 'Лимонад клубнично-имбирный', 650, 'strawberry_ginger_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Шоколадница' ), 'Лимонад манго-мята', 650, 'mango_mint_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Шоколадница' ), 'Кофе капучино', 350, 'cappuccino_coffee.jpg', 200, 'Напитки'),
+	((SELECT id FROM restaurants WHERE name = 'Шоколадница' ), 'Салфетка', 6, 'salf.png', 5, 'Прочее'),
 	((SELECT id FROM restaurants WHERE name = 'Шоколадница' ), 'Какао', 280, 'cacao.jpg', 200, 'Напитки');
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
 	((SELECT id FROM restaurants WHERE name = 'Сыто Пьяно' ), 'Телятина по-бургундски', 1140, 'veal_bourguignon.jpg', 350, 'Горячие блюда'),
@@ -857,6 +867,7 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 	((SELECT id FROM restaurants WHERE name = 'Сыто Пьяно' ), 'Лимонад клубнично-имбирный', 650, 'strawberry_ginger_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Сыто Пьяно' ), 'Лимонад манго-мята', 650, 'mango_mint_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Сыто Пьяно' ), 'Кофе капучино', 350, 'cappuccino_coffee.jpg', 200, 'Напитки'),
+	((SELECT id FROM restaurants WHERE name = 'Сыто Пьяно' ), 'Салфетка', 6, 'salf.png', 5, 'Прочее'),
 	((SELECT id FROM restaurants WHERE name = 'Сыто Пьяно' ), 'Какао', 280, 'cacao.jpg', 200, 'Напитки');
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
 	((SELECT id FROM restaurants WHERE name = 'ФудБанд' ), 'Телятина по-бургундски', 1140, 'veal_bourguignon.jpg', 350, 'Горячие блюда'),
@@ -882,6 +893,7 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 	((SELECT id FROM restaurants WHERE name = 'ФудБанд' ), 'Лимонад клубнично-имбирный', 650, 'strawberry_ginger_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'ФудБанд' ), 'Лимонад манго-мята', 650, 'mango_mint_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'ФудБанд' ), 'Кофе капучино', 350, 'cappuccino_coffee.jpg', 200, 'Напитки'),
+	((SELECT id FROM restaurants WHERE name = 'ФудБанд' ), 'Салфетка', 6, 'salf.png', 5, 'Прочее'),
 	((SELECT id FROM restaurants WHERE name = 'ФудБанд' ), 'Какао', 280, 'cacao.jpg', 200, 'Напитки');
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
 	((SELECT id FROM restaurants WHERE name = 'Таколэнд' ), 'Телятина по-бургундски', 1140, 'veal_bourguignon.jpg', 350, 'Горячие блюда'),
@@ -907,6 +919,7 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 	((SELECT id FROM restaurants WHERE name = 'Таколэнд' ), 'Лимонад клубнично-имбирный', 650, 'strawberry_ginger_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Таколэнд' ), 'Лимонад манго-мята', 650, 'mango_mint_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Таколэнд' ), 'Кофе капучино', 350, 'cappuccino_coffee.jpg', 200, 'Напитки'),
+	((SELECT id FROM restaurants WHERE name = 'Таколэнд' ), 'Салфетка', 6, 'salf.png', 5, 'Прочее'),
 	((SELECT id FROM restaurants WHERE name = 'Таколэнд' ), 'Какао', 280, 'cacao.jpg', 200, 'Напитки');
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
 	((SELECT id FROM restaurants WHERE name = 'Достаевский' ), 'Телятина по-бургундски', 1140, 'veal_bourguignon.jpg', 350, 'Горячие блюда'),
@@ -932,6 +945,7 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 	((SELECT id FROM restaurants WHERE name = 'Достаевский' ), 'Лимонад клубнично-имбирный', 650, 'strawberry_ginger_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Достаевский' ), 'Лимонад манго-мята', 650, 'mango_mint_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Достаевский' ), 'Кофе капучино', 350, 'cappuccino_coffee.jpg', 200, 'Напитки'),
+	((SELECT id FROM restaurants WHERE name = 'Достаевский' ), 'Салфетка', 6, 'salf.png', 5, 'Прочее'),
 	((SELECT id FROM restaurants WHERE name = 'Достаевский' ), 'Какао', 280, 'cacao.jpg', 200, 'Напитки');
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
 	((SELECT id FROM restaurants WHERE name = 'Синнабон' ), 'Телятина по-бургундски', 1140, 'veal_bourguignon.jpg', 350, 'Горячие блюда'),
@@ -957,6 +971,7 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 	((SELECT id FROM restaurants WHERE name = 'Синнабон' ), 'Лимонад клубнично-имбирный', 650, 'strawberry_ginger_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Синнабон' ), 'Лимонад манго-мята', 650, 'mango_mint_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Синнабон' ), 'Кофе капучино', 350, 'cappuccino_coffee.jpg', 200, 'Напитки'),
+	((SELECT id FROM restaurants WHERE name = 'Синнабон' ), 'Салфетка', 6, 'salf.png', 5, 'Прочее'),
 	((SELECT id FROM restaurants WHERE name = 'Синнабон' ), 'Какао', 280, 'cacao.jpg', 200, 'Напитки');
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
 	((SELECT id FROM restaurants WHERE name = 'Стардогс' ), 'Телятина по-бургундски', 1140, 'veal_bourguignon.jpg', 350, 'Горячие блюда'),
@@ -982,6 +997,7 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 	((SELECT id FROM restaurants WHERE name = 'Стардогс' ), 'Лимонад клубнично-имбирный', 650, 'strawberry_ginger_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Стардогс' ), 'Лимонад манго-мята', 650, 'mango_mint_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Стардогс' ), 'Кофе капучино', 350, 'cappuccino_coffee.jpg', 200, 'Напитки'),
+	((SELECT id FROM restaurants WHERE name = 'Стардогс' ), 'Салфетка', 6, 'salf.png', 5, 'Прочее'),
 	((SELECT id FROM restaurants WHERE name = 'Стардогс' ), 'Какао', 280, 'cacao.jpg', 200, 'Напитки');
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
 	((SELECT id FROM restaurants WHERE name = 'Оллис' ), 'Телятина по-бургундски', 1140, 'veal_bourguignon.jpg', 350, 'Горячие блюда'),
@@ -1007,6 +1023,7 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 	((SELECT id FROM restaurants WHERE name = 'Оллис' ), 'Лимонад клубнично-имбирный', 650, 'strawberry_ginger_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Оллис' ), 'Лимонад манго-мята', 650, 'mango_mint_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Оллис' ), 'Кофе капучино', 350, 'cappuccino_coffee.jpg', 200, 'Напитки'),
+	((SELECT id FROM restaurants WHERE name = 'Оллис' ), 'Салфетка', 6, 'salf.png', 5, 'Прочее'),
 	((SELECT id FROM restaurants WHERE name = 'Оллис' ), 'Какао', 280, 'cacao.jpg', 200, 'Напитки');
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
 	((SELECT id FROM restaurants WHERE name = 'Такси еды' ), 'Телятина по-бургундски', 1140, 'veal_bourguignon.jpg', 350, 'Горячие блюда'),
@@ -1032,6 +1049,7 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 	((SELECT id FROM restaurants WHERE name = 'Такси еды' ), 'Лимонад клубнично-имбирный', 650, 'strawberry_ginger_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Такси еды' ), 'Лимонад манго-мята', 650, 'mango_mint_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Такси еды' ), 'Кофе капучино', 350, 'cappuccino_coffee.jpg', 200, 'Напитки'),
+	((SELECT id FROM restaurants WHERE name = 'Такси еды' ), 'Салфетка', 6, 'salf.png', 5, 'Прочее'),
 	((SELECT id FROM restaurants WHERE name = 'Такси еды' ), 'Какао', 280, 'cacao.jpg', 200, 'Напитки');
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
 	((SELECT id FROM restaurants WHERE name = 'Вилла Паста' ), 'Телятина по-бургундски', 1140, 'veal_bourguignon.jpg', 350, 'Горячие блюда'),
@@ -1057,6 +1075,7 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 	((SELECT id FROM restaurants WHERE name = 'Вилла Паста' ), 'Лимонад клубнично-имбирный', 650, 'strawberry_ginger_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Вилла Паста' ), 'Лимонад манго-мята', 650, 'mango_mint_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Вилла Паста' ), 'Кофе капучино', 350, 'cappuccino_coffee.jpg', 200, 'Напитки'),
+	((SELECT id FROM restaurants WHERE name = 'Вилла Паста' ), 'Салфетка', 6, 'salf.png', 5, 'Прочее'),
 	((SELECT id FROM restaurants WHERE name = 'Вилла Паста' ), 'Какао', 280, 'cacao.jpg', 200, 'Напитки');
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
 	((SELECT id FROM restaurants WHERE name = 'Итальянская ривьера' ), 'Телятина по-бургундски', 1140, 'veal_bourguignon.jpg', 350, 'Горячие блюда'),
@@ -1082,6 +1101,7 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 	((SELECT id FROM restaurants WHERE name = 'Итальянская ривьера' ), 'Лимонад клубнично-имбирный', 650, 'strawberry_ginger_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Итальянская ривьера' ), 'Лимонад манго-мята', 650, 'mango_mint_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Итальянская ривьера' ), 'Кофе капучино', 350, 'cappuccino_coffee.jpg', 200, 'Напитки'),
+	((SELECT id FROM restaurants WHERE name = 'Итальянская ривьера' ), 'Салфетка', 6, 'salf.png', 5, 'Прочее'),
 	((SELECT id FROM restaurants WHERE name = 'Итальянская ривьера' ), 'Какао', 280, 'cacao.jpg', 200, 'Напитки');
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
 	((SELECT id FROM restaurants WHERE name = 'Суши Мания' ), 'Телятина по-бургундски', 1140, 'veal_bourguignon.jpg', 350, 'Горячие блюда'),
@@ -1107,6 +1127,7 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 	((SELECT id FROM restaurants WHERE name = 'Суши Мания' ), 'Лимонад клубнично-имбирный', 650, 'strawberry_ginger_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Суши Мания' ), 'Лимонад манго-мята', 650, 'mango_mint_lemonade.jpg', 800, 'Напитки'),
 	((SELECT id FROM restaurants WHERE name = 'Суши Мания' ), 'Кофе капучино', 350, 'cappuccino_coffee.jpg', 200, 'Напитки'),
+	((SELECT id FROM restaurants WHERE name = 'Суши Мания' ), 'Салфетка', 6, 'salf.png', 5, 'Прочее'),
 	((SELECT id FROM restaurants WHERE name = 'Суши Мания' ), 'Какао', 280, 'cacao.jpg', 200, 'Напитки');
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
 	((SELECT id FROM restaurants WHERE name = 'Пельмени на углях' ), 'Телятина по-бургундски', 1140, 'veal_bourguignon.jpg', 350, 'Горячие блюда'),
