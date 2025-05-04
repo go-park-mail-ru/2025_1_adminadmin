@@ -28,7 +28,7 @@ func NewSearchHandler(uc search.SearchUsecase) *SearchHandler {
 func (h *SearchHandler) SearchRestaurantWithProducts(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
-	query := url.QueryEscape(r.URL.Query().Get("query"))
+	query, _ := url.QueryUnescape(r.URL.Query().Get("query"))
 	count := r.URL.Query().Get("count")
 	offset := r.URL.Query().Get("offset")
 

@@ -140,7 +140,7 @@ services:
       - --config.file=/etc/prometheus/prometheus.yml
     hostname: prometheus
     ports:
-      - "9090:9090"
+      - "8090:9090"
     restart: unless-stopped
     environment:
       TZ: "Europe/Moscow"
