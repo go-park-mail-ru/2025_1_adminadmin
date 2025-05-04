@@ -2402,6 +2402,22 @@ AFTER INSERT ON reviews
 FOR EACH ROW
 EXECUTE FUNCTION update_restaurant_rating();
 
+CREATE TEXT SEARCH DICTIONARY russian_ispell (
+    TEMPLATE = ispell,
+    DictFile = russian,
+    AffFile = russian,
+    StopWords = russian
+);
+
+CREATE TEXT SEARCH CONFIGURATION ru (COPY = russian);
+
+ALTER TEXT SEARCH CONFIGURATION ru
+ALTER MAPPING FOR hword, hword_part, word
+WITH russian_ispell, russian_stem;
+
+ALTER SYSTEM SET default_text_search_config = 'ru';
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
 -- Добавление колонок для tsvector
 ALTER TABLE restaurants ADD COLUMN IF NOT EXISTS tsvector_column tsvector;
 ALTER TABLE products ADD COLUMN IF NOT EXISTS tsvector_column tsvector;
