@@ -20,7 +20,7 @@ scrape_configs:
   - job_name: "auth"
     metrics_path: /api/metrics
     static_configs:
-      - targets: ["auth:5459"]
+      - targets: ["auth:5462"]
 
   - job_name: "cart"
     metrics_path: /api/metrics
