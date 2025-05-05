@@ -144,5 +144,14 @@ func (u *CartUsecase) scheduleDeliveryStatusUpdate(orderID uuid.UUID) {
         return
     }
 
-    logger.Info("Order status updated to 'in delivery'")
+    logger.Info("Order status updated to 'in_delivery'")
+
+	time.Sleep(20 * time.Second)
+    err = u.restaurantRepo.UpdateOrderStatus(ctx, orderID, "delivered")
+    if err != nil {
+        logger.Error("Failed to update to 'delivered'",
+            slog.String("error", err.Error()))
+        return
+    }
+    logger.Info("Order status updated to 'delivered'")
 }
