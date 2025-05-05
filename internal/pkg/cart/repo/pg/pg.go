@@ -50,6 +50,7 @@ FROM orders WHERE user_id = $1 LIMIT $2 OFFSET $3;`
     created_at
 FROM orders WHERE id = $1 AND user_id = $2;`
 	updateOrderStatus = `UPDATE orders SET status = $1 WHERE id = $2;`
+	scheduleDeliveryStatusChange = `SELECT cron.schedule_in('20 seconds', $$UPDATE orders SET status = 'in delivery' WHERE id = $1$$);`
 )
 
 type RestaurantRepository struct {
@@ -206,5 +207,13 @@ func (r *RestaurantRepository) UpdateOrderStatus(ctx context.Context, order_id u
 	}
 
 	logger.Info("Successful")
+	return nil
+}
+
+func (r *RestaurantRepository) ScheduleDeliveryStatusChange(ctx context.Context, orderID uuid.UUID) error {
+	_, err := r.db.Exec(ctx, scheduleDeliveryStatusChange, orderID)
+	if err != nil {
+		return fmt.Errorf("ошибка при планировании обновления статуса: %w", err)
+	}
 	return nil
 }

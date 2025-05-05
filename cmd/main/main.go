@@ -168,7 +168,7 @@ func main() {
 		search.HandleFunc("", searchDelivery.SearchRestaurantWithProducts).Methods(http.MethodGet)
 	}
 
-	r.HandleFunc("/payment", cartHandler.Payment).Methods(http.MethodPost)
+	r.HandleFunc("/payment", cartHandler.UpdateOrderStatus).Methods(http.MethodPost)
 	r.PathPrefix("/metrics").Handler(promhttp.Handler())
 	http.Handle("/", r)
 	srv := http.Server{

@@ -446,31 +446,21 @@ func (h *CartHandler) GetOrderById(w http.ResponseWriter, r *http.Request) {
 func (h *CartHandler) UpdateOrderStatus(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
-	_, err := r.Cookie("AdminJWT")
+	err := r.ParseForm()
 	if err != nil {
-		if err == http.ErrNoCookie {
-			log.LogHandlerError(logger, fmt.Errorf("токен отсутствует: %w", err), http.StatusUnauthorized)
-			utils.SendError(w, "Токен отсутствует", http.StatusUnauthorized)
-			return
-		}
-		log.LogHandlerError(logger, fmt.Errorf("ошибка при чтении куки: %w", err), http.StatusBadRequest)
-		utils.SendError(w, "Ошибка при чтении куки", http.StatusBadRequest)
-		return
-	}
-	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
-		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
-		utils.SendError(w, "некорректный CSRF-токен", http.StatusForbidden)
+		log.LogHandlerError(logger, err, http.StatusBadRequest)
+		utils.SendError(w, "не удалось распарсить форму", http.StatusBadRequest)
 		return
 	}
 
-	var req models.Order
-	if err := easyjson.UnmarshalFromReader(r.Body, &req); err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("ошибка чтения тела запроса: %w", err), http.StatusBadRequest)
-		utils.SendError(w, "Некорректный формат данных", http.StatusBadRequest)
+	orderID := r.FormValue("label")
+	if orderID == "" {
+		log.LogHandlerError(logger, fmt.Errorf("label not found"), http.StatusBadRequest)
+		utils.SendError(w, "не передан id заказа (label)", http.StatusBadRequest)
 		return
 	}
 
-	_, err = h.client.UpdateOrderStatus(r.Context(), &gen.UpdateOrderStatusRequest{OrderId: req.ID.String()})
+	_, err = h.client.UpdateOrderStatus(r.Context(), &gen.UpdateOrderStatusRequest{OrderId: orderID})
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("не удалось получить заказ: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "не удалось получить заказ", http.StatusInternalServerError)

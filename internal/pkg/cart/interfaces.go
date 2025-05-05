@@ -31,4 +31,5 @@ type RestaurantRepo interface {
 	GetOrders(ctx context.Context, user_id uuid.UUID, count, offset int) ([]models.Order, error)
 	GetOrderById(ctx context.Context, order_id, user_id uuid.UUID) (models.Order, error)
 	UpdateOrderStatus(ctx context.Context, order_id uuid.UUID, status string) error
+	ScheduleDeliveryStatusChange(ctx context.Context, orderID uuid.UUID) error
 }

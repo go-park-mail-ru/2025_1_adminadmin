@@ -123,6 +123,11 @@ func (u *CartUsecase) UpdateOrderStatus(ctx context.Context, order_id uuid.UUID)
 		return err
 	}
 
+	err = u.restaurantRepo.ScheduleDeliveryStatusChange(ctx, order_id)
+	if err != nil {
+		logger.Error(err.Error())
+	}
+
 	logger.Info("success")
 	return nil
 }
