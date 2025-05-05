@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS orders (
 
 CREATE OR REPLACE FUNCTION set_order_in_delivery(order_id UUID) RETURNS VOID AS $$
 BEGIN
-    UPDATE orders SET status = 'in delivery' WHERE id = order_id;
+    UPDATE orders SET status = 'in_delivery' WHERE id = order_id;
 END;
 $$ LANGUAGE plpgsql;
 
