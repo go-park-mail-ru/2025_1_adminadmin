@@ -12,6 +12,8 @@ import (
 	generatedAuth "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/grpc/gen"
 	authRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/repo"
 	authUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/usecase"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/metrics"
+	mw "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/middleware/metrics"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"google.golang.org/grpc"
 )
@@ -40,7 +42,10 @@ func run() (err error) {
 	AuthUsecase := authUsecase.CreateAuthUsecase(AuthRepo)
 	AuthDelivery := grpcAuth.CreateAuthHandler(AuthUsecase)
 
-	gRPCServer := grpc.NewServer()
+	grpcMetrics, _ := metrics.NewGrpcMetrics("auth")
+	grpcMiddleware := mw.NewGrpcMw(grpcMetrics)
+
+	gRPCServer := grpc.NewServer(grpc.ChainUnaryInterceptor(grpcMiddleware.UnaryServerInterceptor()))
 	generatedAuth.RegisterAuthServiceServer(gRPCServer, AuthDelivery)
 
 	go func() {

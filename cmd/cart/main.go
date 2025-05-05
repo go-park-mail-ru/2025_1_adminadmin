@@ -57,6 +57,7 @@ func run() (err error) {
 	cartRepoRedis := cartRedisRepo.NewCartRepository(redisClient)
 	CartUsecase := cartUsecase.NewCartUsecase(cartRepoRedis, CartRepoPg)
 	CartDelivery := grpcCart.CreateCartHandler(CartUsecase)
+
 	grpcMetrics, _ := metrics.NewGrpcMetrics("cart")
 	grpcMiddleware := mw.NewGrpcMw(grpcMetrics)
 
