@@ -130,7 +130,7 @@ func (u *CartUsecase) UpdateOrderStatus(ctx context.Context, order_id uuid.UUID)
 }
 
 func (u *CartUsecase) scheduleDeliveryStatusUpdate(orderID uuid.UUID) {
-    ctx, cancel := context.WithTimeout(context.Background(), 70*time.Second)
+    ctx, cancel := context.WithTimeout(context.Background(), 120*time.Second)
     defer cancel()
 	
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
