@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net"
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
@@ -14,7 +15,9 @@ import (
 	authUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/usecase"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/metrics"
 	mw "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/middleware/metrics"
+	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"google.golang.org/grpc"
 )
 
@@ -55,6 +58,15 @@ func run() (err error) {
 		}
 		if err := gRPCServer.Serve(listener); err != nil {
 			return
+		}
+	}()
+
+	r := mux.NewRouter().PathPrefix("/api").Subrouter()
+	r.PathPrefix("/metrics").Handler(promhttp.Handler())
+	http.Handle("/", r)
+	httpSrv := http.Server{Handler: r, Addr: fmt.Sprintf(":%s", "5462")}
+	go func() {
+		if err := httpSrv.ListenAndServe(); err != nil {
 		}
 	}()
 

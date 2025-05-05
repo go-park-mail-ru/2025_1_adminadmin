@@ -44,6 +44,7 @@ services:
     restart: always
     ports:
       - "5459:5459"
+      - "5462:5462"
     networks:
       - adminadmin-network
 
