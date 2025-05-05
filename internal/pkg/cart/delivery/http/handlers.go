@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
 	"log/slog"
 	"net/http"
 	"os"
@@ -485,14 +484,21 @@ func (h *CartHandler) UpdateOrderStatus(w http.ResponseWriter, r *http.Request) 
 func (h *CartHandler) Payment(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
-	body, err := io.ReadAll(r.Body)
+	err := r.ParseForm()
 	if err != nil {
-		log.LogHandlerError(logger, err, http.StatusInternalServerError)
-		utils.SendError(w, "не удалось прочитать тело запроса", http.StatusInternalServerError)
+		log.LogHandlerError(logger, err, http.StatusBadRequest)
+		utils.SendError(w, "не удалось распарсить форму", http.StatusBadRequest)
 		return
 	}
-	defer r.Body.Close()
 
-	log.LogHandlerInfo(logger, fmt.Sprintf("Получен запрос в DeliveryHandler: %s", string(body)), http.StatusOK)
+	orderID := r.FormValue("label")
+	if orderID == "" {
+		log.LogHandlerError(logger, fmt.Errorf("label not found"), http.StatusBadRequest)
+		utils.SendError(w, "не передан id заказа (label)", http.StatusBadRequest)
+		return
+	}
+
+	log.LogHandlerInfo(logger, fmt.Sprintf("Получен id заказа: %s", orderID), http.StatusOK)
+
 	w.Write([]byte("OK"))
 }
