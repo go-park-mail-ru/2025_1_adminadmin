@@ -211,7 +211,8 @@ func (r *RestaurantRepository) UpdateOrderStatus(ctx context.Context, order_id u
 }
 
 func (r *RestaurantRepository) ScheduleDeliveryStatusChange(ctx context.Context, orderID uuid.UUID) error {
-	_, err := r.db.Exec(ctx, scheduleDeliveryStatusChange, orderID)
+	query := `SELECT cron.schedule_in('20 seconds', $$SELECT set_order_in_delivery('` + orderID.String() + `')$$);`
+	_, err := r.db.Exec(ctx, query)
 	if err != nil {
 		return fmt.Errorf("ошибка при планировании обновления статуса: %w", err)
 	}
