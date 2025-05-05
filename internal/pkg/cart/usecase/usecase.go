@@ -123,12 +123,30 @@ func (u *CartUsecase) UpdateOrderStatus(ctx context.Context, order_id uuid.UUID)
 		return err
 	}
 
-	err = u.restaurantRepo.ScheduleDeliveryStatusChange(ctx, order_id)
-	if err != nil {
-		logger.Error(err.Error())
-		return err
-	}
+	go u.scheduleDeliveryStatusUpdate(order_id)
 
 	logger.Info("success")
 	return nil
+}
+
+func (u *CartUsecase) scheduleDeliveryStatusUpdate(orderID uuid.UUID) {
+    // Создаем новый контекст с таймаутом
+    ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+    defer cancel()
+	
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+
+    // Ждем 20 секунд
+    time.Sleep(20 * time.Second)
+
+    // Обновляем статус на "in delivery"
+    err := u.restaurantRepo.UpdateOrderStatus(ctx, orderID, "in delivery")
+    if err != nil {
+        logger.Error("Failed to update delivery status",
+            slog.String("error", err.Error()))
+        return
+    }
+
+    logger.Info("Order status updated to 'in delivery'")
 }
