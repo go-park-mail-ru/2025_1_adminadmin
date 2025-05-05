@@ -219,5 +219,7 @@ func (r *RestaurantRepository) ScheduleDeliveryStatusChange(ctx context.Context,
 		logger.Error("Ошибка при обновлении статуса заказа", slog.String("error", err.Error()))
 		return err
 	}
+
+	logger.Info("Successful")
 	return nil
 }
