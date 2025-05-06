@@ -75,7 +75,7 @@ func (h *RestaurantHandler) GetProductsByRestaurant(w http.ResponseWriter, r *ht
 	data, err := json.Marshal(products)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("не удалось сериализовать данные: %w", err), http.StatusInternalServerError)
-		utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)
+		utils.SendError(w, "не удалось получить продукты", http.StatusInternalServerError)
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
@@ -125,7 +125,7 @@ func (h *RestaurantHandler) RestaurantList(w http.ResponseWriter, r *http.Reques
 	data, err := json.Marshal(restaurants)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
-		utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)
+		utils.SendError(w, "не удалось получить рестораны", http.StatusInternalServerError)
 		return
 	}
 
@@ -175,7 +175,7 @@ func (h *RestaurantHandler) ReviewsList(w http.ResponseWriter, r *http.Request) 
 	data, err := json.Marshal(reviews)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
-		utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)
+		utils.SendError(w, "не удалось получить отзывы", http.StatusInternalServerError)
 		return
 	}
 
@@ -199,8 +199,8 @@ func (h *RestaurantHandler) CreateReview(w http.ResponseWriter, r *http.Request)
 	var req models.ReviewInReq
 	err := easyjson.UnmarshalFromReader(r.Body, &req)
 	if err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка парсинга JSON: %w", err), http.StatusBadRequest)
-		utils.SendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
+		log.LogHandlerError(logger, fmt.Errorf("ошибка парсинга JSON: %w", err), http.StatusBadRequest)
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 	req.Sanitize()
@@ -262,8 +262,8 @@ func (h *RestaurantHandler) CreateReview(w http.ResponseWriter, r *http.Request)
 	w.Header().Set("Content-Type", "application/json")
 
 	if err := json.NewEncoder(w).Encode(review); err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("ошибка формирования JSON: %w", err), http.StatusInternalServerError)
-		utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
+		log.LogHandlerError(logger, fmt.Errorf("ошибка формирования JSON: %w", err), http.StatusBadRequest)
+		w.WriteHeader(http.StatusBadRequest)
 	}
 }
 
@@ -316,7 +316,7 @@ func (h *RestaurantHandler) CheckReviews(w http.ResponseWriter, r *http.Request)
 		data, err := json.Marshal(exists)
 		if err != nil {
 			log.LogHandlerError(logger, fmt.Errorf("не удалось сериализовать данные: %w", err), http.StatusInternalServerError)
-			utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)
+			utils.SendError(w, "не удалось проверить отзывы", http.StatusInternalServerError)
 			return
 		}
 		w.Header().Set("Content-Type", "application/json")

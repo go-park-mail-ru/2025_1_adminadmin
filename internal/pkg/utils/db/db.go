@@ -30,10 +30,10 @@ func InitRedis() (*redis.Client, error) {
 		Password: "",
 		DB:       0,
 	})
-	err := client.Ping(context.Background())
-	if err != nil {
-		return nil, err.Err()
-	}
+	//err := client.Ping(context.Background())
+	//if err != nil {
+		//return nil, err.Err()
+	//}
 
 	return client, nil
 }
