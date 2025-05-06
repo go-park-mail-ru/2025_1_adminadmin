@@ -288,6 +288,20 @@ func (mr *MockRestaurantRepoMockRecorder) Save(ctx, order, userLogin interface{}
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Save", reflect.TypeOf((*MockRestaurantRepo)(nil).Save), ctx, order, userLogin)
 }
 
+// ScheduleDeliveryStatusChange mocks base method.
+func (m *MockRestaurantRepo) ScheduleDeliveryStatusChange(ctx context.Context, orderID uuid.UUID) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ScheduleDeliveryStatusChange", ctx, orderID)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// ScheduleDeliveryStatusChange indicates an expected call of ScheduleDeliveryStatusChange.
+func (mr *MockRestaurantRepoMockRecorder) ScheduleDeliveryStatusChange(ctx, orderID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ScheduleDeliveryStatusChange", reflect.TypeOf((*MockRestaurantRepo)(nil).ScheduleDeliveryStatusChange), ctx, orderID)
+}
+
 // UpdateOrderStatus mocks base method.
 func (m *MockRestaurantRepo) UpdateOrderStatus(ctx context.Context, order_id uuid.UUID, status string) error {
 	m.ctrl.T.Helper()

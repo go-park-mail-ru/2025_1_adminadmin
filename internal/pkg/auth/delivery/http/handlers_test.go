@@ -82,7 +82,7 @@ func TestSignIn(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			ctrl := gomock.NewController(t)
-			mockUsecase := mocks.NewMockAuthUsecase(ctrl)
+			mockGrpc := mocks.NewMockAuthGrpc(ctrl)
 			defer ctrl.Finish()
 
 			if tt.name != "Invalid JSON" {

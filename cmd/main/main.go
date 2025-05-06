@@ -12,8 +12,8 @@ import (
 	"time"
 
 	authGen "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/grpc/gen"
-	cartGen "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/grpc/gen"
 	authHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/http"
+	cartGen "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/grpc/gen"
 	cartHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/http"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/metrics"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/middleware/cors"
@@ -28,18 +28,8 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/redis/go-redis/v9"
 	"google.golang.org/grpc"
 )
-
-func initRedis() *redis.Client {
-	client := redis.NewClient(&redis.Options{
-		Addr:     os.Getenv("REDIS_ADDR"),
-		Password: "",
-		DB:       0,
-	})
-	return client
-}
 
 func initDB(logger *slog.Logger) (*pgxpool.Pool, error) {
 	connStr := os.Getenv("POSTGRES_CONN")
