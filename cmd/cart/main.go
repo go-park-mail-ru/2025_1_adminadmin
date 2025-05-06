@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"net"
 	"net/http"
@@ -17,48 +16,33 @@ import (
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/metrics"
 	mw "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/middleware/metrics"
 	"github.com/gorilla/mux"
-	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/redis/go-redis/v9"
 	"google.golang.org/grpc"
 )
 
-func initRedis() *redis.Client {
-	client := redis.NewClient(&redis.Options{
-		Addr:     os.Getenv("REDIS_ADDR"),
-		Password: "",
-		DB:       0,
-	})
-	return client
-}
-
 func main() {
-	if err := run(); err != nil {
+	if err := run(); err != nil { //log
 		os.Exit(1)
 	}
 }
 
 func run() (err error) {
 
-	db, err := pgxpool.Connect(context.Background(), os.Getenv("POSTGRES_CONN"))
+	CartRepoPg, err := cartPgRepo.NewRestaurantRepository()
 	if err != nil {
 		return
 	}
-	defer db.Close()
-
-	//tlsCredentials, err := loadtls.LoadTLSCredentials(cfg.Grpc.NoteIP)
-	//if err != nil {
-	//	logger.Error(err.Error())
-	//	return
-	//}
-
-	redisClient := initRedis()
-	CartRepoPg := cartPgRepo.NewRestaurantRepository(db)
-	cartRepoRedis := cartRedisRepo.NewCartRepository(redisClient)
+	cartRepoRedis, err := cartRedisRepo.NewCartRepository()
+	if err != nil {
+		return
+	}
 	CartUsecase := cartUsecase.NewCartUsecase(cartRepoRedis, CartRepoPg)
 	CartDelivery := grpcCart.CreateCartHandler(CartUsecase)
 
-	grpcMetrics, _ := metrics.NewGrpcMetrics("cart")
+	grpcMetrics, err := metrics.NewGrpcMetrics("cart")
+	if err != nil {
+		return
+	}
 	grpcMiddleware := mw.NewGrpcMw(grpcMetrics)
 
 	gRPCServer := grpc.NewServer(grpc.ChainUnaryInterceptor(grpcMiddleware.UnaryServerInterceptor()))

@@ -26,27 +26,9 @@ import (
 	searchRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/search/repo"
 	searchUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/search/usecase"
 	"github.com/gorilla/mux"
-	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"google.golang.org/grpc"
 )
-
-func initDB(logger *slog.Logger) (*pgxpool.Pool, error) {
-	connStr := os.Getenv("POSTGRES_CONN")
-
-	pool, err := pgxpool.Connect(context.Background(), connStr)
-	if err != nil {
-		return nil, err
-	}
-
-	err = pool.Ping(context.Background())
-	if err != nil {
-		return nil, err
-	}
-
-	logger.Info("Успешное подключение к PostgreSQL")
-	return pool, nil
-}
 
 // @title AdminAdmin API
 // @version 1.0
@@ -62,12 +44,6 @@ func main() {
 	defer logFile.Close()
 
 	logger := slog.New(slog.NewJSONHandler(io.MultiWriter(logFile, os.Stdout), &slog.HandlerOptions{Level: slog.LevelInfo}))
-
-	pool, err := initDB(logger)
-	if err != nil {
-		logger.Error("Ошибка при подключении к PostgreSQL: " + err.Error())
-	}
-	defer pool.Close()
 
 	cartConn, err := grpc.Dial("cart:5460", grpc.WithInsecure())
 	if err != nil {
@@ -97,11 +73,17 @@ func main() {
 
 	authHandler := authHandler.CreateAuthHandler(authGRPCClient)
 
-	restaurantRepo := restaurantRepo.NewRestaurantRepository(pool)
+	restaurantRepo, err := restaurantRepo.NewRestaurantRepository()
+	if err != nil {
+		return
+	}
 	restaurantUsecase := restaurantUsecase.NewRestaurantsUsecase(restaurantRepo)
 	restaurantDelivery := restaurantDelivery.NewRestaurantHandler(restaurantUsecase)
 
-	searchRep := searchRepo.NewSearchRepo(pool)
+	searchRep, err := searchRepo.NewSearchRepo()
+	if err != nil {
+		return
+	}
 	searchUsecase := searchUsecase.NewSearchUsecase(searchRep)
 	searchDelivery := searchDelivery.NewSearchHandler(searchUsecase)
 

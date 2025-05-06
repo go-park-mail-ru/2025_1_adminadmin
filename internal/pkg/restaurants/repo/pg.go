@@ -5,6 +5,7 @@ import (
 	"log/slog"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
+	dbUtils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/db"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	"github.com/jackc/pgconn"
 	"github.com/jackc/pgtype/pgxtype"
@@ -31,8 +32,9 @@ type RestaurantRepository struct {
 	db pgxtype.Querier
 }
 
-func NewRestaurantRepository(db pgxtype.Querier) *RestaurantRepository {
-	return &RestaurantRepository{db: db}
+func NewRestaurantRepository() (*RestaurantRepository, error) {
+	db, err := dbUtils.InitDB()
+	return &RestaurantRepository{db: db}, err
 }
 
 func (r *RestaurantRepository) GetProductsByRestaurant(ctx context.Context, restaurantID uuid.UUID, count int, offset int) (*models.RestaurantFull, error) {

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"net"
 	"net/http"
@@ -16,7 +15,6 @@ import (
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/metrics"
 	mw "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/middleware/metrics"
 	"github.com/gorilla/mux"
-	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"google.golang.org/grpc"
 )
@@ -29,19 +27,10 @@ func main() {
 
 func run() (err error) {
 
-	db, err := pgxpool.Connect(context.Background(), os.Getenv("POSTGRES_CONN"))
+	AuthRepo, err := authRepo.CreateAuthRepo()
 	if err != nil {
 		return
 	}
-	defer db.Close()
-
-	//tlsCredentials, err := loadtls.LoadTLSCredentials(cfg.Grpc.NoteIP)
-	//if err != nil {
-	//	logger.Error(err.Error())
-	//	return
-	//}
-
-	AuthRepo := authRepo.CreateAuthRepo(db)
 	AuthUsecase := authUsecase.CreateAuthUsecase(AuthRepo)
 	AuthDelivery := grpcAuth.CreateAuthHandler(AuthUsecase)
 

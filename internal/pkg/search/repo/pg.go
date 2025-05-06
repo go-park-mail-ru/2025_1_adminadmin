@@ -6,6 +6,7 @@ import (
 	"log/slog"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
+	dbUtils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/db"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	"github.com/jackc/pgtype/pgxtype"
 	"github.com/satori/uuid"
@@ -48,10 +49,11 @@ type SearchRepo struct {
 	db pgxtype.Querier
 }
 
-func NewSearchRepo(db pgxtype.Querier) *SearchRepo {
+func NewSearchRepo() (*SearchRepo, error) {
+	db, err := dbUtils.InitDB()
 	return &SearchRepo{
 		db: db,
-	}
+	}, err
 }
 
 func (r *SearchRepo) SearchRestaurantWithProducts(ctx context.Context, query string, count, offset int) ([]models.RestaurantSearch, error) {
