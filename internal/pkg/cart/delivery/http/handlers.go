@@ -1,20 +1,19 @@
 package http
 
 import (
-	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
 	"log/slog"
 	"net/http"
 	"os"
 	"strconv"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
-	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/grpc/gen"
 	"github.com/satori/uuid"
 
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/converter"
 	jwtUtils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/jwt"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/send_error"
@@ -25,12 +24,12 @@ import (
 )
 
 type CartHandler struct {
-	cartUsecase cart.CartUsecase
-	secret      string
+	client gen.CartServiceClient
+	secret string
 }
 
-func NewCartHandler(cartUsecase cart.CartUsecase) *CartHandler {
-	return &CartHandler{cartUsecase: cartUsecase, secret: os.Getenv("JWT_SECRET")}
+func NewCartHandler(client gen.CartServiceClient) *CartHandler {
+	return &CartHandler{client: client, secret: os.Getenv("JWT_SECRET")}
 }
 
 func (h *CartHandler) getCartData(r *http.Request) (models.Cart, string, error, bool) {
@@ -55,14 +54,19 @@ func (h *CartHandler) getCartData(r *http.Request) (models.Cart, string, error, 
 		return models.Cart{}, "", fmt.Errorf("невалидный токен"), false
 	}
 
-	ctx := context.Background()
-	cart, err, full_cart := h.cartUsecase.GetCart(ctx, login)
+	grpcResponse, err := h.client.GetCart(r.Context(), &gen.GetCartRequest{Login: login})
 	if err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("ошибка получения корзины: %w", err), http.StatusInternalServerError)
+		log.LogHandlerError(logger, fmt.Errorf("ошибка gRPC вызова: %w", err), http.StatusInternalServerError)
 		return models.Cart{}, "", fmt.Errorf("ошибка получения корзины"), false
 	}
 
-	return cart, login, nil, full_cart
+	cart, err := converter.ProtoToCart(grpcResponse)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка конвертации корзины: %w", err), http.StatusInternalServerError)
+		return models.Cart{}, "", fmt.Errorf("ошибка обработки данных корзины"), false
+	}
+
+	return cart, login, nil, grpcResponse.FullCart
 }
 
 func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
@@ -134,8 +138,12 @@ func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Reques
 
 	requestBody.Sanitize()
 
-	ctx := context.Background()
-	err = h.cartUsecase.UpdateItemQuantity(ctx, login, productID, requestBody.RestaurantId, requestBody.Quantity)
+	_, err = h.client.UpdateItemQuantity(r.Context(), &gen.UpdateQuantityRequest{
+		Login:        login,
+		ProductId:    productID,
+		RestaurantId: requestBody.RestaurantId,
+		Quantity:     int32(requestBody.Quantity),
+	})
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("не удалось обновить количество: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "Не удалось обновить количество товара в корзине", http.StatusInternalServerError)
@@ -198,7 +206,7 @@ func (h *CartHandler) ClearCart(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.cartUsecase.ClearCart(r.Context(), login)
+	_, err = h.client.ClearCart(r.Context(), &gen.ClearCartRequest{Login: login})
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Ошибка при очистке корзины: %v", err), http.StatusInternalServerError)
 		return
@@ -211,7 +219,7 @@ func (h *CartHandler) ClearCart(w http.ResponseWriter, r *http.Request) {
 func (h *CartHandler) CreateOrder(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
-	cart, userID, err, full_cart := h.getCartData(r)
+	cart, login, err, full_cart := h.getCartData(r)
 	if err != nil {
 		log.LogHandlerError(logger, err, http.StatusUnauthorized)
 		utils.SendError(w, "некорректный JWT-токен", http.StatusUnauthorized)
@@ -244,18 +252,26 @@ func (h *CartHandler) CreateOrder(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ctx := r.Context()
+	grpcReq := converter.OrderInReqToProto(req, cart, login)
 
-	order, err := h.cartUsecase.CreateOrder(ctx, userID, req, cart)
+	grpcResponse, err := h.client.CreateOrder(r.Context(), grpcReq)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("не удалось создать заказ: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "Ошибка при создании заказа", http.StatusInternalServerError)
 		return
 	}
 
-	err = h.cartUsecase.ClearCart(r.Context(), userID)
+	order, err := converter.ProtoToOrder(grpcResponse)
 	if err != nil {
-		http.Error(w, fmt.Sprintf("Ошибка при очистке корзины: %v", err), http.StatusInternalServerError)
+		log.LogHandlerError(logger, fmt.Errorf("ошибка конвертации заказа: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "Ошибка обработки данных заказа", http.StatusInternalServerError)
+		return
+	}
+
+	_, err = h.client.ClearCart(r.Context(), &gen.ClearCartRequest{Login: login})
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка при очистке корзины: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, fmt.Sprintf("ошибка при очистке корзины: %v", err), http.StatusInternalServerError)
 		return
 	}
 
@@ -295,13 +311,13 @@ func (h *CartHandler) GetOrders(w http.ResponseWriter, r *http.Request) {
 
 	claims := jwt.MapClaims{}
 
-	idStr, ok := jwtUtils.GetIdFromJWT(JWTStr, claims, h.secret)
-	if !ok || idStr == "" {
+	userIdStr, ok := jwtUtils.GetIdFromJWT(JWTStr, claims, h.secret)
+	if !ok || userIdStr == "" {
 		log.LogHandlerError(logger, errors.New("недействительный токен: id отсутствует"), http.StatusUnauthorized)
 		utils.SendError(w, "Недействительный токен: id отсутствует", http.StatusUnauthorized)
 		return
 	}
-	id, err := uuid.FromString(idStr)
+	userId, err := uuid.FromString(userIdStr)
 	if err != nil {
 		log.LogHandlerError(logger, err, http.StatusInternalServerError)
 		utils.SendError(w, err.Error(), http.StatusInternalServerError)
@@ -321,11 +337,26 @@ func (h *CartHandler) GetOrders(w http.ResponseWriter, r *http.Request) {
 		offset = 0
 	}
 
-	orders, err := h.cartUsecase.GetOrders(r.Context(), id, count, offset)
+	grpcResponse, err := h.client.GetOrders(r.Context(), &gen.GetOrdersRequest{
+		UserId: userId.String(),
+		Count:  int32(count),
+		Offset: int32(offset),
+	})
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка уровнем ниже (usecase): %w", err), http.StatusInternalServerError)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
+	}
+
+	orders := make([]models.Order, 0, len(grpcResponse.Orders))
+	for _, grpcOrder := range grpcResponse.Orders {
+		order, err := converter.ProtoToOrder(grpcOrder)
+		if err != nil {
+			log.LogHandlerError(logger, fmt.Errorf("ошибка конвертации заказа: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "Ошибка обработки данных заказа", http.StatusInternalServerError)
+			return
+		}
+		orders = append(orders, order)
 	}
 
 	data, err := json.Marshal(orders)
@@ -343,7 +374,7 @@ func (h *CartHandler) GetOrders(w http.ResponseWriter, r *http.Request) {
 func (h *CartHandler) GetOrderById(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
-	_, err := r.Cookie("AdminJWT")
+	cookie, err := r.Cookie("AdminJWT")
 	if err != nil {
 		if err == http.ErrNoCookie {
 			log.LogHandlerError(logger, fmt.Errorf("токен отсутствует: %w", err), http.StatusUnauthorized)
@@ -360,6 +391,23 @@ func (h *CartHandler) GetOrderById(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	JWTStr := cookie.Value
+
+	claims := jwt.MapClaims{}
+
+	userIdStr, ok := jwtUtils.GetIdFromJWT(JWTStr, claims, h.secret)
+	if !ok || userIdStr == "" {
+		log.LogHandlerError(logger, errors.New("недействительный токен: id отсутствует"), http.StatusUnauthorized)
+		utils.SendError(w, "Недействительный токен: id отсутствует", http.StatusUnauthorized)
+		return
+	}
+	userId, err := uuid.FromString(userIdStr)
+	if err != nil {
+		log.LogHandlerError(logger, err, http.StatusInternalServerError)
+		utils.SendError(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
 	vars := mux.Vars(r)
 	orderIDStr := vars["orderID"]
 	orderID, err := uuid.FromString(orderIDStr)
@@ -369,10 +417,17 @@ func (h *CartHandler) GetOrderById(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	order, err := h.cartUsecase.GetOrderById(r.Context(), orderID)
+	grpcResponse, err := h.client.GetOrderById(r.Context(), &gen.GetOrderByIdRequest{OrderId: orderID.String(), UserId: userId.String()})
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("не удалось получить заказ: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "не удалось получить заказ", http.StatusInternalServerError)
+		return
+	}
+
+	order, err := converter.ProtoToOrder(grpcResponse)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка конвертации заказа: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "Ошибка обработки данных заказа", http.StatusInternalServerError)
 		return
 	}
 
@@ -391,31 +446,21 @@ func (h *CartHandler) GetOrderById(w http.ResponseWriter, r *http.Request) {
 func (h *CartHandler) UpdateOrderStatus(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
-	_, err := r.Cookie("AdminJWT")
+	err := r.ParseForm()
 	if err != nil {
-		if err == http.ErrNoCookie {
-			log.LogHandlerError(logger, fmt.Errorf("токен отсутствует: %w", err), http.StatusUnauthorized)
-			utils.SendError(w, "Токен отсутствует", http.StatusUnauthorized)
-			return
-		}
-		log.LogHandlerError(logger, fmt.Errorf("ошибка при чтении куки: %w", err), http.StatusBadRequest)
-		utils.SendError(w, "Ошибка при чтении куки", http.StatusBadRequest)
-		return
-	}
-	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
-		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
-		utils.SendError(w, "некорректный CSRF-токен", http.StatusForbidden)
+		log.LogHandlerError(logger, err, http.StatusBadRequest)
+		utils.SendError(w, "не удалось распарсить форму", http.StatusBadRequest)
 		return
 	}
 
-	var req models.Order
-	if err := easyjson.UnmarshalFromReader(r.Body, &req); err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("ошибка чтения тела запроса: %w", err), http.StatusBadRequest)
-		utils.SendError(w, "Некорректный формат данных", http.StatusBadRequest)
+	orderID := r.FormValue("label")
+	if orderID == "" {
+		log.LogHandlerError(logger, fmt.Errorf("label not found"), http.StatusBadRequest)
+		utils.SendError(w, "не передан id заказа (label)", http.StatusBadRequest)
 		return
 	}
 
-	err = h.cartUsecase.UpdateOrderStatus(r.Context(), req.ID)
+	_, err = h.client.UpdateOrderStatus(r.Context(), &gen.UpdateOrderStatusRequest{OrderId: orderID})
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("не удалось получить заказ: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "не удалось получить заказ", http.StatusInternalServerError)
@@ -429,14 +474,21 @@ func (h *CartHandler) UpdateOrderStatus(w http.ResponseWriter, r *http.Request) 
 func (h *CartHandler) Payment(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
-	body, err := io.ReadAll(r.Body)
+	err := r.ParseForm()
 	if err != nil {
-		log.LogHandlerError(logger, err, http.StatusInternalServerError)
-		utils.SendError(w, "не удалось прочитать тело запроса", http.StatusInternalServerError)
+		log.LogHandlerError(logger, err, http.StatusBadRequest)
+		utils.SendError(w, "не удалось распарсить форму", http.StatusBadRequest)
 		return
 	}
-	defer r.Body.Close()
 
-	log.LogHandlerInfo(logger, fmt.Sprintf("Получен запрос в DeliveryHandler: %s", string(body)), http.StatusOK)
+	orderID := r.FormValue("label")
+	if orderID == "" {
+		log.LogHandlerError(logger, fmt.Errorf("label not found"), http.StatusBadRequest)
+		utils.SendError(w, "не передан id заказа (label)", http.StatusBadRequest)
+		return
+	}
+
+	log.LogHandlerInfo(logger, fmt.Sprintf("Получен id заказа: %s", orderID), http.StatusOK)
+
 	w.Write([]byte("OK"))
 }

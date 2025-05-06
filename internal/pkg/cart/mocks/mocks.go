@@ -149,18 +149,18 @@ func (mr *MockCartUsecaseMockRecorder) GetCart(ctx, userID interface{}) *gomock.
 }
 
 // GetOrderById mocks base method.
-func (m *MockCartUsecase) GetOrderById(ctx context.Context, order_id uuid.UUID) (models.Order, error) {
+func (m *MockCartUsecase) GetOrderById(ctx context.Context, order_id, user_id uuid.UUID) (models.Order, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetOrderById", ctx, order_id)
+	ret := m.ctrl.Call(m, "GetOrderById", ctx, order_id, user_id)
 	ret0, _ := ret[0].(models.Order)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetOrderById indicates an expected call of GetOrderById.
-func (mr *MockCartUsecaseMockRecorder) GetOrderById(ctx, order_id interface{}) *gomock.Call {
+func (mr *MockCartUsecaseMockRecorder) GetOrderById(ctx, order_id, user_id interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetOrderById", reflect.TypeOf((*MockCartUsecase)(nil).GetOrderById), ctx, order_id)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetOrderById", reflect.TypeOf((*MockCartUsecase)(nil).GetOrderById), ctx, order_id, user_id)
 }
 
 // GetOrders mocks base method.
@@ -245,18 +245,18 @@ func (mr *MockRestaurantRepoMockRecorder) GetCartItem(ctx, productIDs, productAm
 }
 
 // GetOrderById mocks base method.
-func (m *MockRestaurantRepo) GetOrderById(ctx context.Context, order_id uuid.UUID) (models.Order, error) {
+func (m *MockRestaurantRepo) GetOrderById(ctx context.Context, order_id, user_id uuid.UUID) (models.Order, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetOrderById", ctx, order_id)
+	ret := m.ctrl.Call(m, "GetOrderById", ctx, order_id, user_id)
 	ret0, _ := ret[0].(models.Order)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetOrderById indicates an expected call of GetOrderById.
-func (mr *MockRestaurantRepoMockRecorder) GetOrderById(ctx, order_id interface{}) *gomock.Call {
+func (mr *MockRestaurantRepoMockRecorder) GetOrderById(ctx, order_id, user_id interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetOrderById", reflect.TypeOf((*MockRestaurantRepo)(nil).GetOrderById), ctx, order_id)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetOrderById", reflect.TypeOf((*MockRestaurantRepo)(nil).GetOrderById), ctx, order_id, user_id)
 }
 
 // GetOrders mocks base method.

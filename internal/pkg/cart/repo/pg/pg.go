@@ -48,8 +48,9 @@ FROM orders WHERE user_id = $1 LIMIT $2 OFFSET $3;`
     leave_at_door,
     final_price,
     created_at
-FROM orders WHERE id = $1;`
+FROM orders WHERE id = $1 AND user_id = $2;`
 	updateOrderStatus = `UPDATE orders SET status = $1 WHERE id = $2;`
+	scheduleDeliveryStatusChange = `SELECT cron.schedule_in('20 seconds', $$UPDATE orders SET status = 'in delivery' WHERE id = $1$$);`
 )
 
 type RestaurantRepository struct {
@@ -171,13 +172,13 @@ func (r *RestaurantRepository) GetOrders(ctx context.Context, user_id uuid.UUID,
 	return orders, rows.Err()
 }
 
-func (r *RestaurantRepository) GetOrderById(ctx context.Context, order_id uuid.UUID) (models.Order, error) {
+func (r *RestaurantRepository) GetOrderById(ctx context.Context, order_id, user_id uuid.UUID) (models.Order, error) {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 
 	var order models.Order
 	var orderProductsJSON string
 
-	err := r.db.QueryRow(ctx, getOrderById, order_id).Scan(&order.ID, &order.UserID, &order.Status, &order.Address, &orderProductsJSON,
+	err := r.db.QueryRow(ctx, getOrderById, order_id, user_id).Scan(&order.ID, &order.UserID, &order.Status, &order.Address, &orderProductsJSON,
 		&order.ApartmentOrOffice, &order.Intercom, &order.Entrance, &order.Floor, &order.CourierComment,
 		&order.LeaveAtDoor, &order.FinalPrice, &order.CreatedAt)
 	if err != nil {
@@ -207,4 +208,28 @@ func (r *RestaurantRepository) UpdateOrderStatus(ctx context.Context, order_id u
 
 	logger.Info("Successful")
 	return nil
+}
+
+func (r *RestaurantRepository) ScheduleDeliveryStatusChange(ctx context.Context, orderID uuid.UUID) error {
+    logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+    // Безопасный параметризованный запрос
+    query := `
+        SELECT cron.schedule(
+            'delivery_status_' || $1,
+            '20 seconds',
+            'SELECT set_order_in_delivery($1)'
+        )
+    `
+    
+    _, err := r.db.Exec(ctx, query, orderID)
+    if err != nil {
+        logger.Error("Failed to schedule delivery status update",
+            slog.String("error", err.Error()),
+        )
+        return fmt.Errorf("failed to schedule delivery update: %w", err)
+    }
+
+    logger.Info("Delivery status update scheduled successfully")
+    return nil
 }

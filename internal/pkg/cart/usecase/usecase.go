@@ -24,10 +24,10 @@ func NewCartUsecase(cartRepo cart.CartRepo, restaurantRepo cart.RestaurantRepo) 
 	}
 }
 
-func (uc *CartUsecase) GetCart(ctx context.Context, userID string) (models.Cart, error, bool) {
+func (uc *CartUsecase) GetCart(ctx context.Context, login string) (models.Cart, error, bool) {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 
-	cartRaw, restaurantID, err := uc.cartRepo.GetCart(ctx, userID)
+	cartRaw, restaurantID, err := uc.cartRepo.GetCart(ctx, login)
 	if err != nil {
 		logger.Error("ошибка получения корзины", slog.String("error", err.Error()))
 		return models.Cart{}, err, false
@@ -53,9 +53,9 @@ func (uc *CartUsecase) GetCart(ctx context.Context, userID string) (models.Cart,
 	return items, nil, true
 }
 
-func (uc *CartUsecase) UpdateItemQuantity(ctx context.Context, userID, productID string, restaurantId string, quantity int) error {
+func (uc *CartUsecase) UpdateItemQuantity(ctx context.Context, login, productID string, restaurantId string, quantity int) error {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
-	err := uc.cartRepo.UpdateItemQuantity(ctx, userID, productID, restaurantId, quantity)
+	err := uc.cartRepo.UpdateItemQuantity(ctx, login, productID, restaurantId, quantity)
 	if err != nil {
 		logger.Error("не удалось обновить количество", slog.String("error", err.Error()))
 	} else {
@@ -64,9 +64,9 @@ func (uc *CartUsecase) UpdateItemQuantity(ctx context.Context, userID, productID
 	return err
 }
 
-func (uc *CartUsecase) ClearCart(ctx context.Context, userID string) error {
+func (uc *CartUsecase) ClearCart(ctx context.Context, login string) error {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
-	err := uc.cartRepo.ClearCart(ctx, userID)
+	err := uc.cartRepo.ClearCart(ctx, login)
 	if err != nil {
 		logger.Error("ошибка при очистке корзины", slog.String("error", err.Error()))
 	} else {
@@ -109,8 +109,8 @@ func (u *CartUsecase) GetOrders(ctx context.Context, user_id uuid.UUID, count, o
 	return u.restaurantRepo.GetOrders(ctx, user_id, count, offset)
 }
 
-func (u *CartUsecase) GetOrderById(ctx context.Context, order_id uuid.UUID) (models.Order, error) {
-	return u.restaurantRepo.GetOrderById(ctx, order_id)
+func (u *CartUsecase) GetOrderById(ctx context.Context, order_id, user_id uuid.UUID) (models.Order, error) {
+	return u.restaurantRepo.GetOrderById(ctx, order_id, user_id)
 }
 
 func (u *CartUsecase) UpdateOrderStatus(ctx context.Context, order_id uuid.UUID) error {
@@ -123,6 +123,35 @@ func (u *CartUsecase) UpdateOrderStatus(ctx context.Context, order_id uuid.UUID)
 		return err
 	}
 
+	go u.scheduleDeliveryStatusUpdate(order_id)
+
 	logger.Info("success")
 	return nil
+}
+
+func (u *CartUsecase) scheduleDeliveryStatusUpdate(orderID uuid.UUID) {
+    ctx, cancel := context.WithTimeout(context.Background(), 120*time.Second)
+    defer cancel()
+	
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+    time.Sleep(60 * time.Second)
+
+    err := u.restaurantRepo.UpdateOrderStatus(ctx, orderID, "in_delivery")
+    if err != nil {
+        logger.Error("Failed to update delivery status",
+            slog.String("error", err.Error()))
+        return
+    }
+
+    logger.Info("Order status updated to 'in_delivery'")
+
+	time.Sleep(20 * time.Second)
+    err = u.restaurantRepo.UpdateOrderStatus(ctx, orderID, "delivered")
+    if err != nil {
+        logger.Error("Failed to update to 'delivered'",
+            slog.String("error", err.Error()))
+        return
+    }
+    logger.Info("Order status updated to 'delivered'")
 }

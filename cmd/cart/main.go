@@ -9,17 +9,28 @@ import (
 	"os/signal"
 	"syscall"
 
-	grpcAuth "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/grpc"
-	generatedAuth "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/grpc/gen"
-	authRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/repo"
-	authUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/usecase"
+	grpcCart "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/grpc"
+	generatedCart "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/grpc/gen"
+	cartPgRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/pg"
+	cartRedisRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/redis"
+	cartUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/usecase"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/metrics"
 	mw "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/middleware/metrics"
 	"github.com/gorilla/mux"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/redis/go-redis/v9"
 	"google.golang.org/grpc"
 )
+
+func initRedis() *redis.Client {
+	client := redis.NewClient(&redis.Options{
+		Addr:     os.Getenv("REDIS_ADDR"),
+		Password: "",
+		DB:       0,
+	})
+	return client
+}
 
 func main() {
 	if err := run(); err != nil {
@@ -41,18 +52,20 @@ func run() (err error) {
 	//	return
 	//}
 
-	AuthRepo := authRepo.CreateAuthRepo(db)
-	AuthUsecase := authUsecase.CreateAuthUsecase(AuthRepo)
-	AuthDelivery := grpcAuth.CreateAuthHandler(AuthUsecase)
+	redisClient := initRedis()
+	CartRepoPg := cartPgRepo.NewRestaurantRepository(db)
+	cartRepoRedis := cartRedisRepo.NewCartRepository(redisClient)
+	CartUsecase := cartUsecase.NewCartUsecase(cartRepoRedis, CartRepoPg)
+	CartDelivery := grpcCart.CreateCartHandler(CartUsecase)
 
-	grpcMetrics, _ := metrics.NewGrpcMetrics("auth")
+	grpcMetrics, _ := metrics.NewGrpcMetrics("cart")
 	grpcMiddleware := mw.NewGrpcMw(grpcMetrics)
 
 	gRPCServer := grpc.NewServer(grpc.ChainUnaryInterceptor(grpcMiddleware.UnaryServerInterceptor()))
-	generatedAuth.RegisterAuthServiceServer(gRPCServer, AuthDelivery)
+	generatedCart.RegisterCartServiceServer(gRPCServer, CartDelivery)
 
 	go func() {
-		listener, err := net.Listen("tcp", fmt.Sprintf(":%s", "5459"))
+		listener, err := net.Listen("tcp", fmt.Sprintf(":%s", "5460"))
 		if err != nil {
 			return
 		}
@@ -64,7 +77,7 @@ func run() (err error) {
 	r := mux.NewRouter().PathPrefix("/api").Subrouter()
 	r.PathPrefix("/metrics").Handler(promhttp.Handler())
 	http.Handle("/", r)
-	httpSrv := http.Server{Handler: r, Addr: fmt.Sprintf(":%s", "5462")}
+	httpSrv := http.Server{Handler: r, Addr: fmt.Sprintf(":%s", "5461")}
 	go func() {
 		if err := httpSrv.ListenAndServe(); err != nil {
 		}
