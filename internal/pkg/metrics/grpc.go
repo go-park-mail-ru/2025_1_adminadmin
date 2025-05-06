@@ -40,7 +40,7 @@ func NewGrpcMetrics(name string) (*GrpcMetrics, error) {
 		prometheus.HistogramOpts{
 			Name: "reqtime",
 		},
-		[]string{"status", "path"},
+		[]string{"status", "path", "service"},
 	)
 	if err := prometheus.Register(metr.Times); err != nil {
 		return nil, err
@@ -54,5 +54,5 @@ func (m *GrpcMetrics) IncreaseErrors(path string) {
 	m.Errors.WithLabelValues(path, m.name).Inc()
 }
 func (metr *GrpcMetrics) ObserveResponseTime(status int, path string, observeTime float64) {
-	metr.Times.WithLabelValues(strconv.Itoa(status), path).Observe(observeTime)
+	metr.Times.WithLabelValues(strconv.Itoa(status), path, metr.name).Observe(observeTime)
 }
