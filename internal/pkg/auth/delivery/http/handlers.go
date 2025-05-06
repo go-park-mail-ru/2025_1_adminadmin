@@ -8,10 +8,10 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
-	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/grpc/gen"
 	jwtUtils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/jwt"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
@@ -19,6 +19,8 @@ import (
 	"github.com/golang-jwt/jwt"
 	"github.com/mailru/easyjson"
 	"github.com/satori/uuid"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 const maxRequestBodySize = 10 << 20
@@ -54,13 +56,20 @@ func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) {
 		Password: req.Password})
 
 	if err != nil {
-		switch err {
-		case auth.ErrInvalidLogin, auth.ErrUserNotFound:
+		st, ok := status.FromError(err)
+		if !ok {
+			log.LogHandlerError(logger, fmt.Errorf("не gRPC ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "внутренняя ошибка", http.StatusInternalServerError)
+			return
+		}
+
+		switch st.Code() {
+		case codes.InvalidArgument:
 			log.LogHandlerError(logger, err, http.StatusBadRequest)
-			utils.SendError(w, err.Error(), http.StatusBadRequest)
-		case auth.ErrInvalidCredentials:
+			utils.SendError(w, st.Message(), http.StatusBadRequest)
+		case codes.Unauthenticated:
 			log.LogHandlerError(logger, err, http.StatusUnauthorized)
-			utils.SendError(w, err.Error(), http.StatusUnauthorized)
+			utils.SendError(w, st.Message(), http.StatusUnauthorized)
 		default:
 			log.LogHandlerError(logger, fmt.Errorf("неизвестная ошибка: %w", err), http.StatusInternalServerError)
 			utils.SendError(w, "неизвестная ошибка", http.StatusInternalServerError)
@@ -138,16 +147,28 @@ func (h *AuthHandler) SignUp(w http.ResponseWriter, r *http.Request) {
 	})
 
 	if err != nil {
-		switch err {
-		case auth.ErrInvalidLogin, auth.ErrInvalidPassword:
-			log.LogHandlerError(logger, fmt.Errorf("неправильный логин или пароль: %w", err), http.StatusBadRequest)
-			utils.SendError(w, "неправильный логин или пароль", http.StatusBadRequest)
-		case auth.ErrInvalidName, auth.ErrInvalidPhone, auth.ErrCreatingUser:
+		st, ok := status.FromError(err)
+		if !ok {
+			log.LogHandlerError(logger, fmt.Errorf("не gRPC ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "внутренняя ошибка", http.StatusInternalServerError)
+			return
+		}
+
+		switch st.Code() {
+		case codes.InvalidArgument:
 			log.LogHandlerError(logger, err, http.StatusBadRequest)
-			utils.SendError(w, err.Error(), http.StatusBadRequest)
+
+			if strings.Contains(st.Message(), "логин") || strings.Contains(st.Message(), "пароль") {
+				utils.SendError(w, "неправильный логин или пароль", http.StatusBadRequest)
+			} else {
+				utils.SendError(w, "пользователь с таким логином уже существует", http.StatusBadRequest)
+			}
+		case codes.Internal:
+			log.LogHandlerError(logger, err, http.StatusInternalServerError)
+			utils.SendError(w, "пользователь с таким логином уже существует", http.StatusInternalServerError)
 		default:
 			log.LogHandlerError(logger, fmt.Errorf("неизвестная ошибка: %w", err), http.StatusInternalServerError)
-			utils.SendError(w, "пользователь с таким логином уже существует", http.StatusInternalServerError)
+			utils.SendError(w, "неизвестная ошибка", http.StatusInternalServerError)
 		}
 		return
 	}
@@ -244,9 +265,21 @@ func (h *AuthHandler) Check(w http.ResponseWriter, r *http.Request) {
 	})
 
 	if err != nil {
-		if errors.Is(err, auth.ErrUserNotFound) {
-			utils.SendError(w, err.Error(), http.StatusBadRequest)
+		st, ok := status.FromError(err)
+		if !ok {
+			log.LogHandlerError(logger, fmt.Errorf("не gRPC ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "внутренняя ошибка", http.StatusInternalServerError)
+			return
 		}
+
+		switch st.Code() {
+		case codes.InvalidArgument:
+			utils.SendError(w, st.Message(), http.StatusBadRequest)
+		default:
+			log.LogHandlerError(logger, fmt.Errorf("неизвестная ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "неизвестная ошибка", http.StatusInternalServerError)
+		}
+		return
 	}
 
 	parsedUUID, err := uuid.FromString(user.Id)
@@ -354,10 +387,17 @@ func (h *AuthHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 		Password:    updateData.Password,
 	})
 	if err != nil {
-		switch err {
-		case auth.ErrInvalidPassword, auth.ErrInvalidName, auth.ErrInvalidPhone, auth.ErrSamePassword:
+		st, ok := status.FromError(err)
+		if !ok {
+			log.LogHandlerError(logger, fmt.Errorf("не gRPC ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "внутренняя ошибка", http.StatusInternalServerError)
+			return
+		}
+
+		switch st.Code() {
+		case codes.InvalidArgument:
 			log.LogHandlerError(logger, err, http.StatusBadRequest)
-			utils.SendError(w, err.Error(), http.StatusBadRequest)
+			utils.SendError(w, st.Message(), http.StatusBadRequest)
 		default:
 			log.LogHandlerError(logger, fmt.Errorf("ошибка обновления данных пользователя: %w", err), http.StatusInternalServerError)
 			utils.SendError(w, "ошибка обновления данных пользователя", http.StatusInternalServerError)
@@ -470,24 +510,33 @@ func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) {
 	picBytes, _ := io.ReadAll(file)
 
 	user, err := h.client.UpdateUserPic(r.Context(), &gen.UpdateUserPicRequest{
-		Login: login,
-		UserPic: picBytes,
+		Login:         login,
+		UserPic:       picBytes,
 		FileExtension: ext,
 	})
 	if err != nil {
-		switch err {
-		case auth.ErrUserNotFound:
+		st, ok := status.FromError(err)
+		if !ok {
+			log.LogHandlerError(logger, fmt.Errorf("не gRPC ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "внутренняя ошибка", http.StatusInternalServerError)
+			return
+		}
+
+		switch st.Code() {
+		case codes.NotFound:
 			log.LogHandlerError(logger, err, http.StatusNotFound)
-			utils.SendError(w, err.Error(), http.StatusNotFound)
-		case auth.ErrBasePath:
-			log.LogHandlerError(logger, err, http.StatusInternalServerError)
-			utils.SendError(w, err.Error(), http.StatusInternalServerError)
-		case auth.ErrFileCreation, auth.ErrFileSaving, auth.ErrFileDeletion:
-			log.LogHandlerError(logger, fmt.Errorf("ошибка при работе с файлом: %w", err), http.StatusInternalServerError)
-			utils.SendError(w, "ошибка при работе с файлом", http.StatusInternalServerError)
+			utils.SendError(w, st.Message(), http.StatusNotFound)
+		case codes.Internal:
+			if strings.Contains(st.Message(), "файл") {
+				log.LogHandlerError(logger, fmt.Errorf("ошибка при работе с файлом: %w", err), http.StatusInternalServerError)
+				utils.SendError(w, "ошибка при работе с файлом", http.StatusInternalServerError)
+			} else {
+				log.LogHandlerError(logger, fmt.Errorf("ошибка при обновлении аватарки: %w", err), http.StatusInternalServerError)
+				utils.SendError(w, "ошибка при обновлении аватарки", http.StatusInternalServerError)
+			}
 		default:
-			log.LogHandlerError(logger, fmt.Errorf("ошибка при обновлении аватарки: %w", err), http.StatusInternalServerError)
-			utils.SendError(w, "ошибка при обновлении аватарки", http.StatusInternalServerError)
+			log.LogHandlerError(logger, fmt.Errorf("неизвестная ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "неизвестная ошибка", http.StatusInternalServerError)
 		}
 		return
 	}
@@ -555,8 +604,21 @@ func (h *AuthHandler) GetUserAddresses(w http.ResponseWriter, r *http.Request) {
 		Login: login,
 	})
 	if err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("ошибка на уровне ниже (usecase): %w", err), http.StatusInternalServerError)
-		utils.SendError(w, err.Error(), http.StatusInternalServerError)
+		st, ok := status.FromError(err)
+		if !ok {
+			log.LogHandlerError(logger, fmt.Errorf("не gRPC ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "внутренняя ошибка", http.StatusInternalServerError)
+			return
+		}
+	
+		switch st.Code() {
+		case codes.Internal:
+			log.LogHandlerError(logger, fmt.Errorf("ошибка на уровне usecase: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "ошибка получения адресов", http.StatusInternalServerError)
+		default:
+			log.LogHandlerError(logger, fmt.Errorf("неизвестная ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "неизвестная ошибка", http.StatusInternalServerError)
+		}
 		return
 	}
 
@@ -612,8 +674,25 @@ func (h *AuthHandler) DeleteAddress(w http.ResponseWriter, r *http.Request) {
 		Id: address.Id.String(),
 	})
 	if err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("ошибка на уровне ниже (usecase): %w", err), http.StatusInternalServerError)
-		utils.SendError(w, err.Error(), http.StatusInternalServerError)
+		st, ok := status.FromError(err)
+		if !ok {
+			log.LogHandlerError(logger, fmt.Errorf("не gRPC ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "внутренняя ошибка", http.StatusInternalServerError)
+			return
+		}
+	
+		switch st.Code() {
+		case codes.InvalidArgument:
+			log.LogHandlerError(logger, err, http.StatusBadRequest)
+			utils.SendError(w, st.Message(), http.StatusBadRequest)
+		case codes.Internal:
+			log.LogHandlerError(logger, err, http.StatusInternalServerError)
+			utils.SendError(w, "ошибка удаления адреса", http.StatusInternalServerError)
+		default:
+			log.LogHandlerError(logger, fmt.Errorf("неизвестная ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "неизвестная ошибка", http.StatusInternalServerError)
+		}
+		return
 	}
 
 	logger.Info("Successful")
@@ -673,8 +752,25 @@ func (h *AuthHandler) AddAddress(w http.ResponseWriter, r *http.Request) {
 		UserId:  address.UserId.String(),
 	})
 	if err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("ошибка на уровне ниже (usecase): %w", err), http.StatusInternalServerError)
-		utils.SendError(w, err.Error(), http.StatusInternalServerError)
+		st, ok := status.FromError(err)
+		if !ok {
+			log.LogHandlerError(logger, fmt.Errorf("не gRPC ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "внутренняя ошибка", http.StatusInternalServerError)
+			return
+		}
+	
+		switch st.Code() {
+		case codes.InvalidArgument:
+			log.LogHandlerError(logger, err, http.StatusBadRequest)
+			utils.SendError(w, st.Message(), http.StatusBadRequest)
+		case codes.Internal:
+			log.LogHandlerError(logger, err, http.StatusInternalServerError)
+			utils.SendError(w, "ошибка при добавлении адреса", http.StatusInternalServerError)
+		default:
+			log.LogHandlerError(logger, fmt.Errorf("неизвестная ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "неизвестная ошибка", http.StatusInternalServerError)
+		}
+		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")

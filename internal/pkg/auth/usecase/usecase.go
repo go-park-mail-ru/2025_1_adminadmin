@@ -34,8 +34,8 @@ func checkPassword(passHash []byte, plainPassword string) bool {
 }
 
 const (
-	minNameLength  = 2
-	maxNameLength  = 25
+	minNameLength  = 4
+	maxNameLength  = 50
 	minPhoneLength = 7
 	maxPhoneLength = 15
 	maxLoginLength = 20
