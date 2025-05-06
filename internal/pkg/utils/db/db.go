@@ -27,13 +27,9 @@ func InitDB() (*pgxpool.Pool, error) {
 func InitRedis() (*redis.Client, error) {
 	client := redis.NewClient(&redis.Options{
 		Addr:     os.Getenv("REDIS_ADDR"),
-		Password: "",
+		Password: os.Getenv("REDIS_PASS"),
 		DB:       0,
 	})
-	//err := client.Ping(context.Background())
-	//if err != nil {
-		//return nil, err.Err()
-	//}
 
 	return client, nil
 }

@@ -12,7 +12,6 @@ import (
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/grpc/gen"
 	"github.com/satori/uuid"
-	"google.golang.org/grpc/status"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/converter"
 	jwtUtils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/jwt"
@@ -57,12 +56,8 @@ func (h *CartHandler) getCartData(r *http.Request) (models.Cart, string, error, 
 
 	grpcResponse, err := h.client.GetCart(r.Context(), &gen.GetCartRequest{Login: login})
 	if err != nil {
-		st, ok := status.FromError(err)
-		if !ok {
-			log.LogHandlerError(logger, fmt.Errorf("не gRPC ошибка: %w", err), http.StatusInternalServerError)
-			return models.Cart{}, "", fmt.Errorf("внутренняя ошибка"), false
-		}
-		return models.Cart{}, "", errors.New(st.Message()), false
+		log.LogHandlerError(logger, fmt.Errorf("ошибка gRPC вызова: %w", err), http.StatusInternalServerError)
+		return models.Cart{}, "", fmt.Errorf("ошибка получения корзины"), false
 	}
 
 	cart, err := converter.ProtoToCart(grpcResponse)
@@ -80,7 +75,7 @@ func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
 	cart, _, err, full_cart := h.getCartData(r)
 	if err != nil {
 		log.LogHandlerError(logger, err, http.StatusUnauthorized)
-		utils.SendError(w, err.Error(), http.StatusUnauthorized)
+		utils.SendError(w, "некорректный JWT-токен", http.StatusUnauthorized)
 		return
 	}
 	cart.Sanitize()
@@ -115,7 +110,7 @@ func (h *CartHandler) UpdateQuantityInCart(w http.ResponseWriter, r *http.Reques
 	_, login, err, _ := h.getCartData(r)
 	if err != nil {
 		log.LogHandlerError(logger, err, http.StatusUnauthorized)
-		utils.SendError(w, err.Error(), http.StatusUnauthorized)
+		utils.SendError(w, "некорректный JWT-токен", http.StatusUnauthorized)
 		return
 	}
 
@@ -213,8 +208,7 @@ func (h *CartHandler) ClearCart(w http.ResponseWriter, r *http.Request) {
 
 	_, err = h.client.ClearCart(r.Context(), &gen.ClearCartRequest{Login: login})
 	if err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("ошибка при очистке корзины: %w", err), http.StatusInternalServerError)
-		utils.SendError(w, "ошибка при очистке корзины", http.StatusInternalServerError)
+		http.Error(w, fmt.Sprintf("Ошибка при очистке корзины: %v", err), http.StatusInternalServerError)
 		return
 	}
 
@@ -228,7 +222,7 @@ func (h *CartHandler) CreateOrder(w http.ResponseWriter, r *http.Request) {
 	cart, login, err, full_cart := h.getCartData(r)
 	if err != nil {
 		log.LogHandlerError(logger, err, http.StatusUnauthorized)
-		utils.SendError(w, err.Error(), http.StatusUnauthorized)
+		utils.SendError(w, "некорректный JWT-токен", http.StatusUnauthorized)
 		return
 	}
 
@@ -261,8 +255,11 @@ func (h *CartHandler) CreateOrder(w http.ResponseWriter, r *http.Request) {
 	grpcReq := converter.OrderInReqToProto(req, cart, login)
 
 	grpcResponse, err := h.client.CreateOrder(r.Context(), grpcReq)
-	log.LogHandlerError(logger, fmt.Errorf("не удалось создать заказ: %w", err), http.StatusInternalServerError)
-	utils.SendError(w, "не удалось создать заказ", http.StatusInternalServerError)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("не удалось создать заказ: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "Ошибка при создании заказа", http.StatusInternalServerError)
+		return
+	}
 
 	order, err := converter.ProtoToOrder(grpcResponse)
 	if err != nil {
@@ -274,7 +271,7 @@ func (h *CartHandler) CreateOrder(w http.ResponseWriter, r *http.Request) {
 	_, err = h.client.ClearCart(r.Context(), &gen.ClearCartRequest{Login: login})
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка при очистке корзины: %w", err), http.StatusInternalServerError)
-		utils.SendError(w, "ошибка при очистке корзины", http.StatusInternalServerError)
+		utils.SendError(w, fmt.Sprintf("ошибка при очистке корзины: %v", err), http.StatusInternalServerError)
 		return
 	}
 
@@ -346,8 +343,8 @@ func (h *CartHandler) GetOrders(w http.ResponseWriter, r *http.Request) {
 		Offset: int32(offset),
 	})
 	if err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("ошибка при получении заказов: %w", err), http.StatusInternalServerError)
-		utils.SendError(w, "ошибка при получении заказов", http.StatusInternalServerError)
+		log.LogHandlerError(logger, fmt.Errorf("ошибка уровнем ниже (usecase): %w", err), http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
@@ -465,8 +462,8 @@ func (h *CartHandler) UpdateOrderStatus(w http.ResponseWriter, r *http.Request) 
 
 	_, err = h.client.UpdateOrderStatus(r.Context(), &gen.UpdateOrderStatusRequest{OrderId: orderID})
 	if err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("не удалось обновить статус заказа: %w", err), http.StatusInternalServerError)
-		utils.SendError(w, "не удалось обновить статус заказа", http.StatusInternalServerError)
+		log.LogHandlerError(logger, fmt.Errorf("не удалось получить заказ: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "не удалось получить заказ", http.StatusInternalServerError)
 		return
 	}
 
