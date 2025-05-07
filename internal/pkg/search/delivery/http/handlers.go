@@ -45,7 +45,6 @@ func (h *SearchHandler) SearchRestaurantWithProducts(w http.ResponseWriter, r *h
 		utils.SendError(w, "Ошибка поиска ресторанов с продуктами", http.StatusInternalServerError)
 		return
 	}
-
 	data, err := json.Marshal(restaurants)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)

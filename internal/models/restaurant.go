@@ -48,16 +48,3 @@ func (r *Restaurant) Sanitize() {
 	r.Description = html.EscapeString(r.Description)
 	r.ImageURL = html.EscapeString(r.ImageURL)
 }
-
-func (r *RestaurantSearch) Sanitize() {
-	r.Name = html.EscapeString(r.Name)
-	r.Description = html.EscapeString(r.Description)
-	r.BannerURL = html.EscapeString(r.BannerURL)
-	r.Address = html.EscapeString(r.Address)
-}
-
-func (r *ProductSearch) Sanitize() {
-	r.Name = html.EscapeString(r.Name)
-	r.Category = html.EscapeString(r.Category)
-	r.ImageURL = html.EscapeString(r.ImageURL)
-}
