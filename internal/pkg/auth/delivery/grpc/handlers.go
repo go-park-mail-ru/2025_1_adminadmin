@@ -26,8 +26,6 @@ func CreateAuthHandler(uc auth.AuthUsecase) *AuthHandler {
 }
 
 func (h *AuthHandler) SignIn(ctx context.Context, in *gen.SignInRequest) (*gen.UserResponse, error) {
-	//logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
-
 	req := models.SignInReq{
 		Login:    in.Login,
 		Password: in.Password,
@@ -39,13 +37,10 @@ func (h *AuthHandler) SignIn(ctx context.Context, in *gen.SignInRequest) (*gen.U
 	if err != nil {
 		switch err {
 		case auth.ErrInvalidLogin, auth.ErrUserNotFound:
-			//log.LogHandlerError(logger, err, http.StatusBadRequest)
 			return nil, status.Errorf(codes.InvalidArgument, "%v", err)
 		case auth.ErrInvalidCredentials:
-			//log.LogHandlerError(logger, err, http.StatusUnauthorized)
 			return nil, status.Errorf(codes.Unauthenticated, "%v", err)
 		default:
-			//log.LogHandlerError(logger, fmt.Errorf("Неизвестная ошибка: %w", err), http.StatusInternalServerError)
 			return nil, status.Errorf(codes.Internal, "%v", err)
 		}
 	}
@@ -64,8 +59,6 @@ func (h *AuthHandler) SignIn(ctx context.Context, in *gen.SignInRequest) (*gen.U
 }
 
 func (h *AuthHandler) SignUp(ctx context.Context, in *gen.SignUpRequest) (*gen.UserResponse, error) {
-	//logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
-
 	req := models.SignUpReq{
 		Login:       in.Login,
 		FirstName:   in.FirstName,
@@ -80,13 +73,10 @@ func (h *AuthHandler) SignUp(ctx context.Context, in *gen.SignUpRequest) (*gen.U
 	if err != nil {
 		switch err {
 		case auth.ErrInvalidLogin, auth.ErrInvalidPassword:
-			//log.LogHandlerError(logger, fmt.Errorf("Неправильный логин или пароль: %w", err), http.StatusBadRequest)
 			return nil, status.Errorf(codes.InvalidArgument, "%v", err)
 		case auth.ErrInvalidName, auth.ErrInvalidPhone, auth.ErrCreatingUser:
-			//log.LogHandlerError(logger, err, http.StatusBadRequest)
 			return nil, status.Errorf(codes.InvalidArgument, "%v", err)
 		default:
-			//log.LogHandlerError(logger, fmt.Errorf("Неизвестная ошибка: %w", err), http.StatusInternalServerError)
 			return nil, status.Errorf(codes.Internal, "%v", err)
 		}
 	}
@@ -105,8 +95,6 @@ func (h *AuthHandler) SignUp(ctx context.Context, in *gen.SignUpRequest) (*gen.U
 }
 
 func (h *AuthHandler) Check(ctx context.Context, in *gen.CheckRequest) (*gen.UserResponse, error) {
-	//logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
-
 	user, err := h.uc.Check(ctx, in.Login)
 
 	if err != nil {
@@ -127,8 +115,6 @@ func (h *AuthHandler) Check(ctx context.Context, in *gen.CheckRequest) (*gen.Use
 }
 
 func (h *AuthHandler) UpdateUser(ctx context.Context, in *gen.UpdateUserRequest) (*gen.UserResponse, error) {
-	//logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
-
 	req := models.UpdateUserReq{
 		Description: in.Description,
 		FirstName:   in.FirstName,
@@ -142,10 +128,8 @@ func (h *AuthHandler) UpdateUser(ctx context.Context, in *gen.UpdateUserRequest)
 	if err != nil {
 		switch err {
 		case auth.ErrInvalidPassword, auth.ErrInvalidName, auth.ErrInvalidPhone, auth.ErrSamePassword:
-			//log.LogHandlerError(logger, err, http.StatusBadRequest)
 			return nil, status.Errorf(codes.InvalidArgument, "%v", err)
 		default:
-			//log.LogHandlerError(logger, fmt.Errorf("Ошибка обновления данных пользователя: %w", err), http.StatusInternalServerError)
 			return nil, status.Errorf(codes.Internal, "%v", err)
 		}
 	}
@@ -162,23 +146,17 @@ func (h *AuthHandler) UpdateUser(ctx context.Context, in *gen.UpdateUserRequest)
 }
 
 func (h *AuthHandler) UpdateUserPic(ctx context.Context, in *gen.UpdateUserPicRequest) (*gen.UserResponse, error) {
-	//logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
-
 	reader := bytes.NewReader(in.UserPic)
 	user, err := h.uc.UpdateUserPic(ctx, in.Login, reader, in.FileExtension)
 	if err != nil {
 		switch err {
 		case auth.ErrUserNotFound:
-			//log.LogHandlerError(logger, err, http.StatusNotFound)
 			return nil, status.Errorf(codes.NotFound, "%v", err)
 		case auth.ErrBasePath:
-			//log.LogHandlerError(logger, err, http.StatusInternalServerError)
 			return nil, status.Errorf(codes.Internal, "%v", err)
 		case auth.ErrFileCreation, auth.ErrFileSaving, auth.ErrFileDeletion:
-			//log.LogHandlerError(logger, fmt.Errorf("Ошибка при работе с файлом: %w", err), http.StatusInternalServerError)
 			return nil, status.Errorf(codes.Internal, "%v", err)
 		default:
-			//log.LogHandlerError(logger, fmt.Errorf("Ошибка при обновлении аватарки: %w", err), http.StatusInternalServerError)
 			return nil, status.Errorf(codes.Internal, "%v", err)
 		}
 	}
@@ -195,11 +173,8 @@ func (h *AuthHandler) UpdateUserPic(ctx context.Context, in *gen.UpdateUserPicRe
 }
 
 func (h *AuthHandler) GetUserAddresses(ctx context.Context, in *gen.AddressRequest) (*gen.AddressListResponse, error) {
-	//logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
-
 	addresses, err := h.uc.GetUserAddresses(ctx, in.Login)
 	if err != nil {
-		//log.LogHandlerError(logger, fmt.Errorf("Ошибка на уровне ниже (usecase): %w", err), http.StatusInternalServerError)
 		return nil, status.Errorf(codes.Internal, "%v", err)
 	}
 
@@ -218,10 +193,8 @@ func (h *AuthHandler) GetUserAddresses(ctx context.Context, in *gen.AddressReque
 }
 
 func (h *AuthHandler) DeleteAddress(ctx context.Context, in *gen.DeleteAddressRequest) (*emptypb.Empty, error) {
-	//logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 	parsedUUID, err := uuid.FromString(in.Id)
 	if err != nil {
-		//log.LogHandlerError(logger, fmt.Errorf("некорректный id адреса: %w", err), http.StatusUnauthorized)
 		return nil, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	address := models.Address{
@@ -230,22 +203,18 @@ func (h *AuthHandler) DeleteAddress(ctx context.Context, in *gen.DeleteAddressRe
 
 	err = h.uc.DeleteAddress(ctx, address.Id)
 	if err != nil {
-		//log.LogHandlerError(logger, fmt.Errorf("Ошибка на уровне ниже (usecase): %w", err), http.StatusInternalServerError)
 		return nil, status.Errorf(codes.Internal, "%v", err)
 	}
 	return &emptypb.Empty{}, nil
 }
 
 func (h *AuthHandler) AddAddress(ctx context.Context, in *gen.Address) (*emptypb.Empty, error) {
-	//logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 	parsedUUIDa, err := uuid.FromString(in.Id)
 	if err != nil {
-		//log.LogHandlerError(logger, fmt.Errorf("некорректный id адреса: %w", err), http.StatusUnauthorized)
 		return nil, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	parsedUUIDu, err := uuid.FromString(in.UserId)
 	if err != nil {
-		//log.LogHandlerError(logger, fmt.Errorf("некорректный id адреса: %w", err), http.StatusUnauthorized)
 		return nil, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	address := models.Address{
@@ -256,7 +225,6 @@ func (h *AuthHandler) AddAddress(ctx context.Context, in *gen.Address) (*emptypb
 
 	err = h.uc.AddAddress(ctx, address)
 	if err != nil {
-		//log.LogHandlerError(logger, fmt.Errorf("Ошибка на уровне ниже (usecase): %w", err), http.StatusInternalServerError)
 		return nil, status.Errorf(codes.Internal, "%v", err)
 	}
 	return &emptypb.Empty{}, nil

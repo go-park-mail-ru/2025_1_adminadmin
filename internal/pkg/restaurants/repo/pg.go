@@ -212,3 +212,4 @@ func (repo *RestaurantRepository) ReviewExistsReturn(ctx context.Context, userID
 
 	return rev, nil
 }
+
