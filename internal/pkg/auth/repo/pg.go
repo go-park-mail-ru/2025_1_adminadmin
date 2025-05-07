@@ -139,7 +139,7 @@ func (repo *AuthRepo) DeleteAddress(ctx context.Context, addressId uuid.UUID) er
 
 	if rowsAffected == 0 {
 		logger.Error("Адрес не найден")
-		return errors.New("Адрес не найден")
+		return errors.New("адрес не найден")
 	}
 
 	logger.Info("Successful")

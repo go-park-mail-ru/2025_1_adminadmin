@@ -40,13 +40,13 @@ func (h *AuthHandler) SignIn(ctx context.Context, in *gen.SignInRequest) (*gen.U
 		switch err {
 		case auth.ErrInvalidLogin, auth.ErrUserNotFound:
 			//log.LogHandlerError(logger, err, http.StatusBadRequest)
-			return nil, status.Errorf(codes.InvalidArgument, err.Error())
+			return nil, status.Errorf(codes.InvalidArgument, "%v", err)
 		case auth.ErrInvalidCredentials:
 			//log.LogHandlerError(logger, err, http.StatusUnauthorized)
-			return nil, status.Errorf(codes.Unauthenticated, err.Error())
+			return nil, status.Errorf(codes.Unauthenticated, "%v", err)
 		default:
 			//log.LogHandlerError(logger, fmt.Errorf("Неизвестная ошибка: %w", err), http.StatusInternalServerError)
-			return nil, status.Errorf(codes.Internal, err.Error())
+			return nil, status.Errorf(codes.Internal, "%v", err)
 		}
 	}
 
@@ -81,13 +81,13 @@ func (h *AuthHandler) SignUp(ctx context.Context, in *gen.SignUpRequest) (*gen.U
 		switch err {
 		case auth.ErrInvalidLogin, auth.ErrInvalidPassword:
 			//log.LogHandlerError(logger, fmt.Errorf("Неправильный логин или пароль: %w", err), http.StatusBadRequest)
-			return nil, status.Errorf(codes.InvalidArgument, err.Error())
+			return nil, status.Errorf(codes.InvalidArgument, "%v", err)
 		case auth.ErrInvalidName, auth.ErrInvalidPhone, auth.ErrCreatingUser:
 			//log.LogHandlerError(logger, err, http.StatusBadRequest)
-			return nil, status.Errorf(codes.InvalidArgument, err.Error())
+			return nil, status.Errorf(codes.InvalidArgument, "%v", err)
 		default:
 			//log.LogHandlerError(logger, fmt.Errorf("Неизвестная ошибка: %w", err), http.StatusInternalServerError)
-			return nil, status.Errorf(codes.Internal, err.Error())
+			return nil, status.Errorf(codes.Internal, "%v", err)
 		}
 	}
 	return &gen.UserResponse{
@@ -111,7 +111,7 @@ func (h *AuthHandler) Check(ctx context.Context, in *gen.CheckRequest) (*gen.Use
 
 	if err != nil {
 		if errors.Is(err, auth.ErrUserNotFound) {
-			return nil, status.Errorf(codes.InvalidArgument, err.Error())
+			return nil, status.Errorf(codes.InvalidArgument, "%v", err)
 		}
 	}
 
@@ -143,10 +143,10 @@ func (h *AuthHandler) UpdateUser(ctx context.Context, in *gen.UpdateUserRequest)
 		switch err {
 		case auth.ErrInvalidPassword, auth.ErrInvalidName, auth.ErrInvalidPhone, auth.ErrSamePassword:
 			//log.LogHandlerError(logger, err, http.StatusBadRequest)
-			return nil, status.Errorf(codes.InvalidArgument, err.Error())
+			return nil, status.Errorf(codes.InvalidArgument, "%v", err)
 		default:
 			//log.LogHandlerError(logger, fmt.Errorf("Ошибка обновления данных пользователя: %w", err), http.StatusInternalServerError)
-			return nil, status.Errorf(codes.Internal, err.Error())
+			return nil, status.Errorf(codes.Internal, "%v", err)
 		}
 	}
 	return &gen.UserResponse{
@@ -170,16 +170,16 @@ func (h *AuthHandler) UpdateUserPic(ctx context.Context, in *gen.UpdateUserPicRe
 		switch err {
 		case auth.ErrUserNotFound:
 			//log.LogHandlerError(logger, err, http.StatusNotFound)
-			return nil, status.Errorf(codes.NotFound, err.Error())
+			return nil, status.Errorf(codes.NotFound, "%v", err)
 		case auth.ErrBasePath:
 			//log.LogHandlerError(logger, err, http.StatusInternalServerError)
-			return nil, status.Errorf(codes.Internal, err.Error())
+			return nil, status.Errorf(codes.Internal, "%v", err)
 		case auth.ErrFileCreation, auth.ErrFileSaving, auth.ErrFileDeletion:
 			//log.LogHandlerError(logger, fmt.Errorf("Ошибка при работе с файлом: %w", err), http.StatusInternalServerError)
-			return nil, status.Errorf(codes.Internal, err.Error())
+			return nil, status.Errorf(codes.Internal, "%v", err)
 		default:
 			//log.LogHandlerError(logger, fmt.Errorf("Ошибка при обновлении аватарки: %w", err), http.StatusInternalServerError)
-			return nil, status.Errorf(codes.Internal, err.Error())
+			return nil, status.Errorf(codes.Internal, "%v", err)
 		}
 	}
 	return &gen.UserResponse{
@@ -200,7 +200,7 @@ func (h *AuthHandler) GetUserAddresses(ctx context.Context, in *gen.AddressReque
 	addresses, err := h.uc.GetUserAddresses(ctx, in.Login)
 	if err != nil {
 		//log.LogHandlerError(logger, fmt.Errorf("Ошибка на уровне ниже (usecase): %w", err), http.StatusInternalServerError)
-		return nil, status.Errorf(codes.Internal, err.Error())
+		return nil, status.Errorf(codes.Internal, "%v", err)
 	}
 
 	var grpcAddresses []*gen.Address
@@ -222,7 +222,7 @@ func (h *AuthHandler) DeleteAddress(ctx context.Context, in *gen.DeleteAddressRe
 	parsedUUID, err := uuid.FromString(in.Id)
 	if err != nil {
 		//log.LogHandlerError(logger, fmt.Errorf("некорректный id адреса: %w", err), http.StatusUnauthorized)
-		return nil, status.Errorf(codes.InvalidArgument, err.Error())
+		return nil, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	address := models.Address{
 		Id: parsedUUID,
@@ -231,7 +231,7 @@ func (h *AuthHandler) DeleteAddress(ctx context.Context, in *gen.DeleteAddressRe
 	err = h.uc.DeleteAddress(ctx, address.Id)
 	if err != nil {
 		//log.LogHandlerError(logger, fmt.Errorf("Ошибка на уровне ниже (usecase): %w", err), http.StatusInternalServerError)
-		return nil, status.Errorf(codes.Internal, err.Error())
+		return nil, status.Errorf(codes.Internal, "%v", err)
 	}
 	return &emptypb.Empty{}, nil
 }
@@ -241,12 +241,12 @@ func (h *AuthHandler) AddAddress(ctx context.Context, in *gen.Address) (*emptypb
 	parsedUUIDa, err := uuid.FromString(in.Id)
 	if err != nil {
 		//log.LogHandlerError(logger, fmt.Errorf("некорректный id адреса: %w", err), http.StatusUnauthorized)
-		return nil, status.Errorf(codes.InvalidArgument, err.Error())
+		return nil, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	parsedUUIDu, err := uuid.FromString(in.UserId)
 	if err != nil {
 		//log.LogHandlerError(logger, fmt.Errorf("некорректный id адреса: %w", err), http.StatusUnauthorized)
-		return nil, status.Errorf(codes.InvalidArgument, err.Error())
+		return nil, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	address := models.Address{
 		Id:      parsedUUIDa,
@@ -257,7 +257,7 @@ func (h *AuthHandler) AddAddress(ctx context.Context, in *gen.Address) (*emptypb
 	err = h.uc.AddAddress(ctx, address)
 	if err != nil {
 		//log.LogHandlerError(logger, fmt.Errorf("Ошибка на уровне ниже (usecase): %w", err), http.StatusInternalServerError)
-		return nil, status.Errorf(codes.Internal, err.Error())
+		return nil, status.Errorf(codes.Internal, "%v", err)
 	}
 	return &emptypb.Empty{}, nil
 }

@@ -72,10 +72,10 @@ func (h *CartHandler) getCartData(r *http.Request) (models.Cart, string, error, 
 func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
-	cart, _, err, full_cart := h.getCartData(r)
-	if err != nil {
+	cart, login, err, full_cart := h.getCartData(r)
+	if login == "" {
 		log.LogHandlerError(logger, err, http.StatusUnauthorized)
-		utils.SendError(w, "некорректный JWT-токен", http.StatusUnauthorized)
+		utils.SendError(w, "ошибка авторизации", http.StatusUnauthorized)
 		return
 	}
 	cart.Sanitize()

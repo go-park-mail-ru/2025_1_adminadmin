@@ -105,7 +105,7 @@ func TestGetProductsByRestaurant(t *testing.T) {
 			mockPool := pgxpoolmock.NewMockPgxPool(ctrl)
 			tt.repoMocker(mockPool)
 
-			repo := NewRestaurantRepository(mockPool)
+			repo := RestaurantRepository{db: mockPool}
 			_, err := repo.GetProductsByRestaurant(context.Background(), restaurantID, 10, 0)
 
 			if tt.wantErr {
@@ -118,78 +118,81 @@ func TestGetProductsByRestaurant(t *testing.T) {
 }
 
 func TestGetAll(t *testing.T) {
-	ctrl := gomock.NewController(t)
-	defer ctrl.Finish()
+    ctrl := gomock.NewController(t)
+    defer ctrl.Finish()
 
-	type args struct {
-		count  int
-		offset int
-	}
+    type args struct {
+        count  int
+        offset int
+    }
 
-	columns := []string{"id", "name", "description", "rating"}
+    // Добавляем image_url в список колонок
+    columns := []string{"id", "name", "description", "rating", "image_url"}
 
-	restaurantID := uuid.NewV4()
-	expectedRestaurant := models.Restaurant{
-		Id:          restaurantID,
-		Name:        "Тестовый ресторан",
-		Description: "Лучшее место на земле",
-		Rating:      4.8,
-	}
+    restaurantID := uuid.NewV4()
+    expectedRestaurant := models.Restaurant{
+        Id:          restaurantID,
+        Name:        "Тестовый ресторан",
+        Description: "Лучшее место на земле",
+        Rating:      4.8,
+        ImageURL:    "default.jpg", // Добавляем значение для image_url
+    }
 
-	tests := []struct {
-		name       string
-		args       args
-		repoMocker  func(mock *pgxpoolmock.MockPgxPool)
-		wantResult []models.Restaurant
-		wantErr    bool
-	}{
-		{
-			name: "Success",
-			args: args{count: 10, offset: 0},
-			repoMocker: func(mock *pgxpoolmock.MockPgxPool) {
-				pgxRows := pgxpoolmock.NewRows(columns).
-					AddRow(
-						expectedRestaurant.Id,
-						expectedRestaurant.Name,
-						expectedRestaurant.Description,
-						expectedRestaurant.Rating,
-					).ToPgxRows()
+    tests := []struct {
+        name       string
+        args       args
+        repoMocker func(mock *pgxpoolmock.MockPgxPool)
+        wantResult []models.Restaurant
+        wantErr    bool
+    }{
+        {
+            name: "Success",
+            args: args{count: 10, offset: 0},
+            repoMocker: func(mock *pgxpoolmock.MockPgxPool) {
+                pgxRows := pgxpoolmock.NewRows(columns).
+                    AddRow(
+                        expectedRestaurant.Id,
+                        expectedRestaurant.Name,
+                        expectedRestaurant.Description,
+                        expectedRestaurant.Rating,
+                        expectedRestaurant.ImageURL, // Добавляем image_url
+                    ).ToPgxRows()
 
-				mock.EXPECT().
-					Query(gomock.Any(), getAllRestaurant, 10, 0).
-					Return(pgxRows, nil)
-			},
-			wantResult: []models.Restaurant{expectedRestaurant},
-			wantErr:    false,
-		},
-		{
-			name: "Error",
-			args: args{count: 10, offset: 0},
-			repoMocker: func(mock *pgxpoolmock.MockPgxPool) {
-				mock.EXPECT().
-					Query(gomock.Any(), getAllRestaurant, 10, 0).
-					Return(nil, errors.New("db error"))
-			},
-			wantResult: nil,
-			wantErr:    true,
-		},
-	}
+                mock.EXPECT().
+                    Query(gomock.Any(), getAllRestaurant, 10, 0).
+                    Return(pgxRows, nil)
+            },
+            wantResult: []models.Restaurant{expectedRestaurant},
+            wantErr:    false,
+        },
+        {
+            name: "Error",
+            args: args{count: 10, offset: 0},
+            repoMocker: func(mock *pgxpoolmock.MockPgxPool) {
+                mock.EXPECT().
+                    Query(gomock.Any(), getAllRestaurant, 10, 0).
+                    Return(nil, errors.New("db error"))
+            },
+            wantResult: nil,
+            wantErr:    true,
+        },
+    }
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			mockPool := pgxpoolmock.NewMockPgxPool(ctrl)
-			tt.repoMocker(mockPool)
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            mockPool := pgxpoolmock.NewMockPgxPool(ctrl)
+            tt.repoMocker(mockPool)
 
-			repo := NewRestaurantRepository(mockPool)
+            repo := RestaurantRepository{db: mockPool}
 
-			got, err := repo.GetAll(context.Background(), tt.args.count, tt.args.offset)
-			if tt.wantErr {
-				assert.Error(t, err)
-				assert.Nil(t, got)
-			} else {
-				assert.NoError(t, err)
-				assert.Equal(t, tt.wantResult, got)
-			}
-		})
-	}
+            got, err := repo.GetAll(context.Background(), tt.args.count, tt.args.offset)
+            if tt.wantErr {
+                assert.Error(t, err)
+                assert.Nil(t, got)
+            } else {
+                assert.NoError(t, err)
+                assert.Equal(t, tt.wantResult, got)
+            }
+        })
+    }
 }

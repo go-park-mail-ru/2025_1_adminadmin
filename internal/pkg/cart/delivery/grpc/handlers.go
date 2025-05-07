@@ -42,7 +42,7 @@ func (h *CartHandler) GetCart(ctx context.Context, in *gen.GetCartRequest) (*gen
 func (h *CartHandler) UpdateItemQuantity(ctx context.Context, in *gen.UpdateQuantityRequest) (*emptypb.Empty, error) {
 	err := h.uc.UpdateItemQuantity(ctx, in.Login, in.ProductId, in.RestaurantId, int(in.Quantity))
 	if err != nil {
-		return nil, status.Errorf(codes.Internal, err.Error())
+		return nil, status.Errorf(codes.Internal, "%v", err)
 	}
 
 	return &emptypb.Empty{}, nil
@@ -51,7 +51,7 @@ func (h *CartHandler) UpdateItemQuantity(ctx context.Context, in *gen.UpdateQuan
 func (h *CartHandler) ClearCart(ctx context.Context, in *gen.ClearCartRequest) (*emptypb.Empty, error) {
 	err := h.uc.ClearCart(ctx, in.Login)
 	if err != nil {
-		return nil, status.Errorf(codes.Internal, err.Error())
+		return nil, status.Errorf(codes.Internal, "%v", err)
 	}
 
 	return &emptypb.Empty{}, nil
@@ -88,7 +88,7 @@ func (h *CartHandler) CreateOrder(ctx context.Context, in *gen.CreateOrderReques
 
 	order, err := h.uc.CreateOrder(ctx, in.Login, req, cart)
 	if err != nil {
-		return nil, status.Errorf(codes.Internal, err.Error())
+		return nil, status.Errorf(codes.Internal, "%v", err)
 	}
 
 	return converter.OrderToProto(order, in.Login)
@@ -101,7 +101,7 @@ func (h *CartHandler) GetOrders(ctx context.Context, in *gen.GetOrdersRequest) (
 	}
 	orders, err := h.uc.GetOrders(ctx, userId, int(in.Count), int(in.Offset))
 	if err != nil {
-		return nil, status.Errorf(codes.Internal, err.Error())
+		return nil, status.Errorf(codes.Internal, "%v", err)
 	}
 
 	protoOrders := make([]*gen.OrderResponse, 0, len(orders))
