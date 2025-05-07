@@ -2,6 +2,7 @@ package pg
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"testing"
@@ -107,8 +108,8 @@ func TestSaveOrder(t *testing.T) {
 	testUserLogin := "test_user"
 	testUserID := uuid.NewV4()
 	testOrder := models.Order{
-		ID:     testOrderID,
-		Status: "new",
+		ID:      testOrderID,
+		Status:  "new",
 		Address: "123 Test St",
 		OrderProducts: models.Cart{
 			Id:   uuid.NewV4(),
@@ -141,7 +142,6 @@ func TestSaveOrder(t *testing.T) {
 		CreatedAt:         time.Now(),
 		FinalPrice:        1199.47,
 	}
-	
 
 	tests := []struct {
 		name        string
@@ -209,4 +209,316 @@ func TestSaveOrder(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestGetOrders(t *testing.T) {
+    testUserID := uuid.NewV4()
+    testOrderID := uuid.NewV4()
+    testAddressID := "test_address_123"
+    testTime := time.Now().UTC()
+    
+    // Тестовые данные для корзины
+    testCart := models.Cart{
+        Id:   uuid.NewV4(),
+        Name: "Test Restaurant",
+        CartItems: []models.CartItem{
+            {
+                Id:       uuid.NewV4(),
+                Name:     "Burger",
+                Price:    499,
+                ImageURL: "burger.jpg",
+                Weight:   250,
+                Amount:   2,
+            },
+        },
+    }
+    testCartJSON, _ := json.Marshal(testCart)
+    
+    testOrder := models.Order{
+        ID:            testOrderID,
+        UserID:        testUserID.String(),
+        Status:        "processing",
+        Address:       testAddressID,
+        OrderProducts: testCart,
+        ApartmentOrOffice: "42",
+        Intercom:      "1234",
+        Entrance:      "1",
+        Floor:         "4",
+        CourierComment: "Call before arrival",
+        LeaveAtDoor:   false,
+        FinalPrice:    999.99,
+        CreatedAt:     testTime,
+    }
+    
+    columns := []string{
+        "id", "user_id", "status", "address_id", "order_products",
+        "apartment_or_office", "intercom", "entrance", "floor", 
+        "courier_comment", "leave_at_door", "final_price", "created_at",
+    }
+    
+    tests := []struct {
+        name           string
+        userID        uuid.UUID
+        count         int
+        offset        int
+        repoMocker    func(*pgxpoolmock.MockPgxPool)
+        expectedResult []models.Order
+        expectError   bool
+    }{
+        {
+            name:    "Success - single order",
+            userID:  testUserID,
+            count:   10,
+            offset:  0,
+            repoMocker: func(mockPool *pgxpoolmock.MockPgxPool) {
+                rows := pgxpoolmock.NewRows(columns).
+                    AddRow(
+                        testOrder.ID,
+                        testOrder.UserID,
+                        testOrder.Status,
+                        testOrder.Address,
+                        string(testCartJSON),
+                        testOrder.ApartmentOrOffice,
+                        testOrder.Intercom,
+                        testOrder.Entrance,
+                        testOrder.Floor,
+                        testOrder.CourierComment,
+                        testOrder.LeaveAtDoor,
+                        testOrder.FinalPrice,
+                        testTime,
+                    ).ToPgxRows()
+                
+                mockPool.EXPECT().
+                    Query(gomock.Any(), getAllOrders, testUserID, 10, 0).
+                    Return(rows, nil)
+            },
+            expectedResult: []models.Order{testOrder},
+            expectError:   false,
+        },
+        {
+            name:    "Error - database query fails",
+            userID:  testUserID,
+            count:   10,
+            offset:  0,
+            repoMocker: func(mockPool *pgxpoolmock.MockPgxPool) {
+                mockPool.EXPECT().
+                    Query(gomock.Any(), getAllOrders, testUserID, 10, 0).
+                    Return(nil, fmt.Errorf("database error"))
+            },
+            expectedResult: nil,
+            expectError:   true,
+        },
+        {
+            name:    "Error - invalid JSON in order_products",
+            userID:  testUserID,
+            count:   10,
+            offset:  0,
+            repoMocker: func(mockPool *pgxpoolmock.MockPgxPool) {
+                rows := pgxpoolmock.NewRows(columns).
+                    AddRow(
+                        testOrder.ID,
+                        testOrder.UserID,
+                        testOrder.Status,
+                        testOrder.Address,
+                        "invalid json",
+                        testOrder.ApartmentOrOffice,
+                        testOrder.Intercom,
+                        testOrder.Entrance,
+                        testOrder.Floor,
+                        testOrder.CourierComment,
+                        testOrder.LeaveAtDoor,
+                        testOrder.FinalPrice,
+                        testTime,
+                    ).ToPgxRows()
+                
+                mockPool.EXPECT().
+                    Query(gomock.Any(), getAllOrders, testUserID, 10, 0).
+                    Return(rows, nil)
+            },
+            expectedResult: nil,
+            expectError:   true,
+        },
+    }
+    
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            ctrl := gomock.NewController(t)
+            defer ctrl.Finish()
+            
+            mockPool := pgxpoolmock.NewMockPgxPool(ctrl)
+            tt.repoMocker(mockPool)
+            
+            repo := &RestaurantRepository{db: mockPool}
+            
+            orders, err := repo.GetOrders(context.Background(), tt.userID, tt.count, tt.offset)
+            
+            if tt.expectError {
+                assert.Error(t, err)
+                if tt.expectedResult == nil {
+                    assert.Nil(t, orders)
+                }
+            } else {
+                assert.NoError(t, err)
+                assert.Equal(t, tt.expectedResult, orders)
+                
+                // Проверка sanitize
+                if len(orders) > 0 {
+                    assert.NotEqual(t, "", orders[0].Status)
+                    assert.NotEqual(t, "", orders[0].Address)
+                    if len(orders[0].OrderProducts.CartItems) > 0 {
+                        assert.NotEqual(t, "", orders[0].OrderProducts.CartItems[0].Name)
+                    }
+                }
+            }
+        })
+    }
+}
+
+func TestGetOrderById(t *testing.T) {
+    testUserID := uuid.NewV4()
+    testOrderID := uuid.NewV4()
+    testAddressID := "test_address_123"
+    testTime := time.Now().UTC()
+    
+    // Тестовые данные для корзины
+    testCart := models.Cart{
+        Id:   uuid.NewV4(),
+        Name: "Test Restaurant",
+        CartItems: []models.CartItem{
+            {
+                Id:       uuid.NewV4(),
+                Name:     "Burger",
+                Price:    499,
+                ImageURL: "burger.jpg",
+                Weight:   250,
+                Amount:   2,
+            },
+        },
+    }
+    testCartJSON, _ := json.Marshal(testCart)
+    
+    testOrder := models.Order{
+        ID:            testOrderID,
+        UserID:        testUserID.String(),
+        Status:        "processing",
+        Address:       testAddressID,
+        OrderProducts: testCart,
+        ApartmentOrOffice: "42",
+        Intercom:      "1234",
+        Entrance:      "1",
+        Floor:         "4",
+        CourierComment: "Call before arrival",
+        LeaveAtDoor:   false,
+        FinalPrice:    999.99,
+        CreatedAt:     testTime,
+    }
+    
+    columns := []string{
+        "id", "user_id", "status", "address_id", "order_products",
+        "apartment_or_office", "intercom", "entrance", "floor", 
+        "courier_comment", "leave_at_door", "final_price", "created_at",
+    }
+
+    tests := []struct {
+        name           string
+        orderID       uuid.UUID
+        userID        uuid.UUID
+        repoMocker    func(*pgxpoolmock.MockPgxPool)
+        expectedResult models.Order
+        expectError   bool
+        errorMessage  string
+    }{
+        {
+            name:     "Success",
+            orderID:  testOrderID,
+            userID:   testUserID,
+            repoMocker: func(mockPool *pgxpoolmock.MockPgxPool) {
+                row := pgxpoolmock.NewRows(columns).
+                    AddRow(
+                        testOrder.ID,
+                        testOrder.UserID,
+                        testOrder.Status,
+                        testOrder.Address,
+                        string(testCartJSON),
+                        testOrder.ApartmentOrOffice,
+                        testOrder.Intercom,
+                        testOrder.Entrance,
+                        testOrder.Floor,
+                        testOrder.CourierComment,
+                        testOrder.LeaveAtDoor,
+                        testOrder.FinalPrice,
+                        testTime,
+                    ).ToPgxRows()
+                row.Next()
+                
+                mockPool.EXPECT().
+                    QueryRow(gomock.Any(), getOrderById, testOrderID, testUserID).
+                    Return(row)
+            },
+            expectedResult: testOrder,
+            expectError:   false,
+        },
+        {
+            name:     "Error - invalid JSON",
+            orderID:  testOrderID,
+            userID:   testUserID,
+            repoMocker: func(mockPool *pgxpoolmock.MockPgxPool) {
+                row := pgxpoolmock.NewRows(columns).
+                    AddRow(
+                        testOrder.ID,
+                        testOrder.UserID,
+                        testOrder.Status,
+                        testOrder.Address,
+                        "invalid json",
+                        testOrder.ApartmentOrOffice,
+                        testOrder.Intercom,
+                        testOrder.Entrance,
+                        testOrder.Floor,
+                        testOrder.CourierComment,
+                        testOrder.LeaveAtDoor,
+                        testOrder.FinalPrice,
+                        testTime,
+                    ).ToPgxRows()
+                row.Next()
+                
+                mockPool.EXPECT().
+                    QueryRow(gomock.Any(), getOrderById, testOrderID, testUserID).
+                    Return(row)
+            },
+            expectedResult: models.Order{},
+            expectError:   true,
+        },
+    }
+
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            ctrl := gomock.NewController(t)
+            defer ctrl.Finish()
+            
+            mockPool := pgxpoolmock.NewMockPgxPool(ctrl)
+            tt.repoMocker(mockPool)
+            
+            repo := &RestaurantRepository{db: mockPool}
+            
+            order, err := repo.GetOrderById(context.Background(), tt.orderID, tt.userID)
+            
+            if tt.expectError {
+                assert.Error(t, err)
+                if tt.errorMessage != "" {
+                    assert.Contains(t, err.Error(), tt.errorMessage)
+                }
+                assert.Equal(t, models.Order{}, order)
+            } else {
+                assert.NoError(t, err)
+                assert.Equal(t, tt.expectedResult, order)
+                
+                // Проверка sanitize
+                assert.NotEqual(t, "", order.Status)
+                assert.NotEqual(t, "", order.Address)
+                if len(order.OrderProducts.CartItems) > 0 {
+                    assert.NotEqual(t, "", order.OrderProducts.CartItems[0].Name)
+                }
+            }
+        })
+    }
 }

@@ -62,7 +62,7 @@ func TestInsertUser(t *testing.T) {
 
 			test.repoMocker(mockPool)
 
-			repo := CreateAuthRepo(mockPool)
+			repo := AuthRepo{db: mockPool}
 			err := repo.InsertUser(context.Background(), models.User{
 				Login:        "test_user",
 				PasswordHash: usecase.HashPassword(salt, "password123"),
@@ -133,7 +133,7 @@ func TestSelectUserByLogin(t *testing.T) {
 			pgxRows.Next()
 			test.repoMocker(mockPool, pgxRows, test.login)
 
-			repo := CreateAuthRepo(mockPool)
+			repo := AuthRepo{db: mockPool}
 			_, err := repo.SelectUserByLogin(context.Background(), test.login)
 
 			assert.Equal(t, test.expectedErr, err)
@@ -207,7 +207,7 @@ func TestUpdateUser(t *testing.T) {
 
 			test.repoMocker(mockPool)
 
-			repo := CreateAuthRepo(mockPool)
+			repo := AuthRepo{db: mockPool}
 			err := repo.UpdateUser(context.Background(), test.user)
 
 			if test.expectedErr != nil {
@@ -268,7 +268,7 @@ func TestUpdateUserPic(t *testing.T) {
 
 			test.repoMocker(mockPool)
 
-			repo := CreateAuthRepo(mockPool)
+			repo := AuthRepo{db: mockPool}
 			err := repo.UpdateUserPic(context.Background(), test.login, test.userPic)
 
 			if test.expectedErr != nil {
@@ -338,7 +338,7 @@ func TestSelectUserAddresses(t *testing.T) {
 
 			test.repoMocker(mockPool, pgxRows, test.login)
 
-			repo := CreateAuthRepo(mockPool)
+			repo := AuthRepo{db: mockPool}
 			result, err := repo.SelectUserAddresses(context.Background(), test.login)
 
 			if test.expectedErr != nil {
@@ -390,7 +390,7 @@ func TestDeleteAddress(t *testing.T) {
 
 			test.setupMock(mockPool)
 
-			repo := CreateAuthRepo(mockPool)
+			repo := AuthRepo{db: mockPool}
 			err := repo.DeleteAddress(context.Background(), test.addressID)
 
 			if test.expectedErr != nil {
@@ -453,7 +453,7 @@ func TestInsertAddress(t *testing.T) {
 
 			test.repoMocker(mockPool)
 
-			repo := CreateAuthRepo(mockPool)
+			repo := AuthRepo{db: mockPool}
 			err := repo.InsertAddress(context.Background(), test.address)
 
 			if test.expectedErr != nil {

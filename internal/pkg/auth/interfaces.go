@@ -15,6 +15,7 @@ var (
 	ErrInvalidLogin       = errors.New("Неверный формат логина")
 	ErrInvalidPassword    = errors.New("Неверный формат пароля")
 	ErrInvalidCredentials = errors.New("Неверный логин или пароль")
+	AlreadyExists         = errors.New("Пользователь с таким логином уже существует")
 	ErrGeneratingToken    = errors.New("Ошибка генерации токена")
 	ErrInvalidName        = errors.New("Имя и фамилия должны содержать только русские буквы и быть от 2 до 25 символов")
 	ErrInvalidPhone       = errors.New("Некорректный номер телефона")

@@ -6,9 +6,10 @@ import (
 	"log/slog"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
+	dbUtils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/db"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
-	"github.com/satori/uuid"
 	"github.com/jackc/pgtype/pgxtype"
+	"github.com/satori/uuid"
 )
 
 const (
@@ -31,10 +32,11 @@ type AuthRepo struct {
 	db pgxtype.Querier
 }
 
-func CreateAuthRepo(db pgxtype.Querier) *AuthRepo {
+func CreateAuthRepo() (*AuthRepo, error) {
+	db, err := dbUtils.InitDB()
 	return &AuthRepo{
 		db: db,
-	}
+	}, err
 }
 
 func (repo *AuthRepo) InsertUser(ctx context.Context, user models.User) error {
@@ -137,7 +139,7 @@ func (repo *AuthRepo) DeleteAddress(ctx context.Context, addressId uuid.UUID) er
 
 	if rowsAffected == 0 {
 		logger.Error("Адрес не найден")
-		return errors.New("Адрес не найден")
+		return errors.New("адрес не найден")
 	}
 
 	logger.Info("Successful")

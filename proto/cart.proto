@@ -1,0 +1,104 @@
+syntax = "proto3";
+
+package cart;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./internal/pkg/cart/delivery/grpc/gen";
+
+service CartService {
+  rpc GetCart (GetCartRequest) returns (CartResponse) {}
+
+  rpc UpdateItemQuantity (UpdateQuantityRequest) returns (google.protobuf.Empty) {}
+
+  rpc ClearCart (ClearCartRequest) returns (google.protobuf.Empty) {}
+
+  rpc CreateOrder (CreateOrderRequest) returns (OrderResponse) {}
+  
+  rpc GetOrders (GetOrdersRequest) returns (OrderListResponse) {}
+  
+  rpc GetOrderById (GetOrderByIdRequest) returns (OrderResponse) {}
+  
+  rpc UpdateOrderStatus (UpdateOrderStatusRequest) returns (google.protobuf.Empty) {}
+}
+
+message GetCartRequest {
+    string Login = 1;
+}
+
+message UpdateQuantityRequest {
+  string Login = 1;
+  string ProductId = 2;
+  string RestaurantId = 3;
+  int32 Quantity = 4;
+}
+
+message ClearCartRequest {
+    string Login = 1;
+}
+
+message CreateOrderRequest {
+  string Status = 1;
+  string Address = 2;
+  string ApartmentOrOffice = 3;
+  string Intercom = 4;
+  string Entrance = 5;
+  string Floor = 6;
+  string CourierComment = 7;
+  bool LeaveAtDoor = 8;
+  double FinalPrice = 9;
+  CartResponse Cart = 10;
+  string Login = 11;
+}
+
+message GetOrdersRequest {
+  string UserId = 1;
+  int32 Count = 2;
+  int32 Offset = 3;
+}
+
+message GetOrderByIdRequest {
+  string OrderId = 1;
+  string UserId = 2;
+}
+
+message UpdateOrderStatusRequest {
+  string OrderId = 1;
+}
+
+message CartResponse {
+  string RestaurantId = 1;
+  string RestaurantName = 2;
+  repeated CartItem Products = 3;
+  bool FullCart = 4;
+}
+
+message CartItem {
+  string Id = 1;
+  string Name = 2;
+  double Price = 3;
+  string ImageUrl = 4;
+  int32 Weight = 5;
+  int32 Amount = 6;
+}
+
+message OrderResponse {
+  string Id = 1;
+  string UserId = 2;
+  string Status = 3;
+  string Address = 4;
+  CartResponse OrderProducts = 5;
+  string ApartmentOrOffice = 6;
+  string Intercom = 7;
+  string Entrance = 8;
+  string Floor = 9;
+  string CourierComment = 10;
+  bool LeaveAtDoor = 11;
+  google.protobuf.Timestamp CreatedAt = 12;
+  double FinalPrice = 13;
+}
+
+message OrderListResponse {
+  repeated OrderResponse Orders = 1;
+}

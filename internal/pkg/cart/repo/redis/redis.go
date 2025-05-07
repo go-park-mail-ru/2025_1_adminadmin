@@ -6,6 +6,7 @@ import (
 	"log/slog"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/db"
 	"github.com/redis/go-redis/v9"
 )
 
@@ -13,8 +14,9 @@ type CartRepository struct {
 	redisClient *redis.Client
 }
 
-func NewCartRepository(redisClient *redis.Client) *CartRepository {
-	return &CartRepository{redisClient: redisClient}
+func NewCartRepository() (*CartRepository, error) {
+	redisClient, err := dbUtils.InitRedis()
+	return &CartRepository{redisClient: redisClient}, err
 }
 
 func (r *CartRepository) GetCart(ctx context.Context, userID string) (map[string]int, string, error) {

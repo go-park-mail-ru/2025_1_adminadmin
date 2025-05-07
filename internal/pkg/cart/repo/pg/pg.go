@@ -2,11 +2,13 @@ package pg
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log/slog"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/db"
 	"github.com/jackc/pgtype/pgxtype"
 	"github.com/satori/uuid"
 )
@@ -18,14 +20,47 @@ const (
 		apartment_or_office, intercom, entrance, floor,
 		courier_comment, leave_at_door, created_at, final_price) 
 		VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`
+	getAllOrders = `SELECT
+    id,
+    user_id,
+    status,
+    address_id,
+    order_products,
+    apartment_or_office,
+    intercom,
+    entrance,
+    floor,
+    courier_comment,
+    leave_at_door,
+    final_price,
+    created_at
+FROM orders WHERE user_id = $1 LIMIT $2 OFFSET $3;`
+	getOrderById = `SELECT
+    id,
+    user_id,
+    status,
+    address_id,
+    order_products,
+    apartment_or_office,
+    intercom,
+    entrance,
+    floor,
+    courier_comment,
+    leave_at_door,
+    final_price,
+    created_at
+FROM orders WHERE id = $1 AND user_id = $2;`
+	updateOrderStatus = `UPDATE orders SET status = $1 WHERE id = $2;`
+	scheduleDeliveryStatusChange = `SELECT cron.schedule_in('20 seconds', $$UPDATE orders SET status = 'in delivery' WHERE id = $1$$);`
 )
 
 type RestaurantRepository struct {
 	db pgxtype.Querier
 }
 
-func NewRestaurantRepository(db pgxtype.Querier) *RestaurantRepository {
-	return &RestaurantRepository{db: db}
+func NewRestaurantRepository() (*RestaurantRepository, error) {
+	db, err := dbUtils.InitDB()
+	return &RestaurantRepository{db: db}, err
 }
 
 func (r *RestaurantRepository) GetCartItem(ctx context.Context, productIDs []string, productAmounts map[string]int, restaurantID string) (models.Cart, error) {
@@ -106,4 +141,97 @@ func (r *RestaurantRepository) Save(ctx context.Context, order models.Order, use
 	logger.Info("Заказ успешно сохранен", slog.String("order_id", order.ID.String()))
 
 	return nil
+}
+
+func (r *RestaurantRepository) GetOrders(ctx context.Context, user_id uuid.UUID, count, offset int) ([]models.Order, error) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	rows, err := r.db.Query(ctx, getAllOrders, user_id, count, offset)
+	if err != nil {
+		logger.Error(err.Error())
+		return nil, err
+	}
+	defer rows.Close()
+
+	var orders []models.Order
+	for rows.Next() {
+		var order models.Order
+		var orderProductsJSON string
+		if err := rows.Scan(&order.ID, &order.UserID, &order.Status, &order.Address, &orderProductsJSON,
+			&order.ApartmentOrOffice, &order.Intercom, &order.Entrance, &order.Floor, &order.CourierComment,
+			&order.LeaveAtDoor, &order.FinalPrice, &order.CreatedAt); err != nil {
+			logger.Error(err.Error())
+			return nil, err
+		}
+		if err := json.Unmarshal([]byte(orderProductsJSON), &order.OrderProducts); err != nil {
+			logger.Error("ошибка анмаршалинга JSON: " + err.Error())
+			return nil, err
+		}
+		order.Sanitize()
+		orders = append(orders, order)
+	}
+	logger.Info("Successful")
+	return orders, rows.Err()
+}
+
+func (r *RestaurantRepository) GetOrderById(ctx context.Context, order_id, user_id uuid.UUID) (models.Order, error) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	var order models.Order
+	var orderProductsJSON string
+
+	err := r.db.QueryRow(ctx, getOrderById, order_id, user_id).Scan(&order.ID, &order.UserID, &order.Status, &order.Address, &orderProductsJSON,
+		&order.ApartmentOrOffice, &order.Intercom, &order.Entrance, &order.Floor, &order.CourierComment,
+		&order.LeaveAtDoor, &order.FinalPrice, &order.CreatedAt)
+	if err != nil {
+		logger.Error("Ошибка при получении заказа", slog.String("error", err.Error()))
+		return models.Order{}, fmt.Errorf("не удалось получить заказ: %w", err)
+	}
+
+	if err = json.Unmarshal([]byte(orderProductsJSON), &order.OrderProducts); err != nil {
+		logger.Error("ошибка анмаршалинга JSON: " + err.Error())
+		return models.Order{}, err
+	}
+	logger.Info("Successful")
+	return order, nil
+}
+
+func (r *RestaurantRepository) UpdateOrderStatus(ctx context.Context, order_id uuid.UUID, status string) error {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	res, err := r.db.Exec(ctx, updateOrderStatus, status, order_id)
+	if err != nil {
+		logger.Error("Ошибка при обновлении статуса заказа", slog.String("error", err.Error()))
+		return err
+	}
+	if rows := res.RowsAffected(); rows == 0 {
+		return fmt.Errorf("заказ с id %s не найден", order_id)
+	}
+
+	logger.Info("Successful")
+	return nil
+}
+
+func (r *RestaurantRepository) ScheduleDeliveryStatusChange(ctx context.Context, orderID uuid.UUID) error {
+    logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+    // Безопасный параметризованный запрос
+    query := `
+        SELECT cron.schedule(
+            'delivery_status_' || $1,
+            '20 seconds',
+            'SELECT set_order_in_delivery($1)'
+        )
+    `
+    
+    _, err := r.db.Exec(ctx, query, orderID)
+    if err != nil {
+        logger.Error("Failed to schedule delivery status update",
+            slog.String("error", err.Error()),
+        )
+        return fmt.Errorf("failed to schedule delivery update: %w", err)
+    }
+
+    logger.Info("Delivery status update scheduled successfully")
+    return nil
 }

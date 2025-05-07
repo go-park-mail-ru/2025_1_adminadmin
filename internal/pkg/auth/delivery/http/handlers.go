@@ -8,16 +8,19 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
-	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/grpc/gen"
 	jwtUtils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/jwt"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/send_error"
 	"github.com/golang-jwt/jwt"
 	"github.com/mailru/easyjson"
 	"github.com/satori/uuid"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 const maxRequestBodySize = 10 << 20
@@ -29,57 +32,54 @@ var allowedMimeTypes = map[string]string{
 }
 
 type AuthHandler struct {
-	uc     auth.AuthUsecase
+	client gen.AuthServiceClient
 	secret string
 }
 
-func CreateAuthHandler(uc auth.AuthUsecase) *AuthHandler {
-	return &AuthHandler{uc: uc, secret: os.Getenv("JWT_SECRET")}
+func CreateAuthHandler(client gen.AuthServiceClient) *AuthHandler {
+	return &AuthHandler{client: client, secret: os.Getenv("JWT_SECRET")}
 }
 
-// SignIn godoc
-// @Summary Авторизация пользователя
-// @Description Вход пользователя по логину и паролю
-// @Tags auth
-// @ID sign-in
-// @Accept json
-// @Produce json
-// @Param input body models.SignInReq true "Данные для входа"
-// @Success 200 {object} models.User "Успешный ответ с данными пользователя"
-// @Failure 400 {object} utils.ErrorResponse "Ошибка парсинга или неправильные данные"
-// @Failure 500 {object} utils.ErrorResponse "Внутренняя ошибка сервера"
-// @Router /auth/signin [post]
 func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
 	var req models.SignInReq
 	if err := easyjson.UnmarshalFromReader(r.Body, &req); err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка парсинга JSON: %w", err), http.StatusBadRequest)
-		utils.SendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
+		log.LogHandlerError(logger, fmt.Errorf("ошибка парсинга JSON: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "ошибка парсинга JSON", http.StatusBadRequest)
 		return
 	}
 	req.Sanitize()
 
-	user, token, csrfToken, err := h.uc.SignIn(r.Context(), req)
+	user, err := h.client.SignIn(r.Context(), &gen.SignInRequest{
+		Login:    req.Login,
+		Password: req.Password})
 
 	if err != nil {
-		switch err {
-		case auth.ErrInvalidLogin, auth.ErrUserNotFound:
+		st, ok := status.FromError(err)
+		if !ok {
+			log.LogHandlerError(logger, fmt.Errorf("не gRPC ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "внутренняя ошибка", http.StatusInternalServerError)
+			return
+		}
+
+		switch st.Code() {
+		case codes.InvalidArgument:
 			log.LogHandlerError(logger, err, http.StatusBadRequest)
-			utils.SendError(w, err.Error(), http.StatusBadRequest)
-		case auth.ErrInvalidCredentials:
+			utils.SendError(w, st.Message(), http.StatusBadRequest)
+		case codes.Unauthenticated:
 			log.LogHandlerError(logger, err, http.StatusUnauthorized)
-			utils.SendError(w, err.Error(), http.StatusUnauthorized)
+			utils.SendError(w, st.Message(), http.StatusUnauthorized)
 		default:
-			log.LogHandlerError(logger, fmt.Errorf("Неизвестная ошибка: %w", err), http.StatusInternalServerError)
-			utils.SendError(w, "Неизвестная ошибка", http.StatusInternalServerError)
+			log.LogHandlerError(logger, fmt.Errorf("неизвестная ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "неизвестная ошибка", http.StatusInternalServerError)
 		}
 		return
 	}
 
 	http.SetCookie(w, &http.Cookie{
 		Name:     "AdminJWT",
-		Value:    token,
+		Value:    user.Token,
 		HttpOnly: true,
 		Secure:   false,
 		Expires:  time.Now().Add(24 * time.Hour),
@@ -88,7 +88,7 @@ func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) {
 
 	http.SetCookie(w, &http.Cookie{
 		Name:     "CSRF-Token",
-		Value:    csrfToken,
+		Value:    user.CsrfToken,
 		Expires:  time.Now().Add(24 * time.Hour),
 		HttpOnly: false,
 		Secure:   false,
@@ -96,59 +96,86 @@ func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) {
 		Path:     "/",
 	})
 
-	w.Header().Set("X-CSRF-Token", csrfToken)
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("X-CSRF-Token", user.CsrfToken)
 
-	if err := json.NewEncoder(w).Encode(user); err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка формирования JSON: %w", err), http.StatusInternalServerError)
-		utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
+	parsedUUID, err := uuid.FromString(user.Id)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("некорректный id: %w", err), http.StatusUnauthorized)
+		utils.SendError(w, "некорректный id", http.StatusUnauthorized)
 	}
+
+	newModel := models.User{
+		Login:       user.Login,
+		PhoneNumber: user.PhoneNumber,
+		Id:          parsedUUID,
+		FirstName:   user.FirstName,
+		LastName:    user.LastName,
+		Description: user.Description,
+		UserPic:     user.UserPic,
+	}
+
+	data, err := json.Marshal(newModel)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(data)
+	log.LogHandlerInfo(logger, "Success", http.StatusOK)
 }
 
-// SignUp godoc
-// @Summary Регистрация пользователя
-// @Description Регистрация пользователя (логин, пароль, имя, фамилия, номер телефона)
-// @Tags auth
-// @ID sign-up
-// @Accept json
-// @Produce json
-// @Param input body models.SignUpReq true "Данные для входа"
-// @Success 200 {object} models.User "Успешный ответ с данными пользователя"
-// @Failure 400 {object} utils.ErrorResponse "Ошибка парсинга или неправильные данные"
-// @Failure 500 {object} utils.ErrorResponse "Внутренняя ошибка сервера"
-// @Router /auth/signup [post]
 func (h *AuthHandler) SignUp(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
 	var req models.SignUpReq
 	err := easyjson.UnmarshalFromReader(r.Body, &req)
 	if err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка парсинга JSON: %w", err), http.StatusBadRequest)
-		utils.SendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
+		log.LogHandlerError(logger, fmt.Errorf("ошибка парсинга JSON: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "ошибка парсинга JSON", http.StatusBadRequest)
 		return
 	}
 	req.Sanitize()
 
-	user, token, csrfToken, err := h.uc.SignUp(r.Context(), req)
+	user, err := h.client.SignUp(r.Context(), &gen.SignUpRequest{
+		Login:       req.Login,
+		FirstName:   req.FirstName,
+		LastName:    req.LastName,
+		PhoneNumber: req.PhoneNumber,
+		Password:    req.Password,
+	})
 
 	if err != nil {
-		switch err {
-		case auth.ErrInvalidLogin, auth.ErrInvalidPassword:
-			log.LogHandlerError(logger, fmt.Errorf("Неправильный логин или пароль: %w", err), http.StatusBadRequest)
-			utils.SendError(w, "Неправильный логин или пароль", http.StatusBadRequest)
-		case auth.ErrInvalidName, auth.ErrInvalidPhone, auth.ErrCreatingUser:
+		st, ok := status.FromError(err)
+		if !ok {
+			log.LogHandlerError(logger, fmt.Errorf("не gRPC ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "внутренняя ошибка", http.StatusInternalServerError)
+			return
+		}
+
+		switch st.Code() {
+		case codes.InvalidArgument:
 			log.LogHandlerError(logger, err, http.StatusBadRequest)
-			utils.SendError(w, err.Error(), http.StatusBadRequest)
+
+			if strings.Contains(st.Message(), "логин") || strings.Contains(st.Message(), "пароль") {
+				utils.SendError(w, "неправильный логин или пароль", http.StatusBadRequest)
+			} else {
+				utils.SendError(w, "пользователь с таким логином уже существует", http.StatusBadRequest)
+			}
+		case codes.Internal:
+			log.LogHandlerError(logger, err, http.StatusInternalServerError)
+			utils.SendError(w, "пользователь с таким логином уже существует", http.StatusInternalServerError)
 		default:
-			log.LogHandlerError(logger, fmt.Errorf("Неизвестная ошибка: %w", err), http.StatusInternalServerError)
-			utils.SendError(w, "Неизвестная ошибка", http.StatusInternalServerError)
+			log.LogHandlerError(logger, fmt.Errorf("неизвестная ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "неизвестная ошибка", http.StatusInternalServerError)
 		}
 		return
 	}
 
 	http.SetCookie(w, &http.Cookie{
 		Name:     "AdminJWT",
-		Value:    token,
+		Value:    user.Token,
 		Expires:  time.Now().Add(24 * time.Hour),
 		HttpOnly: true,
 		Secure:   true,
@@ -157,7 +184,7 @@ func (h *AuthHandler) SignUp(w http.ResponseWriter, r *http.Request) {
 
 	http.SetCookie(w, &http.Cookie{
 		Name:     "CSRF-Token",
-		Value:    csrfToken,
+		Value:    user.CsrfToken,
 		Expires:  time.Now().Add(24 * time.Hour),
 		HttpOnly: false,
 		Secure:   true,
@@ -165,28 +192,36 @@ func (h *AuthHandler) SignUp(w http.ResponseWriter, r *http.Request) {
 		Path:     "/",
 	})
 
-	w.Header().Set("X-CSRF-Token", csrfToken)
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("X-CSRF-Token", user.CsrfToken)
 
-	if err := json.NewEncoder(w).Encode(user); err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка формирования JSON: %w", err), http.StatusInternalServerError)
-		utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
+	parsedUUID, err := uuid.FromString(user.Id)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("некорректный id: %w", err), http.StatusUnauthorized)
+		utils.SendError(w, "некорректный id", http.StatusUnauthorized)
 	}
+
+	newModel := models.User{
+		Login:       user.Login,
+		PhoneNumber: user.PhoneNumber,
+		Id:          parsedUUID,
+		FirstName:   user.FirstName,
+		LastName:    user.LastName,
+		Description: user.Description,
+		UserPic:     user.UserPic,
+	}
+
+	data, err := json.Marshal(newModel)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(data)
+	log.LogHandlerInfo(logger, "Success", http.StatusOK)
 }
 
-// Check godoc
-// @Summary Проверка авторизации пользовател
-// @Description Проверка JWT, а также проверка CSRF в Cookie и заголовке
-// @Tags auth
-// @ID check
-// @Accept json
-// @Produce json
-// @Success 200 {object} models.User "Успешный ответ с данными пользователя"
-// @Failure 400 {object} utils.ErrorResponse  "Некорректный запрос"
-// @Failure 401 {object} utils.ErrorResponse  "Ошибка авторизации (необходима авторизация)"
-// @Failure 403 {object} utils.ErrorResponse  "Ошибка авторизации (некорректный CSRF токен)"
-// @Failure 500 {object} utils.ErrorResponse "Внутренняя ошибка сервера"
-// @Router /auth/check [get]
 func (h *AuthHandler) Check(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
@@ -225,39 +260,63 @@ func (h *AuthHandler) Check(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user, err := h.uc.Check(r.Context(), login)
+	user, err := h.client.Check(r.Context(), &gen.CheckRequest{
+		Login: login,
+	})
 
 	if err != nil {
-		if errors.Is(err, auth.ErrUserNotFound) {
-			utils.SendError(w, err.Error(), http.StatusBadRequest)
+		st, ok := status.FromError(err)
+		if !ok {
+			log.LogHandlerError(logger, fmt.Errorf("не gRPC ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "внутренняя ошибка", http.StatusInternalServerError)
+			return
 		}
+
+		switch st.Code() {
+		case codes.InvalidArgument:
+			utils.SendError(w, st.Message(), http.StatusBadRequest)
+		default:
+			log.LogHandlerError(logger, fmt.Errorf("неизвестная ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "неизвестная ошибка", http.StatusInternalServerError)
+		}
+		return
+	}
+
+	parsedUUID, err := uuid.FromString(user.Id)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("некорректный id: %w", err), http.StatusUnauthorized)
+		utils.SendError(w, "некорректный id", http.StatusUnauthorized)
+	}
+
+	newModel := models.User{
+		Login:       user.Login,
+		PhoneNumber: user.PhoneNumber,
+		Id:          parsedUUID,
+		FirstName:   user.FirstName,
+		LastName:    user.LastName,
+		Description: user.Description,
+		UserPic:     user.UserPic,
+	}
+
+	data, err := json.Marshal(newModel)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)
+		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(user); err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка формирования JSON: %w", err), http.StatusInternalServerError)
-		utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
-	}
-	log.LogHandlerInfo(logger, "Successful", http.StatusOK)
+	w.Write(data)
+	log.LogHandlerInfo(logger, "Success", http.StatusOK)
 }
 
-// LogOut godoc
-// @Summary Выход из аккаунта
-// @Description Выход из аккаунта путем обнуления куков
-// @Tags auth
-// @ID logout
-// @Accept json
-// @Produce json
-// @Success 200
-// @Failure 400 {object} utils.ErrorResponse "Пользователь уже разлогинен"
-// @Router /auth/logout [get]
 func (h *AuthHandler) LogOut(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
 	cookie, err := r.Cookie("AdminJWT")
 	if err != nil || cookie.Value == "" {
-		log.LogHandlerError(logger, fmt.Errorf("Пользователь уже разлогинен: %w", err), http.StatusBadRequest)
-		utils.SendError(w, "Пользователь уже разлогинен", http.StatusBadRequest)
+		log.LogHandlerError(logger, fmt.Errorf("пользователь уже разлогинен: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "пользователь уже разлогинен", http.StatusBadRequest)
 		return
 	}
 	http.SetCookie(w, &http.Cookie{
@@ -280,32 +339,18 @@ func (h *AuthHandler) LogOut(w http.ResponseWriter, r *http.Request) {
 	log.LogHandlerInfo(logger, "Successful", http.StatusOK)
 }
 
-// UpdateUser godoc
-// @Summary Обновление информации пользователя
-// @Description Обновление полей пользователя (description, first_name, last_name, phone_number, password)
-// @Tags auth
-// @ID update_user
-// @Accept json
-// @Produce json
-// @Param input body models.UpdateUserReq false "Параметры для редактирования"
-// @Success 200 {object} models.User "Успешный ответ с обновленными данными пользователя"
-// @Failure 400 {object} utils.ErrorResponse "Ошибка при чтении куки"
-// @Failure 400 {object} utils.ErrorResponse "Ошибка парсинга или формирования JSON"
-// @Failure 401 {object} utils.ErrorResponse  "Токен не найден или недействителен"
-// @Failure 500 {object} utils.ErrorResponse  "Ошибка на сервере при обработке запроса"
-// @Router /auth/update_user [post]
 func (h *AuthHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
 	cookie, err := r.Cookie("AdminJWT")
 	if err != nil {
 		if err == http.ErrNoCookie {
-			log.LogHandlerError(logger, fmt.Errorf("Токен отсутствует: %w", err), http.StatusUnauthorized)
-			utils.SendError(w, "Токен отсутствует", http.StatusUnauthorized)
+			log.LogHandlerError(logger, fmt.Errorf("токен отсутствует: %w", err), http.StatusUnauthorized)
+			utils.SendError(w, "токен отсутствует", http.StatusUnauthorized)
 			return
 		}
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка при чтении куки: %w", err), http.StatusBadRequest)
-		utils.SendError(w, "Ошибка при чтении куки", http.StatusBadRequest)
+		log.LogHandlerError(logger, fmt.Errorf("ошибка при чтении куки: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "ошибка при чтении куки", http.StatusBadRequest)
 		return
 	}
 	JWTStr := cookie.Value
@@ -314,8 +359,8 @@ func (h *AuthHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 	login, ok := jwtUtils.GetLoginFromJWT(JWTStr, claims, h.secret)
 	if !ok || login == "" {
-		log.LogHandlerError(logger, errors.New("Недействительный токен: login отсутствует"), http.StatusUnauthorized)
-		utils.SendError(w, "Недействительный токен: login отсутствует", http.StatusUnauthorized)
+		log.LogHandlerError(logger, errors.New("недействительный токен: login отсутствует"), http.StatusUnauthorized)
+		utils.SendError(w, "недействительный токен: login отсутствует", http.StatusUnauthorized)
 		return
 	}
 
@@ -327,59 +372,79 @@ func (h *AuthHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 	var updateData models.UpdateUserReq
 	if err := easyjson.UnmarshalFromReader(r.Body, &updateData); err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка парсинга JSON: %w", err), http.StatusBadRequest)
-		utils.SendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
+		log.LogHandlerError(logger, fmt.Errorf("ошибка парсинга JSON: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "ошибка парсинга JSON", http.StatusBadRequest)
 		return
 	}
 	updateData.Sanitize()
 
-	updatedUser, err := h.uc.UpdateUser(r.Context(), login, updateData)
+	user, err := h.client.UpdateUser(r.Context(), &gen.UpdateUserRequest{
+		Login:       login,
+		Description: updateData.Description,
+		FirstName:   updateData.FirstName,
+		LastName:    updateData.LastName,
+		PhoneNumber: updateData.PhoneNumber,
+		Password:    updateData.Password,
+	})
 	if err != nil {
-		switch err {
-		case auth.ErrInvalidPassword, auth.ErrInvalidName, auth.ErrInvalidPhone, auth.ErrSamePassword:
+		st, ok := status.FromError(err)
+		if !ok {
+			log.LogHandlerError(logger, fmt.Errorf("не gRPC ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "внутренняя ошибка", http.StatusInternalServerError)
+			return
+		}
+
+		switch st.Code() {
+		case codes.InvalidArgument:
 			log.LogHandlerError(logger, err, http.StatusBadRequest)
-			utils.SendError(w, err.Error(), http.StatusBadRequest)
+			utils.SendError(w, st.Message(), http.StatusBadRequest)
 		default:
-			log.LogHandlerError(logger, fmt.Errorf("Ошибка обновления данных пользователя: %w", err), http.StatusInternalServerError)
-			utils.SendError(w, "Ошибка обновления данных пользователя", http.StatusInternalServerError)
+			log.LogHandlerError(logger, fmt.Errorf("ошибка обновления данных пользователя: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "ошибка обновления данных пользователя", http.StatusInternalServerError)
 		}
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(updatedUser); err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка формирования JSON: %w", err), http.StatusInternalServerError)
-		utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
+	parsedUUID, err := uuid.FromString(user.Id)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("некорректный id: %w", err), http.StatusUnauthorized)
+		utils.SendError(w, "некорректный id", http.StatusUnauthorized)
 	}
-	log.LogHandlerInfo(logger, "Successful", http.StatusOK)
+
+	newModel := models.User{
+		Login:       user.Login,
+		PhoneNumber: user.PhoneNumber,
+		Id:          parsedUUID,
+		FirstName:   user.FirstName,
+		LastName:    user.LastName,
+		Description: user.Description,
+		UserPic:     user.UserPic,
+	}
+
+	data, err := json.Marshal(newModel)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(data)
+	log.LogHandlerInfo(logger, "Success", http.StatusOK)
 }
 
-// UpdateUserPic godoc
-// @Summary Обновление аватарки пользователя
-// @Description Загружает новый файл аватарки пользователя. Поддерживаемые форматы: JPEG, PNG, WEBP.
-// @Tags auth
-// @ID update_userpic
-// @Accept multipart/form-data
-// @Produce json
-// @Param user_pic formData file true "Файл изображения"
-// @Success 200 {object} models.User "Успешное обновление аватарки у пользователя"
-// @Failure 400 {object} utils.ErrorResponse "Ошибка парсинга файла или формат не поддерживается"
-// @Failure 401 {object} utils.ErrorResponse "Проблемы с авторизацией, отсутствует токен"
-// @Failure 413 {object} utils.ErrorResponse "Файл слишком большой"
-// @Failure 500 {object} utils.ErrorResponse "Ошибка при работе с файлом или сервером"
-// @Router /auth/update_userpic [post]
 func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
 	cookie, err := r.Cookie("AdminJWT")
 	if err != nil {
 		if err == http.ErrNoCookie {
-			log.LogHandlerError(logger, fmt.Errorf("Токен отсутствует: %w", err), http.StatusUnauthorized)
-			utils.SendError(w, "Токен отсутствует", http.StatusUnauthorized)
+			log.LogHandlerError(logger, fmt.Errorf("токен отсутствует: %w", err), http.StatusUnauthorized)
+			utils.SendError(w, "токен отсутствует", http.StatusUnauthorized)
 			return
 		}
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка при чтении куки: %w", err), http.StatusBadRequest)
-		utils.SendError(w, "Ошибка при чтении куки", http.StatusBadRequest)
+		log.LogHandlerError(logger, fmt.Errorf("ошибка при чтении куки: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "ошибка при чтении куки", http.StatusBadRequest)
 		return
 	}
 	JWTStr := cookie.Value
@@ -388,8 +453,8 @@ func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) {
 
 	login, ok := jwtUtils.GetLoginFromJWT(JWTStr, claims, h.secret)
 	if !ok || login == "" {
-		log.LogHandlerError(logger, errors.New("Недействительный токен: login отсутствует"), http.StatusUnauthorized)
-		utils.SendError(w, "Недействительный токен: login отсутствует", http.StatusUnauthorized)
+		log.LogHandlerError(logger, errors.New("недействительный токен: login отсутствует"), http.StatusUnauthorized)
+		utils.SendError(w, "недействительный токен: login отсутствует", http.StatusUnauthorized)
 		return
 	}
 
@@ -403,11 +468,11 @@ func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) {
 
 	if err := r.ParseMultipartForm(maxRequestBodySize); err != nil {
 		if errors.As(err, new(*http.MaxBytesError)) {
-			log.LogHandlerError(logger, fmt.Errorf("Превышен допустимый размер файла: %w", err), http.StatusRequestEntityTooLarge)
-			utils.SendError(w, "Превышен допустимый размер файла", http.StatusRequestEntityTooLarge)
+			log.LogHandlerError(logger, fmt.Errorf("превышен допустимый размер файла: %w", err), http.StatusRequestEntityTooLarge)
+			utils.SendError(w, "превышен допустимый размер файла", http.StatusRequestEntityTooLarge)
 		} else {
-			log.LogHandlerError(logger, fmt.Errorf("Невозможно обработать файл: %w", err), http.StatusBadRequest)
-			utils.SendError(w, "Невозможно обработать файл", http.StatusBadRequest)
+			log.LogHandlerError(logger, fmt.Errorf("невозможно обработать файл: %w", err), http.StatusBadRequest)
+			utils.SendError(w, "невозможно обработать файл", http.StatusBadRequest)
 		}
 		return
 	}
@@ -420,78 +485,102 @@ func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) {
 
 	file, _, err := r.FormFile("user_pic")
 	if err != nil {
-		utils.SendError(w, "Файл не найден в запросе", http.StatusBadRequest)
+		utils.SendError(w, "файл не найден в запросе", http.StatusBadRequest)
 		return
 	}
 	defer file.Close()
 
 	buffer := make([]byte, 512)
 	if _, err := file.Read(buffer); err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка при чтении файла: %w", err), http.StatusBadRequest)
-		utils.SendError(w, "Ошибка при чтении файла", http.StatusBadRequest)
+		log.LogHandlerError(logger, fmt.Errorf("ошибка при чтении файла: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "ошибка при чтении файла", http.StatusBadRequest)
 		return
 	}
 	file.Seek(0, io.SeekStart)
 
 	mimeType := http.DetectContentType(buffer)
 	if _, ok := allowedMimeTypes[mimeType]; !ok {
-		log.LogHandlerError(logger, fmt.Errorf("Недопустимый формат файла: %w", err), http.StatusBadRequest)
-		utils.SendError(w, "Недопустимый формат файла.", http.StatusBadRequest)
+		log.LogHandlerError(logger, fmt.Errorf("недопустимый формат файла: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "недопустимый формат файла.", http.StatusBadRequest)
 		return
 	}
 
 	ext := allowedMimeTypes[mimeType]
 
-	updatedUser, err := h.uc.UpdateUserPic(r.Context(), login, file, ext)
+	picBytes, _ := io.ReadAll(file)
+
+	user, err := h.client.UpdateUserPic(r.Context(), &gen.UpdateUserPicRequest{
+		Login:         login,
+		UserPic:       picBytes,
+		FileExtension: ext,
+	})
 	if err != nil {
-		switch err {
-		case auth.ErrUserNotFound:
+		st, ok := status.FromError(err)
+		if !ok {
+			log.LogHandlerError(logger, fmt.Errorf("не gRPC ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "внутренняя ошибка", http.StatusInternalServerError)
+			return
+		}
+
+		switch st.Code() {
+		case codes.NotFound:
 			log.LogHandlerError(logger, err, http.StatusNotFound)
-			utils.SendError(w, err.Error(), http.StatusNotFound)
-		case auth.ErrBasePath:
-			log.LogHandlerError(logger, err, http.StatusInternalServerError)
-			utils.SendError(w, err.Error(), http.StatusInternalServerError)
-		case auth.ErrFileCreation, auth.ErrFileSaving, auth.ErrFileDeletion:
-			log.LogHandlerError(logger, fmt.Errorf("Ошибка при работе с файлом: %w", err), http.StatusInternalServerError)
-			utils.SendError(w, "Ошибка при работе с файлом", http.StatusInternalServerError)
+			utils.SendError(w, st.Message(), http.StatusNotFound)
+		case codes.Internal:
+			if strings.Contains(st.Message(), "файл") {
+				log.LogHandlerError(logger, fmt.Errorf("ошибка при работе с файлом: %w", err), http.StatusInternalServerError)
+				utils.SendError(w, "ошибка при работе с файлом", http.StatusInternalServerError)
+			} else {
+				log.LogHandlerError(logger, fmt.Errorf("ошибка при обновлении аватарки: %w", err), http.StatusInternalServerError)
+				utils.SendError(w, "ошибка при обновлении аватарки", http.StatusInternalServerError)
+			}
 		default:
-			log.LogHandlerError(logger, fmt.Errorf("Ошибка при обновлении аватарки: %w", err), http.StatusInternalServerError)
-			utils.SendError(w, "Ошибка при обновлении аватарки", http.StatusInternalServerError)
+			log.LogHandlerError(logger, fmt.Errorf("неизвестная ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "неизвестная ошибка", http.StatusInternalServerError)
 		}
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(updatedUser); err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка формирования JSON: %w", err), http.StatusInternalServerError)
-		utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
+	parsedUUID, err := uuid.FromString(user.Id)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("некорректный id: %w", err), http.StatusUnauthorized)
+		utils.SendError(w, "некорректный id", http.StatusUnauthorized)
 	}
-	log.LogHandlerInfo(logger, "Successful", http.StatusOK)
+
+	newModel := models.User{
+		Login:       user.Login,
+		PhoneNumber: user.PhoneNumber,
+		Id:          parsedUUID,
+		FirstName:   user.FirstName,
+		LastName:    user.LastName,
+		Description: user.Description,
+		UserPic:     user.UserPic,
+	}
+
+	data, err := json.Marshal(newModel)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(data)
+	log.LogHandlerInfo(logger, "Success", http.StatusOK)
 }
 
-// GetUserAddresses godoc
-// @Summary Получение адресов пользователя
-// @Description Возвращает список адресов, привязанных к пользователю.
-// @Tags auth
-// @ID get_addresses
-// @Produce json
-// @Success 200 {array} models.Address
-// @Failure 400 {object} utils.ErrorResponse "Ошибка чтения cookie"
-// @Failure 401 {object} utils.ErrorResponse "Проблемы с авторизацией"
-// @Failure 500 {object} utils.ErrorResponse "Ошибка на сервере при обработке запроса"
-// @Router /auth/get_addresses [get]
 func (h *AuthHandler) GetUserAddresses(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
 	cookie, err := r.Cookie("AdminJWT")
 	if err != nil {
 		if err == http.ErrNoCookie {
-			log.LogHandlerError(logger, fmt.Errorf("Токен отсутствует: %w", err), http.StatusUnauthorized)
-			utils.SendError(w, "Токен отсутствует", http.StatusUnauthorized)
+			log.LogHandlerError(logger, fmt.Errorf("токен отсутствует: %w", err), http.StatusUnauthorized)
+			utils.SendError(w, "токен отсутствует", http.StatusUnauthorized)
 			return
 		}
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка при чтении куки: %w", err), http.StatusBadRequest)
-		utils.SendError(w, "Ошибка при чтении куки", http.StatusBadRequest)
+		log.LogHandlerError(logger, fmt.Errorf("ошибка при чтении куки: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "ошибка при чтении куки", http.StatusBadRequest)
 		return
 	}
 	JWTStr := cookie.Value
@@ -500,8 +589,8 @@ func (h *AuthHandler) GetUserAddresses(w http.ResponseWriter, r *http.Request) {
 
 	login, ok := jwtUtils.GetLoginFromJWT(JWTStr, claims, h.secret)
 	if !ok || login == "" {
-		log.LogHandlerError(logger, errors.New("Недействительный токен: login отсутствует"), http.StatusUnauthorized)
-		utils.SendError(w, "Недействительный токен: login отсутствует", http.StatusUnauthorized)
+		log.LogHandlerError(logger, errors.New("недействительный токен: login отсутствует"), http.StatusUnauthorized)
+		utils.SendError(w, "недействительный токен: login отсутствует", http.StatusUnauthorized)
 		return
 	}
 
@@ -511,33 +600,59 @@ func (h *AuthHandler) GetUserAddresses(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	addresses, err := h.uc.GetUserAddresses(r.Context(), login)
+	addresses, err := h.client.GetUserAddresses(r.Context(), &gen.AddressRequest{
+		Login: login,
+	})
 	if err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка на уровне ниже (usecase): %w", err), http.StatusInternalServerError)
-		utils.SendError(w, err.Error(), http.StatusInternalServerError)
+		st, ok := status.FromError(err)
+		if !ok {
+			log.LogHandlerError(logger, fmt.Errorf("не gRPC ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "внутренняя ошибка", http.StatusInternalServerError)
+			return
+		}
+	
+		switch st.Code() {
+		case codes.Internal:
+			log.LogHandlerError(logger, fmt.Errorf("ошибка на уровне usecase: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "ошибка получения адресов", http.StatusInternalServerError)
+		default:
+			log.LogHandlerError(logger, fmt.Errorf("неизвестная ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "неизвестная ошибка", http.StatusInternalServerError)
+		}
+		return
+	}
+
+	var modelAddresses []models.Address
+	for _, addr := range addresses.Addresses {
+		parsedUUIDa, err := uuid.FromString(addr.Id)
+		if err != nil {
+			log.LogHandlerError(logger, fmt.Errorf("некорректный id адреса: %w", err), http.StatusUnauthorized)
+			utils.SendError(w, "некорректный id адреса", http.StatusUnauthorized)
+		}
+		parsedUUIDu, err := uuid.FromString(addr.UserId)
+		if err != nil {
+			log.LogHandlerError(logger, fmt.Errorf("некорректный id пользователя: %w", err), http.StatusUnauthorized)
+			utils.SendError(w, "некорректный id пользователя", http.StatusUnauthorized)
+		}
+		modelAddresses = append(modelAddresses, models.Address{
+			Id:      parsedUUIDa,
+			Address: addr.Address,
+			UserId:  parsedUUIDu,
+		})
+	}
+
+	data, err := json.Marshal(modelAddresses)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "не удалось сериализовать данные", http.StatusInternalServerError)
 		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(addresses); err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка формирования JSON: %w", err), http.StatusInternalServerError)
-		utils.SendError(w, "Ошибка формирования JSON", http.StatusInternalServerError)
-	}
-	log.LogHandlerInfo(logger, "Successful", http.StatusOK)
+	w.Write(data)
+	log.LogHandlerInfo(logger, "Success", http.StatusOK)
 }
 
-// DeleteAddress godoc
-// @Summary Удаление адреса пользователя
-// @Description Удаляет адрес по его ID. Тело запроса должно содержать JSON с полем id.
-// @Tags auth
-// @ID delete_address
-// @Accept json
-// @Produce json
-// @Param input body models.DeleteAddressReq true "ID адреса для удаления"
-// @Success 200
-// @Failure 400 {object} utils.ErrorResponse "Ошибка парсинга JSON"
-// @Failure 500 {object} utils.ErrorResponse "Ошибка на сервере при обработке запроса"
-// @Router /auth/delete_address [post]
 func (h *AuthHandler) DeleteAddress(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
@@ -549,47 +664,53 @@ func (h *AuthHandler) DeleteAddress(w http.ResponseWriter, r *http.Request) {
 	var address models.Address
 	err := easyjson.UnmarshalFromReader(r.Body, &address)
 	if err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка парсинга JSON: %w", err), http.StatusBadRequest)
-		utils.SendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
+		log.LogHandlerError(logger, fmt.Errorf("ошибка парсинга JSON: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "ошибка парсинга JSON", http.StatusBadRequest)
 		return
 	}
 	address.Sanitize()
 
-	err = h.uc.DeleteAddress(r.Context(), address.Id)
+	_, err = h.client.DeleteAddress(r.Context(), &gen.DeleteAddressRequest{
+		Id: address.Id.String(),
+	})
 	if err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка на уровне ниже (usecase): %w", err), http.StatusInternalServerError)
-		utils.SendError(w, err.Error(), http.StatusInternalServerError)
+		st, ok := status.FromError(err)
+		if !ok {
+			log.LogHandlerError(logger, fmt.Errorf("не gRPC ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "внутренняя ошибка", http.StatusInternalServerError)
+			return
+		}
+	
+		switch st.Code() {
+		case codes.InvalidArgument:
+			log.LogHandlerError(logger, err, http.StatusBadRequest)
+			utils.SendError(w, st.Message(), http.StatusBadRequest)
+		case codes.Internal:
+			log.LogHandlerError(logger, err, http.StatusInternalServerError)
+			utils.SendError(w, "ошибка удаления адреса", http.StatusInternalServerError)
+		default:
+			log.LogHandlerError(logger, fmt.Errorf("неизвестная ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "неизвестная ошибка", http.StatusInternalServerError)
+		}
+		return
 	}
 
 	logger.Info("Successful")
 	w.Header().Set("Content-Type", "application/json")
 }
 
-// AddAddress godoc
-// @Summary Добавление адреса пользователю
-// @Description Привязывание адреса к аккаунту пользователя (аккаунт может быть связан с несколькими адресами)
-// @Tags auth
-// @ID add_address
-// @Accept json
-// @Produce json
-// @Param address body models.Address true "Адрес для добавления (поле UserId будет установлено автоматически из токена)"
-// @Success 200
-// @Failure 400 {object} utils.ErrorResponse "Ошибка парсинга JSON или отсутствует токен"
-// @Failure 401 {object} utils.ErrorResponse "Недействительный или отсутствующий токен"
-// @Failure 500 {object} utils.ErrorResponse "Внутренняя ошибка при добавлении адреса"
-// @Router /auth/add_address [post]
 func (h *AuthHandler) AddAddress(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 
 	cookie, err := r.Cookie("AdminJWT")
 	if err != nil {
 		if err == http.ErrNoCookie {
-			log.LogHandlerError(logger, fmt.Errorf("Токен отсутствует: %w", err), http.StatusUnauthorized)
-			utils.SendError(w, "Токен отсутствует", http.StatusUnauthorized)
+			log.LogHandlerError(logger, fmt.Errorf("токен отсутствует: %w", err), http.StatusUnauthorized)
+			utils.SendError(w, "токен отсутствует", http.StatusUnauthorized)
 			return
 		}
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка при чтении куки: %w", err), http.StatusBadRequest)
-		utils.SendError(w, "Ошибка при чтении куки", http.StatusBadRequest)
+		log.LogHandlerError(logger, fmt.Errorf("ошибка при чтении куки: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "ошибка при чтении куки", http.StatusBadRequest)
 		return
 	}
 	JWTStr := cookie.Value
@@ -598,8 +719,8 @@ func (h *AuthHandler) AddAddress(w http.ResponseWriter, r *http.Request) {
 
 	idStr, ok := jwtUtils.GetIdFromJWT(JWTStr, claims, h.secret)
 	if !ok || idStr == "" {
-		log.LogHandlerError(logger, errors.New("Недействительный токен: id отсутствует"), http.StatusUnauthorized)
-		utils.SendError(w, "Недействительный токен: id отсутствует", http.StatusUnauthorized)
+		log.LogHandlerError(logger, errors.New("недействительный токен: id отсутствует"), http.StatusUnauthorized)
+		utils.SendError(w, "недействительный токен: id отсутствует", http.StatusUnauthorized)
 		return
 	}
 
@@ -618,17 +739,38 @@ func (h *AuthHandler) AddAddress(w http.ResponseWriter, r *http.Request) {
 	var address models.Address
 	err = easyjson.UnmarshalFromReader(r.Body, &address)
 	if err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка парсинга JSON: %w", err), http.StatusBadRequest)
-		utils.SendError(w, "Ошибка парсинга JSON", http.StatusBadRequest)
+		log.LogHandlerError(logger, fmt.Errorf("ошибка парсинга JSON: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "ошибка парсинга JSON", http.StatusBadRequest)
 		return
 	}
 	address.UserId = id
 	address.Sanitize()
 
-	err = h.uc.AddAddress(r.Context(), address)
+	_, err = h.client.AddAddress(r.Context(), &gen.Address{
+		Id:      address.Id.String(),
+		Address: address.Address,
+		UserId:  address.UserId.String(),
+	})
 	if err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("Ошибка на уровне ниже (usecase): %w", err), http.StatusInternalServerError)
-		utils.SendError(w, err.Error(), http.StatusInternalServerError)
+		st, ok := status.FromError(err)
+		if !ok {
+			log.LogHandlerError(logger, fmt.Errorf("не gRPC ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "внутренняя ошибка", http.StatusInternalServerError)
+			return
+		}
+	
+		switch st.Code() {
+		case codes.InvalidArgument:
+			log.LogHandlerError(logger, err, http.StatusBadRequest)
+			utils.SendError(w, st.Message(), http.StatusBadRequest)
+		case codes.Internal:
+			log.LogHandlerError(logger, err, http.StatusInternalServerError)
+			utils.SendError(w, "ошибка при добавлении адреса", http.StatusInternalServerError)
+		default:
+			log.LogHandlerError(logger, fmt.Errorf("неизвестная ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "неизвестная ошибка", http.StatusInternalServerError)
+		}
+		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")

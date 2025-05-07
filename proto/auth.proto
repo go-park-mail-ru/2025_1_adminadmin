@@ -1,0 +1,87 @@
+syntax = "proto3";
+
+package auth;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "./internal/pkg/auth/delivery/grpc/gen";
+
+service AuthService {
+  rpc SignIn (SignInRequest) returns (UserResponse) {}
+  
+  rpc SignUp (SignUpRequest) returns (UserResponse) {}
+  
+  rpc Check (CheckRequest) returns (UserResponse) {}
+    
+  rpc UpdateUser (UpdateUserRequest) returns (UserResponse) {}
+  
+  rpc UpdateUserPic (UpdateUserPicRequest) returns (UserResponse) {}
+  
+  rpc GetUserAddresses (AddressRequest) returns (AddressListResponse) {}
+  
+  rpc DeleteAddress (DeleteAddressRequest) returns (google.protobuf.Empty) {}
+  
+  rpc AddAddress (Address) returns (google.protobuf.Empty) {}
+}
+
+message CheckRequest {
+  string Login = 1;
+}
+
+message AddressRequest {
+  string Login = 1;
+}
+
+message SignInRequest {
+  string Login = 1;
+  string Password = 2;
+}
+
+message SignUpRequest {
+  string Login = 1;
+  string FirstName = 2;
+  string LastName = 3;
+  string PhoneNumber = 4;
+  string Password = 5;
+}
+
+message UpdateUserRequest {
+  string Login = 1;
+  string Description = 2;
+  string FirstName = 3;
+  string LastName = 4;
+  string PhoneNumber = 5;
+  string Password = 6;
+}
+
+message UpdateUserPicRequest {
+  string login = 1;
+  bytes user_pic = 2; 
+  string file_extension = 3;
+}
+
+message DeleteAddressRequest {
+  string Id = 1; 
+}
+
+message Address {
+  string Id = 1; 
+  string Address = 2;
+  string UserId = 3; 
+}
+
+message UserResponse {
+  string Login = 1;
+  string PhoneNumber = 2;
+  string Id = 3; 
+  string FirstName = 4;
+  string LastName = 5;
+  string Description = 6;
+  string UserPic = 7; 
+  string Token = 8;
+  string CsrfToken = 9;
+}
+
+message AddressListResponse {
+  repeated Address Addresses = 1;
+}

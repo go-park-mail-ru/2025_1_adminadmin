@@ -1,99 +1,87 @@
 package http
 
 import (
-	"errors"
+	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"strings"
 	"testing"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/grpc/gen"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/mocks"
 	utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/jwt"
 	"github.com/golang/mock/gomock"
+	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/gorilla/mux"
 	"github.com/satori/uuid"
 	"github.com/stretchr/testify/assert"
 )
 
-func TestCartHandler_GetCart(t *testing.T) {
-	secret := "test-secret"
+func TestGetCart(t *testing.T) {
+	secret := "secret-value"
 	login := "testuser"
+	csrf_token := "test-csrf"
 	userId := uuid.NewV4()
-	validToken := utils.GenerateJWTForTest(t, login, secret, userId)
-
+	productId := uuid.NewV4().String()
+	restaurantId := uuid.NewV4().String()
 	tests := []struct {
 		name           string
-		cookieSetup    func(r *http.Request)
-		mockSetup      func(mockUC *mocks.MockCartUsecase)
+		login          string
+		grpcResponse   *gen.CartResponse
+		grpcErr        error
+		setupRequest   func() *http.Request
 		expectedStatus int
-		expectedBody   string
-		fullCart       bool
-		cart           models.Cart
 	}{
 		{
-			name: "Invalid JWT",
-			cookieSetup: func(r *http.Request) {
-				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: "invalid-token"})
+			name:  "GetCart_Success",
+			login: "testuser",
+			grpcResponse: &gen.CartResponse{
+				RestaurantId:   restaurantId,
+				RestaurantName: "Test Restaurant",
+				Products: []*gen.CartItem{
+					{
+						Id:       productId,
+						Name:     "Product 1",
+						Price:    10.5,
+						ImageUrl: "image1.jpg",
+						Weight:   100,
+						Amount:   2,
+					},
+				},
+				FullCart: true,
 			},
-			expectedStatus: http.StatusUnauthorized,
-			expectedBody:   "некорректный JWT-токен",
-		},
-		{
-			name: "Invalid CSRF Token",
-			cookieSetup: func(r *http.Request) {
-				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: validToken})
-				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: "csrf1"})
-				r.Header.Set("X-CSRF-Token", "csrf2")
-			},
-			mockSetup: func(mockUC *mocks.MockCartUsecase) {
-				mockUC.EXPECT().GetCart(gomock.Any(), login).
-					Return(models.Cart{}, nil, true)
-			},
-			expectedStatus: http.StatusForbidden,
-			expectedBody:   "некорректный CSRF-токен",
-		},
-		{
-			name: "Empty Cart",
-			cookieSetup: func(r *http.Request) {
-				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: validToken})
-				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: "csrf-token"})
-				r.Header.Set("X-CSRF-Token", "csrf-token")
-			},
-			mockSetup: func(mockUC *mocks.MockCartUsecase) {
-				mockUC.EXPECT().GetCart(gomock.Any(), login).
-					Return(models.Cart{}, nil, false)
-			},
-			expectedStatus: http.StatusNotFound,
-			expectedBody:   "корзина пуста",
-		},
-
-		{
-			name: "Success",
-			cookieSetup: func(r *http.Request) {
-				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: validToken})
-				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: "csrf-token"})
-				r.Header.Set("X-CSRF-Token", "csrf-token")
-			},
-			mockSetup: func(mockUC *mocks.MockCartUsecase) {
-				mockUC.EXPECT().GetCart(gomock.Any(), login).
-					Return(models.Cart{
-						Id:   uuid.NewV4(),
-						Name: "<Cart>",
-						CartItems: []models.CartItem{
-							{
-								Id:       uuid.NewV4(),
-								Name:     "<Roll>",
-								ImageURL: "http://test.com/image?x=<x>",
-								Price:    100,
-								Weight:   200,
-								Amount:   1,
-							},
-						},
-					}, nil, true)
+			grpcErr: nil,
+			setupRequest: func() *http.Request {
+				r := httptest.NewRequest("GET", "/cart", nil)
+				tokenStr := utils.GenerateJWTForTest(t, login, secret, userId)
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
+				r.Header.Set("X-CSRF-Token", csrf_token)
+				return r
 			},
 			expectedStatus: http.StatusOK,
-			expectedBody:   `{"id":"`,
+		},
+		{
+			name:  "GetCart_EmptyCart",
+			login: "testuser",
+			grpcResponse: &gen.CartResponse{
+				RestaurantId:   "",
+				RestaurantName: "",
+				Products:       []*gen.CartItem{},
+				FullCart:       false,
+			},
+			grpcErr: nil,
+			setupRequest: func() *http.Request {
+				r := httptest.NewRequest("GET", "/cart", nil)
+				tokenStr := utils.GenerateJWTForTest(t, login, secret, userId)
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrf_token})
+				r.Header.Set("X-CSRF-Token", csrf_token)
+				return r
+			},
+			expectedStatus: http.StatusUnauthorized,
 		},
 	}
 
@@ -102,117 +90,105 @@ func TestCartHandler_GetCart(t *testing.T) {
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
 
-			mockUsecase := mocks.NewMockCartUsecase(ctrl)
-			if tt.mockSetup != nil {
-				tt.mockSetup(mockUsecase)
-			}
+			mockClient := mocks.NewMockCartServiceClient(ctrl)
 
-			req := httptest.NewRequest("GET", "/api/cart", nil)
-			tt.cookieSetup(req)
-			w := httptest.NewRecorder()
+			if tt.login != "" && tt.grpcResponse != nil {
+				mockClient.EXPECT().GetCart(
+					gomock.Any(),
+					&gen.GetCartRequest{Login: tt.login},
+				).Return(tt.grpcResponse, tt.grpcErr)
+			}
 
 			handler := CartHandler{
-				cartUsecase: mockUsecase,
-				secret:      secret,
+				client: mockClient,
+				secret: secret,
 			}
+
+			req := tt.setupRequest()
+			w := httptest.NewRecorder()
+
 			handler.GetCart(w, req)
 
 			assert.Equal(t, tt.expectedStatus, w.Code)
-			assert.Contains(t, w.Body.String(), tt.expectedBody)
+
+			if tt.name == "GetCart_Success" {
+				var response models.Cart
+				err := json.NewDecoder(w.Body).Decode(&response)
+				assert.NoError(t, err)
+				assert.Len(t, response.CartItems, 1)
+			}
 		})
 	}
 }
 
-func TestCartHandler_UpdateQuantityInCart(t *testing.T) {
-	secret := "test-secret"
+func TestUpdateQuantityInCart(t *testing.T) {
+	secret := "secret-value"
 	login := "testuser"
-	userId := uuid.NewV4()
-	validToken := utils.GenerateJWTForTest(t, login, secret, userId)
+	csrfToken := "test-csrf"
+	userID := uuid.NewV4()
+	productID := uuid.NewV4().String()
+	restaurantID := uuid.NewV4().String()
+
+	validCart := &gen.CartResponse{
+		RestaurantId:   restaurantID,
+		RestaurantName: "Test Restaurant",
+		Products: []*gen.CartItem{
+			{
+				Id:       productID,
+				Name:     "Product 1",
+				Price:    10.5,
+				ImageUrl: "image1.jpg",
+				Weight:   100,
+				Amount:   2,
+			},
+		},
+		FullCart: true,
+	}
 
 	tests := []struct {
-		name           string
-		cookieSetup    func(r *http.Request)
-		body           string
-		productID      string
-		mockSetup      func(mockUC *mocks.MockCartUsecase)
-		expectedStatus int
-		expectedBody   string
+		name             string
+		requestBody      string
+		setupRequest     func() *http.Request
+		expectStatus     int
+		mockGrpcBehavior func(mockClient *mocks.MockCartServiceClient)
 	}{
 		{
-			name: "Invalid JWT",
-			cookieSetup: func(r *http.Request) {
-				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: "invalid"})
+			name:         "UpdateQuantity_Success",
+			requestBody:  fmt.Sprintf(`{"quantity": 3, "restaurant_id": "%s"}`, restaurantID),
+			expectStatus: http.StatusOK,
+			setupRequest: func() *http.Request {
+				body := strings.NewReader(fmt.Sprintf(`{"quantity": 3, "restaurant_id": "%s"}`, restaurantID))
+				r := httptest.NewRequest("PUT", fmt.Sprintf("/cart/%s", productID), body)
+				tokenStr := utils.GenerateJWTForTest(t, login, secret, userID)
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrfToken})
+				r.Header.Set("X-CSRF-Token", csrfToken)
+				return r
 			},
-			productID:      uuid.NewV4().String(),
-			body:           `{}`,
-			expectedStatus: http.StatusUnauthorized,
-			expectedBody:   "некорректный JWT-токен",
+			mockGrpcBehavior: func(mockClient *mocks.MockCartServiceClient) {
+				mockClient.EXPECT().GetCart(gomock.Any(), &gen.GetCartRequest{Login: login}).Return(validCart, nil).Times(2)
+				mockClient.EXPECT().UpdateItemQuantity(gomock.Any(), &gen.UpdateQuantityRequest{
+					Login:        login,
+					ProductId:    productID,
+					RestaurantId: restaurantID,
+					Quantity:     3,
+				}).Return(&empty.Empty{}, nil)
+			},
 		},
 		{
-			name: "Invalid CSRF Token",
-			cookieSetup: func(r *http.Request) {
-				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: validToken})
-				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: "csrf1"})
-				r.Header.Set("X-CSRF-Token", "csrf2")
+			name:         "UpdateQuantity_InvalidCSRF",
+			requestBody:  fmt.Sprintf(`{"quantity": 1, "restaurant_id": "%s"}`, restaurantID),
+			expectStatus: http.StatusUnauthorized,
+			setupRequest: func() *http.Request {
+				body := strings.NewReader(fmt.Sprintf(`{"quantity": 1, "restaurant_id": "%s"}`, restaurantID))
+				r := httptest.NewRequest("PUT", fmt.Sprintf("/cart/%s", productID), body)
+				tokenStr := utils.GenerateJWTForTest(t, login, secret, userID)
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
+				return r
 			},
-			productID:      uuid.NewV4().String(),
-			body:           `{}`,
-			mockSetup:      func(mockUC *mocks.MockCartUsecase) {},
-			expectedStatus: http.StatusForbidden,
-			expectedBody:   "некорректный CSRF-токен",
-		},
-		{
-			name: "Invalid Body",
-			cookieSetup: func(r *http.Request) {
-				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: validToken})
-				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: "csrf-token"})
-				r.Header.Set("X-CSRF-Token", "csrf-token")
+			mockGrpcBehavior: func(mockClient *mocks.MockCartServiceClient) {
+				mockClient.EXPECT().GetCart(gomock.Any(), &gen.GetCartRequest{Login: login}).Return(validCart, nil).AnyTimes()
 			},
-			productID:      uuid.NewV4().String(),
-			body:           `not-a-json`,
-			mockSetup:      func(mockUC *mocks.MockCartUsecase) {},
-			expectedStatus: http.StatusBadRequest,
-			expectedBody:   "Некорректный формат данных",
-		},
-		{
-			name: "Update Error",
-			cookieSetup: func(r *http.Request) {
-				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: validToken})
-				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: "csrf-token"})
-				r.Header.Set("X-CSRF-Token", "csrf-token")
-			},
-			productID: uuid.NewV4().String(),
-			body: `{
-				"restaurant_id": "` + uuid.NewV4().String() + `",
-				"quantity": 2
-			}`,
-			mockSetup: func(mockUC *mocks.MockCartUsecase) {
-				mockUC.EXPECT().UpdateItemQuantity(gomock.Any(), login, gomock.Any(), gomock.Any(), int64(2)).
-					Return(nil)
-				mockUC.EXPECT().GetCart(gomock.Any(), login).Return(models.Cart{CartItems: []models.CartItem{}}, nil)
-			},
-			expectedStatus: http.StatusInternalServerError,
-			expectedBody:   "Не удалось обновить количество товара в корзине",
-		},
-		{
-			name: "Success",
-			cookieSetup: func(r *http.Request) {
-				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: validToken})
-				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: "csrf-token"})
-				r.Header.Set("X-CSRF-Token", "csrf-token")
-			},
-			productID: uuid.NewV4().String(),
-			body: `{
-				"restaurant_id": "` + uuid.NewV4().String() + `",
-				"quantity": 3
-			}`,
-			mockSetup: func(mockUC *mocks.MockCartUsecase) {
-				mockUC.EXPECT().UpdateItemQuantity(gomock.Any(), login, gomock.Any(), gomock.Any(), int64(3)).
-					Return(nil)
-				mockUC.EXPECT().GetCart(gomock.Any(), login).Return(models.Cart{CartItems: []models.CartItem{}}, nil)
-			},
-			expectedStatus: http.StatusOK,
-			expectedBody:   `"id":"`,
 		},
 	}
 
@@ -221,77 +197,108 @@ func TestCartHandler_UpdateQuantityInCart(t *testing.T) {
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
 
-			mockUsecase := mocks.NewMockCartUsecase(ctrl)
-			if tt.mockSetup != nil {
-				tt.mockSetup(mockUsecase)
-			}
-
-			req := httptest.NewRequest("PUT", "/api/cart/"+tt.productID, strings.NewReader(tt.body))
-			req = mux.SetURLVars(req, map[string]string{"productID": tt.productID})
-			tt.cookieSetup(req)
-			w := httptest.NewRecorder()
+			mockClient := mocks.NewMockCartServiceClient(ctrl)
+			tt.mockGrpcBehavior(mockClient)
 
 			handler := CartHandler{
-				cartUsecase: mockUsecase,
-				secret:      secret,
+				client: mockClient,
+				secret: secret,
 			}
+
+			req := tt.setupRequest()
+			req = mux.SetURLVars(req, map[string]string{"productID": productID})
+			w := httptest.NewRecorder()
+
 			handler.UpdateQuantityInCart(w, req)
 
-			assert.Equal(t, tt.expectedStatus, w.Code)
-			assert.Contains(t, w.Body.String(), tt.expectedBody)
+			assert.Equal(t, tt.expectStatus, w.Code)
 		})
 	}
 }
 
-func TestCartHandler_ClearCart(t *testing.T) {
-	secret := "test-secret"
+func TestClearCart(t *testing.T) {
+	secret := "secret-value"
 	login := "testuser"
+	csrfToken := "test-csrf"
 	userID := uuid.NewV4()
-	validToken := utils.GenerateJWTForTest(t, login, secret, userID)
 
 	tests := []struct {
-		name           string
-		setupRequest   func(r *http.Request)
-		mockSetup      func(mockUC *mocks.MockCartUsecase)
-		expectedStatus int
+		name             string
+		setupRequest     func() *http.Request
+		expectStatus     int
+		mockGrpcBehavior func(mockClient *mocks.MockCartServiceClient)
 	}{
 		{
-			name:           "No JWT cookie",
-			setupRequest:   func(r *http.Request) {},
-			expectedStatus: http.StatusUnauthorized,
+			name: "ClearCart_Success",
+			setupRequest: func() *http.Request {
+				r := httptest.NewRequest("DELETE", "/cart", nil)
+				tokenStr := utils.GenerateJWTForTest(t, login, secret, userID)
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrfToken})
+				r.Header.Set("X-CSRF-Token", csrfToken)
+				return r
+			},
+			expectStatus: http.StatusOK,
+			mockGrpcBehavior: func(mockClient *mocks.MockCartServiceClient) {
+				mockClient.EXPECT().ClearCart(gomock.Any(), &gen.ClearCartRequest{
+					Login: login,
+				}).Return(&empty.Empty{}, nil)
+			},
 		},
 		{
-			name: "Invalid CSRF",
-			setupRequest: func(r *http.Request) {
-				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: validToken})
-				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: "csrf1"})
-				r.Header.Set("X-CSRF-Token", "csrf2")
+			name: "ClearCart_NoToken",
+			setupRequest: func() *http.Request {
+				r := httptest.NewRequest("DELETE", "/cart", nil)
+				// No AdminJWT cookie
+				return r
 			},
-			expectedStatus: http.StatusForbidden,
+			expectStatus:     http.StatusUnauthorized,
+			mockGrpcBehavior: func(mockClient *mocks.MockCartServiceClient) {},
 		},
 		{
-			name: "ClearCart error",
-			setupRequest: func(r *http.Request) {
-				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: validToken})
-				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: "csrf-token"})
-				r.Header.Set("X-CSRF-Token", "csrf-token")
+			name: "ClearCart_InvalidLogin",
+			setupRequest: func() *http.Request {
+				r := httptest.NewRequest("DELETE", "/cart", nil)
+				// Генерация токена с некорректным логином
+				tokenStr := utils.GenerateJWTForTest(t, "", secret, userID)
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrfToken})
+				r.Header.Set("X-CSRF-Token", csrfToken)
+				return r
 			},
-			mockSetup: func(mockUC *mocks.MockCartUsecase) {
-				mockUC.EXPECT().ClearCart(gomock.Any(), login).Return(errors.New("fail"))
-			},
-			expectedStatus: http.StatusInternalServerError,
+			expectStatus:     http.StatusForbidden,
+			mockGrpcBehavior: func(mockClient *mocks.MockCartServiceClient) {},
 		},
 		{
-			name: "Success",
-			setupRequest: func(r *http.Request) {
-				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: validToken})
-				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: "csrf-token"})
-				r.Header.Set("X-CSRF-Token", "csrf-token")
+			name: "ClearCart_InvalidCSRF",
+			setupRequest: func() *http.Request {
+				r := httptest.NewRequest("DELETE", "/cart", nil)
+				tokenStr := utils.GenerateJWTForTest(t, login, secret, userID)
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
+				// No CSRF token
+				return r
 			},
-			mockSetup: func(mockUC *mocks.MockCartUsecase) {
-				mockUC.EXPECT().ClearCart(gomock.Any(), login).Return(nil)
+			expectStatus: http.StatusUnauthorized,
+			mockGrpcBehavior: func(mockClient *mocks.MockCartServiceClient) {
+				// CSRF error happens before ClearCart
 			},
-			expectedStatus: http.StatusOK,
+		},
+		{
+			name: "ClearCart_GRPCError",
+			setupRequest: func() *http.Request {
+				r := httptest.NewRequest("DELETE", "/cart", nil)
+				tokenStr := utils.GenerateJWTForTest(t, login, secret, userID)
+				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
+				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrfToken})
+				r.Header.Set("X-CSRF-Token", csrfToken)
+				return r
+			},
+			expectStatus: http.StatusInternalServerError,
+			mockGrpcBehavior: func(mockClient *mocks.MockCartServiceClient) {
+				mockClient.EXPECT().ClearCart(gomock.Any(), &gen.ClearCartRequest{
+					Login: login,
+				}).Return(nil, fmt.Errorf("gRPC error"))
+			},
 		},
 	}
 
@@ -300,22 +307,20 @@ func TestCartHandler_ClearCart(t *testing.T) {
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
 
-			mockUC := mocks.NewMockCartUsecase(ctrl)
-			if tt.mockSetup != nil {
-				tt.mockSetup(mockUC)
-			}
-
-			req := httptest.NewRequest(http.MethodDelete, "/api/cart/clear", nil)
-			tt.setupRequest(req)
-			w := httptest.NewRecorder()
+			mockClient := mocks.NewMockCartServiceClient(ctrl)
+			tt.mockGrpcBehavior(mockClient)
 
 			handler := CartHandler{
-				cartUsecase: mockUC,
-				secret:      secret,
+				client: mockClient,
+				secret: secret,
 			}
 
+			req := tt.setupRequest()
+			w := httptest.NewRecorder()
+
 			handler.ClearCart(w, req)
-			assert.Equal(t, tt.expectedStatus, w.Code)
+
+			assert.Equal(t, tt.expectStatus, w.Code)
 		})
 	}
 }

@@ -11,48 +11,24 @@ import (
 	"syscall"
 	"time"
 
+	authGen "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/grpc/gen"
 	authHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/http"
-	authRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/repo"
-	authUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/usecase"
+	cartGen "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/grpc/gen"
 	cartHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/http"
-	cartPgRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/pg"
-	cartRedisRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/redis"
-	cartUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/usecase"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/metrics"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/middleware/cors"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/middleware/log"
+	metricsmw "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/middleware/metrics"
 	restaurantDelivery "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/delivery/http"
 	restaurantRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/repo"
 	restaurantUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/restaurants/usecase"
+	searchDelivery "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/search/delivery/http"
+	searchRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/search/repo"
+	searchUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/search/usecase"
 	"github.com/gorilla/mux"
-	"github.com/jackc/pgx/v4/pgxpool"
-	"github.com/redis/go-redis/v9"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"google.golang.org/grpc"
 )
-
-func initRedis() *redis.Client {
-	client := redis.NewClient(&redis.Options{
-		Addr:     os.Getenv("REDIS_ADDR"),
-		Password: "",
-		DB:       0,
-	})
-	return client
-}
-
-func initDB(logger *slog.Logger) (*pgxpool.Pool, error) {
-	connStr := os.Getenv("POSTGRES_CONN")
-
-	pool, err := pgxpool.Connect(context.Background(), connStr)
-	if err != nil {
-		return nil, err
-	}
-
-	err = pool.Ping(context.Background())
-	if err != nil {
-		return nil, err
-	}
-
-	logger.Info("Успешное подключение к PostgreSQL")
-	return pool, nil
-}
 
 // @title AdminAdmin API
 // @version 1.0
@@ -69,27 +45,47 @@ func main() {
 
 	logger := slog.New(slog.NewJSONHandler(io.MultiWriter(logFile, os.Stdout), &slog.HandlerOptions{Level: slog.LevelInfo}))
 
-	pool, err := initDB(logger)
+	cartConn, err := grpc.Dial("cart:5460", grpc.WithInsecure())
 	if err != nil {
-		logger.Error("Ошибка при подключении к PostgreSQL: " + err.Error())
+		logger.Error("Ошибка подключения к gRPC Cart-сервису: " + err.Error())
+		return
 	}
-	defer pool.Close()
+	defer cartConn.Close()
 
-	redisClient := initRedis()
-	cartRepoPg := cartPgRepo.NewRestaurantRepository(pool)
-	cartRepoRedis := cartRedisRepo.NewCartRepository(redisClient)
-	cartUsecase := cartUsecase.NewCartUsecase(cartRepoRedis, cartRepoPg)
-	cartHandler := cartHandler.NewCartHandler(cartUsecase)
+	cartGRPCClient := cartGen.NewCartServiceClient(cartConn)
+	cartHandler := cartHandler.NewCartHandler(cartGRPCClient)
 
+	Metrics, err := metrics.NewHttpMetrics("main")
+	if err != nil {
+		logger.Error("can't create metrics")
+	}
+	MetricsMiddleware := metricsmw.CreateHttpMetricsMiddleware(Metrics, logger)
 	logMW := log.CreateLoggerMiddleware(logger)
 
-	authRepo := authRepo.CreateAuthRepo(pool)
-	authUsecase := authUsecase.CreateAuthUsecase(authRepo)
-	authHandler := authHandler.CreateAuthHandler(authUsecase)
+	conn, err := grpc.Dial("auth:5459", grpc.WithInsecure())
+	if err != nil {
+		logger.Error("Ошибка подключения к gRPC Auth-сервису: " + err.Error())
+		return
+	}
+	defer conn.Close()
 
-	restaurantRepo := restaurantRepo.NewRestaurantRepository(pool)
+	authGRPCClient := authGen.NewAuthServiceClient(conn)
+
+	authHandler := authHandler.CreateAuthHandler(authGRPCClient)
+
+	restaurantRepo, err := restaurantRepo.NewRestaurantRepository()
+	if err != nil {
+		return
+	}
 	restaurantUsecase := restaurantUsecase.NewRestaurantsUsecase(restaurantRepo)
 	restaurantDelivery := restaurantDelivery.NewRestaurantHandler(restaurantUsecase)
+
+	searchRep, err := searchRepo.NewSearchRepo()
+	if err != nil {
+		return
+	}
+	searchUsecase := searchUsecase.NewSearchUsecase(searchRep)
+	searchDelivery := searchDelivery.NewSearchHandler(searchUsecase)
 
 	r := mux.NewRouter().PathPrefix("/api").Subrouter()
 	r.NotFoundHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -98,12 +94,14 @@ func main() {
 
 	r.Use(
 		logMW,
+		MetricsMiddleware,
 		cors.CorsMiddleware)
 
 	auth := r.PathPrefix("/auth").Subrouter()
 	{
-		auth.HandleFunc("/signup", authHandler.SignUp).Methods(http.MethodPost, http.MethodOptions)
+
 		auth.HandleFunc("/signin", authHandler.SignIn).Methods(http.MethodPost, http.MethodOptions)
+		auth.HandleFunc("/signup", authHandler.SignUp).Methods(http.MethodPost, http.MethodOptions)
 		auth.HandleFunc("/check", authHandler.Check).Methods(http.MethodGet, http.MethodOptions)
 		auth.HandleFunc("/logout", authHandler.LogOut).Methods(http.MethodGet, http.MethodOptions)
 		auth.HandleFunc("/update_user", authHandler.UpdateUser).Methods(http.MethodPost, http.MethodOptions)
@@ -111,11 +109,16 @@ func main() {
 		auth.HandleFunc("/address", authHandler.GetUserAddresses).Methods(http.MethodGet, http.MethodOptions)
 		auth.HandleFunc("/address", authHandler.DeleteAddress).Methods(http.MethodDelete, http.MethodOptions)
 		auth.HandleFunc("/address", authHandler.AddAddress).Methods(http.MethodPost, http.MethodOptions)
+
 	}
 	restaurants := r.PathPrefix("/restaurants").Subrouter()
 	{
 		restaurants.HandleFunc("/list", restaurantDelivery.RestaurantList).Methods(http.MethodGet, http.MethodOptions)
 		restaurants.HandleFunc("/{id}", restaurantDelivery.GetProductsByRestaurant).Methods(http.MethodGet, http.MethodOptions)
+		restaurants.HandleFunc("/{id}/reviews", restaurantDelivery.ReviewsList).Methods(http.MethodGet, http.MethodOptions)
+		restaurants.HandleFunc("/{id}/reviews", restaurantDelivery.CreateReview).Methods(http.MethodPost, http.MethodOptions)
+		restaurants.HandleFunc("/{id}/check", restaurantDelivery.CheckReviews).Methods(http.MethodGet, http.MethodOptions)
+		restaurants.HandleFunc("/{id}/search", searchDelivery.SearchProductsInRestaurant).Methods(http.MethodGet)
 	}
 	cart := r.PathPrefix("/cart").Subrouter()
 	{
@@ -126,9 +129,19 @@ func main() {
 
 	order := r.PathPrefix("/order").Subrouter()
 	{
+		order.HandleFunc("", cartHandler.GetOrders).Methods(http.MethodGet)
+		order.HandleFunc("/{orderID}", cartHandler.GetOrderById).Methods(http.MethodGet)
+		order.HandleFunc("/{orderID}/update", cartHandler.UpdateOrderStatus).Methods(http.MethodPost)
 		order.HandleFunc("/create", cartHandler.CreateOrder).Methods(http.MethodPost, http.MethodOptions)
 	}
 
+	search := r.PathPrefix("/search").Subrouter()
+	{
+		search.HandleFunc("", searchDelivery.SearchRestaurantWithProducts).Methods(http.MethodGet)
+	}
+
+	r.HandleFunc("/payment", cartHandler.UpdateOrderStatus).Methods(http.MethodPost)
+	r.PathPrefix("/metrics").Handler(promhttp.Handler())
 	http.Handle("/", r)
 	srv := http.Server{
 		Handler:           r,

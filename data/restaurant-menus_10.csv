@@ -1,0 +1,1022 @@
+restaurant_id,category,name,description,price
+142,Sandwiches,Ham &amp; Cheese Sub,"Smoked Ham &amp; Turkey with mayo, mustard, lettuce, tomato &amp; Swiss American cheese.",8.99 USD
+142,Sandwiches,Grilled Chicken Sub,"Tender Chicken Breast with mayo, mustard, sauteed onions, peppers &amp; Swiss American cheese.",8.99 USD
+142,Sandwiches,Grilled Tilapia Sub,"Grilled Tilapia Filet with Zesty sauce, lettuce, tomatoes &amp; House Dressing.",8.99 USD
+142,Entrees,Beef Kabob,"1 Beef Skewer and 1 Veggie Skewer. Served with house salad, wild rice, hummus dip and pita bread.",18.99 USD
+142,Entrees,Chicken Kabob,"1 Chicken Skewer and 1 Veggie Skewer. Served with house salad, rice, hummus dip and pita bread.",17.99 USD
+142,Entrees,Shrimp Kabob,"1 Shrimp Skewer and 1 Veggie Skewer. Served with house salad, rice, hummus dip and pita bread.",17.99 USD
+142,Entrees,Gyro Plate,"Gyro meat slices with house salad, wild rice, tzatziki sauce. Served with pita bread.",18.99 USD
+142,Entrees,Kafta Kabob,"5 pieces of kafta (seasoned beef), 1 skewer of vegetables, house salad, wild rice &amp; hummus. Served with pita bread.",17.99 USD
+142,Entrees,Falafel Plate,"5 pieces of vegetarian falafel, house salad, wild rice, and hummus dip. Served with pita bread.",15.99 USD
+142,Entrees,Tilapia Plate,"2 tilapia filets, sauteed mushrooms and onions, house salad, wild rice, hummus dip and pita bread.",17.99 USD
+142,Entrees,Combination Kabob,"1 Beef skewer, 1 Chicken skewer &amp; 1 Veggie skewer. Served with house salad, rice, hummus dip and pita bread.",19.99 USD
+142,Entrees,Veggie Kabab,"2 skewers of Veggies with purple onions, cherry tomatoes, mushrooms &amp; bell peppers.",15.99 USD
+142,Sides,Onion Rings,Hand Breaded Onion Slices,4.99 USD
+142,Sides,French Fries,Fries with House Seasoning,3.99 USD
+142,Sides,Chili Cheese Fries,"Steak Fries, Homemade Chili and Cheese",5.99 USD
+142,Sides,Cheese Fries,Steak Fries with Cheese Sauce,4.99 USD
+142,Sides,Ranch &amp; Cheese Fries,Steak Fries with Ranch &amp; Cheese Sauce,4.99 USD
+142,Sides,Cajun Ranch Fries,Steak Fries with Ranch Sauce &amp; Cajun Seasoning,4.99 USD
+142,Sides,Ranch Fries,Steak Fries with Ranch Sauce,4.99 USD
+142,Sides,Fried Okra,Hand Breaded Crispy Okra slices,4.99 USD
+142,Sides,Broccoli,Fresh Grilled Broccoli Crowns,3.99 USD
+142,Sides,Mushroom,Fresh Grilled Wild Mushrooms,4.99 USD
+142,Sides,Wild Rice,Blended Mix of Seasoned Rice,3.99 USD
+142,Sides,Side Garden Salad,Fresh Spring Mix Garden Salad with Choice of Dressing,5.99 USD
+142,Sides,Small Tabouli Salad,"Chopped parsley, tomatoes, onions, mint, cracked wheat, olive oil &amp; lemon juice, topped w/ feta cheese.",4.99 USD
+142,Sides,Hashbrowns,Crisp Grilled Potatoes,3.99 USD
+142,Desserts,Baklava,"Layered Phyllo Dough, walnuts &amp; syrup, topped with pistachios.",2.99 USD
+142,Desserts,Chocolate Cake,,3.99 USD
+142,Desserts,Red Velvet Cake,,3.99 USD
+142,Desserts,Cheesecake,NY Style Cheesecake Slice,3.99 USD
+142,Desserts,Strawberry Cheesecake,NY Cheesecake with Strawberry Drizzle.,3.99 USD
+142,Desserts,Pecan Pie,,3.99 USD
+142,Desserts,Caramel Layered Cake,,3.99 USD
+142,Breakfast Sandwiches (Served All Day),Sausage Egg &amp; Cheese Sandwich,"Sausage, Eggs and Cheddar cheese on Texas Toast.",6.99 USD
+142,Breakfast Sandwiches (Served All Day),Bacon Egg &amp; Cheese Sandwich,"Bacon, Eggs and American cheese on Texas Toast.",6.99 USD
+142,Breakfast Sandwiches (Served All Day),Egg Sandwich,2 eggs on Texas Toast,4.99 USD
+142,Breakfast Sandwiches (Served All Day),Egg and Cheese Sandwich,Fried Egg and American cheese on Texas Toast.,5.99 USD
+142,Breakfast Burritos (Served All Day),Super SEC Breakfast Burrito,"Sausage, Eggs and cheddar cheese.",7.99 USD
+142,Breakfast Burritos (Served All Day),Easy Money Burrito,"2 eggs, sausage, hashbrowns, scallions and cheddar cheese.",8.99 USD
+142,Breakfast Burritos (Served All Day),Lucky Boy Burrito,"2 eggs, bacon, hashbrowns and cheddar cheese.",8.99 USD
+142,Breakfast Burritos (Served All Day),Light Breakfast Burrito,2 eggs and cheddar cheese.,7.49 USD
+142,Breakfast Burritos (Served All Day),California Burrito,"2 eggs, guacamole, hash browns and cheddar cheese.",8.99 USD
+142,Breakfast Burritos (Served All Day),Good Morning Burrito,"2 eggs, Ribeye Steak, onions, peppers, and cheddar cheese.",8.99 USD
+142,Breakfast Burritos (Served All Day),Mediterranean Burrito,"2 eggs, Gyro slice, sauteed onions, and feta cheese.",8.99 USD
+142,Breakfast Burritos (Served All Day),Hawaiian Burrito,"2 eggs, ham, pineapple and cheddar cheese.",8.99 USD
+142,Breakfast Burritos (Served All Day),Southwestern Burrito,"2 eggs, ham, onion, peppers and cheddar cheese.",8.99 USD
+142,Breakfast Burritos (Served All Day),Veggie Purple Burrito,"2 eggs, onions, bell peppers, mushrooms, tomato, and cheddar cheese",8.99 USD
+142,Omelettes (Served All Day),Cheese Omelette,3 eggs and cheddar cheese.,8.99 USD
+142,Omelettes (Served All Day),Meat Lover Omelette,"Sausage, Bacon &amp; Ham with Tomatoes &amp; Cheddar Cheese.",11.99 USD
+142,Omelettes (Served All Day),Ham &amp; Cheese Omelette,Filled with ham and American cheese.,10.99 USD
+142,Omelettes (Served All Day),Steak Omelette,"Our famous fresh ribeye steak with grilled purple onion, bell peppers, mushrooms and Swiss cheese.",11.99 USD
+142,Omelettes (Served All Day),Western Omelette,"Filled with ham, purple onion, bell pepper and American cheese.",11.99 USD
+142,Omelettes (Served All Day),Gyro Omelette,"Thin sliced gyro with grilled purple onion, bell pepper, mushrooms and Swiss cheese.",11.99 USD
+142,Omelettes (Served All Day),Purple Onion Omelette,"Our kafta meat with purple onion, mushrooms and feta cheese.",11.99 USD
+142,Omelettes (Served All Day),Vegetable Omelette,"Grilled purple onion, bell pepper, mushrooms, tomato and Swiss cheese.",10.99 USD
+142,Kids Menu,Kids Burger &amp; Fries,Kid size burger w/ Meat and ketchup &amp; small fries,6.99 USD
+142,Kids Menu,Kids Grilled Cheese &amp; Fries,Texas Toast w/ American cheese served with fries,6.99 USD
+142,Kids Menu,Kids Chicken Fingers &amp; Fries,2 chicken fingers &amp; fries.,6.99 USD
+142,Drinks,Fountain Soft Drink,,1.99 USD
+142,Drinks,Sweet Tea,,1.99 USD
+142,Drinks,Unsweet Mint Tea,,1.99 USD
+142,Drinks,Sweet Mint Tea,,1.99 USD
+142,Drinks,Sweet Peach Tea,,1.99 USD
+142,Drinks,Coke Bottle,,1.99 USD
+142,Drinks,Diet Coke Bottle,,1.99 USD
+142,Drinks,Coke Zero Bottle,,1.99 USD
+142,Drinks,Sprite Bottle,,1.99 USD
+142,Drinks,Fanta Bottle,,1.99 USD
+142,Drinks,Yellow Fanta Bottle,,1.99 USD
+142,Drinks,Cherry Coke Bottle,,1.99 USD
+142,Drinks,Pibb/Pepper Bottle,,1.99 USD
+142,Drinks,Minute Maid Orange,,1.99 USD
+142,Drinks,Minute Maid Pineapple,,1.99 USD
+142,Drinks,Minute Maid Apple,,1.99 USD
+142,Drinks,Gatorade,,1.99 USD
+142,Drinks,Dasani Water Bottle,,1.49 USD
+142,EXTRAS,Hummus,,1.49 USD
+142,EXTRAS,Taziki Sauce,,0.99 USD
+142,EXTRAS,"Zesty ""Garlic"" Sauce",,0.75 USD
+142,EXTRAS,Ranch,,0.75 USD
+142,EXTRAS,BBQ,,0.75 USD
+142,EXTRAS,HoneyMustard,,0.75 USD
+142,EXTRAS,Blue Cheese,,0.75 USD
+142,EXTRAS,Sweet Sour Sauce,,0.75 USD
+142,EXTRAS,House Dressing,,0.75 USD
+142,EXTRAS,1000 Island,,0.75 USD
+142,EXTRAS,Tahini,,0.75 USD
+142,EXTRAS,Sour Cream,,0.99 USD
+142,EXTRAS,Mild Sauce,,0.75 USD
+142,EXTRAS,Lava Sauce,,0.75 USD
+142,EXTRAS,Mango Habanero Sauce,,0.75 USD
+142,EXTRAS,Greek Feta Dressing,,0.99 USD
+142,EXTRAS,Hot Sauce,,0.75 USD
+142,EXTRAS,Teriyaki Sauce,,0.75 USD
+142,EXTRAS,Cheddar Cheese Sauce,,0.99 USD
+142,EXTRAS,Extra Cheese,,0.99 USD
+142,VEGGIES,XT VEGGIE SKEWER,,4.99 USD
+142,VEGGIES,XT TOMATO,,0.75 USD
+142,VEGGIES,XT ONIONS,,0.75 USD
+142,VEGGIES,XT BELL PEPPER,,0.75 USD
+142,VEGGIES,XT VEGGIE PATTY,,2.99 USD
+142,VEGGIES,XT PIECE FALAFEL,,0.99 USD
+142,VEGGIES,XT MUSHROOMS (2OZ),,0.99 USD
+142,VEGGIES,XT OLIVES (20Z),,0.99 USD
+142,VEGGIES,XT JALAPENO (2OZ),,0.99 USD
+142,VEGGIES,XT PEPPERONCINI (3),,0.99 USD
+142,VEGGIES,XT CHIVES (2OZ),,0.75 USD
+142,MISC,TAZIKI SAUCE,,0.99 USD
+142,MISC,2OZ HUMMUS,,1.49 USD
+142,MISC,2OZ BABA GANOUJ,,0.99 USD
+142,MISC,2OZ GUACAMOLE,,1.99 USD
+142,MISC,2OZ SOUR CREAM,,0.99 USD
+142,MISC,20Z BUTTER,,0.75 USD
+142,MISC,SLICE SWISS CHEESE,,0.99 USD
+142,MISC,SLICE AMERICAN CHEESE,,0.99 USD
+142,MISC,20Z FETA CHEESE,,0.99 USD
+142,MISC,20Z CHEDDAR CHEESE,,0.99 USD
+142,MISC,2OZ NACHO CHEESE,,1.49 USD
+142,MISC,XT PITA BREAD,,1.49 USD
+142,MISC,PITA CHIPS,,2.49 USD
+142,MISC,SIDE OF FRUIT,,0.75 USD
+143,Picked for you,Wings Combo (10 Pc),,14.99 USD
+143,Picked for you,Philly Cheesesteak Sandwich,,7.99 USD
+143,Picked for you,Wings Combo (15 Pc),,19.99 USD
+143,Picked for you,Whole Wings Combo (6 Pc),,10.99 USD
+143,Picked for you,"Wings (20 Pc) ",,23.99 USD
+143,Popular Items,Wings Combo (10 Pc),,14.99 USD
+143,Popular Items,"Wings (15 Pc) ",,16.99 USD
+143,Popular Items,Wings Combo (6 Pc),,10.99 USD
+143,Popular Items,Wings Combo (15 Pc),,19.99 USD
+143,Popular Items,Whole Wings Combo (20 Pc),,28.99 USD
+143,Popular Items,Chocolate Cake,,3.99 USD
+143,Popular Items,French Fries,,2.99 USD
+143,Popular Items,Double Bacon Cheeseburger Combo,,11.59 USD
+143,Buffalo Wings,Wings (4 Pc),,5.99 USD
+143,Buffalo Wings,Wings (6 Pc),,7.99 USD
+143,Buffalo Wings,Wings (8 Pc),,9.99 USD
+143,Buffalo Wings,"Wings (10 Pc) ",,11.99 USD
+143,Buffalo Wings,"Wings (12 Pc) ",,13.99 USD
+143,Buffalo Wings,"Wings (15 Pc) ",,16.99 USD
+143,Buffalo Wings,"Wings (20 Pc) ",,23.99 USD
+143,Buffalo Wings,"Wings (25 Pc) ",,27.99 USD
+143,Buffalo Wings,"Wings (50 Pc) ",,49.99 USD
+143,Buffalo Wings,"Wings (75 Pc) ",,79.99 USD
+143,Buffalo Wings,"Wings (100 Pc) ",,99.99 USD
+143,Buffalo Wing Combos,Wings Combo (4 Pc),,8.99 USD
+143,Buffalo Wing Combos,Wings Combo (6 Pc),,10.99 USD
+143,Buffalo Wing Combos,Wings Combo (8 Pc),,12.99 USD
+143,Buffalo Wing Combos,Wings Combo (10 Pc),,14.99 USD
+143,Buffalo Wing Combos,Wings Combo (15 Pc),,19.99 USD
+143,Buffalo Wing Combos," Wings Combo (20 Pc)",,26.99 USD
+143,Buffalo Wing Combos,Wings Combo (25 Pc),,31.99 USD
+143,Whole Wings,Whole Wings(4 Pc),,6.99 USD
+143,Whole Wings,Whole Wings(6 Pc),,8.99 USD
+143,Whole Wings,Whole Wings(8Pc),,10.99 USD
+143,Whole Wings,Whole Wings (10Pc),,13.99 USD
+143,Whole Wings,Whole Wings (12 Pc),,15.99 USD
+143,Whole Wings,Whole Wings (15 Pc),,18.99 USD
+143,Whole Wings,Whole Wings (20 Pc),,25.99 USD
+143,Whole Wings,Whole Wings (25 Pc),,31.99 USD
+143,Whole Wings,Whole Wings (50 Pc),,63.99 USD
+143,Whole Wings,Whole Wings (75 Pc),,85.99 USD
+143,Whole Wings,Whole Wings (100 Pc),,119.99 USD
+143,Whole Wing Combo,Whole Wings Combo (4 Pc),,8.99 USD
+143,Whole Wing Combo,Whole Wings Combo (6 Pc),,10.99 USD
+143,Whole Wing Combo,Whole Wings Combo (8 Pc),,12.99 USD
+143,Whole Wing Combo,Whole Wings Combo (10 Pc),,16.99 USD
+143,Whole Wing Combo,Whole Wings Combo (12 Pc),,18.99 USD
+143,Whole Wing Combo,Whole Wings Combo (15 Pc),,22.99 USD
+143,Whole Wing Combo,Whole Wings Combo (20 Pc),,28.99 USD
+143,Sandwiches,Tilapia Sandwich,,6.99 USD
+143,Sandwiches,Philly Cheesesteak Sandwich,,7.99 USD
+143,Sandwiches,Philly Chicken Sandwich,"Mushroom, bell pepper, onions, mayo, and cheese.",7.99 USD
+143,Sandwiches,Fried Chicken Sandwich,"Lettuce, tomato, and mayo.",6.99 USD
+143,Sandwiches,Grilled Chicken Sandwich,"Lettuce, tomato, and mayo.",7.99 USD
+143,Sandwiches,Whiting Fish Sandwich,,6.99 USD
+143,Sandwiches,Catfish Sandwich,"Lettuce, tomato, mayo, onion, and pickles.",6.99 USD
+143,Sandwiches,Classic Club Sandwich,"Ham, turkey bacon, cheese, lettuce, and tomatoes.",6.99 USD
+143,Sandwiches,Shrimp Sandwich,,6.99 USD
+143,Sandwich Combo,Tilapia Sandwich Combo,,9.99 USD
+143,Sandwich Combo,Philly Cheesesteak Combo,,9.99 USD
+143,Sandwich Combo,Philly Chicken Combo,,9.99 USD
+143,Sandwich Combo,Fried Chicken Sandwich Combo,,9.99 USD
+143,Sandwich Combo,Grilled Chicken Sandwich Combo,,10.99 USD
+143,Sandwich Combo,Whiting Fish Sandwich Combo,,9.99 USD
+143,Sandwich Combo,Catfish Sandwich Combo,,9.99 USD
+143,Sandwich Combo,Classic Club Combo,,8.99 USD
+143,Sandwich Combo,Shrimp Combo,,9.49 USD
+143,Burgers,Hamburger,,5.99 USD
+143,Burgers,Cheeseburger,,6.59 USD
+143,Burgers,Bacon Cheeseburger,,6.99 USD
+143,Burgers,Double Cheeseburger,,7.99 USD
+143,Burgers,DBL Bacon Cheeseburger,,8.59 USD
+143,Burgers,Famous Juicy Lucy (8 oz),"8 oz. fresh ground beef handmade seasoned to perfection, grilled onions, mushrooms, cheese, and lettuce",9.99 USD
+143,Burger Combos,Hamburger Combo,,8.49 USD
+143,Burger Combos,Famous Juicy Lucy Combo,,12.99 USD
+143,Burger Combos,Cheeseburger Combo,,8.99 USD
+143,Burger Combos,Bacon Cheeseburger Combo,,9.59 USD
+143,Burger Combos,Double Cheeseburger Combo,,10.99 USD
+143,Burger Combos,Double Bacon Cheeseburger Combo,,11.59 USD
+143,King Specials,"Wings (5 pcs) and Hamburger (1 pc) ",Served with fries and drink.,14.99 USD
+143,King Specials,"Chicken Tenders (3 pcs) and Wings (5 pcs) ",Served with fries and drink.,14.99 USD
+143,King Specials,"Chicken Tenders (3 pcs) and Shrimp (5 pcs) ",Served with fries and drink.,14.99 USD
+143,King Specials,Wings (5 pcs) and Shrimp (5 pcs),Served with fries and drink.,14.99 USD
+143,King Specials,Whiting (2 pcs) and Shrimp (5 pcs),Served with fries and drink.,14.99 USD
+143,King Specials,"Whiting (2 pcs) and Wings (5 pcs) ",Served with fries and drink.,14.99 USD
+143,King Specials,Catfish (2 pcs) and Shrimp (5 pcs),Served with fries and drink.,14.99 USD
+143,King Specials,Catfish (2 pcs) and Wings (5 pcs),Served with fries and drink.,14.99 USD
+143,King Specials,Shrimp (5 pcs) and Sandwich  (1 pc ),Served with fries and drink.,14.99 USD
+143,Chicken Tender Combos,3 Chicken Tender Combo,Combos served with fries and drink.,7.99 USD
+143,Chicken Tender Combos,4 Chicken Tender Combo,Combos served with fries and drink.,9.99 USD
+143,Chicken Tender Combos,6 Chicken Tender Combo,Combos served with fries and drink.,12.99 USD
+143,Salads,Chicken Salad,"Lettuce, tomatoes, onions, mushrooms, bell peppers, cheese, and pickles.",11.99 USD
+143,Salads,Shrimp Salad,"Lettuce, tomatoes, onions, mushrooms, bell peppers, cheese, and pickles.",11.99 USD
+143,Salads,Garden Salad,"Lettuce, tomatoes, onions, mushrooms, bell peppers, cheese, and pickles.",8.99 USD
+143,Salads,Fish Salad,"Lettuce, tomatoes, onions, mushrooms, bell peppers, cheese, and pickles.",11.99 USD
+143,Salads,Chef Salad,"Lettuce, tomatoes, onions, mushrooms, bell peppers, cheese, and pickles.",10.99 USD
+143,Chicken Specials,1/2 lb Gizzard Only,Served with bread.,6.59 USD
+143,Chicken Specials,1/2 Gizzard Combo,Served with bread.,8.49 USD
+143,Chicken Specials,1 lb Gizzard,Served with bread.,9.99 USD
+143,Chicken Specials,1 lb Gizzard Combo,Served with bread.,12.49 USD
+143,Chicken Specials,1/2 lb Liver Combo,Served with bread.,8.49 USD
+143,Chicken Specials,1 lb Liver Combo,Served with bread.,11.89 USD
+143,Chicken Specials,1/2 lb Liver Only,Served with bread.,6.59 USD
+143,Chicken Specials,1 lb Liver Only,Served with bread.,6.59 USD
+143,Butterfly Shrimp Combos,4 Butterfly Shrimp Combos,Served with fries and drink.,10.49 USD
+143,Butterfly Shrimp Combos,4 Grilled Shrimp Combos,Served with fries and drink.,10.49 USD
+143,Butterfly Shrimp Combos,6 Butterfly Shrimp Combos,Served with fries and drink.,12.49 USD
+143,Butterfly Shrimp Combos,6 Grilled Shrimp Combos,Served with fries and drink.,12.49 USD
+143,Butterfly Shrimp Combos,Jumbo Shrimp Only (1 pc),,1.59 USD
+143,Fish Fillet Only,1 Pc Whiting,served with Bread,4.99 USD
+143,Fish Fillet Only,3 Pc Whiting,served with Bread,9.99 USD
+143,Fish Fillet Only,1 Pc Tilapia,,4.99 USD
+143,Fish Fillet Only,3 Pc Tilapia,,9.99 USD
+143,Fish Fillet Only,1 Pc Catfish,,4.99 USD
+143,Fish Fillet Only,3 Pc Catfish,,9.99 USD
+143,Fish Fillet Combos,1 Pc Whiting Combo,,7.99 USD
+143,Fish Fillet Combos,2 Pc Whiting Combo,,9.99 USD
+143,Fish Fillet Combos,1 Pc Tilapia Combo,,7.99 USD
+143,Fish Fillet Combos,2 Pc Tilapia Combo,,9.99 USD
+143,Fish Fillet Combos,1 Pc Catfish Combo,,7.99 USD
+143,Fish Fillet Combos,2 Pc Catfish Combo,,9.99 USD
+143,Oysters and Clams,Fried Oysters (8 pcs),,9.99 USD
+143,Oysters and Clams,Fried Oyster Sandwich,,8.99 USD
+143,Oysters and Clams,Fried Clams (1/2 lb),,9.79 USD
+143,Oysters and Clams,Fried Clam Sandwich,,8.69 USD
+143,Oysters and Clams Combos,Fried Oysters Combo (8 pcs),,12.99 USD
+143,Oysters and Clams Combos,Fried Oyster Sandwich Combo,,11.99 USD
+143,Oysters and Clams Combos,Fried Clams Combo (1/2 lb),,12.99 USD
+143,Oysters and Clams Combos,Fried Clam Sandwich Combo,,11.99 USD
+143,Hot Dog,Hot Dog,,2.79 USD
+143,Hot Dog,Coleslaw Dogs,,2.99 USD
+143,Hot Dog,Chili Cheese Dogs,,3.49 USD
+143,Hot Dog Combo,Hot Dog Combo,"Served with 2 hot dogs, fries, and drink.",6.99 USD
+143,Hot Dog Combo,Coleslaw Dogs Combo,"Served with 2 hot dogs, fries, and drink.",6.99 USD
+143,Hot Dog Combo,Chili Cheese Dogs Combo,"Served with 2 hot dogs, fries, and drink.",6.99 USD
+143,Kids Meals,Kids Chicken Tenders (2 pcs),"Served with fries and drink
+
+",6.59 USD
+143,Kids Meals,"Kids Wings (3 pcs) ","Served with fries and drink
+
+",6.59 USD
+143,Kids Meals,"Kids Whole Wings(2 pcs) ","Served with fries and drink
+
+",6.59 USD
+143,Kids Meals,Kids Hot Dog,,6.59 USD
+143,Kids Meals,Kids Popcorn Shrimp,,6.59 USD
+143,Customize Your Fries,French Fries,,2.99 USD
+143,Side Items,Fried Okra,,3.99 USD
+143,Side Items,Onion Rings,,3.99 USD
+143,Side Items,Corn Nuggets,,3.99 USD
+143,Side Items,Cheesy Bites,,3.99 USD
+143,Side Items,Coleslaw,,3.49 USD
+143,Side Items,Potato Salad,,3.49 USD
+143,Side Items,Mac and Cheese,,3.99 USD
+143,Side Items,Jalapeño Bombers,,3.99 USD
+143,Desserts,Chocolate Cake,,3.99 USD
+143,Desserts,Lemon Cake,,3.99 USD
+143,Desserts,Red Velvet,,3.99 USD
+143,Desserts,Cheesecake,,3.99 USD
+143,Desserts,Funnel Cake,,3.99 USD
+143,Beverages,Soda,,1.99 USD
+144,Picked for you,Full Pound Bone-In Wings,"9 to 11 pieces. Crispy on the outside, plum and juicy on the inside. Tossed in your choice of sauce (buffalo, garlic parmesan, sweet chili and bbq) and served with your choice of dipping sauce (ranch or blue cheese).",16.09 USD
+144,Picked for you,Cinnamon Monkey Bread,,8.03 USD
+144,Picked for you,"2 Liter Bottles ",2-Liter Bottles.,3.49 USD
+144,Picked for you,Streusel Monkey Bread,Bite-sized pieces of oven baked dough sprinkled with sweet cinnamon and sugar. Topped with streusel and decadent icing.,8.03 USD
+144,Picked for you,Garlic Bread with Cheese,,8.61 USD
+144,Specialty Pies,All-Meat Combo,"Pepperoni, ham, beef, sausage, Italian sausage, bacon bits, and mozzarella cheese. Your choice of size.",0.0 USD
+144,Specialty Pies,Bacon Cheeseburger,"Beef, bacon bits, onions, pickles, cheddar cheese, and mozzarella cheese. Your choice of size.",0.0 USD
+144,Specialty Pies,Classic Combo,"Pepperoni, beef, sausage, onions, black olives, mushrooms, and mozzarella cheese. Your choice of size.",0.0 USD
+144,Specialty Pies,"Taco ","Tangy Taco Sauce, Beef, Onions, Lettuce, Tomatoes, Cheddar Cheese &amp; Mozzarella Cheese, Taco Sauce Packets ",0.0 USD
+144,Specialty Pies,Hawaiian,"Ham, bacon bits, pineapple, and mozzarella cheese. Your choice of size.",0.0 USD
+144,Specialty Pies,Humble,"Pepperoni, Italian sausage, onions, green peppers, and mozzarella cheese. Your choice of size.",0.0 USD
+144,Specialty Pies,Veggie,"Green peppers, onions, mushrooms, black olives, tomatoes, and mozzarella cheese. Your choice of size.",0.0 USD
+144,Specialty Pies,Wild &amp; Wild West BBQ,"Chicken, bacon bits, caramelized onions, BBQ sauce, cheddar cheese, and mozzarella cheese. Your choice of size.",0.0 USD
+144,Specialty Pies,Buffalo Chicken,"Chicken, red onions, buffalo sauce, ranch dressing, and mozzarella cheese. Your choice of size.",0.0 USD
+144,Specialty Pies,Chicken Bacon Ranch,"Ranch dressing, chicken, bacon bits, and mozzarella cheese. Your choice of size.",0.0 USD
+144,Specialty Pies,"SUPER Combo ","Pepperoni, Ham, Beef, Sausage, Onions, Black Olives, Mushrooms, Green Peppers, Tomatoes, Cheddar Cheese &amp; Extra Mozzarella Cheese ",0.0 USD
+144,Specialty Pies,"Super Taco ","Tangy Taco Base Sauce, Beef, Onions, Lettuce, Tomatoes, Cheddar Cheese &amp; Mozzarella Cheese, Black Olives, and Sour Cream ",0.0 USD
+144,Specialty Pies,"Hot Stuff ","Pepperoni, Beef, Italian Sausage, Onions, Jalapeno Peppers, and Mozzarella Cheese ",0.0 USD
+144,Appetizer Sides &amp; Beverages,Side of Garlic Bread,4 Pieces. Thick sliced bread seasoned with a special blend of Italian spices and garlic butter. Served with classic marinara sauce.,6.89 USD
+144,Appetizer Sides &amp; Beverages,Seasoned Potato Wedges,,4.59 USD
+144,Appetizer Sides &amp; Beverages,"2 Liter Bottles ",2-Liter Bottles.,3.49 USD
+144,Appetizer Sides &amp; Beverages,Side of Cheesesticks,"12 pieces.  A special blend of garlic, Italian seasoning, and real mozzarella cheese. Served with classic marinara sauce.",8.03 USD
+144,Appetizer Sides &amp; Beverages,Garlic Bread with Cheese,,8.61 USD
+144,Appetizer Sides &amp; Beverages,Italian Monkey Bread,,8.03 USD
+144,Chicken Wings,Half Pound Bone-In Wings,"5 to 7 pieces. Crispy on the outside, plum and juicy on the inside. Tossed in your choice of sauce (buffalo, garlic parmesan, sweet chili and bbq) and served with your choice of dipping sauce (ranch or blue cheese).",10.39 USD
+144,Chicken Wings,Full Pound Bone-In Wings,"9 to 11 pieces. Crispy on the outside, plum and juicy on the inside. Tossed in your choice of sauce (buffalo, garlic parmesan, sweet chili and bbq) and served with your choice of dipping sauce (ranch or blue cheese).",16.09 USD
+144,Chicken Wings,Family (2 lbs.) Bone-In Wings,"18 to 20 pieces. Crispy on the outside, plum and juicy on the inside. Tossed in your choice of sauce (Buffalo, Garlic Parmesan, Sweet Chili and BBQ) and served with your choice of dipping sauce (Ranch or Blue Cheese).",28.79 USD
+144,Chicken Wings,Half Boneless Wings,"8 to 10 pieces crispy on the outside, plum and juicy on the inside. Tossed in your choice of sauce (buffalo, garlic parmesan, sweet chili and bbq) and served with your choice of dipping sauce (ranch or blue cheese).",10.39 USD
+144,Chicken Wings,Full Pound Boneless Wings,"12 to 16 pieces. Crispy on the outside, plum and juicy on the inside. Tossed in your choice of sauce (buffalo, garlic parmesan, sweet chili and bbq) and served with your choice of dipping sauce (ranch or blue cheese).",16.09 USD
+144,Chicken Wings,Family (2 lbs.) Boneless Wings,"24 to 26 pieces. Crispy on the outside, plum and juicy on the inside. Tossed in your choice of sauce (buffalo, garlic parmesan, sweet chili and bbq) and served with your choice of dipping sauce (ranch or blue cheese).",28.79 USD
+144,Calzones,Calzones,"Oven-baked dough, brushed with house made signature Italian butter and filled with premium real mozzarella cheese. Served with classic marinara sauce",11.48 USD
+144,Dessert Pizza &amp; Monkey Bread,Cinnamon Monkey Bread,,8.03 USD
+144,Dessert Pizza &amp; Monkey Bread,Festive Holiday Monkey bread,,9.3 USD
+144,Dessert Pizza &amp; Monkey Bread,Streusel Monkey Bread,Bite-sized pieces of oven baked dough sprinkled with sweet cinnamon and sugar. Topped with streusel and decadent icing.,8.03 USD
+144,Dessert Pizza &amp; Monkey Bread,Caramel Monkey Bread,,8.03 USD
+145,Picked for you,Loaded Cauligrits,"Our cauliflower grits, turkey pan sausage, turkey bacon, turkey smoked sausage, four-cheese blends, and scrambled egg. Approx six net carbs.",8.99 USD
+145,Picked for you,The Black Burger Sandwich,"90 percent lean ground beef, yellow American cheese, grilled onions, crispy turkey bacon, and our signature black mayonnaise. Approx 20 net carbs. Made with hand pattied ground turkey.",9.99 USD
+145,Picked for you,Cinnamon Roll Waffle,"Cinnamon, cream cheese, pecans, grass-fed butter. Keto and gluten-free. 100 percent keto, gluten-free, allergens dairy, and nuts. Approx 2.5 net carbs, 13 grams protein, 552 calories per 1/2 waffle serving.",12.49 USD
+145,Picked for you,The Gobbler Sandwich,"Blackened turkey sandwich with sautéed bell peppers or onion, seasoned tomato, spinach, and white American cheese, gobbler sauce, and light mayonnaise. Approx 23 net carbs (sandwich) and 12 net carbs (bread). Made with hand pattied ground turkey.",7.99 USD
+145,Picked for you,"Red Thunder Pizza (10"") (8 slices)","Turkey pepperoni, turkey sausage, turkey bacon, mozzarella, Parmesan, bell peppers, red onions, and banana peppers. Approx 5 net carbs and 223 calories per slice.",18.99 USD
+145,Breakfast,Turkey Bacon (2 Strips),,2.0 USD
+145,Breakfast,Toast,Approx six net carbs.,1.25 USD
+145,Biscuits (Breakfast),Low Carb Biscuit,Approx four net carbs.,2.99 USD
+145,Biscuits (Breakfast),Turkey Sausage Patty,Approx two net carbs.,1.85 USD
+145,Biscuits (Breakfast),Turkey Smoked Sausage Links (2 oz),Approx three net carbs.,1.85 USD
+145,Biscuits (Breakfast),Turkey Sausage Biscuit,Approx six net carbs.,5.59 USD
+145,Biscuits (Breakfast),Turkey Smoked Sausage Sandwich,"Cheese, scrambled egg, low-carb toast, and turkey smoked sausage. Approx six net carbs.",4.99 USD
+145,Biscuits (Breakfast),"Low Carb Steak, Egg, and Cheese Biscuit",Approx four net carbs.,6.99 USD
+145,Biscuits (Breakfast),"Low Carb Turkey, Egg, and Cheese Biscuit",Approx four net carbs.,5.99 USD
+145,Biscuits (Breakfast),Steak and Eggs with Cheese,Approx five net carbs.,5.99 USD
+145,Biscuits (Breakfast),Turkey Sausage Gravy with Biscuit (3/4 cup),"Turkey bacon pieces, fresh cream, spices, and no grease or flour. Approx six net carbs.",6.99 USD
+145,Cauliflower Grits (Breakfast),Plain Cauliflower Grits (3/4 cup),Approx four net carbs.,5.99 USD
+145,Cauliflower Grits (Breakfast),Loaded Cauligrits,"Our cauliflower grits, turkey pan sausage, turkey bacon, turkey smoked sausage, four-cheese blends, and scrambled egg. Approx six net carbs.",8.99 USD
+145,Cauliflower Grits (Breakfast),Loaded Shrimp Cauligrits,"Our cauliflower grits, four cheese blend, turkey bacon, and seasoned garlic butter shrimp. Approx five net carbs.",8.75 USD
+145,Master Waffles (Keto and Gluten Free) (Breakfast),Cinnamon Roll Waffle,"Cinnamon, cream cheese, pecans, grass-fed butter. Keto and gluten-free. 100 percent keto, gluten-free, allergens dairy, and nuts. Approx 2.5 net carbs, 13 grams protein, 552 calories per 1/2 waffle serving.",12.49 USD
+145,Master Waffles (Keto and Gluten Free) (Breakfast),Belgian Waffle,"Peanut butter powder topping, grass-fed butter, keto-friendly maple syrup. 100 percent keto, gluten-free. Allergens dairy, eggs, and nuts. Approx. two net carbs, 14 grams protein, 253 calories per 1/2 waffle serving.",11.99 USD
+145,Almond Flour Master Waffles (Breakfast),Belgian Almond Flour Waffle,"Low carb syrup, grass-fed butter. Gluten-free, allergens dairy, nuts, and eggs. Approx 25 net carbs.",9.99 USD
+145,Almond Flour Master Waffles (Breakfast),Doughnut Waffle,"Waffle with naturally sweetened glaze, gluten-free, non-GMO. Gluten-free, allergens dairy, nuts, and eggs. Approx 25 net carbs.",11.99 USD
+145,Almond Flour Master Waffles (Breakfast),Apple Cinnamon Waffle,"Served with cinnamon apple butter glaze. Gluten-free, non-GMO. Gluten-free, allergens dairy, nuts, and eggs. Approx 26 net carbs.",12.49 USD
+145,Eggs &amp; Omelets (Breakfast),Eggs (2 pcs),,1.75 USD
+145,Eggs &amp; Omelets (Breakfast),Cheese Eggs (2 pcs),,2.25 USD
+145,Eggs &amp; Omelets (Breakfast),Special Eggs,"Two eggs, bell peppers, onion, turkey bacon crumbles, three cheese blends. Approx three net carbs.",4.49 USD
+145,Eggs &amp; Omelets (Breakfast),Steak Omelet,"Seasoned steak, bell peppers, onions, white American cheese, banana peppers, and bell peppers signature sauce. Approx three net carbs.",8.75 USD
+145,Eggs &amp; Omelets (Breakfast),Turkey Sausage Omelett,"Turkey sausage, three cheese blends, bell peppers, onions, banana peppers, and salsa. Approx four net carbs.",6.75 USD
+145,Sandwiches,Smoked Gouda Burger Sandwich,"90 percent lean hand pattied beef, red onion, smoked gouda cheese, low-carb BBQ sauce, white American cheese, and light mayonnaise. Approx 22 net carbs. Mad with hand pattied ground turkey.",8.59 USD
+145,Sandwiches,Alfredo Burger Sandwich,"90 percent lean ground beef turkey bacon crumbles, white American cheese, Parmesan, spinach, bell peppers or onion, tomato, alfredo sauce. Approx 25 net carbs. Made with hand pattied ground turkey.",8.89 USD
+145,Sandwiches,Steak Burger Sandwich,"90 percent lean ground beef, seasoned steak, bell peppers signature sauce, sauteed bell peppers or onion, banana peppers. Approx 21 net carbs. Made with hand pattied ground turkey.",9.99 USD
+145,Sandwiches,American Burger Sandwich,"90 percent lean ground beef, white American cheese, sugar-free ketchup, mustard, mayonnaise, red onion, tomato, premium romaine lettuce. Approx 21 net carbs. Made with hand pattied ground turkey.",8.6 USD
+145,Sandwiches,The Black Burger Sandwich,"90 percent lean ground beef, yellow American cheese, grilled onions, crispy turkey bacon, and our signature black mayonnaise. Approx 20 net carbs. Made with hand pattied ground turkey.",9.99 USD
+145,Sandwiches,The Gobbler Sandwich,"Blackened turkey sandwich with sautéed bell peppers or onion, seasoned tomato, spinach, and white American cheese, gobbler sauce, and light mayonnaise. Approx 23 net carbs (sandwich) and 12 net carbs (bread). Made with hand pattied ground turkey.",7.99 USD
+145,Sandwiches,Turkey Polish Sausage Sandwich,"Ground turkey topping, turkey smoked sausage, sauteed bell peppers or onion, sour cream, mustard, and bell peppers low-carb BBQ sauce. Approx 21 net carbs (sausage) and 15 net carbs (bun). Made with hand pattied ground turkey.",8.79 USD
+145,Sandwiches,Honey Garlic Chicken Sandwich,"Grilled chicken breast, honey garlic mayonnaise, turkey bacon, and bread and butter pickles. Approx 13 net carbs. Made with hand pattied ground turkey.",7.99 USD
+145,Sandwiches,King of Clubs Sandwich,"Keto-friendly sandwich bread smoked turkey breast, crispy turkey bacon, romaine lettuce seasoned tomato, and seasoned mayonnaise. Approx 16 net carbs per half. Made with hand pattied ground turkey.",11.99 USD
+145,Low Carb Pizzas,"White Thunder Pizza (10"") (8 slices)","Turkey pepperoni, turkey sausage, bacon, spinach, feta cheese, mozzarella, Parmesan, and white onions. Approx 5 net carbs and 295 calories per slice.",18.99 USD
+145,Low Carb Pizzas,"Red Thunder Pizza (10"") (8 slices)","Turkey pepperoni, turkey sausage, turkey bacon, mozzarella, Parmesan, bell peppers, red onions, and banana peppers. Approx 5 net carbs and 223 calories per slice.",18.99 USD
+145,Low Carb Pizzas,"Big Meats Pizza (10"") (8 slices)","Turkey pepperoni, turkey sausage, turkey bacon, sliced turkey breast, mozzarella, and Italian cheese. Approx 4 net carbs and 225 calories per slice.",19.99 USD
+145,Low Carb Pizzas,"Chicken Philly Pizza (10"") (8 slices)","Chicken white American cheese, mozzarella, sautéed bell peppers, onions, banana peppers, and bell pepper's signature sauce. Approx 5 net carbs and 257 calories per slice.",19.99 USD
+145,Low Carb Pizzas,"Cloud 9 Pizza (10"") (8 slices)","Chicken alfredo pizza with turkey bacon, spinach, mozzarella, bell pepper, onions, and tomatoes. Approx 5 net carbs and 215 calories per slice.",19.75 USD
+145,Low Carb Pizzas,"A.M. Pizza (10"") (8 slices)","Breakfast pizza with turkey smoked sausage, turkey pan sausage, turkey bacon, Colby and Monterey Jack cheeses, bell peppers, white onion, bell peppers signature sauce. Approx 5 net carbs and 190 calories.",18.99 USD
+145,Low Carb Pizzas,"Bar-B-Chic Pizza (10"") (8 slices)","Barbecue chicken pizza with cheddar and Monterey Jack. Turkey bacon, red onions smoked gouda, and low carb BBQ sauce. Approx 5 net carbs and 190 calories per slice.",19.75 USD
+145,Low Carb Pizzas,"I'm a Vegetarian Pizza (10"") (8 slices)","Veggie pizza with mozzarella, Parmesan, spinach, bell peppers, red onions, and banana. Approx 4 net carbs and 161 calories per slice.",17.99 USD
+145,Low Carb Pizzas,"The Popeye Pizza (10"") (8 slices)","Spinach pizza with tomatoes, basil, red onions, and mozzarella. Approx 4 net carbs and 140 calories per slice.",17.99 USD
+145,Low Carb Pizzas,"The Sea Pizza (10"") (8 slices)","Seasoned shrimp with spinach, parmesan, bell peppers onion, and mozzarella. Approx 5 net carbs and 207 calories per slice.",19.99 USD
+145,Low Carb Pizzas,"Meatball Pizza (10"") (8 slices)","Italian cheese spinach, red onion, custom marinara, whole milk mozzarella, feta cheese, and beef meatballs. Approx 5 net carbs and 235 calories per slice.",19.75 USD
+145,Low Carb Pizzas,"Uncle Philly Pizza (10"") (8 slices)","Philly cheesesteak with white American cheese, mozzarella, sautéed bell pepper onion, banana pepper, and bell peppers signature sauce. Approx 56 net carbs 252 calories per slice.",19.99 USD
+145,Salads,Steak Salad,"Seasoned steak, turkey bacon, spinach, premium romaine lettuce, Parmesan cheese, croutons (4 carbs) tomatoes, bell pepper, onions, and eggs. Approx 9 net carbs and without dressing.",15.35 USD
+145,Salads,Italian Salad,"Chicken, turkey pepperoni, turkey bacon pieces, 3 cheese blend croutons (4 carbs) premium romaine, spinach, tomatoes, Italian seasoning spices, eggs, and cucumber. Approx 9 net carbs and without dressing.",15.49 USD
+145,Salads,Southern Greek Salad,"Romaine or spinach mix, crispy southern style chicken, turkey bacon, parmesan cheese, parmesan cheese, conto bread and butter pickles, egg croutons, and feta cheese. Approx 12 net carbs per serving 410 calories per half.",15.99 USD
+145,Fajitas,Chicken Fajita,"Grilled chicken, sauteed bell peppers and onions, turkey bacon, Mexican cheese, and blend white American cheese. Approx 7 net carbs.",9.99 USD
+145,Fajitas,Steak Fajita,"Chopped steak, sauteed ball peppers, and onions, white American cheese. Approx 7 net carbs.",8.99 USD
+145,Drinks,Nature’s Twist Juice,,2.39 USD
+145,Drinks,Bottled Water,,2.49 USD
+145,Chips,Potato Chips (Frito Lay),,1.79 USD
+145,Chips,Keto Chips,,2.79 USD
+145,Desserts,Brownies,"No added sugar, 0 artificial sugar 100 % keto gluten-free. Approx 3 net carbs each.",2.69 USD
+145,Desserts,Chocolate Chip Cookies,2 net carbs per cookie.,4.25 USD
+145,Desserts,Brookies,Chocolate chip cookie and brownie fusion. Gluten-free and 3g net carbs.,6.0 USD
+146,Picked for you,Chicken Zapnin,"Chimichanga style crispy overstuffed fried burrito with chz, lettuce, tomato, guac, sr crm &amp; roasted chile sc.",19.2 USD
+146,Picked for you,Gordo Chicken Burrito,"Flour tortilla stuffed with grilled chicken, guac, sr crm, pinto bns, &amp; smothered in our original chile con queso.",18.0 USD
+146,Picked for you,Steak &amp; Blue Quesadilla.,"Grilled steak, carmelized onions, blue cheese on a flour tortilla",20.4 USD
+146,Picked for you,3 Way Street Taco.,"3 ""taqueria style"" tacos on fresh corn tortillas with onions, cilantro, zesty lime cabbage &amp; roasted chipotle sauce.",19.2 USD
+146,Picked for you,Gordo Beef Burrito,"Flour tortilla stuffed with beef, guac, sr crm, pinto bns, &amp; smothered in our original chile con queso.",18.0 USD
+146,Appetizers/Large Sides,Street Corn.,"Roasted corn on the cob with spicy aioli, queso fresco, chimayo &amp; cilantro",8.4 USD
+146,Appetizers/Large Sides,Tortilla Soup.,"Seasoned broth with chicken, fresh lime, avocado, pico &amp; crispy tortillas chips",10.8 USD
+146,Appetizers/Large Sides,Black Bean Soup.,Hearty vegetarian soup made with pico &amp; sr crm,9.6 USD
+146,Appetizers/Large Sides,8oz Queso.,,9.6 USD
+146,Appetizers/Large Sides,8oz Spinach Queso.,,9.6 USD
+146,Appetizers/Large Sides,8oz Chorizo Queso.,,10.8 USD
+146,Appetizers/Large Sides,8oz Green Salsa.,,5.4 USD
+146,Appetizers/Large Sides,8oz Guacamole.,,10.8 USD
+146,Appetizers/Large Sides,8oz Pico de Gallo.,,6.0 USD
+146,Appetizers/Large Sides,8oz Red Salsa.,,4.2 USD
+146,Appetizers/Large Sides,8oz Guac.,,10.8 USD
+146,Appetizers/Large Sides,Pint Chorizo Queso.,,21.6 USD
+146,Appetizers/Large Sides,Pint Guacamole.,,21.6 USD
+146,Appetizers/Large Sides,Pint Queso.,,19.2 USD
+146,Appetizers/Large Sides,Pint Spinach Queso.,,19.2 USD
+146,Appetizers/Large Sides,Pint Green Salsa.,,10.8 USD
+146,Appetizers/Large Sides,Pint Pico de Gallo.,,12.0 USD
+146,Appetizers/Large Sides,Pint Red Salsa.,,8.4 USD
+146,Appetizers/Large Sides,Quart Queso.,,38.4 USD
+146,Appetizers/Large Sides,Quart Green Salsa.,,21.6 USD
+146,Appetizers/Large Sides,Quart Guacamole.,,43.2 USD
+146,Appetizers/Large Sides,Quart Red.,,14.4 USD
+146,Appetizers/Large Sides,Quart Pico.,,24.0 USD
+146,Appetizers/Large Sides,Quart Chorizo Queso.,,43.2 USD
+146,Appetizers/Large Sides,Quart Spinach Queso.,,38.4 USD
+146,Family Meals,Family Chicken Fajita Dinner.,,64.8 USD
+146,Family Meals,Family Combo Fajita Dinner.,,69.6 USD
+146,Family Meals,Family BBQ Chicken Dinner.,,52.8 USD
+146,Family Meals,Family Street Taco Dinner.,,50.4 USD
+146,Family Meals,Family Traditional Taco Dinner.,,50.4 USD
+146,Quesadillas,Steak Quesadilla.,Marinated &amp; grilled sirloin steak,20.4 USD
+146,Quesadillas,Beef Quesadilla,Seasoned ground beef on flour tortilla.,14.4 USD
+146,Quesadillas,BBQ Pork Quesadilla.,Tamarind BBQ pork on a tomato tortilla,16.8 USD
+146,Quesadillas,Cheese Quesadilla.,Jack chz on flour tortilla.,13.2 USD
+146,Quesadillas,Chicken Quesadilla.,Lime marinated grilled chicken breast,16.8 USD
+146,Quesadillas,Buffalo Quesadilla.,Chicken breast simmered in our buffalo wing sc.,16.8 USD
+146,Quesadillas,Chicken &amp; Spinach Quesadilla,"Chicken, spinach, pico &amp; jack chz on flour tortilla.",16.8 USD
+146,Quesadillas,BBQ Chicken Quesadilla.,Tamarind BBQ chicken on a tomato tortilla,16.8 USD
+146,Quesadillas,Arizona Quesadilla.,"Grilled chicken, fresh spinach &amp; pico",18.0 USD
+146,Quesadillas,Spinach Quesadilla,Spinach &amp; jack chz on flour tortilla,13.2 USD
+146,Quesadillas,California Quesadilla.,"Fresh spinach &amp; pico, goat cheese &amp; black beans",15.6 USD
+146,Quesadillas,Steak &amp; Blue Quesadilla.,"Grilled steak, carmelized onions, blue cheese on a flour tortilla",20.4 USD
+146,Quesadillas,Shrimp Quesadilla.,Sauteed shrimp &amp; pico on a tomato tortilla,19.2 USD
+146,Quesadillas,Veggie Quesadilla.,,15.6 USD
+146,Burritos,Gordo Steak Burrito,"Flour tortilla stuffed with grilled steak, guac, sr crm, pinto bns, &amp; smothered in our original chile con queso.",21.6 USD
+146,Burritos,Gordo Beef Burrito,"Flour tortilla stuffed with beef, guac, sr crm, pinto bns, &amp; smothered in our original chile con queso.",18.0 USD
+146,Burritos,Gordo Chicken Burrito,"Flour tortilla stuffed with grilled chicken, guac, sr crm, pinto bns, &amp; smothered in our original chile con queso.",18.0 USD
+146,Burritos,Gordo Spinach Burrito,"Flour tortilla stuffed with spinach, guac, sr crm, pinto bns, &amp; smothered in our original chile con queso.",15.6 USD
+146,Burritos,Chicken Asado Burrito,"Our traditional rolled burrito with bell peppers, onions, cheese &amp; topped with roasted chile sc.",16.8 USD
+146,Burritos,Steak Asado Burrito,"Our traditional rolled burrito with bell peppers, onions, cheese &amp; topped with roasted chile sc.",21.6 USD
+146,Burritos,Veggie Asado Burrito,"Our traditional rolled burrito with bell peppers, onions, cheese &amp; topped with roasted chile sc.",15.6 USD
+146,Burritos,Beef Zapnin,"Chimichanga style crispy overstuffed fried burrito with chz, lettuce, tomato, guac, sr crm &amp; roasted chile sc.",19.2 USD
+146,Burritos,Chicken Zapnin,"Chimichanga style crispy overstuffed fried burrito with chz, lettuce, tomato, guac, sr crm &amp; roasted chile sc.",19.2 USD
+146,Burritos,Steak Zapnin,"Chimichanga style crispy overstuffed fried burrito with chz, lettuce, tomato, guac, sr crm &amp; roasted chile sc.",21.6 USD
+146,Burritos,Veggie Zapnin,"Chimichanga style crispy overstuffed fried burrito with chz, lettuce, tomato, guac, sr crm &amp; roasted chile sc.",18.0 USD
+146,Burritos,Burrito Platter.,1 burrito Served with rice &amp; beans.,15.6 USD
+146,Combos,Dos Amigos.,Choose 2 Items. Served with rice &amp; pinto beans.,16.8 USD
+146,Combos,Tres Amigos.,Choose 3 Items. Served with rice &amp; pinto beans.,19.2 USD
+146,Enchiladas,Chicken Suizas.,"Grilled chicken, ricotta &amp; jack chz with spinach in a flr tort &amp; our fire roasted poblano chile cream sc.",16.8 USD
+146,Enchiladas,Santa Fe Enchilada.,"Blue corn tort, grilled chk, onions, bell peppers&amp; jack chz smothered in green chile sc with sr crm &amp; sliced avocado.",16.8 USD
+146,Enchiladas,Shrimp Enchilada,Sauteed shrimp &amp; pico folded into a blue corn tortilla &amp; our fire roasted poblano chile crm sc.,18.0 USD
+146,Fajitas,Steak Fajita,"Includes grilled onions, bell peppers, squash, zucchini &amp; red potatoes on a sizzling skillet with zesty lime slaw, guac, sr crm, pico, mexican rice &amp; pinto beans are served on the side.",27.6 USD
+146,Fajitas,Chicken Fajita,"Includes grilled onions, bell peppers, squash, zucchini &amp; red potatoes on a sizzling skillet with zesty lime slaw, guac, sr crm, pico, mexican rice &amp; pinto beans are served on the side.",22.8 USD
+146,Fajitas,Veggie Fajita.,"Includes grilled onions, bell peppers, squash, zucchini &amp; red potatoes on a sizzling skillet with zesty lime slaw, guac, sr crm, pico, mexican rice &amp; pinto beans are served on the side.",18.0 USD
+146,Fajitas,3 Way Fajita.,"Includes grilled onions, bell peppers, squash, zucchini &amp; red potatoes on a sizzling skillet with zesty lime slaw, guac, sr crm, pico, mexican rice &amp; pinto beans are served on the side.",28.8 USD
+146,Fajitas,Shrimp Fajita.,"Includes grilled onions, bell peppers, squash, zucchini &amp; red potatoes on a sizzling skillet with zesty lime slaw, guac, sr crm, pico, mexican rice &amp; pinto beans are served on the side.",26.4 USD
+146,Fajitas,Chx/Shrimp Fajita.,"Includes grilled onions, bell peppers, squash, zucchini &amp; red potatoes on a sizzling skillet with zesty lime slaw, guac, sr crm, pico, mexican rice &amp; pinto beans are served on the side.",24.0 USD
+146,Fajitas,Steak/Chicken Fajita,"Includes grilled onions, bell peppers, squash, zucchini &amp; red potatoes on a sizzling skillet with zesty lime slaw, guac, sr crm, pico, mexican rice &amp; pinto beans are served on the side.",25.2 USD
+146,Fajitas,Stk/Shrimp Fajita.,"Includes grilled onions, bell peppers, squash, zucchini &amp; red potatoes on a sizzling skillet with zesty lime slaw, guac, sr crm, pico, mexican rice &amp; pinto beans are served on the side.",26.4 USD
+146,Tacos,Taco Basket.,"3 crispy corn or soft flor tort seasoned beef or grilled chk tacos with let, tom &amp; chz",15.6 USD
+146,Tacos,3 Way Street Taco.,"3 ""taqueria style"" tacos on fresh corn tortillas with onions, cilantro, zesty lime cabbage &amp; roasted chipotle sauce.",19.2 USD
+146,Tacos,Chicken Street Taco.,"3 ""taqueria style"" tacos on fresh corn tortillas with onions, cilantro, zesty lime cabbage &amp; roasted chipotle sauce.",16.8 USD
+146,Tacos,Pork Street Taco.,"3 ""taqueria style"" tacos on fresh corn tortillas with onions, cilantro, zesty lime cabbage &amp; roasted chipotle sauce.",15.6 USD
+146,Tacos,Shrimp Street Taco.,"3 ""taqueria style"" tacos on fresh corn tortillas with onions, cilantro, zesty lime cabbage &amp; roasted chipotle sauce.",19.2 USD
+146,Tacos,Tinga Street Taco.,"3 ""taqueria style"" tacos on fresh corn tortillas with onions, cilantro, zesty lime cabbage &amp; roasted chipotle sauce.",16.8 USD
+146,Tacos,Tinga Tostada.,"Tostada style with slow cooked shredded chicken in tomato &amp; chipotle sauce, crispy corn tortilla, lettuce, avocado, queso fresco &amp; rice",15.6 USD
+146,Tacos,Taquitos Tinga,,13.2 USD
+146,Salads,Beef Taco Salad.,"Seasoned ground beef, with shredded lettuce, tomatoes, jack &amp; cheddar chz, guac &amp; sr crm. Served in a tortilla bowl with your choice of dressing.",16.8 USD
+146,Salads,Chicken Taco Salad.,"Grilled fajita chicken with shredded lettuce, tomatoes, jack &amp; cheddar chz, guac &amp; sr crm. Served in a tortilla bowl with your choice of dressing.",16.8 USD
+146,Salads,Mango Chicken Salad,"Fresh mixed greens with tomatoes, cucumber, avocado, red onions &amp; queso fresco with mango &amp; grilled chicken",18.0 USD
+146,Salads,BBQ Chicken Salad.,"Grilled chicken breast, basted with our sweet tamarind BBQ sauce served with fresh mixed greens, avocado, tomatoes, roasted corn, black bean, onion &amp; dressing",19.2 USD
+146,Salads,Steak &amp; Blue Salad.,"Fresh mixed greens with tomatoes, cucumber, avocado, red onions &amp; queso fresco with grilled steak &amp; blue cheese",20.4 USD
+146,Salads,Shrimp Salad.,"Fresh mixed greens with tomatoes, cucumber, avocado, red onions &amp; queso fresco with sauteed shrimp &amp; pico",19.2 USD
+146,Salads,Garden Chicken Salad.,"Grilled chicken with fresh mixed grns with tomatoes, cucumbers &amp; shredded chz",14.4 USD
+146,Salads,Garden Salad.,"Fresh mixed grns with tomatoes, cucumbers &amp; shredded chz",9.0 USD
+146,Salads,Chicken Caesar.,,18.0 USD
+146,Salads,Steak Caesar.,,20.4 USD
+146,Salads,Shrimp Caesar.,,20.4 USD
+146,Tamales,Pork Tamale.,Handmade in the husk with grn chiles &amp; chz. Topped with pork.,16.8 USD
+146,Tamales,Tinga Tamale.,Handmade in the husk with grn chiles &amp; chz. Topped with chk tinga.,15.6 USD
+146,Tamales,Queso Tamale.,Handmade in the husk with grn chiles &amp; chz. Topped with queso.,15.6 USD
+146,Tamales,Shrimp Tamale.,Handmade in the husk with grn chiles &amp; chz. Topped with shrimp.,18.0 USD
+146,Tamales,Chicken and Spinach Tamale,Handmade in the husk with grn chiles &amp; chz. Topped with chk &amp; spin.,18.0 USD
+146,Tamales,Veggie Tamale.,Handmade in the husk with grn chiles &amp; chz. Topped with veggies.,15.6 USD
+146,Nachos,Beef and Chicken Nachos.,"Seasoned ground beef or grilled chicken with Monterrey Jack &amp; Cheddar cheese, black beans, jalapenos, lettuce, tomatoes, guac &amp; sr cream",16.8 USD
+146,Nachos,Blue Nachos.,"Grilled chicken breast, Monterrey Jack &amp; cheddar cheese, black beans, jalapenos, lettuce, tomatoes, guac &amp; sr cream",18.0 USD
+146,Nachos,D Beef Nachos.,"Seasoned ground beef with Monterrey Jack &amp; Cheddar cheese, black beans, jalapenos, lettuce, tomatoes, guac &amp; sr cream",16.8 USD
+146,Nachos,D Chicken Nachos.,"Grilled chicken with Monterrey Jack &amp; Cheddar cheese, black beans, jalapenos, lettuce, tomatoes, guac &amp; sr cream",16.8 USD
+146,Nachos,Nachos.,,10.8 USD
+146,Nachos,Steak Nachos.,"Grilled steak with Monterrey Jack &amp; Cheddar cheese, black beans, jalapenos, lettuce, tomatoes, guac &amp; sr cream",19.2 USD
+146,Kids Menu,Arroz Con Pollo.,Grilled chicken breasts served over Mexican rice drizzled with queso dip,8.4 USD
+146,Kids Menu,Lrg Arroz Pollo.,Grilled chicken breasts served over Mexican rice drizzled with queso dip,16.8 USD
+146,Kids Menu,El Pollo #2.,2 Chicken tenders with fries,7.2 USD
+146,Kids Menu,El Pollo #3.,3 Chicken tenders with fries,9.6 USD
+146,Kids Menu,Junior Beef Nachos,,8.4 USD
+146,Kids Menu,Jr Chicken Nacho.,,8.4 USD
+146,Kids Menu,Jr Cheese Nachos.,,6.0 USD
+146,Kids Menu,Jr Cheese Quesadilla,,7.2 USD
+146,Kids Menu,Jr Chicken Quesadilla,,9.6 USD
+146,Kids Menu,Jr Steak Quesadilla,,10.8 USD
+146,Kids Menu,El Chico Taco.,Ground Beef Crispy Taco served with rice &amp; beans.,6.0 USD
+146,Kids Menu,Jr Chicken Taco.,Soft chicken taco served with rice &amp; beans.,6.0 USD
+146,Kids Menu,Jr Beef Enchilada.,,8.4 USD
+146,Kids Menu,Jr Chix Enchilada,,8.4 USD
+146,Kids Menu,Nino Beef Burrito.,,7.2 USD
+146,Kids Menu,Nino Chix Burrito,,7.2 USD
+146,Kids Menu,Basket of Fries..,,4.8 USD
+146,Kids Menu,Jr Corn Dog.,Corn dog with fries,6.0 USD
+146,Sides,3oz Side Queso,,4.2 USD
+146,Sides,2oz Side Guacamole,,2.4 USD
+146,Sides,2oz Side Sour Cream,,1.2 USD
+146,Sides,Rice.,,2.4 USD
+146,Sides,Refried Beans.,,2.4 USD
+146,Sides,Black Beans.,,2.4 USD
+146,Sides,Side Red Salsa,,0.6 USD
+146,Sides,Side Green Salsa,,0.6 USD
+146,Sides,2oz Cilantro Cream,,1.2 USD
+146,Sides,Side Cheese.,,1.2 USD
+146,Sides,Side Street Corn,,3.6 USD
+146,Sides,Calabacitas.,,3.0 USD
+146,Sides,Corn Tortillas.,,1.5 USD
+146,Sides,Flour Tortillas.,,1.5 USD
+146,Sides,Side Pico.,,0.9 USD
+146,Sides,Basket of Fries...,,4.5 USD
+146,Sides,3oz Jalepeno,,0.3 USD
+146,Sides,Side Dressing.,,0.6 USD
+146,Sides,Side Toppings,,0.3 USD
+146,Desserts,Brownie Chimi.,,7.2 USD
+146,Desserts,Flan.,,6.0 USD
+146,Desserts,Fried Ice Cream.,,7.2 USD
+146,Desserts,Ice Cream Scoop.,,3.0 USD
+146,Desserts,Soppapillas.,Fried tortilla cut into 4 triangles sprinkled with cinnamon &amp; sugar,6.0 USD
+147,Mains,Tacos,"Served with meat choice,cilantro,onions:limes-cucumbers=taco salsa choices green salsa, red Chipotle salsa and peanut salsa..",3.5 USD
+147,Mains,Torta / Sandwich,"Served with protein choices,beans,cheese,mayonnaise, cilantro,onions,tomatoes avocado,jalapeños...",9.75 USD
+147,Mains,Quesadillas,"Served with meat choice of one-steak, chicken, chorizo, sausage, pastor, pork, campecho-3 meats: pastor, chorizo, asada, fish, shrimp, carnitas, or roasted pork.",8.75 USD
+147,Mains,Burritos,"Served with meat choice of one-steak, chicken, chorizo, sausage, pastor, pork, campecho-3 meats pastor, chorizo, asada, fish, shrimp, carnitas, or roasted pork.",9.75 USD
+148,Picked for you,Olipita Combination Plate,"Your choice of any two of our famous delicious entrees (Sampler Plate) . Served with fresh salad, side hummus dip, basmati rice, grilled  vegetable skewer, and fresh pita bread.
+( Sampler Plate)",21.99 USD
+148,Picked for you,Grilled Chicken Kabab Platter,"Chicken breast skewers marinated with lemon juice, olive oil, herbs, and special spices. Served with  fresh salad, hummus dip, basmati rice, grilled vegetable skewers, and fresh pita bread.",14.99 USD
+148,Picked for you,"Hummus ","Made from chickpea, tahini sauce (sesame sauce), lemon juice, garlic, and olive oil served with Pita Bread",5.99 USD
+148,Picked for you,Gyro Plate,"Seasoned slices of beef and lamb and grilled to perfection. Served with tzatziki sauce, fresh salad, hummus dip, basmati rice, grilled vegetable skewer, &amp; fresh pita bread.",14.99 USD
+148,Picked for you,Grilled Tilapia Plate,"Marinated with lemon juice, onion, garlic, and special spices. Served with fresh salad, hummus dip, garlic sauce, basmati rice, grilled vegetable skewer, &amp; fresh pita bread.",14.99 USD
+148,Appetizers,"Hummus ","Made from chickpea, tahini sauce (sesame sauce), lemon juice, garlic, and olive oil served with Pita Bread",5.99 USD
+148,Appetizers,Falafel Appetizers,"Deep fried falafel. Ground chickpeas, parsley, onion, and spices. Served on a bed of fresh salad with tomato, pickles, tahini sauce (sesame sauce) &amp; Served with side Pita Bread.",7.99 USD
+148,Appetizers,"Hummus with Chicken Appetizer ",Hummus topped With Grilled Chicken &amp;  Served with side Pita Bread.,10.99 USD
+148,Appetizers,"Hummus with Gyro Appetizer ",Hummus topped With Gyro Meat &amp; Served with side Pita Bread,10.99 USD
+148,Appetizers,"Hummus With Sautéed Vegetable ","Hummus With Sautéed Vegetable ( Onion, Bell Peppers &amp; Mushroom) Served With Pita Bread.
+( New Item)",9.99 USD
+148,Appetizers,Hummus With Philly Steak,Hummus Topped With Philly Steak ( Onion Peppers &amp; Mushroom) Served with side Pita Bread. ( New Item),10.99 USD
+148,Salads,Greek Salad,"Fresh  lettuce, olives, tomatoes, mixed peppers, cucumber, onions, and radish topped with feta cheese and served with Olipita house Dressing OR Ranch Dressing.",6.99 USD
+148,Salads,Olipita Salad,"Tomatoes, cucumber, onions, bell pepper, and parsley with Olipita house dressing.",5.99 USD
+148,Salads,Olipita Olive Salad,"Try our delicious 
+Olipita Olive Salad
+ ( New Item)👌🏼",3.99 USD
+148,Salads,Garden Salad,"Fresh Lettuce, cucumber, onions, tomatoes, radish, and mixed pepper. Served with side Olipita dressing Or Ranch Dressing.",5.99 USD
+148,Platters,Grilled Chicken Kabab Platter,"Chicken breast skewers marinated with lemon juice, olive oil, herbs, and special spices. Served with  fresh salad, hummus dip, basmati rice, grilled vegetable skewers, and fresh pita bread.",14.99 USD
+148,Platters,Grilled Beef Kofta Kabab Platter,"Ground beef, onion, parsley, garlic, and mixed with special spices. Served with tahini sauce (sesame sauce), with fresh salad, hummus dip, basmati rice, grilled vegetable skewers, and fresh pita bread.",14.99 USD
+148,Platters,Gyro Plate,"Seasoned slices of beef and lamb and grilled to perfection. Served with tzatziki sauce, fresh salad, hummus dip, basmati rice, grilled vegetable skewer, &amp; fresh pita bread.",14.99 USD
+148,Platters,Grilled Tilapia Plate,"Marinated with lemon juice, onion, garlic, and special spices. Served with fresh salad, hummus dip, garlic sauce, basmati rice, grilled vegetable skewer, &amp; fresh pita bread.",14.99 USD
+148,Platters,Falafel Plate (Vegetarian),"Ground chickpeas, parsley, onion, Mediterranean spices shaped to balls, and deep fried. Served with tomatoes, pickles and tahini sauce (sesame sauce), fresh salad, hummus dip, basmati rice, grilled vegetable skewer, and fresh pita bread.",12.99 USD
+148,Platters,Olipita Combination Plate,"Your choice of any two of our famous delicious entrees (Sampler Plate) . Served with fresh salad, side hummus dip, basmati rice, grilled  vegetable skewer, and fresh pita bread.
+( Sampler Plate)",21.99 USD
+148,Platters,Veggie Kabab Plate,"( Vegetarian Lovers) Veggie Kabab Plate. Served with 2 grilled seasoned veggie Kabab skewers, Rice, Salad, side hummus &amp; Pita Bread. 
+House Dressing OR Ranch Dressing.😍
+ ( New Item)",12.99 USD
+148,Platters,Philly Steak Plate,"Try Our delicious Philly Steak Plate (Grilled Philly Steak Meat, Onion, Bell Peppers &amp; Tomato) Served with Rice, Fresh Salad, side garlic sauce &amp; House Dressing OR Ranch Dressing.😋
+( New Item)",12.99 USD
+148,Platters,Chicken Philly Plate,"Try Our delicious Chicken Philly Plate (Grilled Chicken Philly Meat, Onion, Bell Peppers&amp; Tomato) Served With Rice, Fresh Salad, Side Garlic Sauce &amp; House Dressing OR
+ Ranch Dressing.😋
+( New Item)",12.99 USD
+148,Platters,"Grilled Salmon Plate ","Try our New delicious Grilled Salmon Plate , served with Rice, Salad, grilled veggie skewer ,side hummus, garlic sauce &amp; fresh pita bread. 😋👨‍🍳
+(New Item)",16.99 USD
+148,Platters,BBQ Chicken Plate,"Try our New delicious BBQ Grilled chopped  Chicken &amp; Onion . Served on  bed of Rice, Salad &amp; House Dressing OR Ranch Dressing .😋👨‍🍳",12.99 USD
+148,Platters,(4 PCS) Chicken Finger,"(4 PCS) of Chicken Finger. Served with  side honey mustard ,fries &amp; Large soft drink. ( New Item)😋",11.99 USD
+148,Platters,Grilled Shrimp Kabab Platter,"Marinated with lemon juice, onion, garlic, and special spices. Served with tzatziki sauce, fresh salad, hummus dip, basmati rice, grilled vegetable skewers, and fresh pita bread.",14.99 USD
+148,Olipita's Special  Burgers,Veggie Burger,"Try our delicious Veggie Burger( Vegetarian Lovers) Served with Tahini Sauce
+( Sesame Sauce),  Tomato, Fresh lettuce, Onion &amp; Pickles.
+( New Item)😍",6.99 USD
+148,Olipita's Special  Burgers,Kofta Burger,"Ground Beef mixed onion, garlic, parsley &amp; our  special spices flavor. (Not Spicy) , served on a burger bun with tahini sauce, tomato, lettuce, onion&amp; Pickles. (New Item)",6.99 USD
+148,Kids Meals,Kids Chicken Fingers,"Three pieces of chicken finger. Served with  side honey mustard , small fries &amp; drink.",7.99 USD
+148,Kids Meals,Kids Grilled Cheese,Served with small fries and drink.,6.99 USD
+148,Kids Meals,Kids Hot Dogs,"Kids Hot Dog Meal. Served with ketchup &amp; Mustard.
+Comes with small fries &amp; Drink.",7.99 USD
+148,Subs and Wraps,Gyro,"Seasoned slices of beef &amp; lamb, and grilled. Served on fresh pita Bread with fresh lettuce, tomatoes, and tzatziki sauce.",6.99 USD
+148,Subs and Wraps,Philly Steak,"Grilled Philly beef steak, onions, bell peppers, mushrooms, mayo &amp; topped with Swiss cheese.",6.99 USD
+148,Subs and Wraps,Chicken Philly,"Grilled Chicken Philly , onions, bell peppers, mushrooms, mayo &amp; topped with Swiss cheese.",6.99 USD
+148,Subs and Wraps,Hot Dogs,Served with ketchup and mustard.,2.99 USD
+148,Subs and Wraps,Shrimp Philly On Pita," Shrimp Philly Served On Pita with grilled Onion, bell peppers &amp; mushroom ,garlic sauce &amp; topped with Swiss cheese.😍👨‍🍳
+(New Item)",7.49 USD
+148,Subs and Wraps,Grilled Chicken Kabab (Shish Tawouk),"Grilled Chicken kabab skewers, served on Pita Bread with fresh lettuce, tomatoes, pickles, and garlic sauce.",6.99 USD
+148,Subs and Wraps,Beef Kofta Kebab,"Ground beef, onions, parsley, garlic, special spices, served on Pita Bread with fresh lettuce, tomatoes, pickles, and tahini sauce (sesame sauce).",6.99 USD
+148,Subs and Wraps,Falafel,"Ground chickpeas, parsley, onions, Mediterranean spices shaped to balls and deep fried. served with  Fresh lettuce, tomatoes, pickles, and tahini sauce (sesame sauce).",6.99 USD
+148,Subs and Wraps,Olipita Garden (Vegetarian),"A mix of fresh vegetables, hummus, and tahini sauce (sesame sauce).",6.99 USD
+148,Subs and Wraps,Chicken Gyro,"Try our New delicious Chicken Gyro. Served On Pita Bread with Tzatziki Sauce , Fresh lettuce&amp; Tomato. .",6.99 USD
+148,Extra Sauces,House Dressing," ",0.6 USD
+148,Extra Sauces,Tahini Sauce (Sesame Sauce),,0.6 USD
+148,Extra Sauces,Olipita Garlic Sauce,,0.6 USD
+148,Extra Sauces,Tzatziki Sauce,,0.6 USD
+148,Extra Sauces,Hot Sauce,,0.6 USD
+148,Extra Sauces,Ranch Dressing (not spicy),,0.6 USD
+148,Extra Sauces,Honey Mustard,Honey Mustard,0.6 USD
+148,Extra Sauces,BBQ Sauce,BBQ Sauce,0.6 USD
+148,Side Orders,Onion Rings,Fried Onion Rings( New Item)😋,3.49 USD
+148,Side Orders,Fried Okra,Fried Okra ( New Item)😋,3.49 USD
+148,Side Orders,"Cajun Ranch Fries ",Cajun Ranch Fries ( New Item)😍,3.99 USD
+148,Side Orders,French Fries,,2.99 USD
+148,Side Orders,Basmati Rice,,2.99 USD
+148,Side Orders,Feta Cheese,,2.99 USD
+148,Side Orders,Pita Bread,,1.0 USD
+148,Side Orders,"Cajun Ranch &amp; Cheese Fries ",Cajun Ranch &amp; Cheese Fries (New Item)👌🏼,4.99 USD
+148,Side Orders,Cheese Fries,Cheese Fries ( New Item)😍,3.99 USD
+148,Beverages,Fountain Drinks,,1.99 USD
+148,Beverages,Sweet Tea,Fresh Sweet Tea,1.99 USD
+148,Beverages,Bottled  Of Water,,1.49 USD
+148,Beverages,"Strawberry Lemon Juice ","Refreshing juice drink made with real fruit juice for an authentic, natural flavor.No Sugar, Caffeine free &amp; Non-carbonated.",2.69 USD
+148,Olipita Homemade Sweets,Baklava,Layers of filo pastry filled with chopped nuts and sweetened syrup. Topped with extra pistachios.,2.99 USD
+149,Picked for you,Build Your Own Pizza,,8.99 USD
+149,Picked for you,Ultimate Pepperoni Pizza,"Pizza sauce, triple pepperoni, and cheese.",10.99 USD
+149,Picked for you,Mozzarella Sticks,,6.99 USD
+149,Picked for you,Fried Ravioli,,6.99 USD
+149,Picked for you,Cream Cheese Cannoli,"caramel, chocolate, rasperries",7.99 USD
+149,Appetizers,French Fries,,3.99 USD
+149,Appetizers,Fried Ravioli,,6.99 USD
+149,Appetizers,Mozzarella Sticks,,6.99 USD
+149,Appetizers,Onions Rings,,5.99 USD
+149,Appetizers,Corn Nuggets,,6.99 USD
+149,Appetizers,Fried Meatballs,,7.99 USD
+149,Appetizers,Fried Pickles,,6.99 USD
+149,Appetizers,Jalapeno Poppers,,6.99 USD
+149,Appetizers,"12"" Cheese Bread",,8.99 USD
+149,Appetizers,Bacon Fries,,7.99 USD
+149,Appetizers,Cheese Fries,,7.99 USD
+149,Sandwiches,Italian Sub,"Pepperoni, salami, ham, Turkey, Italian dressing, lettuce, tomato, and cheese.",9.48 USD
+149,Sandwiches,Stromboli Steak,"Beef patty, mushroom, gravy, onion, mushroom, and cheese.",9.48 USD
+149,Sandwiches,Meatball,"Meatballs, pizza sauce, and cheese.",9.48 USD
+149,Sandwiches,Buffalo Chicken,"Secret sauce, chicken, and cheese.",9.48 USD
+149,Sandwiches,Pesto Chicken,"Pesto sauce, chicken, and cheese.",9.48 USD
+149,Salad,Chef Salad,"Lettuce, ham, Turkey, bacon, tomato, onion, green pepper, pepperoncini peppers, eggs, and cheese.",8.99 USD
+149,Salad,Garden Salad,"Lettuce, tomato, onion, green pepper, bacon, and cheese.",3.99 USD
+149,Salad,Greek Salad,"Lettuce, tomato, onion, feta cheese, kalamata olives, pepperoncini peppers.",3.99 USD
+149,Salad,Caesar Salad,"Lettuce, tomato, croutons, and parmesan cheese.",3.99 USD
+149,Salad,Chicken Salad,"Lettuce, tomato, onion, green pepper, bacon, and cheese.",8.99 USD
+149,Mains,Build Your Own Pizza,,8.99 USD
+149,Pasta,Spaghetti,,9.99 USD
+149,Pasta,Spaghetti with Meatballs,,10.99 USD
+149,Pasta,Alfredo,,9.99 USD
+149,Pasta,Chicken Alfredo,,10.99 USD
+149,Pasta,Pesto,,9.99 USD
+149,Pasta,Pesto Chicken,,10.99 USD
+149,Pasta,Pesto Alfredo,,9.99 USD
+149,Pasta,Pesto Alfredo Chicken,,10.99 USD
+149,Chicken Speciality Pizza,BBQ Chicken,"BBQ sauce, chicken, and cheese. The secret sauce, bacon, and cheese.",11.99 USD
+149,Chicken Speciality Pizza,Buffalo Chicken,"The secret sauce, chicken, and cheese.",11.99 USD
+149,Chicken Speciality Pizza,Chicken Veggie,"The secret sauce, chicken, spinach, tomatoes, mushrooms, onion, green pepper, black olives, and cheese.",11.99 USD
+149,Specialty Pizza,Hawaiian Pizza,"Pizza sauce, ham, and pineapple.",10.99 USD
+149,Specialty Pizza,Meat Pizza,"Pizza sauce, pepperoni, ground beef, ham, bacon, Italian sausage, and cheese.",10.99 USD
+149,Specialty Pizza,Ultimate Pepperoni Pizza,"Pizza sauce, triple pepperoni, and cheese.",10.99 USD
+149,Specialty Pizza,House Special Pizza,"Garlic or olive oil base, pepperoni, ham, Italian sausage, onion, green pepper, tomatoes, mushrooms, basil, and cheese.",10.99 USD
+149,Specialty Pizza,Supreme Pizza,"Pizza sauce, pepperoni, ham, Italian sausage, onion, green pepper, black olives, mushrooms, and cheese.",10.99 USD
+149,Specialty Pizza,Veggie Pizza,"Pizza sauce, onion, green pepper, spinach, black olives, mushrooms, tomatoes, and cheese.",10.99 USD
+149,Kids Mains,Pepperoni Pizza,Includes a twelve oz drink.,5.99 USD
+149,Kids Mains,Personal Cheese,Includes a twelve oz drink.,5.99 USD
+149,Kids Mains,Spaghetti (Pasta),Includes a twelve oz drink.,5.99 USD
+149,Kids Mains,Chicken Fingers and Fries,Includes a twelve oz drink.,5.99 USD
+149,Pizza by the Slice,Cheese Slice,,3.0 USD
+149,Pizza by the Slice,Pepperoni Slice,,3.5 USD
+149,Pizza by the Slice,Meat Slice,"Pizza sauce, pepperoni, ground beef, ham, bacon, Italian sausage, and cheese.",5.5 USD
+149,Pizza by the Slice,Supreme Slice,"Pizza sauce, pepperoni, ham, Italian sausage, onion, green pepper, black olives, mushrooms, and cheese.",5.5 USD
+149,Pizza by the Slice,Veggie Slice,"Pizza sauce, onion, green pepper, spinach, black olives, mushrooms, tomatoes, and cheese.",5.5 USD
+149,Pizza by the Slice,Hawaiian Slice,"Pizza sauce, ham, and pineapple.",5.5 USD
+149,Calzones,Cheese Calzone,,8.99 USD
+149,Calzones,Specialty Calzones,,11.99 USD
+149,Beverages,Coca-Cola®,Coca-Cola Soda,1.99 USD
+149,Beverages,Pibb Xtra®,Spiced Cherry Cola,1.99 USD
+149,Beverages,Sprite®,Lemon Lime Soda,1.99 USD
+149,Beverages,Diet Coke,20 oz.,1.99 USD
+149,Beverages,Lemonade,20 oz.,1.99 USD
+149,Desserts,Cream Cheese Cannoli,"caramel, chocolate, rasperries",7.99 USD
+149,Desserts,Cricket's Special,,7.99 USD
+150,Picked for you,Spaghetti &amp; Meatballs,"Four plump and juicy meatballs, smothered in our house-made marinara sauce ands served atop a giant bed of pasta. Garnished with basil and freshly grated Parmesan and romano cheeses. Served with breadstick.",16.2 USD
+150,Picked for you,Chicken Parmesan,Lightly breaded chicken served over angel hair pasta and covered by our house-made marinara sauce and Mozzarella. Garnished with Parmesan and romano cheeses and freshly cut basil. Served with a breadstick.,16.8 USD
+150,Picked for you,Beef Stroganoff,"Wavy egg noodles sautéed with tender beef and mushrooms, tossed in a classic stroganoff sauce. Served with a breadstick.",16.2 USD
+150,Picked for you,Fettuccini Alfredo,Fettuccini pasta tossed with our freshly-made cream sauce. Garnished with parsley and freshly grated Parmesan and romano cheeses. Served with a breadstick.,13.2 USD
+150,Picked for you,Spicy Cajun,"Penne pasta tossed with our rustic tomato cream sauce, scallions, fresh yellow onions and red bell peppers. Garnished with scallions. Served with a breadstick.",13.2 USD
+150,Starters &amp; Soups,Thai Lettuce Wraps,"Tender chicken, fresh cut jicama and button mushrooms wok-seared in our signature sauce. Carrots, red bell peppers and Thai peanut sauce served on the side.",10.8 USD
+150,Starters &amp; Soups,Potstickers (For 6),"Plump chicken and cabbage-stuffed dumplings, made complete with a zesty soy lime dipping sauce.",9.0 USD
+150,Starters &amp; Soups,Edamame Potstickers (For 6),Tender dumplings filled with a blend of hearty edamame soybean pieces and lightly seasoned vegetables.,9.0 USD
+150,Starters &amp; Soups,Mozzarella Cheese Bread,"Four Mozzarella cheese-filled bread sticks complimented by a warm, robust marinara dipping sauce.",7.2 USD
+150,Starters &amp; Soups,Tomato Bisque,"Thick, rich and creamy our new spin on an old classic.",7.2 USD
+150,Starters &amp; Soups,Chicken Noodle Soup,"Bite size pieces of chicken, carrots, green onion, mushrooms and egg noodles all come together in our freshly made chicken broth.",7.2 USD
+150,Starters &amp; Soups,Thai Curry Soup,"Bowl. An array of chicken, carrots, red bell pepper, green onion, fresh cut basil and garlic all freshly cooked to order in our delicious Thai Curry base. Spicy.",10.8 USD
+150,Starters &amp; Soups,Green Chile Maize,"A delicious blend of chicken, scallions, sweet corn, and cheddar cheese in green chile cream sauce and broth.",10.8 USD
+150,Salads,Garden Salad,"Garden-fresh mixed greens, crispy croutons, plump tomatoes and red onions coupled with a cheddar and monterey jack cheese blend. served with your choice of dressing.",6.6 USD
+150,Salads,Cranberry Spinach Salad,"Fresh spinach, dried cranberries and spiced almonds tossed with a sweet poppy seed dressing.",6.6 USD
+150,Salads,Greek Salad,"Fusilli pasta, house greens, Kalamata olives, tomatoes and red onions tossed in our house Greek dressing. Topped with crumbled Feta cheese and a pepperoncini pepper for an extra burst of flavor.",9.6 USD
+150,Salads,Steak Salad,"Tender sirloin, roasted red bell peppers, grape tomatoes, fried onions, red onions and spinach with cheddar jack cheese atop a mound of Romaine lettuce tossed in a chipotle ranch dressing. Spicy.",13.2 USD
+150,Salads,BBQ Chicken Salad,"Tender BBQ chicken, napa cabbage, carrots, romaine lettuce, basil, cilantro, sliced avocado, sweet corn, black beans, red onions, Roma tomato, fried onions, and roasted red bell peppers tossed together in a chipotle ranch dressing.",13.2 USD
+150,Salads,Asian Salad,"Thinly sliced crisp Napa cabbage, romaine lettuce, chow mein noodles, basil, shredded carrots and cilantro tossed in our signature spicy sweet and sour dressing.",6.6 USD
+150,Salads,Caesar Salad,"Crisp, chilled Romaine lettuce with grated Parmesan and Romano cheeses, tossed in an authentic Caesar dressing with croutons.",6.6 USD
+150,Salads,Pear &amp; Balsamic Spinach Salad,"Bosc pears, crunchy walnuts and spinach tossed with Bleu cheese crumbles and a tart balsamic vinaigrette.",6.6 USD
+150,Italian,Spaghetti &amp; Meatballs,"Four plump and juicy meatballs, smothered in our house-made marinara sauce ands served atop a giant bed of pasta. Garnished with basil and freshly grated Parmesan and romano cheeses. Served with breadstick.",16.2 USD
+150,Italian,Basil Pesto,"Farfalle pasta tossed with fresh mushrooms, tomatoes and our original basil pesto cream sauce. Garnished with fresh basil and grated Parmesan and romano cheeses  (Sauce contains walnuts). Served with a breadstick.",13.2 USD
+150,Italian,Margherita Pasta,"Farfalle pasta tossed in our own made-to-order sauce of ripe tomatoes, fresh basil, fragrant garlic, red pepper flakes and extra virgin olive oil. Garnished with basil and fresh Parmesan and romano cheeses. Served with a breadstick.",13.2 USD
+150,Italian,Fettuccini Alfredo,Fettuccini pasta tossed with our freshly-made cream sauce. Garnished with parsley and freshly grated Parmesan and romano cheeses. Served with a breadstick.,13.2 USD
+150,Italian,Marinara Pasta,"Farfalle pasta topped with our soon-to-be-famous house-made marinara sauce, which is made with zesty onions and herbs. Garnished with fresh basil and grated Parmesan and romano cheeses. Served with a breadstick.",13.2 USD
+150,Italian,Capellini Primavera,"Angel hair pasta tossed with fresh zucchini, yellow squash, tomatoes, broccoli and carrots in a white wine balsamic vinaigrette garlic sauce. Garnished with a grated Parmesan and romano cheese blend and seasoned with cracked pepper. Served with a breadstick.",13.2 USD
+150,Italian,Pomodoro Pasta,Farfalle pasta and ripe Roma tomatoes meet a delightfully creamy wine-garlic sauce accompanied by sautéed spinach and basil. Garnished with a medley of Parmesan and Romano cheeses. Served with a breadstick.,13.2 USD
+150,Asian,Sesame Lo Mein,"Lots of Lo Mein noodles in a light sesame sauce with mushrooms, red bell peppers, Napa cabbage and scallions. Garnished with black sesame seeds.",13.2 USD
+150,Asian,Shanghai Noodles,"A full bowl of lo mein noodles caramelized in a spicy sweet and sour sauce, wok-seared with pineapple chunks, red bell peppers, snow peas, and carrots. Garnished with scallions.",13.2 USD
+150,Asian,Spicy Japanese Noodles,"Thick Udon noodles spiked with sugar-lime soy sauce and tossed with fresh broccoli, carrots and mushrooms. Topped with bean sprout and a lime wedge.",13.2 USD
+150,Asian,Thai Peanut,"Rice noodles in a spicy peanut sauce with carrots, red peppers and crushed peanuts, bean sprouts, and scallions. Garnished with bean sprouts and a lime wedge.",13.2 USD
+150,Asian,Pad Thai Noodles,"Rice noodles tossed in a classic Thai sauce with bean sprouts, scallions, crushed peanuts, and fried egg. Garnished with freshly cut cilantro and a lime wedge.",13.2 USD
+150,American,Three Cheese Macaroni,"Fusilli pasta with a special blend of melted cheeses and fresh cream, finished with a generous portion of shredded Cheddar and Monterey Jack cheeses. Served with a breadstick.",13.2 USD
+150,American,Beef Stroganoff,"Wavy egg noodles sautéed with tender beef and mushrooms, tossed in a classic stroganoff sauce. Served with a breadstick.",16.2 USD
+150,American,Buttery Noodles,Wavy egg noodles with a touch of butter and cream and your choice of three vegetables. Garnished with freshly chopped parsley with grated parmesan and romano cheese blend. Served with a breadstick.,12.0 USD
+150,American,Santa Fe,"Penne pasta tossed with our signature green chile cream sauce, including sautéed onions, tomatoes and freshly grated Parmesan and Romano cheeses. Served with a breadstick.",13.2 USD
+150,American,Spicy Cajun,"Penne pasta tossed with our rustic tomato cream sauce, scallions, fresh yellow onions and red bell peppers. Garnished with scallions. Served with a breadstick.",13.2 USD
+150,American,Southwest Chipotle,Penne pasta in a delicious roasted chipotle pepper cream sauce tossed with fresh red bell peppers and mild onions. Garnished with grated Parmesan and romano cheeses. Served with a breadstick.,13.2 USD
+150,Specialties,Shrimp Scampi,"A generous portion of shrimp and angel hair pasta sautéed in a tomato, garlic and lemon scampi sauce.  Garnished with parsley and a freshly cut lemon wedge. Served with a breadstick.",18.0 USD
+150,Specialties,Lobster Ravioli,"Ravioli stuffed with lobster meat, sweet ricotta cheese and shallots. Baked under a slightly sweet and spicy chipotle cream sauce topped with mozzarella. Finished with scallions. Served with a breadstick.",16.2 USD
+150,Specialties,Stuffed Shells,Oven-baked pasta shells overflowing with slightly sweet ricotta cheese and spinach smothered in a tomato cream sauce topped with mozzarella and fresh basil. Served with a breadstick.,16.2 USD
+150,Specialties,Chicken Parmesan,Lightly breaded chicken served over angel hair pasta and covered by our house-made marinara sauce and Mozzarella. Garnished with Parmesan and romano cheeses and freshly cut basil. Served with a breadstick.,16.8 USD
+150,Specialties,Eggplant Parmesan,"Large slices of eggplant battered in bread crumbs, served over angel hair pasta, and covered by our house-made marinara sauce and mozzarella. Garnished with Parmesan and romano cheeses  and freshly cut basil. Served with a breadstick.",15.0 USD
+150,Specialties,Cheesy Chicken and Vegetables,"Wok-seared chicken, fresh mushrooms, carrots, and broccoli stirred into our original three-cheese sauce. Served up proper with a fresh-mixed green medley. A pasta-less dish.",13.2 USD
+150,Specialties,Thai Curry Beef and Vegetables,"Beef, carrots, scallions, red bell peppers, and peanuts sautéed with our Thai peanut cream sauce. Perfected with a bed of freshly sliced mozzarella, grape tomatoes, and a garden fresh wedge. Garnished with a lime wedge. A pasta-less dish.",13.2 USD
+150,Specialties,Primavera Chicken and Vegetables,"Chicken breast, carrots, broccoli, tomatoes, zucchini squash, and garlic wok-seared in a white wine balsamic vinaigrette. Served in a lettuce bowl or on a bed of romaine. A pasta-less dish.",13.2 USD
+150,Specialties,Dee-Licious Baked Three-Cheese Macaroni [NEW ITEM],Fusilli pasta with a special blend of melted cheeses and fresh cream. Topped with breadcrumbs and baked to perfection. Garnished with shredded Cheddar and Monterey Jack cheese.,16.2 USD
+150,Kids,Kids Alfredo,Curly pasta tossed with a freshly made cream sauce and topped with Parmesan and romano cheeses.,7.2 USD
+150,Kids,Kids Buttery Noodles,"Curly pasta tossed in butter, topped with freshly grated Parmesan and Romano cheeses.",7.2 USD
+150,Kids,Kids Marconi &amp; Cheese,Curly pasta tossed in our three-cheese sauce and topped with shredded cheddar and Monterey Jack cheeses.,7.2 USD
+150,Kids,Kids Spaghetti,Curly pasta topped with marinara sauce and grated Parmesan and romano cheeses.,7.2 USD
+150,Kids,Kids Spaghetti &amp; Meatballs,Spaghetti pasta and juicy meatballs in our house-made marinara sauce topped with grated Parmesan and romano cheeses.,8.4 USD
+150,Kids,Kids Cheese Pizza,"Fresh zesty marinara sauce and mozzarella cheese on a slightly crisped crust, sprinkled with freshly grated Parmesan and romano cheeses.",7.2 USD
+150,Kids,Kids Chicken Tenders,"Two chicken tenders with a choice of ranch, ketchup or BBQ sauce on side. Served with a fruit cocktail.",8.4 USD
+150,Beverages,Fountain Drinks or Iced Tea,,3.25 USD
+150,Desserts,Tiramisu,Heaven in your mouth.,6.0 USD
+150,Desserts,Cannoli,"A flaky pastry filled with sweet Ricotta cheese and chocolate chips, drizzled with chocolate syrup.",6.0 USD
+150,Desserts,Key Lime Pie,"Created with real, Florida Key Limes in a crispy graham cracker crust.",6.0 USD
+150,Desserts,Mango Pie,Refreshing mango flavor in a cool creamy pie.,6.0 USD
+150,Desserts,Triple Chocolate Cake,,7.2 USD
+150,Desserts,New York Cheesecake,A house favorite topped with your choice of strawberry puree or chocolate syrup.,7.2 USD
+151,Picked for you,Tacos,Served with cilantro and onions.,3.5 USD
+151,Picked for you,Fish Tacos,"Fried tilapia with crunchy slaw mango pico de gallo, and chipotle sauce in a.",4.0 USD
+151,Picked for you,Nachos,"Your choice of meat, pinto beans, rice, mozzarella, sour cream, lettuce, and pico de gallo.",11.99 USD
+151,Picked for you,Fajita Quesadilla,"Your choice of meat, mozzarella, sour cream, and bell peppers.",12.0 USD
+151,Picked for you,Cheese Fries,,3.75 USD
+151,Mains,Tacos,Served with cilantro and onions.,3.5 USD
+151,Mains,Fish Tacos,"Fried tilapia with crunchy slaw mango pico de gallo, and chipotle sauce in a.",4.0 USD
+151,Mains,Burritos,"Your choice of meat, pinto beans, rice mozzarella cheese, lettuce, sour cream, and pico de gallo.",11.75 USD
+151,Mains,Nachos,"Your choice of meat, pinto beans, rice, mozzarella, sour cream, lettuce, and pico de gallo.",11.99 USD
+151,Mains,Bowl,"Your choice of meat, pinto beans, rice, mozzarella, lettuce, sour cream, Pico De Gallo, and bell peppers.",11.75 USD
+151,Mains,Sandwiches,"All sandwiches are served with lettuce, tomatoes, mozzarella cheese, chipotle sauce in a fresh baguette, and your choice of side.",12.5 USD
+151,Mains,Wings,"Order of 7 jumbo pieces with fries, buffalo sauce, BBQ sauce, or lemon pepper.",13.5 USD
+151,Mains,Fajita Quesadilla,"Your choice of meat, mozzarella, sour cream, and bell peppers.",12.0 USD
+151,Mains,Hamburgers,"Lettuce,tomatoes,Pickles,Mayones,Ketchup,Bacon,American cheese",12.0 USD
+151,Sides,Cheese Fries,,3.75 USD
+151,Sides,French Fries,Cut crinkle fries.,3.0 USD
+151,Sides,Lemon Rice,Lemon white rice.,3.0 USD
+151,Sides,Pinto Bens,,3.0 USD
+152,Picked for you,Small Chips,"Freshly fried corn chips sprinkled with our special ""Speedy's salt"". Chips and dips are sold separately.",2.59 USD
+152,Picked for you,Speedy's Famous Taco Salad,"A Shell substitute is being used due to Industry Wide Supplier Shortage Issues. An alternative is that it may BE SERVED ON CHIPS.  Fried 10"" flour shell served with beef, beans, lettuce, mild sauce, grated cheese, sour cream, and jalapeno peppers. Chicken taco salad available. See ""Chicken taco salad"".",8.49 USD
+152,Picked for you,Speedy's Famous Nachos,"Speedy's chips topped with beef, beans, mild sauce, cheese sauce, sour cream, grated cheese, and jalapeno peppers. Chicken nachos available. See ""Chicken nachos"".",8.49 USD
+152,Picked for you,Fried Cheesecake,Fried 8 inch flour tortilla filled with cheesecake filling and topped with powdered sugar and strawberry pie filling.,3.99 USD
+152,Picked for you,Chicken &amp; Cheese Quesadilla,"Tortilla grilled with chicken and cheese, garnished with lettuce and sour cream.  Served with speedy's chips.",7.09 USD
+152,Appetizers,French Fries,,2.29 USD
+152,Appetizers,Cheese Fries,Our crispy battered fries are topped with nacho cheese.,4.39 USD
+152,Appetizers,Chili Cheese Fries,Our crispy battered fries are topped with house-made chili and nacho cheese.,4.89 USD
+152,Appetizers,Popcorn Chicken &amp; Fries,,6.39 USD
+152,A La Carte,Beef Burger,"Seasoned ground beef, lettuce, cheese, and red sauce served on a warm bun.",3.59 USD
+152,A La Carte,Cheese Quesadilla,"Tortilla grilled with cheese, garnished with lettuce and sour cream.  Served with speedy's chips.",5.29 USD
+152,A La Carte,Chicken &amp; Cheese Quesadilla,"Tortilla grilled with chicken and cheese, garnished with lettuce and sour cream.  Served with speedy's chips.",7.09 USD
+152,A La Carte,Ckicken Quesadilla with Peppers &amp; Onions,"Tortilla grilled with chicken, cheese, green peppers, and onion. Garnished with lettuce and sour cream. Served with speedy's chips.",8.89 USD
+152,A La Carte,Beef &amp; Cheese Quesadilla,"Tortilla grilled with beef and cheese, garnished with lettuce and sour cream.  Served with speedy's chips.",6.59 USD
+152,A La Carte,Chicken Chimichanga,"Grilled chicken, red sauce, and grated cheese wrapped in a 10-inch flour tortilla.  Deep-fried with white cheese poured over the top.  Served with speedy's chips.",5.89 USD
+152,A La Carte,Beef Chimichanga,"Seasoned ground beef, red sauce, and grated cheese wrapped in a 10-inch flour tortilla.  Deep-fried with white cheese poured over the top.  Served with speedy's chips.",5.89 USD
+152,A La Carte,Tostada,"Beans, red sauce, lettuce, and grated cheese served on a flat crunchy taco shell.",2.99 USD
+152,A La Carte,Tamale,Seasoned ground beef wrapped in a corn mesa topped with chili.  Served with speedy's chips.,3.59 USD
+152,A La Carte,Rice,"Long grain rice cooked with tomatoes and our specially mixed spices, topped with red sauce.",2.49 USD
+152,A La Carte,Beans,Whipped pintos topped with red sauce and grated cheese.,2.49 USD
+152,A La Carte,Enchilada,Beef enchilada topped with red sauce and grated cheese.,3.59 USD
+152,Dinners,"Taco, Enchilada, Tamale, Beans, Rice, &amp; Salad",All dinners include speedy's chips.,9.69 USD
+152,Dinners,"Taco, Enchilada, Tamale, &amp; Tostada",All dinners include speedy's chips.,8.39 USD
+152,Dinners," Taco, Enchilada, &amp; Tamale",All dinners include speedy's chips.,7.29 USD
+152,Dinners,"2 Enchiladas, Beans &amp; Rice",All dinners include speedy's chips.,8.19 USD
+152,Dinners,"Taco, Enchilada, Beans, &amp; Rice",All dinners include speedy's chips.,7.39 USD
+152,Dinners,"Taco, Enchilada, Beans, &amp; Salad",All dinners include speedy's chips.,7.39 USD
+152,Dinners,"Taco, Enchilada, Rice, &amp; Salad",All dinners include speedy's chips.,7.39 USD
+152,Dinners,"Taco, Enchilada, &amp; Salad",All dinners include speedy's chips.,6.99 USD
+152,Dinners,"2 Tacos, Beans, &amp; Rice",All dinners include speedy's chips.,6.79 USD
+152,Soups &amp; Salads,Chili,"Our house-made chili is filled with ground beef, tomatoes, chili beans, and spices.  Served with speedy's chips or crackers.",3.59 USD
+152,Soups &amp; Salads,Tossed Salad,Shredded lettuce topped with your choice of dressing.  Served with speedy's chips. Served with choice of speedy's chips or crackers.,4.09 USD
+152,Soups &amp; Salads,Grilled Chicken Salad,"Fresh marinated and grilled chicken atop a bed of lettuce, grated cheese, and tomatoes.  Your choice of dressing.  Served with speedy's chips or crackers.",7.89 USD
+152,Dinners Entree,Two Tamales &amp; Two Sides,Two beef tamales served with your choice of two sides,7.39 USD
+152,Dinners Entree,Chicken Quesadilla,With a choice of 2 sides.,8.19 USD
+152,Dinners Entree,Chicken Chimichanga &amp; Two Sides,With a choice of 2 sides.,9.19 USD
+152,Dinners Entree,Tamale &amp; Two Sides,With a choice of 2 sides.,5.99 USD
+152,Dinners Entree,Enchilada &amp; Two Sides,With a choice of 2 sides.,5.99 USD
+152,Dinners Entree,Taco &amp; Two Sides,Beef or chicken taco in a hard or soft shell with a choice of two sides.,5.89 USD
+152,Dinners Entree,Bean Burrito &amp; Two Sides,"Beans, red sauce, and grated cheese wrapped in a flour tortilla.  Served with your choice of two sides and speedy's chips",5.89 USD
+152,Dinners Entree,Beef Burrito &amp; Two Sides,With a choice of 2 sides.,6.59 USD
+152,Dinners Entree,Beef Chimichanga &amp; 2 Sides,Beef burrito deep-fried and topped with white cheese.  Served with your choice of two sides and speedy's chips.,8.79 USD
+152,Dinners Entree,"Beef Burrito, Enchilada &amp; Taco",,8.19 USD
+152,Dinners Entree,"2 Tacos, Speedy's Chips &amp; 4 Oz of White Cheese",Your choice of beef or chicken hard or soft shell,8.19 USD
+152,Dinners Entree,Beef Burrito &amp; Tossed Salad,,6.59 USD
+152,Specialties,Speedy's Famous Taco Salad,"A Shell substitute is being used due to Industry Wide Supplier Shortage Issues. An alternative is that it may BE SERVED ON CHIPS.  Fried 10"" flour shell served with beef, beans, lettuce, mild sauce, grated cheese, sour cream, and jalapeno peppers. Chicken taco salad available. See ""Chicken taco salad"".",8.49 USD
+152,Specialties,Chicken Taco Salad,A Shell substitute is being used due to Industry Wide Supplier Shortage Issues. An alternative is that it may BE SERVED ON CHIPS. Our Speedy's famous taco salad with chicken.,9.29 USD
+152,Specialties,Chicken &amp; Beef Taco Salad,A Shell substitute is being used due to Industry Wide Supplier Shortage Issues. An alternative is that it may BE SERVED ON CHIPS.  Our Speedy's famous taco salad served with beef and chicken,10.19 USD
+152,Specialties,Speedy's Famous Nachos,"Speedy's chips topped with beef, beans, mild sauce, cheese sauce, sour cream, grated cheese, and jalapeno peppers. Chicken nachos available. See ""Chicken nachos"".",8.49 USD
+152,Specialties,Chicken Nachos,Our speedy's famous nachos are served with chicken.,9.29 USD
+152,Specialties,Chicken &amp; Beef Nachos,Our speedy's famous nachos are served with beef and chicken.,10.29 USD
+152,Specialties,Small Nachos,Same great nachos as speedy's famous nachos in a smaller version.,5.79 USD
+152,Specialties,Small Chicken Nachos,The smaller version of our chicken nachos,5.99 USD
+152,Specialties,Small Beef &amp; Chicken Nachos,The smaller version of beef and chicken nachos,6.89 USD
+152,Specialties,Chalupa,Speedy's famous taco salad in a smaller version is served on a flattened taco shell.,6.99 USD
+152,Specialties,Chicken Chalupa,The smaller version of chicken taco salad.,7.49 USD
+152,Specialties,Chicken &amp; Beef Chalupa,The smaller version of chicken and beef taco salad.,7.99 USD
+152,Speedy's Chips,Small Chips,"Freshly fried corn chips sprinkled with our special ""Speedy's salt"". Chips and dips are sold separately.",2.59 USD
+152,Tacos &amp; Burritos,Hard Taco,"Seasoned ground beef, lettuce, and grated cheese served on a freshly fried corn shell",2.19 USD
+152,Tacos &amp; Burritos,Soft Taco,"Seasoned ground beef, lettuce, and grated cheese served on a soft flour tortilla",2.19 USD
+152,Tacos &amp; Burritos,Chicken Hard Taco,,2.19 USD
+152,Tacos &amp; Burritos,Chicken Soft Taco,,2.19 USD
+152,Tacos &amp; Burritos,Lots of Tacos (8 oz Sauce),10 beef tacos and of hot or mild sauce.,19.99 USD
+152,Tacos &amp; Burritos,Beef Burrito,"Seasoned ground beef, red sauce, and grated cheese wrapped in a 10-inch flour tortilla",3.59 USD
+152,Tacos &amp; Burritos,Bean Burrito,"Whipped pintos, red sauce, and grated cheese wrapped in a 10-inch flour tortilla",2.89 USD
+152,Tacos &amp; Burritos,Chicken Burrito,"Fresh marinated and grilled chicken, red sauce, and grated cheese wrapped in a 10-inch flour tortilla.",3.99 USD
+152,Tacos &amp; Burritos,Combo Burrito,"Seasoned ground beef, whipped beans, red sauce, and grated cheese wrapped in a 10-inch flour tortilla.",3.89 USD
+152,Tacos &amp; Burritos,Chili Cheese Burrito,Our beef burrito is covered in chili and nacho cheese sauce.  Served with speedy's chips.,5.59 USD
+152,Dips,White Cheese,"Melted white American cheese, also known as queso. Chips and dips are sold separately.",2.49 USD
+152,Dips,Nacho Cheese,Chips and dips are sold separately.,2.29 USD
+152,Dips,Guacamole,Chips and dips are sold separately.,3.19 USD
+152,Dips,Speedy White,Our house-made specialty dressing is cottage cheese-based and served cold. Chips and dips are sold separately.,2.49 USD
+152,Dips,Mild Sauce,Chips and dips are sold separately.,1.29 USD
+152,Dips,Hot Sauce,Chips and dips are sold separately.,1.29 USD
+152,Dips,Bean (8 Oz),Chips and dips are sold separately.,2.49 USD
+152,Dips,Beans with White Cheese (8 Oz),Whipped pintos covered in white cheese and grated cheese. Chips and dips are sold separately.,3.59 USD
+152,Kids Meals,The Kids Meal,"Pick one entree, one side, and a beverage.",5.99 USD
+152,Desserts,Fried Cheesecake,Fried 8 inch flour tortilla filled with cheesecake filling and topped with powdered sugar and strawberry pie filling.,3.99 USD
+152,Desserts,Fried Apple Pie,Deep-fried flour tortilla filled with apple pie filling and topped with cinnamon sugar.,3.39 USD
+152,Desserts,Peach Pie,Deep-fried flour tortilla filled with peach pie filling and topped with cinnamon sugar.,3.39 USD
+152,Desserts,Cookies (2 pcs),,1.55 USD
+152,Beverages,Sweet Tea,,2.39 USD
+152,Beverages,Unsweet Tea,,2.39 USD
+152,Beverages,Pepsi,,2.39 USD
+152,Beverages,Diet Pepsi,,2.39 USD
+152,Beverages,Dr Pepper,,2.39 USD
+152,Beverages,Diet Dr Pepper,,2.39 USD
+152,Beverages,Mountain Dew,,2.39 USD
+152,Beverages,Sierra Mist,,2.39 USD
+152,Beverages,Sunkist,,2.39 USD
+152,Beverages,Lemonade,,2.39 USD
+153,Picked for you,Chicken Club Wrap,"Slow roasted chicken breast with pepper bacon, natural cheddar cheese, green leaf lettuce, red onion, honey mustard sauce, and tomato in an artisan wheat wrap. Visit arbys.com for nutritional and allergen information. ",7.49 USD
+153,Picked for you,Premium Nuggets (6 ea.),100% white meat chicken in a crispy seasoned breading,3.89 USD
+153,Picked for you,Greek Gyro,"A blend of beef, lamb and Mediterranean spices sliced from a spit rotisserie and placed on a warm flatbread with lettuce, tomatoes, red onions, tzatziki sauce and Greek seasoning. Visit arbys.com for nutritional and allergen information.",5.69 USD
+153,Picked for you,Roast Turkey Ranch &amp; Bacon,"Sliced roast turkey with pepper bacon, cheddar cheese, green leaf lettuce, tomato, red onion and parmesan peppercorn ranch sauce on thick sliced honey wheat bread. Visit arbys.com for nutritional and allergen information.",7.19 USD
+153,Picked for you,Curly Fries (Large),Arby's classic seasoned curly fries. Visit arbys.com for nutritional and allergen information.,3.69 USD
+153,Favorites,Roast Turkey Ranch &amp; Bacon,"Sliced roast turkey with pepper bacon, cheddar cheese, green leaf lettuce, tomato, red onion and parmesan peppercorn ranch sauce on thick sliced honey wheat bread. Visit arbys.com for nutritional and allergen information.",7.19 USD
+153,Favorites,Chicken Club Wrap,"Slow roasted chicken breast with pepper bacon, natural cheddar cheese, green leaf lettuce, red onion, honey mustard sauce, and tomato in an artisan wheat wrap. Visit arbys.com for nutritional and allergen information. ",7.49 USD
+153,Favorites,Roast Turkey &amp; Swiss Wrap,"Sliced roast turkey with Swiss cheese, lettuce, tomato, red onion, spicy brown honey mustard and mayo in an artisan wheat wrap. Visit arbys.com for nutritional and allergen information.",6.99 USD
+153,Favorites,Crispy Chicken Salad,Crispy chicken and diced pepper bacon on a bed of chopped fresh lettuce with diced tomatoes and shredded cheddar cheese. Served with choice of dressing. Visit arbys.com for nutritional and allergen information.,6.99 USD
+153,Wraps,Creamy Mediterranean Chicken Wrap,"Slow-roasted chicken breast with cool and creamy tzatziki sauce, banana peppers, green leaf lettuce, tomato, and red onion in an artisan wheat wrap. Visit arbys.com for nutritional and allergen information. ",7.19 USD
+153,Wraps,Jalapeno Bacon Ranch Wrap,"Slow roasted chicken breast with pepper bacon, cheddar cheese, fire-roasted jalapenos, parmesan peppercorn ranch sauce, green leaf lettuce, red onion, and tomato in an artisan wheat wrap. Visit arbys.com for nutritional and allergen information. ",7.49 USD
+153,Wraps,Chicken Club Wrap,"Slow roasted chicken breast with pepper bacon, natural cheddar cheese, green leaf lettuce, red onion, honey mustard sauce, and tomato in an artisan wheat wrap. Visit arbys.com for nutritional and allergen information. ",7.49 USD
+153,Wraps,Roast Turkey Ranch &amp; Bacon Wrap,"Sliced roast turkey breast with pepper bacon, cheddar cheese, green leaf lettuce, tomato, red onion and parmesan peppercorn ranch sauce in an artisan wheat wrap. Visit arbys.com for nutritional and allergen information.",7.19 USD
+153,Wraps,Roast Turkey &amp; Swiss Wrap,"Sliced roast turkey with Swiss cheese, lettuce, tomato, red onion, spicy brown honey mustard and mayo in an artisan wheat wrap. Visit arbys.com for nutritional and allergen information.",6.99 USD
+153,Sandwiches,Roast Turkey Ranch &amp; Bacon,"Sliced roast turkey with pepper bacon, cheddar cheese, green leaf lettuce, tomato, red onion and parmesan peppercorn ranch sauce on thick sliced honey wheat bread. Visit arbys.com for nutritional and allergen information.",7.19 USD
+153,Sandwiches,Roast Turkey &amp; Swiss,"Sliced roast turkey with Swiss cheese, lettuce, tomato, red onion, spicy brown honey mustard and mayo on thick sliced honey wheat bread. Visit arbys.com for nutritional and allergen information.",6.99 USD
+153,Sandwiches,Reuben,"Thinly sliced corned beef with melted Swiss cheese, tangy sauerkraut and creamy Thousand Island dressing on toasted marble rye bread.Visit arbys.com for nutritional and allergen information.",7.49 USD
+153,Sandwiches,Greek Gyro,"A blend of beef, lamb and Mediterranean spices sliced from a spit rotisserie and placed on a warm flatbread with lettuce, tomatoes, red onions, tzatziki sauce and Greek seasoning. Visit arbys.com for nutritional and allergen information.",5.69 USD
+153,Sandwiches,Roast Beef Gyro,"Thinly sliced seasoned roast beef with Greek seasonings, cool creamy tzatziki sauce, shredded lettuce, tomato and red onion in a warm pita. Visit arbys.com for nutritional and allergen information.",5.69 USD
+153,Sandwiches,Turkey Gyro,"Thinly sliced seasoned roast turkey with Greek seasonings, cool creamy tzatziki sauce, shredded lettuce, tomato and red onion in a warm pita. Visit arbys.com for nutritional and allergen information.",5.69 USD
+153,Salads,Roast Chicken Salad,Slow roasted chicken and diced pepper bacon on a bed of chopped fresh lettuce with diced tomatoes and shredded cheddar cheese. Served with choice of dressing. Visit arbys.com for nutritional and allergen information.,6.99 USD
+153,Salads,Crispy Chicken Salad,Crispy chicken and diced pepper bacon on a bed of chopped fresh lettuce with diced tomatoes and shredded cheddar cheese. Served with choice of dressing. Visit arbys.com for nutritional and allergen information.,6.99 USD
+153,Salads,Market Fresh Garden Side Salad,Chopped fresh lettuce with diced tomatoes and shredded cheddar cheese. Served with choice of dressing. Visit arbys.com for nutritional and allergen information.,2.39 USD
+153,Sides &amp; Snacks,Curly Fries (Small),Arby's classic seasoned curly fries. Visit arbys.com for nutritional and allergen information.,2.49 USD
+153,Sides &amp; Snacks,Curly Fries (Medium),Arby's classic seasoned curly fries. Visit arbys.com for nutritional and allergen information.,3.19 USD
+153,Sides &amp; Snacks,Curly Fries (Large),Arby's classic seasoned curly fries. Visit arbys.com for nutritional and allergen information.,3.69 USD
+153,Sides &amp; Snacks,Crinkle Fries (Small),"Crinkle fries with accordion-style grooves for maximum crispiness, lightly seasoned with fine kosher salt.",2.49 USD
+153,Sides &amp; Snacks,Crinkle Fries (Medium),"Crinkle fries with accordion-style grooves for maximum crispiness, lightly seasoned with fine kosher salt.",3.19 USD
+153,Sides &amp; Snacks,Crinkle Fries (Large),"Crinkle fries with accordion-style grooves for maximum crispiness, lightly seasoned with fine kosher salt.",3.69 USD
+153,Sides &amp; Snacks,Premium Nuggets (4 ea.),100% white meat chicken in a crispy seasoned breading,2.69 USD
+153,Sides &amp; Snacks,Premium Nuggets (6 ea.),100% white meat chicken in a crispy seasoned breading,3.89 USD
+153,Sides &amp; Snacks,Market Fresh Garden Side Salad,Chopped fresh lettuce with diced tomatoes and shredded cheddar cheese. Served with choice of dressing. Visit arbys.com for nutritional and allergen information.,2.39 USD
+153,Sliders &amp; Kids Meal,Roast Beef Slider,Thinly sliced roast beef and Swiss cheese on a warm slider style bun. Visit arbys.com for nutritional and allergen information.,1.99 USD
+153,Sliders &amp; Kids Meal,Jalapeno Roast Beef Slider,Thinly sliced roast beef with diced fire-roasted jalapenos and Swiss cheese on a warm slider style bun. Visit arbys.com for nutritional and allergen information.,1.99 USD
+153,Sliders &amp; Kids Meal,Chicken Slider,Crispy chicken tender and Swiss cheese on a warm slider style bun. Visit arbys.com for nutritional and allergen information.,1.99 USD
+153,Sliders &amp; Kids Meal,Buffalo Chicken Slider,A crispy chicken tender dipped in spicy buffalo sauce with parmesan peppercorn ranch sauce on a warm slider style bun. Visit arbys.com for nutritional and allergen information.,1.99 USD
+153,Sliders &amp; Kids Meal,Turkey Slider,Thinly sliced roast turkey and Swiss cheese on a warm slider style bun. Visit arbys.com for nutritional and allergen information.,1.99 USD
+153,Sliders &amp; Kids Meal,Kids Meal,"Choice of Slider, Side, and Beverage. Visit arbys.com for nutritional and allergen information.",0.0 USD
+153,Shakes &amp; Desserts,Chocolate Shake,"A rich &amp; creamy chocolate shake made with Ghirardelli® chocolate, and topped with whipped cream and a Ghirardelli chocolate drizzle. Visit arbys.com for nutritional and allergen information.",3.69 USD
+153,Shakes &amp; Desserts,Vanilla Shake,A rich &amp; creamy vanilla shake topped with whipped cream. Visit arbys.com for nutritional and allergen information.,3.69 USD
+153,Shakes &amp; Desserts,Jamocha Shake,A rich &amp; creamy mocha flavored shake topped with whipped cream. Visit arbys.com for nutritional and allergen information.,3.69 USD
+153,Shakes &amp; Desserts,Salted Caramel &amp; Chocolate Cookie,Salted caramel and Ghirardelli chocolate baked into a warm cookie. Visit arbys.com for nutritional and allergen information.,2.19 USD
+153,Shakes &amp; Desserts,Triple Chocolate Cookie,Warm and rich triple chocolate cookies baked with Ghirardelli chocolate. Visit arbys.com for nutritional and allergen information.,2.19 USD
+153,Shakes &amp; Desserts,Apple Turnover,Everyone knows that an apple a day keeps the doctor away. But did you know that an Apple Turnover a day keeps you happy and satisfied and sufficiently pastried?,2.19 USD
+153,Shakes &amp; Desserts,Cherry Turnover,"If you're the type of person who craves fruity sweets, you'll love our Cherry Turnover. It's a freshly baked pastry stuffed with sweet cherry filling.",2.19 USD
+153,Beverages,Soft Drinks,"If you weren’t already craving an ice cold, refreshing beverage…you are now.",2.39 USD
+153,Beverages,Iced Tea,"If you weren’t already craving an ice cold, refreshing beverage…you are now.",2.39 USD
+153,Beverages,Bottled Water,,2.39 USD
+154,Picked for you,Oxtails,,25.99 USD
+154,Picked for you,1 Smothered Pork Chops,,14.29 USD
+154,Picked for you,Beef Tips with Rice,,20.79 USD
+154,Picked for you,2 Smothered Pork Chops,,23.39 USD
+154,Picked for you,Catfish Fillet (2 pcs) with 2 Sides,2 catfish fillets served with your choice of 2 regular sides.,12.99 USD
+154,Mains,Whole Wings (4pc),,14.29 USD
+154,Mains,Oxtails,,25.99 USD
+154,Mains,1 Smothered Pork Chops,,14.29 USD
+154,Mains,Fried Pork Chops,,12.99 USD
+154,Mains,Meatloaf,,15.59 USD
+154,Mains,Baked Chicken (Dark),,11.69 USD
+154,Mains,BBQ Ribs (4 pcs) Bones,,23.79 USD
+154,Mains,Pig Ears,,15.59 USD
+154,Mains,Pig Feet,,14.29 USD
+154,Mains,BBQ Ribs (3 Bones),,19.89 USD
+154,Mains,Neckbones,,12.99 USD
+154,Mains,Whole Wings (3 pcs),,11.69 USD
+154,Mains,Beef Tips with Rice,,20.79 USD
+154,Mains,Beef Tips with Potatoes,,20.79 USD
+154,Mains,Vegetable Plate,Any 3 regular sides.,10.38 USD
+154,Mains,Whole Wing (6pc),,16.89 USD
+154,Mains,2 Smothered Pork Chops,,23.39 USD
+154,Mains,1 Fried Pork Chop,,14.29 USD
+154,Mains,2 Fried Pork Chops,,19.49 USD
+154,Mains,2 pc Catfish,,15.59 USD
+154,Famliy Rib Specials,Ribs by the Slab,,36.19 USD
+154,Famliy Rib Specials,The Rib Deal,"1 slab of ribs, two sides (pint), and five muffins or bread.",47.89 USD
+154,Famliy Rib Specials,The Big Rib Deal,"2 slabs of ribs, two sides (pint), and five muffins or bread.",80.69 USD
+154,Fries,"Fries ",,3.89 USD
+154,Fries,Ranch Fries,,5.19 USD
+154,Fries,Cheese Fries,,5.19 USD
+154,Fries,Ranch &amp; Cheese Fries,,6.23 USD
+154,Fries,Cajun Ranch &amp; Cheese,,6.89 USD
+154,Salads,Additional Dressing,,0.65 USD
+154,Sandwiches and Combos,Whole Catfish,,7.79 USD
+154,Sandwiches and Combos,Catfish Fillet (2 pcs),,7.79 USD
+154,Sandwiches and Combos,Tilapia Fillet (2 pcs),,7.79 USD
+154,Sandwiches and Combos,"Whitening Fillet (2 pcs)  ",,6.49 USD
+154,Sandwiches and Combos,BBQ Rib (4 pcs) Bones,,15.99 USD
+154,Sandwiches and Combos,Whole Whitening Fillet,,6.49 USD
+154,Sandwiches and Combos,Pork Chop,"Lettuce, tomato, pickles, mayo, and mustard.",7.79 USD
+154,Sandwiches and Combos,"BBQ Rib (3 pcs) Bones ",,13.39 USD
+154,Whole Chicken Wings and Combos,3 Whole Wings,,7.79 USD
+154,Whole Chicken Wings and Combos,6 Whole Wings,,11.69 USD
+154,Whole Chicken Wings and Combos,10 Whole Wings,,16.89 USD
+154,Whole Chicken Wings and Combos,50 Whole Wings,,61.09 USD
+154,Whole Chicken Wings and Combos,100 Whole Wings,,118.29 USD
+154,Whole Chicken Wings and Combos,3 Whole Wing Combo,,11.69 USD
+154,Whole Chicken Wings and Combos,6 Whole Wing Combo,,19.49 USD
+154,Whole Chicken Wings and Combos,10 Whole Wing Combo,,23.39 USD
+154,Seafood and More,Whitening Fillet (2 pcs) with 1 Side,2 whitening fillets with your choice of 1 regular side.,9.09 USD
+154,Seafood and More,Whitening Fillet (2 pcs) with 2 Sides,Whole whitening with your choice of 2 regular sides.,11.69 USD
+154,Seafood and More,Catfish Fillet (4 pcs) with 1 Side,4 catfish fillets with your choice of 1 regular side.,19.49 USD
+154,Seafood and More,Catfish Fillet (4 pcs) with 2 Sides,4 catfish fillets with your choice of 2 regular sides.,22.09 USD
+154,Seafood and More,Tilapia Fillet (4 pcs) with 1 Side,4 tilapia fillets with your choice of 1 regular side.,19.49 USD
+154,Seafood and More,Tilapia Fillet (4 pcs) with 2 Sides,4 tilapia fillets with your choice of 2 regular sides.,22.09 USD
+154,Seafood and More,Crawfish (Half Order) Seasonal,Served with potatoes and corn.,16.89 USD
+154,Seafood and More,Whole Whitening with 1 Side,Whole whitening with your choice of 1 regular side.,9.09 USD
+154,Seafood and More,Whitening Fillet (4 pcs) with 1 Side,4 whitening fillets with your choice of 1 regular side.,14.99 USD
+154,Seafood and More,Whitening Fillet (4 pcs) with 2 Sides,4 whitening fillets with your choice of 2 regular sides.,19.49 USD
+154,Seafood and More,Tilapia (2 pcs) with 1 Side,2 tilapia fillets with your choice of 1 regular side.,10.39 USD
+154,Seafood and More,Tilapia (2 pcs) with 2 Sides,2 tilapia fillets with your choice of 2 regular sides.,12.99 USD
+154,Seafood and More,Catfish Fillet (2 pcs) with 1 Side,2 catfish fillets with your choice of 1 regular side.,10.39 USD
+154,Seafood and More,Whole Catfish with 1 Side,whole catfish with your choice of 1 regular side.,12.99 USD
+154,Seafood and More,Whole Whitening with 2 Sides,whole whitening fillet served with your choice of 2 regular sides.,11.69 USD
+154,Seafood and More,Whole Catfish with 2 Sides,the whole catfish served with your choice of 2 regular sides.,12.99 USD
+154,Seafood and More,Catfish Fillet (2 pcs) with 2 Sides,2 catfish fillets served with your choice of 2 regular sides.,12.99 USD
+154,Sides,Additional Cranberry Sauce,,0.65 USD
+154,Sides,Fried Green Tomatoes,,6.48 USD
+154,Sides,Collard Greens,,3.89 USD
+154,Sides,Turnip Greens,,3.89 USD
+154,Sides,"Cabbage ",,3.89 USD
+154,Sides,"Yams ",,3.89 USD
+154,Sides,Mac &amp; Cheese,,3.89 USD
+154,Sides,Dressing,,3.89 USD
+154,Sides,Butter Beans,,3.89 USD
+154,Sides,Pinto Beans,,3.89 USD
+154,Sides,Black Eye Peas,,3.89 USD
+154,Sides,Fried Corn,,3.89 USD
+154,Sides,Fried Okra,,3.89 USD
+154,Sides,Rice,,3.89 USD
+154,Sides,Mashed Potatoes,,3.89 USD
+154,Sides,Potato Salad,,3.89 USD
+154,Sides,Steamed Okra,,3.89 USD
+154,Desserts,"Cake ",Variety.,5.19 USD
+154,Desserts,Peach Cobbler,,3.89 USD
+154,Desserts,Banana Pudding,,3.89 USD
+154,Beverages,"Bottled Water ",,1.3 USD
+154,Beverages,Fruit Punch,,1.68 USD
+154,Beverages,Lemonade,,1.68 USD
+154,Beverages,Peach Tea,,1.68 USD
+154,Beverages,Soda,Coke and Pepsi products,1.3 USD
+155,Picked for you,Burrito Bowl w/ Smoked Chicken,"Rice &amp; black beans, lettuce, pico de gallo, corn, guacamole, cilantro, queso fresco, smoked chicken",18.0 USD
+155,Picked for you,Quesadilla w/ Smoked Pork,"Jack cheese, lettuce, pico de gallo, chipotle crema, guacamole",16.8 USD
+155,Picked for you,Guacamole App,"Avocados, lime, cilantro, with corn chips",12.9 USD
+155,Picked for you,Gulf Fish Taco,"Chipotle slaw, pickled onion, chipotle crema, cilantro",8.1 USD
+155,Picked for you,Carnitas Taco (NEW),"Slow roasted pork, salsa verde, onion, cilantro",6.9 USD
+155,Appetizers,Queso App,"Melted cheese, serrano peppers, with corn chips",10.2 USD
+155,Appetizers,Queso Con Carne,"Our cheese dip topped with brisket burnt ends, pico, cilantro",12.9 USD
+155,Appetizers,Guacamole App,"Avocados, lime, cilantro, with corn chips",12.9 USD
+155,Appetizers,Ceviche,"Gulf seafood, avocado, agave lime dressing, serrano, cilantro",19.2 USD
+155,Appetizers,Tamale,"Carnitas, salsa verde, crema, cilantro",6.9 USD
+155,Appetizers,Nachos,"Pinto beans, cheese, pico, guac, crema, cilantro",14.4 USD
+155,Appetizers,Smoked Chicken Nachos,"Pinto beans, cheese, pico, guac, crema, cilantro, smoked chicken",20.4 USD
+155,Appetizers,Pork Nachos,"Pinto beans, cheese, pico, guac, crema, cilantro, carnitas",20.4 USD
+155,Appetizers,Brisket Nachos,"Pinto beans, cheese, pico, guac, crema, cilantro, smoked beef brisket",22.8 USD
+155,Soup+Salad+Bowls,Pozole,"Stewed pork, hominy, avocado, cabbage, cilantro, radish, lime",11.7 USD
+155,Soup+Salad+Bowls,Picado Salad,"Mixed greens, avocado, black beans, cucumber, cilantro, pickled onions, pepitas, radish, queso fresco, ranch dressing",12.0 USD
+155,Soup+Salad+Bowls,Picado Salad w/ Smoked Chicken,"Mixed greens, avocado, black beans, cucumber, cilantro, pickled onions, pepitas, radish, queso fresco, ranch dressing, smoked chicken",19.5 USD
+155,Soup+Salad+Bowls,Picado Salad w/ Grilled Chicken,"Mixed greens, avocado, black beans, cucumber, cilantro, pickled onions, pepitas, radish, queso fresco, ranch dressing, grilled chicken",21.0 USD
+155,Soup+Salad+Bowls,Picado Salad w/ Smoked Pork,"Mixed greens, avocado, black beans, cucumber, cilantro, pickled onions, pepitas, radish, queso fresco, ranch dressing, smoked pork",19.5 USD
+155,Soup+Salad+Bowls,Picado Salad w/ Beef Brisket,"Mixed greens, avocado, black beans, cucumber, cilantro, pickled onions, pepitas, radish, queso fresco, ranch dressing, smoked beef brisket",27.0 USD
+155,Soup+Salad+Bowls,Picado Salad w/ Gulf Shrimp,"Mixed greens, avocado, black beans, cucumber, cilantro, pickled onions, pepitas, radish, queso fresco, ranch dressing, gulf shrimp",24.0 USD
+155,Soup+Salad+Bowls,Burrito Bowl w/ Smoked Chicken,"Rice &amp; black beans, lettuce, pico de gallo, corn, guacamole, cilantro, queso fresco, smoked chicken",18.0 USD
+155,Soup+Salad+Bowls,Burrito Bowl w/ Smoked Pork,"Rice &amp; black beans, lettuce, pico de gallo, corn, guacamole, cilantro, queso fresco, smoked pork",18.0 USD
+155,Soup+Salad+Bowls,Veggie Bowl,"Seasonal veggies, rice, black beans, lettuce, pickled onion, radish, avocado, pico, corn, queso fresco, cilantro",18.0 USD
+155,Soup+Salad+Bowls,Picado Salad w/ Steak,,27.0 USD
+155,Soup+Salad+Bowls,Burrito Bowl w/ Grilled Chicken,,19.2 USD
+155,Soup+Salad+Bowls,Burrito Bowl w/ Smoked Brisket,,21.6 USD
+155,Soup+Salad+Bowls,Burrito Bowl w/ Adobada,,18.0 USD
+155,Soup+Salad+Bowls,Burrito Bowl w/ Shrimp,,21.6 USD
+155,LD Burritos,Burrito w/ Smoked Chicken,"Flour tortilla stuffed with rice, pinto beans, crema, and pico",16.8 USD
+155,LD Burritos,Burrito w/ Pork Carnitas,"Flour tortilla stuffed with rice, pinto beans, crema, and pico",16.8 USD
+155,LD Burritos,Burrito w/ Smoked Brisket,"Flour tortilla stuffed with rice, pinto beans, crema, and pico",18.0 USD
+155,LD Burritos,Burrito w/ Adobada,,16.8 USD
+155,Quesadillas,Cheese Quesadilla,"Jack cheese, lettuce, pico de gallo, chipotle crema, guacamole",12.0 USD
+155,Quesadillas,Quesadilla w/ Smoked Chicken,"Jack cheese, lettuce, pico de gallo, chipotle crema, guacamole",16.8 USD
+155,Quesadillas,Quesadilla w/ Smoked Pork,"Jack cheese, lettuce, pico de gallo, chipotle crema, guacamole",16.8 USD
+155,Quesadillas,Quesadilla w/ Smoked Brisket,"Jack cheese, lettuce, pico de gallo, chipotle crema, guacamole",18.0 USD
