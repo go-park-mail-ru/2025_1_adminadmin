@@ -36,6 +36,7 @@ func (h *CartHandler) GetCart(ctx context.Context, in *gen.GetCartRequest) (*gen
 		RestaurantName: cart.Name,
 		Products:       converter.CartItemsToProto(cart.CartItems),
 		FullCart:       full_cart,
+		TotalSum:       cart.TotalSum,
 	}, nil
 }
 
@@ -99,7 +100,7 @@ func (h *CartHandler) GetOrders(ctx context.Context, in *gen.GetOrdersRequest) (
 	if err != nil {
 		return nil, status.Errorf(codes.InvalidArgument, "invalid restaurant ID: %v", err)
 	}
-	orders, err := h.uc.GetOrders(ctx, userId, int(in.Count), int(in.Offset))
+	orders, total, err := h.uc.GetOrders(ctx, userId, int(in.Count), int(in.Offset))
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "%v", err)
 	}
@@ -115,6 +116,7 @@ func (h *CartHandler) GetOrders(ctx context.Context, in *gen.GetOrdersRequest) (
 
 	return &gen.OrderListResponse{
 		Orders: protoOrders,
+		Total: int32(total),
 	}, nil
 }
 

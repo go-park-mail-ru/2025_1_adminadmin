@@ -35,6 +35,8 @@ const (
     final_price,
     created_at
 FROM orders WHERE user_id = $1 LIMIT $2 OFFSET $3;`
+	countOrdersQuery = `SELECT COUNT(*) FROM orders WHERE user_id = $1;`
+
 	getOrderById = `SELECT
     id,
     user_id,
@@ -61,6 +63,19 @@ type RestaurantRepository struct {
 func NewRestaurantRepository() (*RestaurantRepository, error) {
 	db, err := dbUtils.InitDB()
 	return &RestaurantRepository{db: db}, err
+}
+
+func (r *RestaurantRepository) GetProductPrice(ctx context.Context, productID string) (float64, error) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	var price float64
+	query := `SELECT price FROM products WHERE id = $1`
+	err := r.db.QueryRow(ctx, query, productID).Scan(&price)
+	if err != nil {
+		logger.Error("Ошибка получения цены товара: ", slog.String("error", err.Error()))
+		return 0, err
+	}
+	return price, nil
 }
 
 func (r *RestaurantRepository) GetCartItem(ctx context.Context, productIDs []string, productAmounts map[string]int, restaurantID string) (models.Cart, error) {
@@ -143,13 +158,20 @@ func (r *RestaurantRepository) Save(ctx context.Context, order models.Order, use
 	return nil
 }
 
-func (r *RestaurantRepository) GetOrders(ctx context.Context, user_id uuid.UUID, count, offset int) ([]models.Order, error) {
+func (r *RestaurantRepository) GetOrders(ctx context.Context, user_id uuid.UUID, count, offset int) ([]models.Order, int, error) {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	var totalCount int
+	err := r.db.QueryRow(ctx, countOrdersQuery, user_id).Scan(&totalCount)
+	if err != nil {
+		logger.Error("Ошибка при получении общего количества заказов: " + err.Error())
+		return nil, 0, err
+	}
 
 	rows, err := r.db.Query(ctx, getAllOrders, user_id, count, offset)
 	if err != nil {
 		logger.Error(err.Error())
-		return nil, err
+		return nil, 0, err
 	}
 	defer rows.Close()
 
@@ -161,17 +183,17 @@ func (r *RestaurantRepository) GetOrders(ctx context.Context, user_id uuid.UUID,
 			&order.ApartmentOrOffice, &order.Intercom, &order.Entrance, &order.Floor, &order.CourierComment,
 			&order.LeaveAtDoor, &order.FinalPrice, &order.CreatedAt); err != nil {
 			logger.Error(err.Error())
-			return nil, err
+			return nil, 0, err
 		}
 		if err := json.Unmarshal([]byte(orderProductsJSON), &order.OrderProducts); err != nil {
 			logger.Error("ошибка анмаршалинга JSON: " + err.Error())
-			return nil, err
+			return nil, 0, err
 		}
 		order.Sanitize()
 		orders = append(orders, order)
 	}
 	logger.Info("Successful")
-	return orders, rows.Err()
+	return orders, totalCount, rows.Err()
 }
 
 func (r *RestaurantRepository) GetOrderById(ctx context.Context, order_id, user_id uuid.UUID) (models.Order, error) {

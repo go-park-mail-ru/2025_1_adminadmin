@@ -359,7 +359,7 @@ func (h *CartHandler) GetOrders(w http.ResponseWriter, r *http.Request) {
 		orders = append(orders, order)
 	}
 
-	data, err := json.Marshal(orders)
+	data, err := json.Marshal(models.OrderResp{Orders: orders, Total: int(grpcResponse.Total)})
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "Не удалось сериализовать данные", http.StatusInternalServerError)
