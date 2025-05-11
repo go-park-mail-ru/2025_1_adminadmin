@@ -48,7 +48,7 @@ func (h *RestaurantHandler) GetProductsByRestaurant(w http.ResponseWriter, r *ht
 	restaurantID := uuid.FromStringOrNil(restaurantIDStr)
 	if restaurantID == uuid.Nil {
 		log.LogHandlerError(logger, errors.New("неверный формат id ресторана"), http.StatusBadRequest)
-		w.WriteHeader(http.StatusBadRequest)
+		utils.SendError(w, "Неверный запрос", http.StatusBadRequest)
 		return
 	}
 
@@ -68,7 +68,7 @@ func (h *RestaurantHandler) GetProductsByRestaurant(w http.ResponseWriter, r *ht
 	products, err := h.restaurantUsecase.GetProductsByRestaurant(r.Context(), restaurantID, count, offset)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка уровнем ниже (usecase): %w", err), http.StatusInternalServerError)
-		w.WriteHeader(http.StatusInternalServerError)
+		utils.SendError(w, "Ошибка сервера", http.StatusInternalServerError)
 		return
 	}
 
@@ -112,20 +112,20 @@ func (h *RestaurantHandler) RestaurantList(w http.ResponseWriter, r *http.Reques
 	restaurants, err := h.restaurantUsecase.GetAll(r.Context(), count, offset)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка уровнем ниже (usecase): %w", err), http.StatusInternalServerError)
-		w.WriteHeader(http.StatusInternalServerError)
+		utils.SendError(w, "Ошибка сервера", http.StatusInternalServerError)
 		return
 	}
 
 	if restaurants == nil {
 		log.LogHandlerError(logger, fmt.Errorf("рестораны не найдены: %w", err), http.StatusNotFound)
-		w.WriteHeader(http.StatusNotFound)
+		utils.SendError(w, "Рестораны не найдены", http.StatusNotFound)
 		return
 	}
 
 	data, err := json.Marshal(restaurants)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
-		utils.SendError(w, "не удалось получить рестораны", http.StatusInternalServerError)
+		utils.SendError(w, "Не удалось получить рестораны", http.StatusInternalServerError)
 		return
 	}
 
@@ -155,20 +155,20 @@ func (h *RestaurantHandler) ReviewsList(w http.ResponseWriter, r *http.Request) 
 	restaurantID := uuid.FromStringOrNil(restaurantIDStr)
 	if restaurantID == uuid.Nil {
 		log.LogHandlerError(logger, errors.New("неверный формат id ресторана"), http.StatusBadRequest)
-		w.WriteHeader(http.StatusBadRequest)
+		utils.SendError(w, "Неверный запрос", http.StatusBadRequest)
 		return
 	}
 
 	reviews, err := h.restaurantUsecase.GetReviews(r.Context(), restaurantID, count, offset)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка уровнем ниже (usecase): %w", err), http.StatusInternalServerError)
-		w.WriteHeader(http.StatusInternalServerError)
+		utils.SendError(w, "Ошибка сервера", http.StatusInternalServerError)
 		return
 	}
 
 	if reviews == nil {
 		log.LogHandlerError(logger, fmt.Errorf("отзывы не найдены: %w", err), http.StatusNotFound)
-		w.WriteHeader(http.StatusNotFound)
+		utils.SendError(w, "Отзывы не найдены", http.StatusNotFound)
 		return
 	}
 
@@ -192,7 +192,7 @@ func (h *RestaurantHandler) CreateReview(w http.ResponseWriter, r *http.Request)
 	restaurantID := uuid.FromStringOrNil(restaurantIDStr)
 	if restaurantID == uuid.Nil {
 		log.LogHandlerError(logger, errors.New("неверный формат id ресторана"), http.StatusBadRequest)
-		w.WriteHeader(http.StatusBadRequest)
+		utils.SendError(w, "Неверный запрос", http.StatusBadRequest)
 		return
 	}
 
@@ -200,7 +200,7 @@ func (h *RestaurantHandler) CreateReview(w http.ResponseWriter, r *http.Request)
 	err := easyjson.UnmarshalFromReader(r.Body, &req)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка парсинга JSON: %w", err), http.StatusBadRequest)
-		w.WriteHeader(http.StatusBadRequest)
+		utils.SendError(w, "Неверный запрос", http.StatusBadRequest)
 		return
 	}
 	req.Sanitize()
@@ -212,10 +212,12 @@ func (h *RestaurantHandler) CreateReview(w http.ResponseWriter, r *http.Request)
 	cookieJWT, err := r.Cookie("AdminJWT")
 	if err != nil {
 		if err == http.ErrNoCookie {
-			w.WriteHeader(http.StatusUnauthorized)
+			log.LogHandlerError(logger, fmt.Errorf("токен отсутствует: %w", err), http.StatusUnauthorized)
+			utils.SendError(w, "Ошибка авторизации", http.StatusUnauthorized)
 			return
 		}
-		w.WriteHeader(http.StatusBadRequest)
+		log.LogHandlerError(logger, fmt.Errorf("ошибка при чтении куки: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "Ошибка авторизации", http.StatusBadRequest)
 		return
 	}
 	JWTStr := cookieJWT.Value
@@ -224,19 +226,21 @@ func (h *RestaurantHandler) CreateReview(w http.ResponseWriter, r *http.Request)
 
 	idS, ok := jwtUtils.GetIdFromJWT(JWTStr, claims, os.Getenv("JWT_SECRET"))
 	if !ok || idS == "" {
-		w.WriteHeader(http.StatusUnauthorized)
+		log.LogHandlerError(logger, errors.New("недействительный токен: id отсутствует"), http.StatusUnauthorized)
+		utils.SendError(w, "Ошибка авторизации", http.StatusUnauthorized)
 		return
 	}
 	id, err := uuid.FromString(idS)
 	if err != nil {
-		logger.Error(err.Error())
-		w.WriteHeader(http.StatusUnauthorized)
+		log.LogHandlerError(logger, fmt.Errorf("неверный id в токене: %w", err), http.StatusUnauthorized)
+		utils.SendError(w, "Ошибка авторизации", http.StatusUnauthorized)
 		return
 	}
 
 	login, ok := jwtUtils.GetLoginFromJWT(JWTStr, claims, os.Getenv("JWT_SECRET"))
 	if !ok || login == "" {
-		w.WriteHeader(http.StatusUnauthorized)
+		log.LogHandlerError(logger, errors.New("недействительный токен: login отсутствует"), http.StatusUnauthorized)
+		utils.SendError(w, "Ошибка авторизации", http.StatusUnauthorized)
 		return
 	}
 
@@ -262,8 +266,8 @@ func (h *RestaurantHandler) CreateReview(w http.ResponseWriter, r *http.Request)
 	w.Header().Set("Content-Type", "application/json")
 
 	if err := json.NewEncoder(w).Encode(review); err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("ошибка формирования JSON: %w", err), http.StatusBadRequest)
-		w.WriteHeader(http.StatusBadRequest)
+		log.LogHandlerError(logger, fmt.Errorf("ошибка формирования JSON: %w", err), http.StatusInternalServerError)
+        utils.SendError(w, "Ошибка сервера", http.StatusInternalServerError)
 	}
 }
 
@@ -276,17 +280,19 @@ func (h *RestaurantHandler) CheckReviews(w http.ResponseWriter, r *http.Request)
 	restaurantID := uuid.FromStringOrNil(restaurantIDStr)
 	if restaurantID == uuid.Nil {
 		log.LogHandlerError(logger, errors.New("неверный формат id ресторана"), http.StatusBadRequest)
-		w.WriteHeader(http.StatusBadRequest)
+        utils.SendError(w, "Неверный запрос", http.StatusBadRequest)
 		return
 	}
 
 	cookieJWT, err := r.Cookie("AdminJWT")
 	if err != nil {
 		if err == http.ErrNoCookie {
-			w.WriteHeader(http.StatusUnauthorized)
+			log.LogHandlerError(logger, fmt.Errorf("токен отсутствует: %w", err), http.StatusUnauthorized)
+			utils.SendError(w, "Ошибка авторизации", http.StatusUnauthorized)
 			return
 		}
-		w.WriteHeader(http.StatusBadRequest)
+		log.LogHandlerError(logger, fmt.Errorf("ошибка при чтении куки: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "Ошибка авторизации", http.StatusBadRequest)
 		return
 	}
 	JWTStr := cookieJWT.Value
@@ -295,13 +301,14 @@ func (h *RestaurantHandler) CheckReviews(w http.ResponseWriter, r *http.Request)
 
 	idS, ok := jwtUtils.GetIdFromJWT(JWTStr, claims, os.Getenv("JWT_SECRET"))
 	if !ok || idS == "" {
-		w.WriteHeader(http.StatusUnauthorized)
+		log.LogHandlerError(logger, errors.New("недействительный токен: id отсутствует"), http.StatusUnauthorized)
+		utils.SendError(w, "Ошибка авторизации", http.StatusUnauthorized)
 		return
 	}
 	id, err := uuid.FromString(idS)
 	if err != nil {
-		logger.Error(err.Error())
-		w.WriteHeader(http.StatusUnauthorized)
+		log.LogHandlerError(logger, fmt.Errorf("неверный id в токене: %w", err), http.StatusUnauthorized)
+		utils.SendError(w, "Ошибка авторизации", http.StatusUnauthorized)
 		return
 	}
 

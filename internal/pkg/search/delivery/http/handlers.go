@@ -42,13 +42,14 @@ func (h *SearchHandler) SearchRestaurantWithProducts(w http.ResponseWriter, r *h
 
 	restaurants, err := h.uc.SearchRestaurantWithProducts(r.Context(), query, countInt, offsetInt)
 	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка поиска ресторанов с продуктами: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "Ошибка поиска ресторанов с продуктами", http.StatusInternalServerError)
 		return
 	}
 	data, err := json.Marshal(restaurants)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
-		utils.SendError(w, "Не удалось сериализовать результат", http.StatusInternalServerError)
+		utils.SendError(w, "Ошибка сервера", http.StatusInternalServerError)
 		return
 	}
 
@@ -63,12 +64,13 @@ func (h *SearchHandler) SearchProductsInRestaurant(w http.ResponseWriter, r *htt
 	restaurantID := uuid.FromStringOrNil(restaurantIDStr)
 	if restaurantID == uuid.Nil {
 		log.LogHandlerError(logger, errors.New("неверный формат id ресторана"), http.StatusBadRequest)
-		w.WriteHeader(http.StatusBadRequest)
+		utils.SendError(w, "Неверный запрос", http.StatusBadRequest)
 		return
 	}
 	query, _ := url.QueryUnescape(r.URL.Query().Get("query"))
 	productCategories, err := h.uc.SearchProductsInRestaurant(r.Context(), restaurantID, query)
 	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка поиска продуктов: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "Ошибка поиска продуктов", http.StatusInternalServerError)
 		return
 	}
@@ -76,7 +78,7 @@ func (h *SearchHandler) SearchProductsInRestaurant(w http.ResponseWriter, r *htt
 	data, err := json.Marshal(productCategories)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
-		utils.SendError(w, "Не удалось сериализовать корзину", http.StatusInternalServerError)
+		utils.SendError(w, "Ошибка сервера", http.StatusInternalServerError)
 		return
 	}
 	
