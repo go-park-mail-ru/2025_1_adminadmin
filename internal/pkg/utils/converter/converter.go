@@ -39,6 +39,7 @@ func ProtoToCart(protoCart *gen.CartResponse) (models.Cart, error) {
 		Id:        restaurantID,
 		Name:      protoCart.RestaurantName,
 		CartItems: items,
+		TotalSum:  protoCart.TotalSum,
 	}, nil
 }
 
@@ -107,7 +108,7 @@ func OrderInReqToProto(req models.OrderInReq, cart models.Cart, login string) *g
 
 func OrderToProto(order models.Order, userId string) (*gen.OrderResponse, error) {
 	createdAtProto := timestamppb.New(order.CreatedAt)
-	err := createdAtProto.CheckValid(); 
+	err := createdAtProto.CheckValid()
 	if err != nil {
 		return nil, err
 	}

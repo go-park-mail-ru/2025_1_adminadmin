@@ -27,7 +27,7 @@ func NewCartUsecase(cartRepo cart.CartRepo, restaurantRepo cart.RestaurantRepo) 
 func (uc *CartUsecase) GetCart(ctx context.Context, login string) (models.Cart, error, bool) {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 
-	cartRaw, restaurantID, err := uc.cartRepo.GetCart(ctx, login)
+	cartRaw, restaurantID, totalSum, err := uc.cartRepo.GetCart(ctx, login)
 	if err != nil {
 		logger.Error("ошибка получения корзины", slog.String("error", err.Error()))
 		return models.Cart{}, err, false
@@ -48,6 +48,7 @@ func (uc *CartUsecase) GetCart(ctx context.Context, login string) (models.Cart, 
 		logger.Error("ошибка получения данных по товарам", slog.String("restaurantID", restaurantID), slog.String("error", err.Error()))
 		return models.Cart{}, err, false
 	}
+	items.TotalSum = totalSum
 
 	logger.Info("успешное получение корзины")
 	return items, nil, true
@@ -55,7 +56,12 @@ func (uc *CartUsecase) GetCart(ctx context.Context, login string) (models.Cart, 
 
 func (uc *CartUsecase) UpdateItemQuantity(ctx context.Context, login, productID string, restaurantId string, quantity int) error {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
-	err := uc.cartRepo.UpdateItemQuantity(ctx, login, productID, restaurantId, quantity)
+	price, err := uc.restaurantRepo.GetProductPrice(ctx, productID)
+	if err != nil {
+		logger.Error("не удалось получить цену товара", slog.String("error", err.Error()))
+		return err
+	}
+	err = uc.cartRepo.UpdateItemQuantity(ctx, login, productID, restaurantId, quantity, price)
 	if err != nil {
 		logger.Error("не удалось обновить количество", slog.String("error", err.Error()))
 	} else {
@@ -105,7 +111,7 @@ func (u *CartUsecase) CreateOrder(ctx context.Context, userID string, req models
 	return order, nil
 }
 
-func (u *CartUsecase) GetOrders(ctx context.Context, user_id uuid.UUID, count, offset int) ([]models.Order, error) {
+func (u *CartUsecase) GetOrders(ctx context.Context, user_id uuid.UUID, count, offset int) ([]models.Order, int, error) {
 	return u.restaurantRepo.GetOrders(ctx, user_id, count, offset)
 }
 

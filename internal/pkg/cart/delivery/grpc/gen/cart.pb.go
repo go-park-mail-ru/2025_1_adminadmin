@@ -465,6 +465,7 @@ type CartResponse struct {
 	RestaurantName string                 `protobuf:"bytes,2,opt,name=RestaurantName,proto3" json:"RestaurantName,omitempty"`
 	Products       []*CartItem            `protobuf:"bytes,3,rep,name=Products,proto3" json:"Products,omitempty"`
 	FullCart       bool                   `protobuf:"varint,4,opt,name=FullCart,proto3" json:"FullCart,omitempty"`
+	TotalSum       float64                `protobuf:"fixed64,5,opt,name=TotalSum,proto3" json:"TotalSum,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -525,6 +526,13 @@ func (x *CartResponse) GetFullCart() bool {
 		return x.FullCart
 	}
 	return false
+}
+
+func (x *CartResponse) GetTotalSum() float64 {
+	if x != nil {
+		return x.TotalSum
+	}
+	return 0
 }
 
 type CartItem struct {
@@ -754,6 +762,7 @@ func (x *OrderResponse) GetFinalPrice() float64 {
 type OrderListResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Orders        []*OrderResponse       `protobuf:"bytes,1,rep,name=Orders,proto3" json:"Orders,omitempty"`
+	Total         int32                  `protobuf:"varint,2,opt,name=Total,proto3" json:"Total,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -795,6 +804,13 @@ func (x *OrderListResponse) GetOrders() []*OrderResponse {
 	return nil
 }
 
+func (x *OrderListResponse) GetTotal() int32 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
 var File_proto_cart_proto protoreflect.FileDescriptor
 
 const file_proto_cart_proto_rawDesc = "" +
@@ -832,12 +848,13 @@ const file_proto_cart_proto_rawDesc = "" +
 	"\aOrderId\x18\x01 \x01(\tR\aOrderId\x12\x16\n" +
 	"\x06UserId\x18\x02 \x01(\tR\x06UserId\"4\n" +
 	"\x18UpdateOrderStatusRequest\x12\x18\n" +
-	"\aOrderId\x18\x01 \x01(\tR\aOrderId\"\xa2\x01\n" +
+	"\aOrderId\x18\x01 \x01(\tR\aOrderId\"\xbe\x01\n" +
 	"\fCartResponse\x12\"\n" +
 	"\fRestaurantId\x18\x01 \x01(\tR\fRestaurantId\x12&\n" +
 	"\x0eRestaurantName\x18\x02 \x01(\tR\x0eRestaurantName\x12*\n" +
 	"\bProducts\x18\x03 \x03(\v2\x0e.cart.CartItemR\bProducts\x12\x1a\n" +
-	"\bFullCart\x18\x04 \x01(\bR\bFullCart\"\x90\x01\n" +
+	"\bFullCart\x18\x04 \x01(\bR\bFullCart\x12\x1a\n" +
+	"\bTotalSum\x18\x05 \x01(\x01R\bTotalSum\"\x90\x01\n" +
 	"\bCartItem\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12\x12\n" +
 	"\x04Name\x18\x02 \x01(\tR\x04Name\x12\x14\n" +
@@ -861,9 +878,10 @@ const file_proto_cart_proto_rawDesc = "" +
 	"\tCreatedAt\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\tCreatedAt\x12\x1e\n" +
 	"\n" +
 	"FinalPrice\x18\r \x01(\x01R\n" +
-	"FinalPrice\"@\n" +
+	"FinalPrice\"V\n" +
 	"\x11OrderListResponse\x12+\n" +
-	"\x06Orders\x18\x01 \x03(\v2\x13.cart.OrderResponseR\x06Orders2\xe1\x03\n" +
+	"\x06Orders\x18\x01 \x03(\v2\x13.cart.OrderResponseR\x06Orders\x12\x14\n" +
+	"\x05Total\x18\x02 \x01(\x05R\x05Total2\xe1\x03\n" +
 	"\vCartService\x125\n" +
 	"\aGetCart\x12\x14.cart.GetCartRequest\x1a\x12.cart.CartResponse\"\x00\x12K\n" +
 	"\x12UpdateItemQuantity\x12\x1b.cart.UpdateQuantityRequest\x1a\x16.google.protobuf.Empty\"\x00\x12=\n" +
