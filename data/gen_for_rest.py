@@ -15,12 +15,16 @@ restaurants = df['rest'].unique().tolist()
 # Оставляем только уникальные товары по полю 'item'
 unique_products = df.drop_duplicates(subset=['item']).to_dict(orient='records')
 
+# Проверяем, что товаров достаточно для выборки по 40 уникальных
+if len(unique_products) < 40:
+    raise ValueError("Недостаточно уникальных товаров. Должно быть минимум 40.")
+
 # Генерируем SQL-запросы
 sql_queries = []
 
 for restaurant in restaurants:
-    # Выбираем 40 случайных товаров (можно менять на sample, если нужны уникальные)
-    selected_products = random.choices(unique_products, k=40)
+    # Выбираем 40 уникальных товаров (без повторов внутри ресторана)
+    selected_products = random.sample(unique_products, k=40)
 
     values = []
     for product in selected_products:
@@ -45,4 +49,4 @@ with open("sql_inserts.txt", "w", encoding="utf-8") as f:
         f.write(query + "\n\n")
 
 print(f"✅ SQL-запросы успешно сгенерированы для {len(restaurants)} ресторанов.")
-print(f"📦 Каждый ресторан получил по 40 товаров из исходного файла (с возможными дублями между ресторанами).")
+print(f"📦 Каждый ресторан получил по 40 уникальных товаров (без повторов внутри ресторана).")
