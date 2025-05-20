@@ -88,7 +88,7 @@ func (r *RestaurantRepository) GetProductsByRestaurant(ctx context.Context, rest
 			logger.Error("failed to scan product: " + err.Error())
 			return nil, err
 		}
-		p.Sanitize()
+		//p.Sanitize()
 		if _, exists := categoryMap[category]; !exists {
 			categoriesOrder = append(categoriesOrder, category)
 		}
