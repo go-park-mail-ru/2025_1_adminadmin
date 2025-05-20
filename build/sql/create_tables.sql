@@ -86,10 +86,10 @@ CREATE TABLE IF NOT EXISTS promocodes (
 	promocode TEXT NOT NULL,
 	discount NUMERIC(10, 2) NOT NULL,
     user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
-    expires_at TIMESTAMPTZ NOT NULL DEFAULT now() + INTERVAL '1 day'
-	is_used BOOLEAN DEFAULT FALSE;
-)
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    expires_at TIMESTAMPTZ NOT NULL DEFAULT now() + INTERVAL '1 day',
+	is_used BOOLEAN DEFAULT FALSE
+);
 
 CREATE OR REPLACE FUNCTION set_order_in_delivery(order_id UUID) RETURNS VOID AS $$
 BEGIN
