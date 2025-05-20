@@ -25,6 +25,9 @@ import (
 	searchDelivery "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/search/delivery/http"
 	searchRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/search/repo"
 	searchUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/search/usecase"
+	promocodeDelivery "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/promocode/delivery/http"
+	promocodeRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/promocode/repo"
+	promocodeUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/promocode/usecase"
 	"github.com/gorilla/mux"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"google.golang.org/grpc"
@@ -80,6 +83,13 @@ func main() {
 	restaurantUsecase := restaurantUsecase.NewRestaurantsUsecase(restaurantRepo)
 	restaurantDelivery := restaurantDelivery.NewRestaurantHandler(restaurantUsecase)
 
+	promocodeRepo, err := promocodeRepo.NewPromocodeRepository()
+	if err != nil {
+		return
+	}
+	promocodeUsecase := promocodeUsecase.NewPromocodeUsecase(promocodeRepo)
+	promocodeDelivery := promocodeDelivery.NewPromocodeHandler(promocodeUsecase)
+
 	searchRep, err := searchRepo.NewSearchRepo()
 	if err != nil {
 		return
@@ -133,6 +143,12 @@ func main() {
 		order.HandleFunc("/{orderID}", cartHandler.GetOrderById).Methods(http.MethodGet)
 		order.HandleFunc("/{orderID}/update", cartHandler.UpdateOrderStatus).Methods(http.MethodPost)
 		order.HandleFunc("/create", cartHandler.CreateOrder).Methods(http.MethodPost, http.MethodOptions)
+	}
+
+		promocodes := r.PathPrefix("/promocodes").Subrouter()
+	{
+		promocodes.HandleFunc("", promocodeDelivery.GetPromocodes).Methods(http.MethodGet)
+		promocodes.HandleFunc("/check", promocodeDelivery.CheckPromocode).Methods(http.MethodPost)
 	}
 
 	search := r.PathPrefix("/search").Subrouter()

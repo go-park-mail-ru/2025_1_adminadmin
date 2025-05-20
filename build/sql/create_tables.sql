@@ -81,6 +81,16 @@ CREATE TABLE IF NOT EXISTS orders (
     created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
+CREATE TABLE IF NOT EXISTS promocodes (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+	promocode TEXT NOT NULL,
+	discount NUMERIC(10, 2) NOT NULL,
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+    expires_at TIMESTAMPTZ NOT NULL DEFAULT now() + INTERVAL '1 day'
+	is_used BOOLEAN DEFAULT FALSE;
+)
+
 CREATE OR REPLACE FUNCTION set_order_in_delivery(order_id UUID) RETURNS VOID AS $$
 BEGIN
     UPDATE orders SET status = 'in_delivery' WHERE id = order_id;
@@ -2511,3 +2521,32 @@ FOR EACH ROW EXECUTE FUNCTION update_product_tsvector();
 -- Создание индексов для ускорения поиска
 CREATE INDEX IF NOT EXISTS idx_restaurants_tsv ON restaurants USING GIN (tsvector_column);
 CREATE INDEX IF NOT EXISTS idx_products_tsv ON products USING GIN (tsvector_column);
+
+
+
+CREATE OR REPLACE FUNCTION issue_promocode_on_paid()
+RETURNS TRIGGER AS $$
+DECLARE
+    new_promocode TEXT := 'PROMO_' || substr(md5(random()::text), 0, 8);
+BEGIN
+    IF NEW.status = 'paid' AND OLD.status IS DISTINCT FROM NEW.status THEN
+        INSERT INTO promocodes (promocode, discount, user_id, created_at, expires_at)
+        VALUES (
+            new_promocode,
+            0.10,
+            NEW.user_id,
+            now(),
+            now() + INTERVAL '7 days'
+        );
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE TRIGGER trg_issue_promocode_on_paid
+AFTER UPDATE ON orders
+FOR EACH ROW
+EXECUTE FUNCTION issue_promocode_on_paid();
+

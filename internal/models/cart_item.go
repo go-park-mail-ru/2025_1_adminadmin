@@ -66,7 +66,25 @@ type OrderInReq struct {
 // easyjson:json
 type OrderResp struct {
 	Orders []Order `json:"orders"`
-	Total  int   `json:"total"`
+	Total  int     `json:"total"`
+}
+
+// easyjson:json
+type Promocode struct {
+	Id        uuid.UUID `json:"id"`
+	Promocode string    `json:"promocode"`
+	Discount  float64   `json:"discount"`
+	UserId    uuid.UUID `json:"user_id"`
+	CreatedAt time.Time `json:"created_at"`
+	ExpiresAt time.Time `json:"expires_at"`
+}
+
+type PromocodeResp struct {
+	Discount  float64   `json:"discount"`
+}
+
+func (p *Promocode) Sanitize() {
+	p.Promocode = html.EscapeString(p.Promocode)
 }
 
 func (c *CartItem) Sanitize() {
