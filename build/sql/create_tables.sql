@@ -612,6 +612,7 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 	((SELECT id FROM restaurants WHERE name = 'Клод Моне'), 'Панир с чечевицей и кокосовым молоком', 620, 'panir_s_chechevitsey_i_kokosovym_molokom.png', 314, 'Вегетарианские блюда'),
 	((SELECT id FROM restaurants WHERE name = 'Клод Моне'), 'Жареный окунь с пряностями', 426, 'zharenyy_okun_s_pryanostyami.png', 350, 'Рыбные блюда'),
 	((SELECT id FROM restaurants WHERE name = 'Клод Моне'), 'Тонкие блины с маслом', 549, 'tonkie_bliny_s_maslom.png', 442, 'Десерты'),
+	((SELECT id FROM restaurants WHERE name = 'Клод Моне' ), 'Салфетка', 6, 'salf.png', 5, 'Прочее'),
 	((SELECT id FROM restaurants WHERE name = 'Клод Моне'), 'Курица в красном соусе', 1555, 'kuritsa_v_krasnom_souse.png', 281, 'Мясные блюда');
 
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
@@ -654,6 +655,7 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 	((SELECT id FROM restaurants WHERE name = 'Аркобалено'), 'Миндальный хлеб с изюмом', 371, 'mindalnyy_khleb_s_izyumom.png', 319, 'Десерты'),
 	((SELECT id FROM restaurants WHERE name = 'Аркобалено'), 'Баранина тикка в сливочно-томатном соусе', 1057, 'baranina_tikka_v_slivochno-tomatnom_souse.png', 280, 'Мясные блюда'),
 	((SELECT id FROM restaurants WHERE name = 'Аркобалено'), 'Креветки в пряном соусе', 816, 'krevetki_v_pryanom_souse.png', 459, 'Рыбные блюда'),
+	((SELECT id FROM restaurants WHERE name = 'Аркобалено' ), 'Салфетка', 6, 'salf.png', 5, 'Прочее'),
 	((SELECT id FROM restaurants WHERE name = 'Аркобалено'), 'Фруктовый джем (абрикос/персик)', 778, 'fruktovyy_dzhem_abrikospersik.png', 415, 'Десерты');
 
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
