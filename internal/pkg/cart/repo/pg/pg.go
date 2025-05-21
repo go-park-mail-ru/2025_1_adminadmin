@@ -121,7 +121,7 @@ func (r *RestaurantRepository) GetRecommendedProducts(ctx context.Context, produ
             rp.name,
             rp.price,
             rp.image_url,
-            rp.weight,
+            rp.weight
         FROM related_products rp
         GROUP BY rp.id, rp.name, rp.price, rp.image_url, rp.weight
         ORDER BY COUNT(*) DESC
