@@ -53,51 +53,7 @@ FROM orders WHERE user_id = $1 LIMIT $2 OFFSET $3;`
     final_price,
     created_at
 FROM orders WHERE id = $1 AND user_id = $2;`
-	updateOrderStatus            = `UPDATE orders SET status = $1 WHERE id = $2;`
-	scheduleDeliveryStatusChange = `SELECT cron.schedule_in('20 seconds', $$UPDATE orders SET status = 'in delivery' WHERE id = $1$$);`
-)
-
-type RestaurantRepository struct {
-	db pgxtype.Querier
-}
-
-func NewRestaurantRepository() (*RestaurantRepository, error) {
-	db, err := dbUtils.InitDB()
-	return &RestaurantRepository{db: db}, err
-}
-
-func (r *RestaurantRepository) GetProductPrice(ctx context.Context, productID string) (float64, error) {
-	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
-
-	var price float64
-	query := `SELECT price FROM products WHERE id = $1`
-	err := r.db.QueryRow(ctx, query, productID).Scan(&price)
-	if err != nil {
-		logger.Error("Ошибка получения цены товара: ", slog.String("error", err.Error()))
-		return 0, err
-	}
-	return price, nil
-}
-
-func (r *RestaurantRepository) GetRecommendedProducts(ctx context.Context, productIDs []string, restaurantID string) ([]models.CartItem, error) {
-	// Преобразуем строковые ID в UUID[]
-	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
-
-	var ids []uuid.UUID
-	for _, pid := range productIDs {
-		id, err := uuid.FromString(pid)
-		if err != nil {
-			return nil, fmt.Errorf("invalid product ID: %s", pid)
-		}
-		ids = append(ids, id)
-	}
-
-	restID, err := uuid.FromString(restaurantID)
-	if err != nil {
-		return nil, fmt.Errorf("invalid restaurant ID: %s", restaurantID)
-	}
-
-	rows, err := r.db.Query(ctx, `
+	getRecommendsByPtoducts = `
         WITH current_cart AS (
             SELECT unnest($1::UUID[]) AS product_id
         ),
@@ -127,8 +83,53 @@ func (r *RestaurantRepository) GetRecommendedProducts(ctx context.Context, produ
         FROM related_products rp
         GROUP BY rp.id, rp.name, rp.price, rp.image_url, rp.weight
         ORDER BY COUNT(*) DESC
-        LIMIT 5;
-    `, pq.Array(ids), restID)
+        LIMIT 5;`
+	updateOrderStatus            = `UPDATE orders SET status = $1 WHERE id = $2;`
+	scheduleDeliveryStatusChange = `SELECT cron.schedule_in('20 seconds', $$UPDATE orders SET status = 'in delivery' WHERE id = $1$$);`
+)
+
+type RestaurantRepository struct {
+	db pgxtype.Querier
+}
+
+func NewRestaurantRepository() (*RestaurantRepository, error) {
+	db, err := dbUtils.InitDB()
+	return &RestaurantRepository{db: db}, err
+}
+
+func (r *RestaurantRepository) GetProductPrice(ctx context.Context, productID string) (float64, error) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	var price float64
+	query := `SELECT price FROM products WHERE id = $1`
+	err := r.db.QueryRow(ctx, query, productID).Scan(&price)
+	if err != nil {
+		logger.Error("Ошибка получения цены товара: ", slog.String("error", err.Error()))
+		return 0, err
+	}
+	return price, nil
+}
+
+func (r *RestaurantRepository) GetRecommendedProducts(ctx context.Context, productIDs []string, restaurantID string) ([]models.CartItem, error) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	var ids []uuid.UUID
+	for _, pid := range productIDs {
+		id, err := uuid.FromString(pid)
+		if err != nil {
+			logger.Error("invalid product ID", slog.String("error", err.Error()))
+			return nil, fmt.Errorf("invalid product ID")
+		}
+		ids = append(ids, id)
+	}
+
+	restID, err := uuid.FromString(restaurantID)
+	if err != nil {
+		logger.Error("invalid restaurant ID", slog.String("error", err.Error()))
+		return nil, fmt.Errorf("invalid restaurant ID")
+	}
+
+	rows, err := r.db.Query(ctx, getRecommendsByPtoducts, pq.Array(ids), restID)
 
 	if err != nil {
 		return nil, err
@@ -148,11 +149,9 @@ func (r *RestaurantRepository) GetRecommendedProducts(ctx context.Context, produ
 		if err != nil {
 			return nil, err
 		}
-		item.Amount = 1 // можно не возвращать
+		item.Amount = 1
 		result = append(result, item)
 	}
-	logger.Info("!!!!!!!!!!!")
-
 	return result, nil
 }
 
@@ -321,7 +320,6 @@ func (r *RestaurantRepository) UpdateOrderStatus(ctx context.Context, order_id u
 func (r *RestaurantRepository) ScheduleDeliveryStatusChange(ctx context.Context, orderID uuid.UUID) error {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 
-	// Безопасный параметризованный запрос
 	query := `
         SELECT cron.schedule(
             'delivery_status_' || $1,

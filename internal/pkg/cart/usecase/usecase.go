@@ -50,7 +50,6 @@ func (uc *CartUsecase) GetCart(ctx context.Context, login string) (models.Cart, 
     }
     items.TotalSum = totalSum
 
-    // Получаем рекомендуемые товары
     recommendedProducts, err := uc.restaurantRepo.GetRecommendedProducts(ctx, productIDs, restaurantID)
     if err != nil {
         logger.Warn("не удалось получить рекомендации", slog.String("error", err.Error()))
