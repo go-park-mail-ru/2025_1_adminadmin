@@ -35,11 +35,17 @@ func ProtoToCart(protoCart *gen.CartResponse) (models.Cart, error) {
 		return models.Cart{}, err
 	}
 
+	items2, err := ProtoToCartItems(protoCart.Products)
+	if err != nil {
+		return models.Cart{}, err
+	}
+
 	return models.Cart{
-		Id:        restaurantID,
-		Name:      protoCart.RestaurantName,
-		CartItems: items,
-		TotalSum:  protoCart.TotalSum,
+		Id:               restaurantID,
+		Name:             protoCart.RestaurantName,
+		CartItems:        items,
+		TotalSum:         protoCart.TotalSum,
+		RecommendedItems: items2,
 	}, nil
 }
 
