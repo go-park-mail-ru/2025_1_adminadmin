@@ -19,10 +19,12 @@ type CartItem struct {
 
 // easyjson:json
 type Cart struct {
-	Id        uuid.UUID  `json:"restaurant_id"`
-	Name      string     `json:"restaurant_name"`
-	CartItems []CartItem `json:"products"`
-	TotalSum  float64    `json:"total_sum"`
+	Id               uuid.UUID  `json:"restaurant_id"`
+	Name             string     `json:"restaurant_name"`
+	CartItems        []CartItem `json:"products"`
+	TotalSum         float64    `json:"total_sum"`
+	RecommendedItems []CartItem `json:"recommended_products,omitempty"` // <-- добавили
+
 }
 
 // easyjson:json
@@ -80,7 +82,7 @@ type Promocode struct {
 }
 
 type PromocodeResp struct {
-	Discount  float64   `json:"discount"`
+	Discount float64 `json:"discount"`
 }
 
 func (p *Promocode) Sanitize() {

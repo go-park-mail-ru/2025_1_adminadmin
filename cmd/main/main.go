@@ -120,7 +120,7 @@ func groupProductsByCategory(products []Product) map[string][]Product {
 func generateOrder(db *sql.DB, userID, addressID string, restaurant Restaurant, products []Product) error {
 	productGroups := groupProductsByCategory(products)
 
-	numItems := rand.Intn(5) + 1 // от 1 до 5 товаров
+	numItems := rand.Intn(5) + 2 // от 1 до 5 товаров
 	var selectedProducts []CartItem
 	var totalPrice float64
 

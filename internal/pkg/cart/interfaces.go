@@ -27,6 +27,7 @@ type CartRepo interface {
 type RestaurantRepo interface {
 	GetProductPrice(ctx context.Context, productID string) (float64, error)
 	GetCartItem(ctx context.Context, productIDs []string, productAmounts map[string]int, restaurantID string) (models.Cart, error)
+    GetRecommendedProducts(ctx context.Context, productIDs []string, restaurantID string) ([]models.CartItem, error) 
 
 	Save(ctx context.Context, order models.Order, userLogin string) error
 	GetOrders(ctx context.Context, user_id uuid.UUID, count, offset int) ([]models.Order, int, error)

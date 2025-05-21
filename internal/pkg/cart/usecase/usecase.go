@@ -25,33 +25,41 @@ func NewCartUsecase(cartRepo cart.CartRepo, restaurantRepo cart.RestaurantRepo) 
 }
 
 func (uc *CartUsecase) GetCart(ctx context.Context, login string) (models.Cart, error, bool) {
-	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+    logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 
-	cartRaw, restaurantID, totalSum, err := uc.cartRepo.GetCart(ctx, login)
-	if err != nil {
-		logger.Error("ошибка получения корзины", slog.String("error", err.Error()))
-		return models.Cart{}, err, false
-	}
+    cartRaw, restaurantID, totalSum, err := uc.cartRepo.GetCart(ctx, login)
+    if err != nil {
+        logger.Error("ошибка получения корзины", slog.String("error", err.Error()))
+        return models.Cart{}, err, false
+    }
 
-	if restaurantID == "" || cartRaw == nil {
-		logger.Info("корзина пуста или нет restaurantID")
-		return models.Cart{}, nil, false
-	}
+    if restaurantID == "" || cartRaw == nil {
+        logger.Info("корзина пуста или нет restaurantID")
+        return models.Cart{}, nil, false
+    }
 
-	productIDs := make([]string, 0, len(cartRaw))
-	for id := range cartRaw {
-		productIDs = append(productIDs, id)
-	}
+    productIDs := make([]string, 0, len(cartRaw))
+    for id := range cartRaw {
+        productIDs = append(productIDs, id)
+    }
 
-	items, err := uc.restaurantRepo.GetCartItem(ctx, productIDs, cartRaw, restaurantID)
-	if err != nil {
-		logger.Error("ошибка получения данных по товарам", slog.String("restaurantID", restaurantID), slog.String("error", err.Error()))
-		return models.Cart{}, err, false
-	}
-	items.TotalSum = totalSum
+    items, err := uc.restaurantRepo.GetCartItem(ctx, productIDs, cartRaw, restaurantID)
+    if err != nil {
+        logger.Error("ошибка получения данных по товарам", slog.String("restaurantID", restaurantID), slog.String("error", err.Error()))
+        return models.Cart{}, err, false
+    }
+    items.TotalSum = totalSum
 
-	logger.Info("успешное получение корзины")
-	return items, nil, true
+    // Получаем рекомендуемые товары
+    recommendedProducts, err := uc.restaurantRepo.GetRecommendedProducts(ctx, productIDs, restaurantID)
+    if err != nil {
+        logger.Warn("не удалось получить рекомендации", slog.String("error", err.Error()))
+    } else {
+        items.RecommendedItems = recommendedProducts
+    }
+
+    logger.Info("успешное получение корзины")
+    return items, nil, true
 }
 
 func (uc *CartUsecase) UpdateItemQuantity(ctx context.Context, login, productID string, restaurantId string, quantity int) error {
