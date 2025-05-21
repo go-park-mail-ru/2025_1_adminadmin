@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"io"
 	"log"
@@ -58,6 +59,23 @@ var categoryWeights = map[string]float64{
 	"Прочее":               0.02,
 }
 
+type CartItem struct {
+	Id       uuid.UUID `json:"id"`
+	Name     string    `json:"name"`
+	Price    float64   `json:"price"`
+	ImageURL string    `json:"image_url"`
+	Weight   int       `json:"weight"`
+	Amount   int       `json:"amount"`
+}
+
+// easyjson:json
+type Cart struct {
+	Id        uuid.UUID  `json:"restaurant_id"`
+	Name      string     `json:"restaurant_name"`
+	CartItems []CartItem `json:"products"`
+	TotalSum  float64    `json:"total_sum"`
+}
+
 func chooseCategoryByWeight(categoryWeights map[string]float64, productGroups map[string][]Product) (string, bool) {
 	var total float64
 	categories := make([]string, 0)
@@ -103,7 +121,7 @@ func generateOrder(db *sql.DB, userID, addressID string, restaurant Restaurant, 
 	productGroups := groupProductsByCategory(products)
 
 	numItems := rand.Intn(5) + 1 // от 1 до 5 товаров
-	var selectedProducts []uuid.UUID
+	var selectedProducts []CartItem
 	var totalPrice float64
 
 	for i := 0; i < numItems; i++ {
@@ -114,7 +132,14 @@ func generateOrder(db *sql.DB, userID, addressID string, restaurant Restaurant, 
 
 		items := productGroups[category]
 		selected := items[rand.Intn(len(items))] // случайный товар из категории
-		selectedProducts = append(selectedProducts, selected.ID)
+		selectedProducts = append(selectedProducts, CartItem{
+			Id:       selected.ID,
+			Name:     selected.Name,
+			Price:    selected.Price,
+			ImageURL: selected.ImageURL,
+			Weight:   selected.Weight,
+			Amount:   1, // можно сделать >1 позже
+		})
 		totalPrice += selected.Price
 	}
 
@@ -122,13 +147,30 @@ func generateOrder(db *sql.DB, userID, addressID string, restaurant Restaurant, 
 		return nil // пропустить пустые заказы
 	}
 
-	_, err := db.Exec(`
+	cart := Cart{
+		Id:        restaurant.ID,
+		Name:      restaurant.Name,
+		CartItems: selectedProducts,
+		TotalSum:  totalPrice,
+	}
+
+	cartJSON, err := json.Marshal(cart)
+	if err != nil {
+		return err
+	}
+
+	orderItems := make([]uuid.UUID, len(selectedProducts))
+	for i, item := range selectedProducts {
+		orderItems[i] = item.Id
+	}
+
+	_, err = db.Exec(`
         INSERT INTO orders (
             user_id, status, address_id, order_products, 
             apartment_or_office, intercom, entrance, floor, courier_comment, leave_at_door, final_price, order_items, created_at
         ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, NOW())`,
-		userID, "completed", addressID, "realistic_order",
-		"123", "no", "A", "3", "leave at door", true, totalPrice, pq.Array(selectedProducts),
+		userID, "completed", addressID, cartJSON,
+		"123", "no", "A", "3", "leave at door", true, totalPrice, pq.Array(orderItems),
 	)
 
 	return err

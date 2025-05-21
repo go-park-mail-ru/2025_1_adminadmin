@@ -183,6 +183,7 @@ func (r *RestaurantRepository) GetOrders(ctx context.Context, user_id uuid.UUID,
 	var orders []models.Order
 	for rows.Next() {
 		var order models.Order
+
 		var orderProductsJSON string
 		if err := rows.Scan(&order.ID, &order.UserID, &order.Status, &order.Address, &orderProductsJSON,
 			&order.ApartmentOrOffice, &order.Intercom, &order.Entrance, &order.Floor, &order.CourierComment,
