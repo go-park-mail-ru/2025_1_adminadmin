@@ -93,14 +93,14 @@ func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-
+	logger.Info("Финальная корзина", slog.Any("data", cart))
 	data, err := json.Marshal(cart)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "Ошибка сервера", http.StatusInternalServerError)
 		return
 	}
-	logger.Info("Финальная корзина", slog.Any("data", data))
+	
 	w.Write(data)
 }
 
