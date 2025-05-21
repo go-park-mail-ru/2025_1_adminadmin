@@ -81,6 +81,8 @@ func (r *RestaurantRepository) GetProductPrice(ctx context.Context, productID st
 
 func (r *RestaurantRepository) GetRecommendedProducts(ctx context.Context, productIDs []string, restaurantID string) ([]models.CartItem, error) {
 	// Преобразуем строковые ID в UUID[]
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
 	var ids []uuid.UUID
 	for _, pid := range productIDs {
 		id, err := uuid.FromString(pid)
@@ -149,6 +151,7 @@ func (r *RestaurantRepository) GetRecommendedProducts(ctx context.Context, produ
 		item.Amount = 1 // можно не возвращать
 		result = append(result, item)
 	}
+	logger.Info("!!!!!!!!!!!")
 
 	return result, nil
 }
