@@ -189,18 +189,13 @@ func (r *RestaurantRepository) GetCartItem(ctx context.Context, productIDs []str
 		logger.Error("Ошибка при преобразовании restaurantID в UUID", slog.String("error", err.Error()))
 		return models.Cart{}, err
 	}
-	recommendedItems, err := r.GetRecommendedProducts(ctx, productIDs, restaurantID)
-    if err != nil {
-        logger.Warn("Не удалось получить рекомендации", slog.String("error", err.Error()))
-    }
 
-    cart := models.Cart{
-        Id:               uid,
-        Name:             restaurantName,
-        CartItems:        items,
-        RecommendedItems: recommendedItems,
-    }
-    cart.Sanitize()
+	cart := models.Cart{
+		Id:        uid,
+		Name:      restaurantName,
+		CartItems: items,
+	}
+	cart.Sanitize()
 
 	logger.Info("Успешно получена корзина", slog.String("restaurant_name", restaurantName), slog.Int("items_count", len(items)))
 	return cart, nil
