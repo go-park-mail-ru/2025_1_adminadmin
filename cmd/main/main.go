@@ -188,7 +188,7 @@ func getProductsByRestaurant(db *sql.DB, restaurantID uuid.UUID) ([]Product, err
 
 func getFirstUserID(db *sql.DB) (string, error) {
 	var userID string
-	err := db.QueryRow("SELECT id FROM users ORDER BY created_at LIMIT 1").Scan(&userID)
+	err := db.QueryRow("SELECT id FROM users LIMIT 1").Scan(&userID)
 	if err != nil {
 		return "", err
 	}
