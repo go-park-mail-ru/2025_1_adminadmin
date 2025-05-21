@@ -57,7 +57,7 @@ func (uc *CartUsecase) GetCart(ctx context.Context, login string) (models.Cart, 
     } else {
         items.RecommendedItems = recommendedProducts
     }
-	logger.Info("Рекомендуемые товары", slog.Any("recommended", recommendedProducts))
+	logger.Info("Рекомендуемые товары", slog.Any("recommended", items))
 
     logger.Info("успешное получение корзины")
     return items, nil, true

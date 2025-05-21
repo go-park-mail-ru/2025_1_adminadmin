@@ -2618,10 +2618,12 @@ func easyjsonD2b7633eEncodeGithubComGoParkMailRu20251AdminadminInternalModels24(
 		out.RawString(prefix)
 		out.Float64(float64(in.TotalSum))
 	}
-	if len(in.RecommendedItems) != 0 {
+	{
 		const prefix string = ",\"recommended_products\":"
 		out.RawString(prefix)
-		{
+		if in.RecommendedItems == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+			out.RawString("null")
+		} else {
 			out.RawByte('[')
 			for v26, v27 := range in.RecommendedItems {
 				if v26 > 0 {
