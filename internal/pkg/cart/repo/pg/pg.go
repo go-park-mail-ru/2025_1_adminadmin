@@ -18,7 +18,7 @@ const (
 	getRestaurantName = "SELECT name FROM restaurants WHERE id = $1"
 	insertOrder       = `INSERT INTO orders (id, user_id, status, address_id, order_products,
 		apartment_or_office, intercom, entrance, floor,
-		courier_comment, leave_at_door, created_at, final_price) 
+		courier_comment, leave_at_door, created_at, final_price, order_items) 
 		VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`
 	getAllOrders = `SELECT
     id,
@@ -143,10 +143,15 @@ func (r *RestaurantRepository) Save(ctx context.Context, order models.Order, use
 	}
 	order.Sanitize()
 
+	var ids []uuid.UUID
+	for _, item := range order.OrderProducts.CartItems {
+    	ids = append(ids, item.Id)
+	}
+
 	_, err = r.db.Exec(ctx, insertOrder,
 		order.ID, userID, order.Status, order.Address, string(orderProductsStr),
 		order.ApartmentOrOffice, order.Intercom, order.Entrance, order.Floor,
-		order.CourierComment, order.LeaveAtDoor, order.CreatedAt, order.FinalPrice)
+		order.CourierComment, order.LeaveAtDoor, order.CreatedAt, order.FinalPrice, ids)
 
 	if err != nil {
 		logger.Error("Ошибка при вставке заказа в базу данных", slog.String("error", err.Error()))

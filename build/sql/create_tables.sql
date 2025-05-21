@@ -78,6 +78,7 @@ CREATE TABLE IF NOT EXISTS orders (
     courier_comment TEXT,
     leave_at_door BOOLEAN DEFAULT FALSE,
     final_price NUMERIC(10, 2) NOT NULL,
+	order_items UUID[],
     created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
