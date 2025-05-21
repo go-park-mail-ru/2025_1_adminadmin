@@ -32,12 +32,12 @@ func (h *CartHandler) GetCart(ctx context.Context, in *gen.GetCartRequest) (*gen
 	}
 
 	return &gen.CartResponse{
-		RestaurantId:   cart.Id.String(),
-		RestaurantName: cart.Name,
-		Products:       converter.CartItemsToProto(cart.CartItems),
-		FullCart:       full_cart,
-		TotalSum:       cart.TotalSum,
-		OrderItems:     converter.CartItemsToProto(cart.RecommendedItems),
+		RestaurantId:        cart.Id.String(),
+		RestaurantName:      cart.Name,
+		Products:            converter.CartItemsToProto(cart.CartItems),
+		FullCart:            full_cart,
+		TotalSum:            cart.TotalSum,
+		RecommendedProducts: converter.CartItemsToProto(cart.RecommendedItems),
 	}, nil
 }
 

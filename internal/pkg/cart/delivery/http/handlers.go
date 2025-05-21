@@ -100,7 +100,7 @@ func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
 		utils.SendError(w, "Ошибка сервера", http.StatusInternalServerError)
 		return
 	}
-
+	logger.Info("Финальная корзина", slog.Any("data", data))
 	w.Write(data)
 }
 

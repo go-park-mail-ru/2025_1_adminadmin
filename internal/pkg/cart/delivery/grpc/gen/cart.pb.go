@@ -460,15 +460,15 @@ func (x *UpdateOrderStatusRequest) GetOrderId() string {
 }
 
 type CartResponse struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	RestaurantId   string                 `protobuf:"bytes,1,opt,name=RestaurantId,proto3" json:"RestaurantId,omitempty"`
-	RestaurantName string                 `protobuf:"bytes,2,opt,name=RestaurantName,proto3" json:"RestaurantName,omitempty"`
-	Products       []*CartItem            `protobuf:"bytes,3,rep,name=Products,proto3" json:"Products,omitempty"`
-	FullCart       bool                   `protobuf:"varint,4,opt,name=FullCart,proto3" json:"FullCart,omitempty"`
-	TotalSum       float64                `protobuf:"fixed64,5,opt,name=TotalSum,proto3" json:"TotalSum,omitempty"`
-	OrderItems     []*CartItem            `protobuf:"bytes,6,rep,name=OrderItems,proto3" json:"OrderItems,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	RestaurantId        string                 `protobuf:"bytes,1,opt,name=RestaurantId,proto3" json:"RestaurantId,omitempty"`
+	RestaurantName      string                 `protobuf:"bytes,2,opt,name=RestaurantName,proto3" json:"RestaurantName,omitempty"`
+	Products            []*CartItem            `protobuf:"bytes,3,rep,name=Products,proto3" json:"Products,omitempty"`
+	FullCart            bool                   `protobuf:"varint,4,opt,name=FullCart,proto3" json:"FullCart,omitempty"`
+	TotalSum            float64                `protobuf:"fixed64,5,opt,name=TotalSum,proto3" json:"TotalSum,omitempty"`
+	RecommendedProducts []*CartItem            `protobuf:"bytes,6,rep,name=RecommendedProducts,proto3" json:"RecommendedProducts,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *CartResponse) Reset() {
@@ -536,9 +536,9 @@ func (x *CartResponse) GetTotalSum() float64 {
 	return 0
 }
 
-func (x *CartResponse) GetOrderItems() []*CartItem {
+func (x *CartResponse) GetRecommendedProducts() []*CartItem {
 	if x != nil {
-		return x.OrderItems
+		return x.RecommendedProducts
 	}
 	return nil
 }
@@ -856,16 +856,14 @@ const file_proto_cart_proto_rawDesc = "" +
 	"\aOrderId\x18\x01 \x01(\tR\aOrderId\x12\x16\n" +
 	"\x06UserId\x18\x02 \x01(\tR\x06UserId\"4\n" +
 	"\x18UpdateOrderStatusRequest\x12\x18\n" +
-	"\aOrderId\x18\x01 \x01(\tR\aOrderId\"\xee\x01\n" +
+	"\aOrderId\x18\x01 \x01(\tR\aOrderId\"\x80\x02\n" +
 	"\fCartResponse\x12\"\n" +
 	"\fRestaurantId\x18\x01 \x01(\tR\fRestaurantId\x12&\n" +
 	"\x0eRestaurantName\x18\x02 \x01(\tR\x0eRestaurantName\x12*\n" +
 	"\bProducts\x18\x03 \x03(\v2\x0e.cart.CartItemR\bProducts\x12\x1a\n" +
 	"\bFullCart\x18\x04 \x01(\bR\bFullCart\x12\x1a\n" +
-	"\bTotalSum\x18\x05 \x01(\x01R\bTotalSum\x12.\n" +
-	"\n" +
-	"OrderItems\x18\x06 \x03(\v2\x0e.cart.CartItemR\n" +
-	"OrderItems\"\x90\x01\n" +
+	"\bTotalSum\x18\x05 \x01(\x01R\bTotalSum\x12@\n" +
+	"\x13RecommendedProducts\x18\x06 \x03(\v2\x0e.cart.CartItemR\x13RecommendedProducts\"\x90\x01\n" +
 	"\bCartItem\x12\x0e\n" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12\x12\n" +
 	"\x04Name\x18\x02 \x01(\tR\x04Name\x12\x14\n" +
@@ -933,7 +931,7 @@ var file_proto_cart_proto_goTypes = []any{
 var file_proto_cart_proto_depIdxs = []int32{
 	7,  // 0: cart.CreateOrderRequest.Cart:type_name -> cart.CartResponse
 	8,  // 1: cart.CartResponse.Products:type_name -> cart.CartItem
-	8,  // 2: cart.CartResponse.OrderItems:type_name -> cart.CartItem
+	8,  // 2: cart.CartResponse.RecommendedProducts:type_name -> cart.CartItem
 	7,  // 3: cart.OrderResponse.OrderProducts:type_name -> cart.CartResponse
 	11, // 4: cart.OrderResponse.CreatedAt:type_name -> google.protobuf.Timestamp
 	9,  // 5: cart.OrderListResponse.Orders:type_name -> cart.OrderResponse
