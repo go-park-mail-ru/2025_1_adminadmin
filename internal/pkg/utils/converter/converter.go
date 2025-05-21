@@ -35,7 +35,7 @@ func ProtoToCart(protoCart *gen.CartResponse) (models.Cart, error) {
 		return models.Cart{}, err
 	}
 
-	items2, err := ProtoToCartItems(protoCart.Products)
+	items2, err := ProtoToCartItems(protoCart.RecommendedProducts)
 	if err != nil {
 		return models.Cart{}, err
 	}
