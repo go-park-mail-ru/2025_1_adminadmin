@@ -73,6 +73,7 @@ message CartResponse {
   repeated CartItem Products = 3;
   bool FullCart = 4;
   double TotalSum = 5;
+  repeated CartItem OrderItems = 6;
 }
 
 message CartItem {

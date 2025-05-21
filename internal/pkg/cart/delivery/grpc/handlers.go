@@ -37,6 +37,7 @@ func (h *CartHandler) GetCart(ctx context.Context, in *gen.GetCartRequest) (*gen
 		Products:       converter.CartItemsToProto(cart.CartItems),
 		FullCart:       full_cart,
 		TotalSum:       cart.TotalSum,
+		OrderItems:     converter.CartItemsToProto(cart.RecommendedItems),
 	}, nil
 }
 
@@ -116,7 +117,7 @@ func (h *CartHandler) GetOrders(ctx context.Context, in *gen.GetOrdersRequest) (
 
 	return &gen.OrderListResponse{
 		Orders: protoOrders,
-		Total: int32(total),
+		Total:  int32(total),
 	}, nil
 }
 
