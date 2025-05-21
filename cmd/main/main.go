@@ -169,7 +169,7 @@ func generateOrder(db *sql.DB, userID, addressID string, restaurant Restaurant, 
             user_id, status, address_id, order_products, 
             apartment_or_office, intercom, entrance, floor, courier_comment, leave_at_door, final_price, order_items, created_at
         ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, NOW())`,
-		userID, "completed", addressID, cartJSON,
+		userID, "delivered", addressID, cartJSON,
 		"123", "no", "A", "3", "leave at door", true, totalPrice, pq.Array(orderItems),
 	)
 
