@@ -122,10 +122,9 @@ func (r *RestaurantRepository) GetRecommendedProducts(ctx context.Context, produ
             rp.price,
             rp.image_url,
             rp.weight,
-            COUNT(*) AS freq
         FROM related_products rp
         GROUP BY rp.id, rp.name, rp.price, rp.image_url, rp.weight
-        ORDER BY freq DESC
+        ORDER BY COUNT(*) DESC
         LIMIT 5;
     `, pq.Array(ids), restID)
 
