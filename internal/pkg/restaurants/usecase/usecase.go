@@ -43,9 +43,11 @@ func (u *RestaurantUsecase) GetReviews(ctx context.Context, restaurantID uuid.UU
 }
 
 func (u *RestaurantUsecase) CreateReview(ctx context.Context, req models.ReviewInReq, id uuid.UUID, restaurantID uuid.UUID, login string) (models.Review, error) {
+	user_pic := u.repo.GetUserPic(ctx, id)
 	newReview := models.Review{
 		Id:         uuid.NewV4(),
 		User:       login,
+		UserPic:    user_pic,
 		ReviewText: req.ReviewText,
 		Rating:     req.Rating,
 		CreatedAt:  time.Now(),
@@ -59,12 +61,9 @@ func (u *RestaurantUsecase) CreateReview(ctx context.Context, req models.ReviewI
 }
 
 func (u *RestaurantUsecase) ReviewExists(ctx context.Context, userID, restaurantID uuid.UUID) (bool, error) {
-    return u.repo.ReviewExists(ctx, userID, restaurantID)
+	return u.repo.ReviewExists(ctx, userID, restaurantID)
 }
 
 func (u *RestaurantUsecase) ReviewExistsReturn(ctx context.Context, userID, restaurantID uuid.UUID) (models.ReviewUser, error) {
-    return u.repo.ReviewExistsReturn(ctx, userID, restaurantID)
+	return u.repo.ReviewExistsReturn(ctx, userID, restaurantID)
 }
-
-
-

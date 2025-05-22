@@ -26,6 +26,7 @@ const (
 	insertReview           = "INSERT INTO reviews (id, user_id, restaurant_id, review_text, rating, created_at) VALUES ($1, $2, $3, NULLIF($4, ''), $5, $6);"
 	checkReviewExistsQuery = `SELECT EXISTS(SELECT 1 FROM reviews WHERE user_id = $1 AND restaurant_id = $2);`
 	getIdByLogin           = "SELECT id FROM reviews WHERE user_id = $1 AND restaurant_id = $2;"
+	getUserPicById         = "SELECT user_pic from users WHERE id = $1"
 )
 
 type RestaurantRepository struct {
@@ -175,6 +176,19 @@ func (repo *RestaurantRepository) CreateReviews(ctx context.Context, req models.
 	return nil
 }
 
+func (repo *RestaurantRepository) GetUserPic(ctx context.Context, id uuid.UUID) string {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+	var user_pic string
+	err := repo.db.QueryRow(ctx, getUserPicById, id).Scan(&user_pic)
+	if err != nil {
+		logger.Error("Ошибка при получении user_pic", slog.String("error", err.Error()))
+		return ""
+	}
+
+	logger.Info("Successful")
+	return user_pic
+}
+
 func (repo *RestaurantRepository) ReviewExists(ctx context.Context, userID, restaurantID uuid.UUID) (bool, error) {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 
@@ -212,4 +226,3 @@ func (repo *RestaurantRepository) ReviewExistsReturn(ctx context.Context, userID
 
 	return rev, nil
 }
-
