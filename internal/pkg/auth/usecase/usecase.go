@@ -243,12 +243,20 @@ func (uc *AuthUsecase) Check(ctx context.Context, login string) (models.User, er
 		logger.Error(err.Error())
 		return models.User{}, auth.ErrUserNotFound
 	}
-	address, err := uc.repo.GetActiveAddress(ctx, user.Id)
+	doesExist, err := uc.repo.ActiveAddressExists(ctx, user.Id)
 	if err != nil {
-		logger.Error(err.Error())
+		logger.Error("Ошибка при проверке наличия активного адреса: " + err.Error())
 		return models.User{}, auth.ErrUserNotFound
 	}
-	user.ActiveAddress = address.Address
+
+	if doesExist {
+		address, err := uc.repo.GetActiveAddress(ctx, user.Id)
+		if err != nil {
+			logger.Error("Ошибка при получении активного адреса: " + err.Error())
+			return models.User{}, auth.ErrUserNotFound
+		}
+		user.ActiveAddress = address.Address
+	}
 
 	return user, nil
 }
