@@ -243,6 +243,7 @@ func (uc *AuthUsecase) Check(ctx context.Context, login string) (models.User, er
 		logger.Error(err.Error())
 		return models.User{}, auth.ErrUserNotFound
 	}
+	
 	doesExist, err := uc.repo.ActiveAddressExists(ctx, user.Id)
 	if err != nil {
 		logger.Error("Ошибка при проверке наличия активного адреса: " + err.Error())
