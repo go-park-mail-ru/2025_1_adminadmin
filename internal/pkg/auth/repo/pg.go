@@ -9,7 +9,6 @@ import (
 	dbUtils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/db"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	"github.com/jackc/pgtype/pgxtype"
-	"github.com/jackc/pgx"
 	"github.com/satori/uuid"
 )
 
@@ -28,6 +27,8 @@ const (
 	insertAddress    = "INSERT INTO addresses (id, address, user_id) VALUES ($1, $2, $3)"
 	addressExists    = "SELECT EXISTS(SELECT 1 FROM addresses WHERE address = $1 AND user_id = $2)"
 	getActiveAddress = "SELECT id, address, user_id, is_active FROM addresses WHERE user_id = $1 and is_active = TRUE"
+	activeAddressExists    = "SELECT EXISTS(SELECT 1 FROM addresses WHERE user_id = $1 AND is_active = TRUE)"
+
 )
 
 type AuthRepo struct {
@@ -180,14 +181,24 @@ func (repo *AuthRepo) GetActiveAddress(ctx context.Context, userId uuid.UUID) (m
 	var address models.Address
 	err := repo.db.QueryRow(ctx, getActiveAddress, userId).Scan(&address.Id, &address.Address, &address.UserId, &address.IsActive)
 	if err != nil {
-		if errors.Is(err, pgx.ErrNoRows) {
-			logger.Info("Нет активного адреса")
-			return models.Address{}, nil
-		}
 		logger.Error(err.Error())
 		return models.Address{}, err
 	}
 
 	logger.Info("Successful")
 	return address, nil
+}
+
+func (repo *AuthRepo) ActiveAddressExists(ctx context.Context, userID uuid.UUID) (bool, error) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	var exists bool
+	err := repo.db.QueryRow(ctx, activeAddressExists, userID).Scan(&exists)
+	if err != nil {
+		logger.Error(err.Error())
+		return false, err
+	}
+
+	logger.Info("Successful")
+	return exists, nil
 }

@@ -39,6 +39,7 @@ type AuthRepo interface {
 	SelectUserAddresses(ctx context.Context, login string) ([]models.Address, error)
 	AddressExists(ctx context.Context, address string, userID uuid.UUID) (bool, error)
 	GetActiveAddress(ctx context.Context, userId uuid.UUID) (models.Address, error)
+	ActiveAddressExists(ctx context.Context, userID uuid.UUID) (bool, error)
 }
 
 type AuthUsecase interface {
