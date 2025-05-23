@@ -14,6 +14,7 @@ type RestaurantRepo interface {
 	CreateReviews(ctx context.Context, req models.Review, id uuid.UUID, restaurantID uuid.UUID) error
 	ReviewExists(ctx context.Context, userID, restaurantID uuid.UUID) (bool, error) 
 	ReviewExistsReturn(ctx context.Context, userID, restaurantID uuid.UUID) (models.ReviewUser, error)
+	GetUserPic(ctx context.Context, id uuid.UUID) string
 
 }
 

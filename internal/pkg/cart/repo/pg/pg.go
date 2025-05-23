@@ -20,7 +20,7 @@ const (
 	insertOrder       = `INSERT INTO orders (id, user_id, status, address_id, order_products,
 		apartment_or_office, intercom, entrance, floor,
 		courier_comment, leave_at_door, created_at, final_price, order_items) 
-		VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`
+		VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)`
 	getAllOrders = `SELECT
     id,
     user_id,
