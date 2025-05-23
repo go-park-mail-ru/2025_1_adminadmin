@@ -30,8 +30,13 @@ type RestaurantRepo interface {
     GetRecommendedProducts(ctx context.Context, productIDs []string, restaurantID string) ([]models.CartItem, error) 
 
 	Save(ctx context.Context, order models.Order, userLogin string) error
+	GetDiscount(ctx context.Context, user_id uuid.UUID, promocode string) (float64, error)
+	DeletePromocode(ctx context.Context, user_id uuid.UUID, promocode string) error
 	GetOrders(ctx context.Context, user_id uuid.UUID, count, offset int) ([]models.Order, int, error)
 	GetOrderById(ctx context.Context, order_id, user_id uuid.UUID) (models.Order, error)
 	UpdateOrderStatus(ctx context.Context, order_id uuid.UUID, status string) error
 	ScheduleDeliveryStatusChange(ctx context.Context, orderID uuid.UUID) error
+	InsertAddress(ctx context.Context, address models.Address) error
+	AddressExists(ctx context.Context, address string, userID uuid.UUID) (bool, error)
+	SetActiveAddress(ctx context.Context, userId uuid.UUID, address string) error 
 }

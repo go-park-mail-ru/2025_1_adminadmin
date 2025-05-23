@@ -125,6 +125,8 @@ func easyjsonD2b7633eDecodeGithubComGoParkMailRu20251AdminadminInternalModels1(i
 			out.Description = string(in.String())
 		case "path":
 			out.UserPic = string(in.String())
+		case "active_address":
+			out.ActiveAddress = string(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -173,6 +175,11 @@ func easyjsonD2b7633eEncodeGithubComGoParkMailRu20251AdminadminInternalModels1(o
 		const prefix string = ",\"path\":"
 		out.RawString(prefix)
 		out.String(string(in.UserPic))
+	}
+	{
+		const prefix string = ",\"active_address\":"
+		out.RawString(prefix)
+		out.String(string(in.ActiveAddress))
 	}
 	out.RawByte('}')
 }
@@ -2689,6 +2696,8 @@ func easyjsonD2b7633eDecodeGithubComGoParkMailRu20251AdminadminInternalModels25(
 			if data := in.UnsafeBytes(); in.Ok() {
 				in.AddError((out.UserId).UnmarshalText(data))
 			}
+		case "is_active":
+			out.IsActive = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -2717,6 +2726,11 @@ func easyjsonD2b7633eEncodeGithubComGoParkMailRu20251AdminadminInternalModels25(
 		const prefix string = ",\"user_id\":"
 		out.RawString(prefix)
 		out.RawText((in.UserId).MarshalText())
+	}
+	{
+		const prefix string = ",\"is_active\":"
+		out.RawString(prefix)
+		out.Bool(bool(in.IsActive))
 	}
 	out.RawByte('}')
 }

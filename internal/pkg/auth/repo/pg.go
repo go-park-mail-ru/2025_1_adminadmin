@@ -9,6 +9,7 @@ import (
 	dbUtils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/db"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	"github.com/jackc/pgtype/pgxtype"
+	"github.com/jackc/pgx"
 	"github.com/satori/uuid"
 )
 
@@ -18,14 +19,15 @@ const (
 	updateUser          = "UPDATE users SET phone_number = $1, first_name = $2, last_name = $3, description = $4, password_hash = $5 WHERE id = $6;"
 	updateUserPic       = "UPDATE users SET user_pic = $1 WHERE login = $2"
 	selectUserAddresses = `
-		SELECT a.id, a.address, a.user_id 
+		SELECT a.id, a.address, a.user_id, a.is_active 
 		FROM addresses a
 		JOIN users u ON a.user_id = u.id
 		WHERE u.login = $1
 	`
-	deleteAddress = "DELETE FROM addresses WHERE id = $1;"
-	insertAddress = "INSERT INTO addresses (id, address, user_id) VALUES ($1, $2, $3)"
-	addressExists = "SELECT EXISTS(SELECT 1 FROM addresses WHERE address = $1 AND user_id = $2)"
+	deleteAddress    = "DELETE FROM addresses WHERE id = $1;"
+	insertAddress    = "INSERT INTO addresses (id, address, user_id) VALUES ($1, $2, $3)"
+	addressExists    = "SELECT EXISTS(SELECT 1 FROM addresses WHERE address = $1 AND user_id = $2)"
+	getActiveAddress = "SELECT id, address, user_id, is_active FROM addresses WHERE user_id = $1 and is_active = TRUE"
 )
 
 type AuthRepo struct {
@@ -114,7 +116,7 @@ func (repo *AuthRepo) SelectUserAddresses(ctx context.Context, login string) ([]
 	var addresses []models.Address
 	for rows.Next() {
 		var addr models.Address
-		if err := rows.Scan(&addr.Id, &addr.Address, &addr.UserId); err != nil {
+		if err := rows.Scan(&addr.Id, &addr.Address, &addr.UserId, &addr.IsActive); err != nil {
 			logger.Error(err.Error())
 			return []models.Address{}, err
 		}
@@ -170,4 +172,22 @@ func (repo *AuthRepo) AddressExists(ctx context.Context, address string, userID 
 	}
 
 	return exists, nil
+}
+
+func (repo *AuthRepo) GetActiveAddress(ctx context.Context, userId uuid.UUID) (models.Address, error) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	var address models.Address
+	err := repo.db.QueryRow(ctx, getActiveAddress, userId).Scan(&address.Id, &address.Address, &address.UserId, &address.IsActive)
+	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			logger.Info("Нет активного адреса")
+			return models.Address{}, nil
+		}
+		logger.Error(err.Error())
+		return models.Address{}, err
+	}
+
+	logger.Info("Successful")
+	return address, nil
 }

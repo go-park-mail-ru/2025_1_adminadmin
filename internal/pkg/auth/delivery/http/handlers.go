@@ -112,6 +112,7 @@ func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) {
 		LastName:    user.LastName,
 		Description: user.Description,
 		UserPic:     user.UserPic,
+		ActiveAddress: user.ActiveAddress,
 	}
 
 	data, err := json.Marshal(newModel)
@@ -296,6 +297,7 @@ func (h *AuthHandler) Check(w http.ResponseWriter, r *http.Request) {
 		LastName:    user.LastName,
 		Description: user.Description,
 		UserPic:     user.UserPic,
+		ActiveAddress: user.ActiveAddress,
 	}
 
 	data, err := json.Marshal(newModel)

@@ -86,6 +86,12 @@ FROM orders WHERE id = $1 AND user_id = $2;`
         LIMIT 5;`
 	updateOrderStatus            = `UPDATE orders SET status = $1 WHERE id = $2;`
 	scheduleDeliveryStatusChange = `SELECT cron.schedule_in('20 seconds', $$UPDATE orders SET status = 'in delivery' WHERE id = $1$$);`
+	deactivateAddress = "UPDATE addresses SET is_active = false WHERE user_id = $1 AND is_active = true"
+	activateAddress = "UPDATE addresses SET is_active = true WHERE address = $1 AND user_id = $2"
+	insertAddress    = "INSERT INTO addresses (id, address, user_id) VALUES ($1, $2, $3)"
+	addressExists    = "SELECT EXISTS(SELECT 1 FROM addresses WHERE address = $1 AND user_id = $2)"
+	getDiscount      = "SELECT discount FROM promocodes WHERE user_id = $1 AND promocode = $2 AND is_used = FALSE"
+	deletePromocode = "UPDATE promocodes SET is_used = TRUE WHERE user_id = $1 AND promocode = $2"
 )
 
 type RestaurantRepository struct {
@@ -240,6 +246,36 @@ func (r *RestaurantRepository) Save(ctx context.Context, order models.Order, use
 	return nil
 }
 
+func (r *RestaurantRepository) GetDiscount(ctx context.Context, user_id uuid.UUID, promocode string) (float64, error) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	var discount float64
+	err := r.db.QueryRow(ctx, getDiscount, user_id, promocode).Scan(&discount)
+	if err != nil {
+		logger.Error("ошибка при получении скидки", slog.String("error", err.Error()))
+		return 0.0, fmt.Errorf("не удалось получить скидку: %w", err)
+	}
+
+	logger.Info("Successful")
+	return discount, nil
+}
+
+func (r *RestaurantRepository) DeletePromocode(ctx context.Context, user_id uuid.UUID, promocode string) error {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	res, err := r.db.Exec(ctx, deletePromocode, user_id, promocode)
+	if err != nil {
+		logger.Error("ошибка при удалении промокода", slog.String("error", err.Error()))
+		return err
+	}
+	if rows := res.RowsAffected(); rows == 0 {
+		return fmt.Errorf("промокод со значением %s не найден", promocode)
+	}
+
+	logger.Info("Successful")
+	return nil
+}
+
 func (r *RestaurantRepository) GetOrders(ctx context.Context, user_id uuid.UUID, count, offset int) ([]models.Order, int, error) {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 
@@ -337,5 +373,55 @@ func (r *RestaurantRepository) ScheduleDeliveryStatusChange(ctx context.Context,
 	}
 
 	logger.Info("Delivery status update scheduled successfully")
+	return nil
+}
+
+func (repo *RestaurantRepository) InsertAddress(ctx context.Context, address models.Address) error {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	_, err := repo.db.Exec(ctx, insertAddress, address.Id, address.Address, address.UserId)
+	if err != nil {
+		logger.Error(err.Error())
+		return err
+	}
+
+	logger.Info("Successful")
+	return nil
+}
+
+func (repo *RestaurantRepository) AddressExists(ctx context.Context, address string, userID uuid.UUID) (bool, error) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	var exists bool
+	err := repo.db.QueryRow(ctx, addressExists, address, userID).Scan(&exists)
+	if err != nil {
+		logger.Error(err.Error())
+		return false, err
+	}
+
+	return exists, nil
+}
+
+func (r *RestaurantRepository) SetActiveAddress(ctx context.Context, userId uuid.UUID, address string) error {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	_, err := r.db.Exec(ctx, deactivateAddress, userId)
+	if err != nil {
+		logger.Error("ошибка при деактивации адреса: " + err.Error())
+		return err
+	}
+
+	cmdTag, err := r.db.Exec(ctx, activateAddress, address, userId)
+	if err != nil {
+		logger.Error("ошибка при смене активного вдреса: " + err.Error())
+		return err
+	}
+
+	if cmdTag.RowsAffected() == 0 {
+		logger.Error("адрес не найден или не принадлежит пользователю")
+		return fmt.Errorf("адрес не найден или не принадлежит пользователю")
+	}
+
+	logger.Info("Successful")
 	return nil
 }

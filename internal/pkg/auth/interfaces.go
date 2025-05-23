@@ -10,23 +10,23 @@ import (
 )
 
 var (
-	ErrCreatingUser       = errors.New("Ошибка в создании пользователя")
-	ErrUserNotFound       = errors.New("Пользователь не найден")
-	ErrInvalidLogin       = errors.New("Неверный формат логина")
-	ErrInvalidPassword    = errors.New("Неверный формат пароля")
-	ErrInvalidCredentials = errors.New("Неверный логин или пароль")
-	AlreadyExists         = errors.New("Пользователь с таким логином уже существует")
-	ErrGeneratingToken    = errors.New("Ошибка генерации токена")
-	ErrInvalidName        = errors.New("Имя и фамилия должны содержать только русские буквы и быть от 2 до 25 символов")
-	ErrInvalidPhone       = errors.New("Некорректный номер телефона")
-	ErrUUID               = errors.New("Ошибка создания UUID")
-	ErrSamePassword       = errors.New("Новый пароль совпадает со старым")
-	ErrBasePath           = errors.New("Базовый путь для картинок не установлен")
-	ErrFileCreation       = errors.New("Ошибка при создании файла")
-	ErrFileSaving         = errors.New("Ошибка при сохранении файла")
-	ErrFileDeletion       = errors.New("Ошибка при удалении файла")
-	ErrDBError            = errors.New("Ошибка БД")
-	ErrAddressNotFound    = errors.New("Ошибка поиска адреса")
+	ErrCreatingUser       = errors.New("ошибка в создании пользователя")
+	ErrUserNotFound       = errors.New("пользователь не найден")
+	ErrInvalidLogin       = errors.New("неверный формат логина")
+	ErrInvalidPassword    = errors.New("неверный формат пароля")
+	ErrInvalidCredentials = errors.New("неверный логин или пароль")
+	ErrAlreadyExists         = errors.New("пользователь с таким логином уже существует")
+	ErrGeneratingToken    = errors.New("ошибка генерации токена")
+	ErrInvalidName        = errors.New("имя и фамилия должны содержать только русские буквы и быть от 2 до 25 символов")
+	ErrInvalidPhone       = errors.New("некорректный номер телефона")
+	ErrUUID               = errors.New("ошибка создания UUID")
+	ErrSamePassword       = errors.New("новый пароль совпадает со старым")
+	ErrBasePath           = errors.New("базовый путь для картинок не установлен")
+	ErrFileCreation       = errors.New("ошибка при создании файла")
+	ErrFileSaving         = errors.New("ошибка при сохранении файла")
+	ErrFileDeletion       = errors.New("ошибка при удалении файла")
+	ErrDBError            = errors.New("ошибка БД")
+	ErrAddressNotFound    = errors.New("ошибка поиска адреса")
 )
 
 type AuthRepo interface {
@@ -38,6 +38,7 @@ type AuthRepo interface {
 	DeleteAddress(ctx context.Context, addressId uuid.UUID) error
 	SelectUserAddresses(ctx context.Context, login string) ([]models.Address, error)
 	AddressExists(ctx context.Context, address string, userID uuid.UUID) (bool, error)
+	GetActiveAddress(ctx context.Context, userId uuid.UUID) (models.Address, error)
 }
 
 type AuthUsecase interface {

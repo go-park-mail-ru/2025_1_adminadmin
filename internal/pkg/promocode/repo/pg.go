@@ -66,19 +66,3 @@ func (r *PromocodeRepository) GetDiscount(ctx context.Context, user_id uuid.UUID
 	logger.Info("Successful")
 	return discount, nil
 }
-
-func (r *PromocodeRepository) DeletePromocode(ctx context.Context, user_id uuid.UUID, promocode string) error {
-	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
-
-	res, err := r.db.Exec(ctx, deletePromocode, user_id, promocode)
-	if err != nil {
-		logger.Error("ошибка при удалении промокода", slog.String("error", err.Error()))
-		return err
-	}
-	if rows := res.RowsAffected(); rows == 0 {
-		return fmt.Errorf("промокод со значением %s не найден", promocode)
-	}
-
-	logger.Info("Successful")
-	return nil
-}

@@ -31,12 +31,6 @@ func (u *PromocodeUsecase) CheckPromocode(ctx context.Context, user_id uuid.UUID
 		return 0.0, err
 	}
 
-	err = u.repo.DeletePromocode(ctx, user_id, promocode)
-	if err != nil {
-		logger.Error(err.Error())
-		return 0.0, err
-	}
-
 	logger.Info("success")
 	return discount, nil
 }

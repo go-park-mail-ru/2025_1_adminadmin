@@ -23,7 +23,7 @@ type Cart struct {
 	Name             string     `json:"restaurant_name"`
 	CartItems        []CartItem `json:"products"`
 	TotalSum         float64    `json:"total_sum"`
-	RecommendedItems []CartItem `json:"recommended_products"` 
+	RecommendedItems []CartItem `json:"recommended_products"`
 }
 
 // easyjson:json
@@ -62,6 +62,7 @@ type OrderInReq struct {
 	CourierComment    string  `json:"courier_comment"`
 	LeaveAtDoor       bool    `json:"leave_at_door"`
 	FinalPrice        float64 `json:"final_price"`
+	Promocode         string  `json:"promocode"`
 }
 
 // easyjson:json

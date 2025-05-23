@@ -109,6 +109,7 @@ func OrderInReqToProto(req models.OrderInReq, cart models.Cart, login string) *g
 		FinalPrice:        req.FinalPrice,
 		Cart:              CartToProto(cart),
 		Login:             login,
+		Promocode:         req.Promocode,
 	}
 }
 

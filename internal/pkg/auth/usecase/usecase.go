@@ -145,6 +145,12 @@ func (uc *AuthUsecase) SignIn(ctx context.Context, data models.SignInReq) (model
 		logger.Error(auth.ErrUserNotFound.Error())
 		return models.User{}, "", "", auth.ErrUserNotFound
 	}
+	address, err := uc.repo.GetActiveAddress(ctx, user.Id)
+	if err != nil {
+		logger.Error(err.Error())
+		return models.User{}, "", "", auth.ErrUserNotFound
+	}
+	user.ActiveAddress = address.Address
 
 	if !checkPassword(user.PasswordHash, data.Password) {
 		logger.Error(auth.ErrInvalidCredentials.Error())
@@ -227,6 +233,12 @@ func (uc *AuthUsecase) Check(ctx context.Context, login string) (models.User, er
 		logger.Error(err.Error())
 		return models.User{}, auth.ErrUserNotFound
 	}
+	address, err := uc.repo.GetActiveAddress(ctx, user.Id)
+	if err != nil {
+		logger.Error(err.Error())
+		return models.User{}, auth.ErrUserNotFound
+	}
+	user.ActiveAddress = address.Address
 
 	return user, nil
 }

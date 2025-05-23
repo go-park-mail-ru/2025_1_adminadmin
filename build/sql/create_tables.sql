@@ -50,8 +50,14 @@ CREATE TABLE IF NOT EXISTS addresses (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),  
     address TEXT NOT NULL,                                                           
     user_id UUID,                                   
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL                                  
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL,
+	is_active BOOLEAN DEFAULT FALSE                                 
 );
+
+CREATE UNIQUE INDEX unique_active_address_per_user
+ON addresses(user_id)
+WHERE is_active = true;
+
 
 CREATE TABLE IF NOT EXISTS products (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),

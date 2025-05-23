@@ -55,6 +55,7 @@ func (h *AuthHandler) SignIn(ctx context.Context, in *gen.SignInRequest) (*gen.U
 		UserPic:     user.UserPic,
 		Token:       token,
 		CsrfToken:   csrfToken,
+		ActiveAddress: user.ActiveAddress,
 	}, nil
 }
 
@@ -111,6 +112,7 @@ func (h *AuthHandler) Check(ctx context.Context, in *gen.CheckRequest) (*gen.Use
 		LastName:    user.LastName,
 		Description: user.Description,
 		UserPic:     user.UserPic,
+		ActiveAddress: user.ActiveAddress,
 	}, nil
 }
 

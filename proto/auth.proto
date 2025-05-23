@@ -68,6 +68,7 @@ message Address {
   string Id = 1; 
   string Address = 2;
   string UserId = 3; 
+  bool IsActive = 4;
 }
 
 message UserResponse {
@@ -80,6 +81,7 @@ message UserResponse {
   string UserPic = 7; 
   string Token = 8;
   string CsrfToken = 9;
+  string ActiveAddress = 10;
 }
 
 message AddressListResponse {

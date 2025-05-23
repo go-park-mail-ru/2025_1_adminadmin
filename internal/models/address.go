@@ -8,9 +8,10 @@ import (
 
 // easyjson:json
 type Address struct {
-	Id      uuid.UUID `json:"id"`
-	Address string    `json:"address"`
-	UserId  uuid.UUID `json:"user_id"`
+	Id       uuid.UUID `json:"id"`
+	Address  string    `json:"address"`
+	UserId   uuid.UUID `json:"user_id"`
+	IsActive bool      `json:"is_active"`
 }
 
 type DeleteAddressReq struct {

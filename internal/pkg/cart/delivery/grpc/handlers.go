@@ -70,6 +70,7 @@ func (h *CartHandler) CreateOrder(ctx context.Context, in *gen.CreateOrderReques
 		CourierComment:    in.CourierComment,
 		LeaveAtDoor:       in.LeaveAtDoor,
 		FinalPrice:        in.FinalPrice,
+		Promocode:         in.Promocode,
 	}
 
 	restId, err := uuid.FromString(in.Cart.RestaurantId)

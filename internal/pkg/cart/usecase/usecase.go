@@ -92,6 +92,21 @@ func (uc *CartUsecase) ClearCart(ctx context.Context, login string) error {
 func (u *CartUsecase) CreateOrder(ctx context.Context, userID string, req models.OrderInReq, cart models.Cart) (models.Order, error) {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 
+	userId, err := uuid.FromString(userID)
+	if err != nil {
+		logger.Error("некорректный id пользователя", slog.String("error", err.Error()))
+		return models.Order{}, err
+	}
+
+	discount := 0.0
+	if req.Promocode != "" {
+		discount, err = u.restaurantRepo.GetDiscount(ctx, userId, req.Promocode)
+		if err != nil {
+			logger.Error("ошибка при получении скидки", slog.String("error", err.Error()))
+			return models.Order{}, err
+		}
+	}
+
 	order := models.Order{
 		ID:                uuid.NewV4(),
 		UserID:            userID,
@@ -105,13 +120,43 @@ func (u *CartUsecase) CreateOrder(ctx context.Context, userID string, req models
 		CourierComment:    req.CourierComment,
 		LeaveAtDoor:       req.LeaveAtDoor,
 		CreatedAt:         time.Now(),
-		FinalPrice:        req.FinalPrice,
+		FinalPrice:        req.FinalPrice * (1 - discount),
 	}
 
 	order.Sanitize()
 
 	if err := u.restaurantRepo.Save(ctx, order, userID); err != nil {
 		logger.Error("не удалось сохранить заказ", slog.String("error", err.Error()))
+		return models.Order{}, err
+	}
+
+	if req.Promocode != "" {
+		if err := u.restaurantRepo.DeletePromocode(ctx, userId, req.Promocode); err != nil {
+			logger.Error("ошибка при удалении промокода", slog.String("error", err.Error()))
+			return models.Order{}, err
+		}
+	}
+
+	doesExist, err := u.restaurantRepo.AddressExists(ctx, order.Address, userId);
+	if err != nil {
+		logger.Error("ошибка поиска адреса", slog.String("error", err.Error()))
+		return models.Order{}, err
+	}
+	if !doesExist {
+		address := models.Address {
+			Id: uuid.NewV4(),
+			Address: order.Address,
+			UserId: userId,
+		}
+		err := u.restaurantRepo.InsertAddress(ctx, address)
+		if err != nil {
+		logger.Error("ошибка при создании адреса", slog.String("error", err.Error()))
+		return models.Order{}, err
+		}
+	}
+
+	if err := u.restaurantRepo.SetActiveAddress(ctx, userId, order.Address); err != nil {
+		logger.Error("не удалось сменить активный адрес", slog.String("error", err.Error()))
 		return models.Order{}, err
 	}
 

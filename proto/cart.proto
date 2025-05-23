@@ -50,6 +50,7 @@ message CreateOrderRequest {
   double FinalPrice = 9;
   CartResponse Cart = 10;
   string Login = 11;
+  string Promocode = 12;
 }
 
 message GetOrdersRequest {
