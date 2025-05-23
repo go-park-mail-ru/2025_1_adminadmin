@@ -17,6 +17,7 @@ import (
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	"github.com/golang-jwt/jwt"
+	"github.com/jackc/pgx"
 	"github.com/satori/uuid"
 	"golang.org/x/crypto/argon2"
 )
@@ -147,10 +148,14 @@ func (uc *AuthUsecase) SignIn(ctx context.Context, data models.SignInReq) (model
 	}
 	address, err := uc.repo.GetActiveAddress(ctx, user.Id)
 	if err != nil {
-		logger.Error(err.Error())
-		return models.User{}, "", "", auth.ErrUserNotFound
+		if !errors.Is(err, pgx.ErrNoRows) {
+			logger.Error("Ошибка при получении активного адреса: " + err.Error())
+			return models.User{}, "", "", auth.ErrUserNotFound
+		}
+		logger.Info("У пользователя нет активного адреса")
+	} else {
+		user.ActiveAddress = address.Address
 	}
-	user.ActiveAddress = address.Address
 
 	if !checkPassword(user.PasswordHash, data.Password) {
 		logger.Error(auth.ErrInvalidCredentials.Error())
