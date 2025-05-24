@@ -4,7 +4,7 @@ import (
 	"context"
 	"sync"
 	"time"
-
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	"github.com/gorilla/websocket"
 )
 
@@ -47,7 +47,7 @@ func (h *Hub) Run(ctx context.Context) {
 				userID := value.(string)
 				//для каждлого клиента читаем новые изменения
 				//тут может быть что угодно - сообщения, тексты, тд
-				messages := userID //h.repo.GetUpdates(ctx, userID, h.currentOffset)
+				messages := []models.Cart{{Name: userID}} //h.repo.GetUpdates(ctx, userID, h.currentOffset)
 				for _, message := range messages {
 					err := connect.WriteJSON(message)
 					if err != nil {
