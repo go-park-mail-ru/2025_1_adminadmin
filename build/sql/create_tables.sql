@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS promocodes (
 
 CREATE OR REPLACE FUNCTION set_order_in_delivery(order_id UUID) RETURNS VOID AS $$
 BEGIN
-    UPDATE orders SET status = 'in_delivery' WHERE id = order_id;
+    UPDATE orders SET status = 'in_delivery', created_at = NOW() WHERE id = order_id;
 END;
 $$ LANGUAGE plpgsql;
 

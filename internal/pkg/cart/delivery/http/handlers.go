@@ -36,8 +36,10 @@ func NewCartHandler(client gen.CartServiceClient, hub *hub.Hub) *CartHandler {
 }
 
 func (h *CartHandler) Subscribe(w http.ResponseWriter, r *http.Request) {
+	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 	cookie, err := r.Cookie("AdminJWT")
 	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("токен отсутствует: %w", err), http.StatusUnauthorized)
 		return
 	}
 	JWTStr := cookie.Value
@@ -48,6 +50,7 @@ func (h *CartHandler) Subscribe(w http.ResponseWriter, r *http.Request) {
 	web.Subprotocols = []string{r.Header.Get("Sec-WebSocket-Protocol")}
 	conn, err := web.Upgrade(w, r, nil)
 	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("не удается обновить: %w", err), http.StatusUnauthorized)
 		return
 	}
 	h.hub.AddClient(id, conn)

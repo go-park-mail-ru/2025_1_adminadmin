@@ -84,7 +84,7 @@ FROM orders WHERE id = $1 AND user_id = $2;`
         GROUP BY rp.id, rp.name, rp.price, rp.image_url, rp.weight
         ORDER BY COUNT(*) DESC
         LIMIT 5;`
-	updateOrderStatus            = `UPDATE orders SET status = $1 WHERE id = $2;`
+	updateOrderStatus            = `UPDATE orders SET status = $1, created_at = NOW() WHERE id = $2;`
 	scheduleDeliveryStatusChange = `SELECT cron.schedule_in('20 seconds', $$UPDATE orders SET status = 'in delivery' WHERE id = $1$$);`
 	deactivateAddress            = "UPDATE addresses SET is_active = false WHERE user_id = $1 AND is_active = true"
 	activateAddress              = "UPDATE addresses SET is_active = true WHERE address = $1 AND user_id = $2"
