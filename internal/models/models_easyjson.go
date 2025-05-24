@@ -1848,6 +1848,8 @@ func easyjsonD2b7633eDecodeGithubComGoParkMailRu20251AdminadminInternalModels17(
 			out.LeaveAtDoor = bool(in.Bool())
 		case "final_price":
 			out.FinalPrice = float64(in.Float64())
+		case "promocode":
+			out.Promocode = string(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -1906,6 +1908,11 @@ func easyjsonD2b7633eEncodeGithubComGoParkMailRu20251AdminadminInternalModels17(
 		const prefix string = ",\"final_price\":"
 		out.RawString(prefix)
 		out.Float64(float64(in.FinalPrice))
+	}
+	{
+		const prefix string = ",\"promocode\":"
+		out.RawString(prefix)
+		out.String(string(in.Promocode))
 	}
 	out.RawByte('}')
 }
