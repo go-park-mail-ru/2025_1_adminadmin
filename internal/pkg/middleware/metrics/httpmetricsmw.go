@@ -1,7 +1,10 @@
 package metricsmw
 
 import (
+	"bufio"
+	"errors"
 	"log/slog"
+	"net"
 	"net/http"
 	"time"
 
@@ -17,10 +20,12 @@ type responseWriter struct {
 func NewResponseWriter(w http.ResponseWriter) *responseWriter {
 	return &responseWriter{w, http.StatusOK}
 }
+
 func (rw *responseWriter) WriteHeader(code int) {
 	rw.statusCode = code
 	rw.ResponseWriter.WriteHeader(code)
 }
+
 func CreateHttpMetricsMiddleware(metr *metrics.HttpMetrics, logger *slog.Logger) mux.MiddlewareFunc {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -38,4 +43,12 @@ func CreateHttpMetricsMiddleware(metr *metrics.HttpMetrics, logger *slog.Logger)
 			metr.ObserveResponseTime(status, path, time.Since(start).Seconds())
 		})
 	}
+}
+
+func (w *responseWriter) Hijack() (net.Conn, *bufio.ReadWriter, error) {
+	h, ok := w.ResponseWriter.(http.Hijacker)
+	if !ok {
+		return nil, nil, errors.New("hijack not supported")
+	}
+	return h.Hijack()
 }

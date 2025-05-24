@@ -15,6 +15,8 @@ import (
 	authHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/http"
 	cartGen "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/grpc/gen"
 	cartHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/http"
+	//cartPgRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/pg"
+	hub "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/hub"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/metrics"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/middleware/cors"
 	logs "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/middleware/log"
@@ -56,8 +58,16 @@ func main() {
 	}
 	defer cartConn.Close()
 
+	//CartRepoPg, err := cartPgRepo.NewRestaurantRepository()
+	//if err != nil {
+	//	return
+	//}
+
+	hubNew := &hub.Hub{}
+	go hubNew.Run(context.Background())
+
 	cartGRPCClient := cartGen.NewCartServiceClient(cartConn)
-	cartHandler := cartHandler.NewCartHandler(cartGRPCClient)
+	cartHandler := cartHandler.NewCartHandler(cartGRPCClient, hubNew)
 
 	Metrics, err := metrics.NewHttpMetrics("main")
 	if err != nil {
