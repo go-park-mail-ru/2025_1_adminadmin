@@ -31,7 +31,8 @@ type RestaurantRepo interface {
 
 	Save(ctx context.Context, order models.Order, userLogin string) error
 	GetDiscount(ctx context.Context, user_id uuid.UUID, promocode string) (float64, error)
-	DeletePromocode(ctx context.Context, user_id uuid.UUID, promocode string) error
+	DeletePromocode(ctx context.Context, userId uuid.UUID, promocode string) error
+	GetIdByLogin(ctx context.Context, login string) (uuid.UUID, error)
 	GetOrders(ctx context.Context, user_id uuid.UUID, count, offset int) ([]models.Order, int, error)
 	GetOrderById(ctx context.Context, order_id, user_id uuid.UUID) (models.Order, error)
 	UpdateOrderStatus(ctx context.Context, order_id uuid.UUID, status string) error

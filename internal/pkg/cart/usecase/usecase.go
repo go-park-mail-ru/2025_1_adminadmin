@@ -89,12 +89,12 @@ func (uc *CartUsecase) ClearCart(ctx context.Context, login string) error {
 	return err
 }
 
-func (u *CartUsecase) CreateOrder(ctx context.Context, userID string, req models.OrderInReq, cart models.Cart) (models.Order, error) {
+func (u *CartUsecase) CreateOrder(ctx context.Context, login string, req models.OrderInReq, cart models.Cart) (models.Order, error) {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 
-	userId, err := uuid.FromString(userID)
+	userId, err := u.restaurantRepo.GetIdByLogin(ctx, login)
 	if err != nil {
-		logger.Error("некорректный id пользователя", slog.String("error", err.Error()))
+		logger.Error("ошибка при получении id пользователя", slog.String("error", err.Error()))
 		return models.Order{}, err
 	}
 
@@ -109,7 +109,7 @@ func (u *CartUsecase) CreateOrder(ctx context.Context, userID string, req models
 
 	order := models.Order{
 		ID:                uuid.NewV4(),
-		UserID:            userID,
+		UserID:            login,
 		Status:            req.Status,
 		Address:           req.Address,
 		OrderProducts:     cart,
@@ -125,7 +125,7 @@ func (u *CartUsecase) CreateOrder(ctx context.Context, userID string, req models
 
 	order.Sanitize()
 
-	if err := u.restaurantRepo.Save(ctx, order, userID); err != nil {
+	if err := u.restaurantRepo.Save(ctx, order, login); err != nil {
 		logger.Error("не удалось сохранить заказ", slog.String("error", err.Error()))
 		return models.Order{}, err
 	}

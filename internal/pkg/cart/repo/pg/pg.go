@@ -86,12 +86,13 @@ FROM orders WHERE id = $1 AND user_id = $2;`
         LIMIT 5;`
 	updateOrderStatus            = `UPDATE orders SET status = $1 WHERE id = $2;`
 	scheduleDeliveryStatusChange = `SELECT cron.schedule_in('20 seconds', $$UPDATE orders SET status = 'in delivery' WHERE id = $1$$);`
-	deactivateAddress = "UPDATE addresses SET is_active = false WHERE user_id = $1 AND is_active = true"
-	activateAddress = "UPDATE addresses SET is_active = true WHERE address = $1 AND user_id = $2"
-	insertAddress    = "INSERT INTO addresses (id, address, user_id) VALUES ($1, $2, $3)"
-	addressExists    = "SELECT EXISTS(SELECT 1 FROM addresses WHERE address = $1 AND user_id = $2)"
-	getDiscount      = "SELECT discount FROM promocodes WHERE user_id = $1 AND promocode = $2 AND is_used = FALSE"
-	deletePromocode = "UPDATE promocodes SET is_used = TRUE WHERE user_id = $1 AND promocode = $2"
+	deactivateAddress            = "UPDATE addresses SET is_active = false WHERE user_id = $1 AND is_active = true"
+	activateAddress              = "UPDATE addresses SET is_active = true WHERE address = $1 AND user_id = $2"
+	insertAddress                = "INSERT INTO addresses (id, address, user_id) VALUES ($1, $2, $3)"
+	addressExists                = "SELECT EXISTS(SELECT 1 FROM addresses WHERE address = $1 AND user_id = $2)"
+	getDiscount                  = "SELECT discount FROM promocodes WHERE user_id = $1 AND promocode = $2 AND is_used = FALSE"
+	deletePromocode              = "UPDATE promocodes SET is_used = TRUE WHERE user_id = $1 AND promocode = $2"
+	getIdByLogin                 = "SELECT id FROM users WHERE login = $1;"
 )
 
 type RestaurantRepository struct {
@@ -260,10 +261,10 @@ func (r *RestaurantRepository) GetDiscount(ctx context.Context, user_id uuid.UUI
 	return discount, nil
 }
 
-func (r *RestaurantRepository) DeletePromocode(ctx context.Context, user_id uuid.UUID, promocode string) error {
+func (r *RestaurantRepository) DeletePromocode(ctx context.Context, userId uuid.UUID, promocode string) error {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 
-	res, err := r.db.Exec(ctx, deletePromocode, user_id, promocode)
+	res, err := r.db.Exec(ctx, deletePromocode, userId, promocode)
 	if err != nil {
 		logger.Error("ошибка при удалении промокода", slog.String("error", err.Error()))
 		return err
@@ -274,6 +275,20 @@ func (r *RestaurantRepository) DeletePromocode(ctx context.Context, user_id uuid
 
 	logger.Info("Successful")
 	return nil
+}
+
+func (r *RestaurantRepository) GetIdByLogin(ctx context.Context, login string) (uuid.UUID, error) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	var userId uuid.UUID
+	err := r.db.QueryRow(ctx, getIdByLogin, login).Scan(&userId)
+	if err != nil {
+		logger.Error("ошибка при получении id пользователя", slog.String("error", err.Error()))
+		return uuid.Nil, fmt.Errorf("не удалось получить id пользователя: %w", err)
+	}
+
+	logger.Info("Successful")
+	return userId, nil
 }
 
 func (r *RestaurantRepository) GetOrders(ctx context.Context, user_id uuid.UUID, count, offset int) ([]models.Order, int, error) {
