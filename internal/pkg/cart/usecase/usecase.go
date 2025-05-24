@@ -130,6 +130,8 @@ func (u *CartUsecase) CreateOrder(ctx context.Context, login string, req models.
 		return models.Order{}, err
 	}
 
+	logger.Info("Проверка промокода", slog.String("promocode", req.Promocode))
+
 	if req.Promocode != "" {
 		if err := u.restaurantRepo.DeletePromocode(ctx, userId, req.Promocode); err != nil {
 			logger.Error("ошибка при удалении промокода", slog.String("error", err.Error()))
