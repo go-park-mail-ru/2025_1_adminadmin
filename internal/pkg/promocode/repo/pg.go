@@ -22,7 +22,7 @@ func NewPromocodeRepository() (*PromocodeRepository, error) {
 }
 
 const (
-	getAllPromocodes = "SELECT id, promocode, discount, created_at, expires_at FROM promocodes WHERE user_id = $1 AND is_used = FALSE ORDER BY id ASC LIMIT $2 OFFSET $3;"
+	getAllPromocodes = "SELECT id, promocode, discount, created_at, expires_at, is_used FROM promocodes WHERE user_id = $1 AND is_used = FALSE ORDER BY id ASC LIMIT $2 OFFSET $3;"
 	getDiscount      = "SELECT discount FROM promocodes WHERE user_id = $1 AND promocode = $2 AND is_used = FALSE"
 	deletePromocode = "UPDATE promocodes SET is_used = TRUE WHERE user_id = $1 AND promocode = $2"
 )
@@ -40,7 +40,7 @@ func (r *PromocodeRepository) GetPromocodes(ctx context.Context, user_id uuid.UU
 	var promocodes []models.Promocode
 	for rows.Next() {
 		var promocode models.Promocode
-		if err := rows.Scan(&promocode.Id, &promocode.Promocode, &promocode.Discount, &promocode.CreatedAt, &promocode.ExpiresAt); err != nil {
+		if err := rows.Scan(&promocode.Id, &promocode.Promocode, &promocode.Discount, &promocode.CreatedAt, &promocode.ExpiresAt, &promocode.IsUsed); err != nil {
 			logger.Error(err.Error())
 			return nil, err
 		}
