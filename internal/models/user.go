@@ -17,7 +17,7 @@ type User struct {
 	UserPic       string    `json:"path"`
 	PasswordHash  []byte    `json:"-"`
 	ActiveAddress string    `json:"active_address"`
-	HasSecret     bool      `json:"has_secret"`
+	HasSecret     bool      
 }
 
 func (u *User) Sanitize() {
