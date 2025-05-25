@@ -30,6 +30,7 @@ import (
 	searchDelivery "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/search/delivery/http"
 	searchRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/search/repo"
 	searchUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/search/usecase"
+	cartPgRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/pg"
 	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -62,8 +63,11 @@ func main() {
 	//if err != nil {
 	//	return
 	//}
-
-	hubNew := &hub.Hub{}
+	CartRepoPg, err := cartPgRepo.NewRestaurantRepository()
+	if err != nil {
+		return
+	}
+	hubNew := &hub.Hub{Repo: CartRepoPg}
 	go hubNew.Run(context.Background())
 
 	cartGRPCClient := cartGen.NewCartServiceClient(cartConn)

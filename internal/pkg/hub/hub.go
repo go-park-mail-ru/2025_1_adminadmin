@@ -4,13 +4,15 @@ import (
 	"context"
 	"sync"
 	"time"
-	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
+
+	repos "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/pg"
 	"github.com/gorilla/websocket"
 )
 
 type Hub struct {
 	connect       sync.Map
 	currentOffset time.Time
+	Repo          *repos.RestaurantRepository
 }
 
 func (h *Hub) AddClient(userID string, client *websocket.Conn) {
@@ -45,16 +47,10 @@ func (h *Hub) Run(ctx context.Context) {
 			h.connect.Range(func(key, value interface{}) bool {
 				connect := key.(*websocket.Conn)
 				userID := value.(string)
-				//для каждлого клиента читаем новые изменения
-				//тут может быть что угодно - сообщения, тексты, тд
-				messages := []models.Cart{{Name: userID}} //h.repo.GetUpdates(ctx, userID, h.currentOffset)
-				for _, message := range messages {
-					err := connect.WriteJSON(message)
-					if err != nil {
-						continue
-					}
-				}
-				return true
+
+				mes := h.Repo.GetUpdates(ctx, userID, h.currentOffset)
+				err := connect.WriteJSON(mes)
+				return err == nil
 			})
 			h.currentOffset = h.currentOffset.Add(5 * time.Second)
 		case <-ctx.Done():

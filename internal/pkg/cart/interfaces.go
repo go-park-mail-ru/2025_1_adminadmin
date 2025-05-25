@@ -2,6 +2,7 @@ package cart
 
 import (
 	"context"
+	"time"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	"github.com/satori/uuid"
@@ -27,7 +28,7 @@ type CartRepo interface {
 type RestaurantRepo interface {
 	GetProductPrice(ctx context.Context, productID string) (float64, error)
 	GetCartItem(ctx context.Context, productIDs []string, productAmounts map[string]int, restaurantID string) (models.Cart, error)
-    GetRecommendedProducts(ctx context.Context, productIDs []string, restaurantID string) ([]models.CartItem, error) 
+	GetRecommendedProducts(ctx context.Context, productIDs []string, restaurantID string) ([]models.CartItem, error)
 
 	Save(ctx context.Context, order models.Order, userLogin string) error
 	GetDiscount(ctx context.Context, user_id uuid.UUID, promocode string) (float64, error)
@@ -39,5 +40,6 @@ type RestaurantRepo interface {
 	ScheduleDeliveryStatusChange(ctx context.Context, orderID uuid.UUID) error
 	InsertAddress(ctx context.Context, address models.Address) error
 	AddressExists(ctx context.Context, address string, userID uuid.UUID) (bool, error)
-	SetActiveAddress(ctx context.Context, userId uuid.UUID, address string) error 
+	SetActiveAddress(ctx context.Context, userId uuid.UUID, address string) error
+	GetUpdates(ctx context.Context, userID string, currentOffset time.Time) models.Order
 }
