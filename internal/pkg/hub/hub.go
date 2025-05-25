@@ -2,6 +2,7 @@ package hub
 
 import (
 	"context"
+	"log"
 	"sync"
 	"time"
 
@@ -47,17 +48,19 @@ func (h *Hub) Run(ctx context.Context) {
 			h.connect.Range(func(key, value interface{}) bool {
 				conn := key.(*websocket.Conn)
 				userID := value.(string)
-
+				log.Print("отправили: ", userID)
 				// Получаем обновление
 				order, ok := h.Repo.GetUpdates(ctx, userID, h.currentOffset)
 				if !ok {
+					log.Print("нет обновления: ", userID)
 					return true // продолжаем работу, но не отправляем ничего
 				}
-
+				log.Print("есть обновление: ", userID)
 				// Отправляем только если есть что отправить
 				if err := conn.WriteJSON(order); err != nil {
 					_ = conn.Close()
-					return false // удаляем соединение
+					log.Print(err)
+					return false 
 				}
 
 				return true
