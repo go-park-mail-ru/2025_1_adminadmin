@@ -9,9 +9,9 @@ type SignInReq struct {
 }
 
 type Check2fa struct {
-	Login string `json:"login"`
+	Login    string `json:"login"`
 	Password string `json:"password"`
-	Code  string `json:"code"`
+	Code     string `json:"code"`
 }
 
 func (s *SignInReq) Sanitize() {

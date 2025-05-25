@@ -127,6 +127,8 @@ func easyjsonD2b7633eDecodeGithubComGoParkMailRu20251AdminadminInternalModels1(i
 			out.UserPic = string(in.String())
 		case "active_address":
 			out.ActiveAddress = string(in.String())
+		case "has_secret":
+			out.HasSecret = bool(in.Bool())
 		default:
 			in.SkipRecursive()
 		}
@@ -180,6 +182,11 @@ func easyjsonD2b7633eEncodeGithubComGoParkMailRu20251AdminadminInternalModels1(o
 		const prefix string = ",\"active_address\":"
 		out.RawString(prefix)
 		out.String(string(in.ActiveAddress))
+	}
+	{
+		const prefix string = ",\"has_secret\":"
+		out.RawString(prefix)
+		out.Bool(bool(in.HasSecret))
 	}
 	out.RawByte('}')
 }
