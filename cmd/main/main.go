@@ -2,9 +2,13 @@ package main
 
 import (
 	"context"
+	"database/sql"
+	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"log/slog"
+	"math/rand"
 	"net/http"
 	"os"
 	"os/signal"
@@ -15,8 +19,8 @@ import (
 	authHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/http"
 	cartGen "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/grpc/gen"
 	cartHandler "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/http"
-	//cartPgRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/pg"
-	hub "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/hub"
+	cartPgRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/pg"
+	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/hub"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/metrics"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/middleware/cors"
 	logs "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/middleware/log"
@@ -30,12 +34,210 @@ import (
 	searchDelivery "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/search/delivery/http"
 	searchRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/search/repo"
 	searchUsecase "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/search/usecase"
-	cartPgRepo "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/repo/pg"
 	"github.com/gorilla/mux"
+	"github.com/lib/pq"
 	_ "github.com/lib/pq"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/satori/uuid"
 	"google.golang.org/grpc"
 )
+
+var categoryWeights = map[string]float64{
+	"Соусы":                0.05,
+	"Закуски":              0.10,
+	"Десерты":              0.08,
+	"Выпечка/Хлеб":         0.05,
+	"Горячие блюда":        0.15,
+	"Паста":                0.10,
+	"Блюда с рисом":        0.10,
+	"Салаты":               0.07,
+	"Напитки":              0.15,
+	"Вегетарианские блюда": 0.05,
+	"Мясные блюда":         0.10,
+	"Карри":                0.05,
+	"Рыбные блюда":         0.05,
+	"Аперитивы/Миксы":      0.03,
+	"Другое":               0.02,
+	"Прочее":               0.02,
+}
+
+type CartItem struct {
+	Id       uuid.UUID `json:"id"`
+	Name     string    `json:"name"`
+	Price    float64   `json:"price"`
+	ImageURL string    `json:"image_url"`
+	Weight   int       `json:"weight"`
+	Amount   int       `json:"amount"`
+}
+
+// easyjson:json
+type Cart struct {
+	Id        uuid.UUID  `json:"restaurant_id"`
+	Name      string     `json:"restaurant_name"`
+	CartItems []CartItem `json:"products"`
+	TotalSum  float64    `json:"total_sum"`
+}
+
+func chooseCategoryByWeight(categoryWeights map[string]float64, productGroups map[string][]Product) (string, bool) {
+	var total float64
+	categories := make([]string, 0)
+	weights := make([]float64, 0)
+
+	for cat, weight := range categoryWeights {
+		if len(productGroups[cat]) > 0 { // только если есть товары
+			total += weight
+			categories = append(categories, cat)
+			weights = append(weights, weight)
+		}
+	}
+
+	if total == 0 {
+		return "", false
+	}
+
+	randVal := rand.Float64() * total
+	sum := 0.0
+
+	for i, w := range weights {
+		sum += w
+		if sum >= randVal {
+			return categories[i], true
+		}
+	}
+
+	return categories[len(categories)-1], true // fallback
+}
+
+func groupProductsByCategory(products []Product) map[string][]Product {
+	grouped := make(map[string][]Product)
+	for _, p := range products {
+		if _, exists := grouped[p.Category]; !exists {
+			grouped[p.Category] = []Product{}
+		}
+		grouped[p.Category] = append(grouped[p.Category], p)
+	}
+	return grouped
+}
+
+func generateOrder(db *sql.DB, userID, addressID string, restaurant Restaurant, products []Product) error {
+	productGroups := groupProductsByCategory(products)
+
+	numItems := rand.Intn(5) + 2 // от 1 до 5 товаров
+	var selectedProducts []CartItem
+	var totalPrice float64
+
+	for i := 0; i < numItems; i++ {
+		category, ok := chooseCategoryByWeight(categoryWeights, productGroups)
+		if !ok || len(productGroups[category]) == 0 {
+			continue
+		}
+
+		items := productGroups[category]
+		selected := items[rand.Intn(len(items))] // случайный товар из категории
+		selectedProducts = append(selectedProducts, CartItem{
+			Id:       selected.ID,
+			Name:     selected.Name,
+			Price:    selected.Price,
+			ImageURL: selected.ImageURL,
+			Weight:   selected.Weight,
+			Amount:   1, // можно сделать >1 позже
+		})
+		totalPrice += selected.Price
+	}
+
+	if len(selectedProducts) == 0 {
+		return nil // пропустить пустые заказы
+	}
+
+	cart := Cart{
+		Id:        restaurant.ID,
+		Name:      restaurant.Name,
+		CartItems: selectedProducts,
+		TotalSum:  totalPrice,
+	}
+
+	cartJSON, err := json.Marshal(cart)
+	if err != nil {
+		return err
+	}
+
+	orderItems := make([]uuid.UUID, len(selectedProducts))
+	for i, item := range selectedProducts {
+		orderItems[i] = item.Id
+	}
+
+	_, err = db.Exec(`
+        INSERT INTO orders (
+            user_id, status, address_id, order_products, 
+            apartment_or_office, intercom, entrance, floor, courier_comment, leave_at_door, final_price, order_items, created_at
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, NOW())`,
+		userID, "delivered", addressID, cartJSON,
+		"123", "no", "A", "3", "leave at door", true, totalPrice, pq.Array(orderItems),
+	)
+
+	return err
+}
+
+type Product struct {
+	ID           uuid.UUID
+	Name         string
+	Price        float64
+	ImageURL     string
+	Weight       int
+	Category     string
+	RestaurantID uuid.UUID
+}
+
+type Restaurant struct {
+	ID   uuid.UUID
+	Name string
+}
+
+func getRestaurants(db *sql.DB) ([]Restaurant, error) {
+	rows, err := db.Query("SELECT id, name FROM restaurants")
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var restaurants []Restaurant
+	for rows.Next() {
+		var r Restaurant
+		if err := rows.Scan(&r.ID, &r.Name); err != nil {
+			return nil, err
+		}
+		restaurants = append(restaurants, r)
+	}
+	return restaurants, nil
+}
+
+func getProductsByRestaurant(db *sql.DB, restaurantID uuid.UUID) ([]Product, error) {
+	rows, err := db.Query("SELECT id, name, price, image_url, weight, category FROM products WHERE restaurant_id = $1", restaurantID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var products []Product
+	for rows.Next() {
+		var p Product
+		p.RestaurantID = restaurantID
+		if err := rows.Scan(&p.ID, &p.Name, &p.Price, &p.ImageURL, &p.Weight, &p.Category); err != nil {
+			return nil, err
+		}
+		products = append(products, p)
+	}
+	return products, nil
+}
+
+func getFirstUserID(db *sql.DB) (string, error) {
+	var userID string
+	err := db.QueryRow("SELECT id FROM users LIMIT 1").Scan(&userID)
+	if err != nil {
+		return "", err
+	}
+	return userID, nil
+}
 
 // @title AdminAdmin API
 // @version 1.0
@@ -43,6 +245,42 @@ import (
 // @host localhost:5458
 // @BasePath /api
 func main() {
+
+	db, err := sql.Open("postgres", os.Getenv("POSTGRES_CONN"))
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+
+	// Получаем ID первого пользователя из БД
+	userID, err := getFirstUserID(db)
+	if err != nil {
+		log.Fatal("Failed to get first user from DB:", err)
+	}
+
+	addressID := "existing-address-id-here" // или тоже можно взять из БД, если хочешь
+
+	restaurants1, err := getRestaurants(db)
+	if err != nil {
+		log.Fatal(err)
+	}
+	for _, restaurant := range restaurants1 {
+		products, err := getProductsByRestaurant(db, restaurant.ID)
+		if err != nil {
+			log.Printf("failed to load products for %s: %v", restaurant.Name, err)
+			continue
+		}
+
+		for i := 0; i < 1000; i++ {
+			err = generateOrder(db, userID, addressID, restaurant, products)
+			if err != nil {
+				log.Printf("failed to insert order for %s: %v", restaurant.Name, err)
+			}
+		}
+
+		fmt.Printf("✅ Generated 1000 orders for %s\n", restaurant.Name)
+	}
+
 	logFile, err := os.OpenFile(os.Getenv("MAIN_LOG_FILE"), os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {
 		fmt.Println("error opening log file: " + err.Error())
