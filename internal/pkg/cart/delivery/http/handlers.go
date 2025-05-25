@@ -13,6 +13,7 @@ import (
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/cart/delivery/grpc/gen"
 	"github.com/satori/uuid"
 
+	hub "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/hub"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/converter"
 	jwtUtils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/jwt"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
@@ -20,16 +21,40 @@ import (
 	validation "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/validation"
 	"github.com/golang-jwt/jwt"
 	"github.com/gorilla/mux"
+	"github.com/gorilla/websocket"
 	"github.com/mailru/easyjson"
 )
 
 type CartHandler struct {
 	client gen.CartServiceClient
 	secret string
+	hub    *hub.Hub
 }
 
-func NewCartHandler(client gen.CartServiceClient) *CartHandler {
-	return &CartHandler{client: client, secret: os.Getenv("JWT_SECRET")}
+func NewCartHandler(client gen.CartServiceClient, hub *hub.Hub) *CartHandler {
+	return &CartHandler{client: client, secret: os.Getenv("JWT_SECRET"), hub: hub}
+}
+
+func (h *CartHandler) Subscribe(w http.ResponseWriter, r *http.Request) {
+	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+	cookie, err := r.Cookie("AdminJWT")
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("токен отсутствует: %w", err), http.StatusUnauthorized)
+		return
+	}
+	JWTStr := cookie.Value
+	claims := jwt.MapClaims{}
+
+	id, _ := jwtUtils.GetIdFromJWT(JWTStr, claims, h.secret)
+	web := websocket.Upgrader{}
+	web.Subprotocols = []string{r.Header.Get("Sec-WebSocket-Protocol")}
+	conn, err := web.Upgrade(w, r, nil)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("не удается обновить: %w", err), http.StatusUnauthorized)
+		return
+	}
+	h.hub.AddClient(id, conn)
+
 }
 
 func (h *CartHandler) getCartData(r *http.Request) (models.Cart, string, error, bool) {
@@ -100,7 +125,7 @@ func (h *CartHandler) GetCart(w http.ResponseWriter, r *http.Request) {
 		utils.SendError(w, "Ошибка сервера", http.StatusInternalServerError)
 		return
 	}
-	
+
 	w.Write(data)
 }
 

@@ -5,11 +5,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"log/slog"
+	"time"
 
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	dbUtils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/db"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	"github.com/jackc/pgtype/pgxtype"
+	"github.com/jackc/pgx"
 	"github.com/lib/pq"
 	"github.com/satori/uuid"
 )
@@ -21,21 +23,25 @@ const (
 		apartment_or_office, intercom, entrance, floor,
 		courier_comment, leave_at_door, created_at, final_price, order_items) 
 		VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)`
-	getAllOrders = `SELECT
-    id,
-    user_id,
-    status,
-    address_id,
-    order_products,
-    apartment_or_office,
-    intercom,
-    entrance,
-    floor,
-    courier_comment,
-    leave_at_door,
-    final_price,
-    created_at
-FROM orders WHERE user_id = $1 LIMIT $2 OFFSET $3;`
+	getAllOrders = `
+    SELECT
+        id,
+        user_id,
+        status,
+        address_id,
+        order_products,
+        apartment_or_office,
+        intercom,
+        entrance,
+        floor,
+        courier_comment,
+        leave_at_door,
+        final_price,
+        created_at
+    FROM orders 
+    WHERE user_id = $1
+    ORDER BY created_at DESC
+    LIMIT $2 OFFSET $3;`
 	countOrdersQuery = `SELECT COUNT(*) FROM orders WHERE user_id = $1;`
 
 	getOrderById = `SELECT
@@ -84,7 +90,7 @@ FROM orders WHERE id = $1 AND user_id = $2;`
         GROUP BY rp.id, rp.name, rp.price, rp.image_url, rp.weight
         ORDER BY COUNT(*) DESC
         LIMIT 5;`
-	updateOrderStatus            = `UPDATE orders SET status = $1 WHERE id = $2;`
+	updateOrderStatus            = `UPDATE orders SET status = $1, created_at = NOW() WHERE id = $2;`
 	scheduleDeliveryStatusChange = `SELECT cron.schedule_in('20 seconds', $$UPDATE orders SET status = 'in delivery' WHERE id = $1$$);`
 	deactivateAddress            = "UPDATE addresses SET is_active = false WHERE user_id = $1 AND is_active = true"
 	activateAddress              = "UPDATE addresses SET is_active = true WHERE address = $1 AND user_id = $2"
@@ -102,6 +108,69 @@ type RestaurantRepository struct {
 func NewRestaurantRepository() (*RestaurantRepository, error) {
 	db, err := dbUtils.InitDB()
 	return &RestaurantRepository{db: db}, err
+}
+
+func (r *RestaurantRepository) GetUpdates(ctx context.Context, userID string, currentOffset time.Time) (models.Order, bool) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	var order models.Order
+	var orderProductsJSON string
+
+	query := `
+        SELECT 
+            id,
+            user_id,
+            status,
+            address_id,
+            order_products,
+            apartment_or_office,
+            intercom,
+            entrance,
+            floor,
+            courier_comment,
+            leave_at_door,
+            final_price,
+            created_at 
+        FROM orders 
+        WHERE created_at > $1 AND user_id = $2 
+        ORDER BY created_at DESC 
+        LIMIT 1;
+    `
+
+	row := r.db.QueryRow(ctx, query, currentOffset, userID)
+
+	err := row.Scan(
+		&order.ID,
+		&order.UserID,
+		&order.Status,
+		&order.Address,
+		&orderProductsJSON,
+		&order.ApartmentOrOffice,
+		&order.Intercom,
+		&order.Entrance,
+		&order.Floor,
+		&order.CourierComment,
+		&order.LeaveAtDoor,
+		&order.FinalPrice,
+		&order.CreatedAt,
+	)
+
+	if err != nil {
+		if err == pgx.ErrNoRows {
+			logger.Debug("Новых заказов нет")
+			return models.Order{}, false
+		}
+		logger.Error("Ошибка при получении заказа", slog.String("error", err.Error()))
+		return models.Order{}, false
+	}
+
+	if err := json.Unmarshal([]byte(orderProductsJSON), &order.OrderProducts); err != nil {
+		logger.Error("Ошибка анмаршалинга JSON: " + err.Error())
+		return models.Order{}, false
+	}
+
+	logger.Info("Найдено новое обновление")
+	return order, true
 }
 
 func (r *RestaurantRepository) GetProductPrice(ctx context.Context, productID string) (float64, error) {
