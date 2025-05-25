@@ -132,6 +132,7 @@ func (h *AuthHandler) Check(ctx context.Context, in *gen.CheckRequest) (*gen.Use
 		Description:   user.Description,
 		UserPic:       user.UserPic,
 		ActiveAddress: user.ActiveAddress,
+		HasSecret:     user.HasSecret,
 	}, nil
 }
 

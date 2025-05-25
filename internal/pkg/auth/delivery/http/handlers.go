@@ -142,10 +142,25 @@ func (h *AuthHandler) GetQRCode(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 	issuerName := "AdminAdmin"
 
-	var req models.QrReq
-	if err := easyjson.UnmarshalFromReader(r.Body, &req); err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("ошибка парсинга JSON: %w", err), http.StatusBadRequest)
-		utils.SendError(w, "Неверный запрос", http.StatusBadRequest)
+	cookie, err := r.Cookie("AdminJWT")
+	if err != nil {
+		if err == http.ErrNoCookie {
+			log.LogHandlerError(logger, fmt.Errorf("токен отсутствует: %w", err), http.StatusUnauthorized)
+			utils.SendError(w, "Ошибка авторизации", http.StatusUnauthorized)
+			return
+		}
+		log.LogHandlerError(logger, fmt.Errorf("ошибка при чтении куки: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "Ошибка авторизации", http.StatusBadRequest)
+		return
+	}
+	JWTStr := cookie.Value
+
+	claims := jwt.MapClaims{}
+
+	login, ok := jwtUtils.GetLoginFromJWT(JWTStr, claims, h.secret)
+	if !ok || login == "" {
+		log.LogHandlerError(logger, errors.New("недействительный токен: login отсутствует"), http.StatusUnauthorized)
+		utils.SendError(w, "Ошибка авторизации", http.StatusUnauthorized)
 		return
 	}
 
@@ -154,7 +169,7 @@ func (h *AuthHandler) GetQRCode(w http.ResponseWriter, r *http.Request) {
 
 	secret2fa := base32.StdEncoding.EncodeToString(secret)
 
-	_, err := h.client.GetQRCode(r.Context(), &gen.GetQRCodeRequest{Login: req.Login, Secret2Fa: secret})
+	_, err = h.client.GetQRCode(r.Context(), &gen.GetQRCodeRequest{Login: login, Secret2Fa: secret})
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка уровнем ниже: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "Ошибка сервера", http.StatusInternalServerError)
@@ -175,7 +190,7 @@ func (h *AuthHandler) GetQRCode(w http.ResponseWriter, r *http.Request) {
 	issuer.Add("issuer", issuerName)
 
 	URL.RawQuery = secretParam.Encode() + "&" + issuer.Encode()
-	URL.Path += fmt.Sprintf("/%s:%s", url.PathEscape(issuerName), url.PathEscape(req.Login))
+	URL.Path += fmt.Sprintf("/%s:%s", url.PathEscape(issuerName), url.PathEscape(login))
 
 	w.Header().Set("Content-Type", "image/png")
 
@@ -229,7 +244,7 @@ func (h *AuthHandler) CheckCode(w http.ResponseWriter, r *http.Request) {
 
 	otpc := &dgoogauth.OTPConfig{
 		Secret:      base32.StdEncoding.EncodeToString(grpcOut.Secret2Fa),
-		WindowSize:  30, 
+		WindowSize:  30,
 		HotpCounter: 0,
 	}
 
@@ -246,7 +261,6 @@ func (h *AuthHandler) CheckCode(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	
 	parsedUUID, err := uuid.FromString(user.Id)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("некорректный id: %w", err), http.StatusUnauthorized)
@@ -262,6 +276,7 @@ func (h *AuthHandler) CheckCode(w http.ResponseWriter, r *http.Request) {
 		Description:   user.Description,
 		UserPic:       user.UserPic,
 		ActiveAddress: user.ActiveAddress,
+		HasSecret:     true,
 	}
 
 	data, err := easyjson.Marshal(newModel)
@@ -447,6 +462,7 @@ func (h *AuthHandler) Check(w http.ResponseWriter, r *http.Request) {
 		Description:   user.Description,
 		UserPic:       user.UserPic,
 		ActiveAddress: user.ActiveAddress,
+		HasSecret:     user.HasSecret,
 	}
 
 	data, err := json.Marshal(newModel)

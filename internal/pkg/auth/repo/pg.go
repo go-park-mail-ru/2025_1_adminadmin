@@ -74,7 +74,7 @@ func (repo *AuthRepo) SelectUserByLogin(ctx context.Context, login string) (mode
 		logger.Error(err.Error())
 		return models.User{}, err
 	}
-	if secret2fa != nil {
+	if len(secret2fa) > 0 {
 		resultUser.HasSecret = true
 	}
 	resultUser.Sanitize()
