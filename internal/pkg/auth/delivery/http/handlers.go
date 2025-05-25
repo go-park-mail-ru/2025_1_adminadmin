@@ -126,7 +126,7 @@ func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) {
 		ActiveAddress: user.ActiveAddress,
 	}
 
-	data, err := json.Marshal(newModel)
+	data, err := easyjson.Marshal(newModel)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "Ошибка сервера", http.StatusInternalServerError)
@@ -264,7 +264,7 @@ func (h *AuthHandler) CheckCode(w http.ResponseWriter, r *http.Request) {
 		ActiveAddress: user.ActiveAddress,
 	}
 
-	data, err := json.Marshal(newModel)
+	data, err := easyjson.Marshal(newModel)
 	if err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
 		utils.SendError(w, "Ошибка сервера", http.StatusInternalServerError)
