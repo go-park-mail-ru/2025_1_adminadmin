@@ -14,7 +14,7 @@ import (
 
 const (
 	insertUser          = "INSERT INTO users (id, login, first_name, last_name, phone_number, description, user_pic, password_hash) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)"
-	selectUserByLogin   = "SELECT id, first_name, last_name, phone_number, description, user_pic, password_hash FROM users WHERE login = $1"
+	selectUserByLogin   = "SELECT id, first_name, last_name, phone_number, description, user_pic, password_hash, secret2fa FROM users WHERE login = $1"
 	updateUser          = "UPDATE users SET phone_number = $1, first_name = $2, last_name = $3, description = $4, password_hash = $5 WHERE id = $6;"
 	updateUserPic       = "UPDATE users SET user_pic = $1 WHERE login = $2"
 	selectUserAddresses = `
@@ -23,12 +23,13 @@ const (
 		JOIN users u ON a.user_id = u.id
 		WHERE u.login = $1
 	`
-	deleteAddress    = "DELETE FROM addresses WHERE id = $1;"
-	insertAddress    = "INSERT INTO addresses (id, address, user_id) VALUES ($1, $2, $3)"
-	addressExists    = "SELECT EXISTS(SELECT 1 FROM addresses WHERE address = $1 AND user_id = $2)"
-	getActiveAddress = "SELECT id, address, user_id, is_active FROM addresses WHERE user_id = $1 and is_active = TRUE"
-	activeAddressExists    = "SELECT EXISTS(SELECT 1 FROM addresses WHERE user_id = $1 AND is_active = TRUE)"
-
+	deleteAddress       = "DELETE FROM addresses WHERE id = $1;"
+	insertAddress       = "INSERT INTO addresses (id, address, user_id) VALUES ($1, $2, $3)"
+	addressExists       = "SELECT EXISTS(SELECT 1 FROM addresses WHERE address = $1 AND user_id = $2)"
+	getActiveAddress    = "SELECT id, address, user_id, is_active FROM addresses WHERE user_id = $1 and is_active = TRUE"
+	activeAddressExists = "SELECT EXISTS(SELECT 1 FROM addresses WHERE user_id = $1 AND is_active = TRUE)"
+	setSecret2fa        = "UPDATE users SET secret2fa = $1 WHERE login = $2"
+	getSecret2fa        = "SELECT secret2fa FROM users WHERE login = $1"
 )
 
 type AuthRepo struct {
@@ -57,6 +58,7 @@ func (repo *AuthRepo) InsertUser(ctx context.Context, user models.User) error {
 func (repo *AuthRepo) SelectUserByLogin(ctx context.Context, login string) (models.User, error) {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 
+	var secret2fa []byte
 	resultUser := models.User{Login: login}
 	err := repo.db.QueryRow(ctx, selectUserByLogin, login).Scan(
 		&resultUser.Id,
@@ -66,16 +68,46 @@ func (repo *AuthRepo) SelectUserByLogin(ctx context.Context, login string) (mode
 		&resultUser.Description,
 		&resultUser.UserPic,
 		&resultUser.PasswordHash,
+		&secret2fa,
 	)
-
 	if err != nil {
 		logger.Error(err.Error())
 		return models.User{}, err
+	}
+	if secret2fa != nil {
+		resultUser.HasSecret = true
 	}
 	resultUser.Sanitize()
 
 	logger.Info("Successful")
 	return resultUser, nil
+}
+
+func (repo *AuthRepo) SetSecret2fa(ctx context.Context, secret2fa []byte, login string) error {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	_, err := repo.db.Exec(ctx, setSecret2fa, secret2fa, login)
+	if err != nil {
+		logger.Error(err.Error())
+		return err
+	}
+
+	logger.Info("Successful")
+	return nil
+}
+
+func (repo *AuthRepo) GetSecret2fa(ctx context.Context, login string) ([]byte, error) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	var secret2fa []byte
+	err := repo.db.QueryRow(ctx, getSecret2fa, login).Scan(&secret2fa)
+	if err != nil {
+		logger.Error(err.Error())
+		return nil, err
+	}
+
+	logger.Info("Successful")
+	return secret2fa, nil
 }
 
 func (repo *AuthRepo) UpdateUser(ctx context.Context, user models.User) error {

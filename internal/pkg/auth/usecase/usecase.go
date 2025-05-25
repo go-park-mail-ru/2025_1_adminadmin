@@ -179,6 +179,23 @@ func (uc *AuthUsecase) SignIn(ctx context.Context, data models.SignInReq) (model
 	return user, token, csrfToken, nil
 }
 
+func (uc *AuthUsecase) GetQRCode(ctx context.Context, secret2fa []byte, login string) error {
+	return uc.repo.SetSecret2fa(ctx, secret2fa, login)
+}
+
+func (uc *AuthUsecase) GetSecret2fa(ctx context.Context, login string) ([]byte, error) {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	secret2fa, err := uc.repo.GetSecret2fa(ctx, login)
+	if err != nil {
+		logger.Error(err.Error())
+		return nil, err
+	}
+
+	logger.Info("Successful")
+	return secret2fa, err
+}
+
 func (uc *AuthUsecase) SignUp(ctx context.Context, data models.SignUpReq) (models.User, string, string, error) {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 

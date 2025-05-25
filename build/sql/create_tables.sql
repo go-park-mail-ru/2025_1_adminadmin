@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS users (
     last_name TEXT NOT NULL,   
     description TEXT DEFAULT '',  
     user_pic TEXT DEFAULT 'default_user.jpg', 
-    password_hash BYTEA NOT NULL                   
+    password_hash BYTEA NOT NULL,
+	secret2fa BYTEA                
 );
 
 CREATE TABLE IF NOT EXISTS restaurant_tags (

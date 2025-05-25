@@ -1,16 +1,20 @@
 package http
 
 import (
+	"crypto/rand"
+	"encoding/base32"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
 	"log/slog"
 	"net/http"
+	"net/url"
 	"os"
 	"strings"
 	"time"
 
+	"github.com/dgryski/dgoogauth"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/grpc/gen"
 	jwtUtils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/jwt"
@@ -19,6 +23,7 @@ import (
 	"github.com/golang-jwt/jwt"
 	"github.com/mailru/easyjson"
 	"github.com/satori/uuid"
+	"github.com/skip2/go-qrcode"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -77,6 +82,12 @@ func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if user.HasSecret {
+		log.LogHandlerInfo(logger, "Включена 2fa, требуется код для подтверждения", http.StatusPreconditionFailed)
+		utils.SendError(w, "Включена 2fa, требуется код для подтверждения", http.StatusPreconditionFailed)
+		return
+	}
+
 	http.SetCookie(w, &http.Cookie{
 		Name:     "AdminJWT",
 		Value:    user.Token,
@@ -105,13 +116,149 @@ func (h *AuthHandler) SignIn(w http.ResponseWriter, r *http.Request) {
 	}
 
 	newModel := models.User{
-		Login:       user.Login,
-		PhoneNumber: user.PhoneNumber,
-		Id:          parsedUUID,
-		FirstName:   user.FirstName,
-		LastName:    user.LastName,
-		Description: user.Description,
-		UserPic:     user.UserPic,
+		Login:         user.Login,
+		PhoneNumber:   user.PhoneNumber,
+		Id:            parsedUUID,
+		FirstName:     user.FirstName,
+		LastName:      user.LastName,
+		Description:   user.Description,
+		UserPic:       user.UserPic,
+		ActiveAddress: user.ActiveAddress,
+	}
+
+	data, err := json.Marshal(newModel)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка маршалинга: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "Ошибка сервера", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(data)
+	log.LogHandlerInfo(logger, "Success", http.StatusOK)
+}
+
+func (h *AuthHandler) GetQRCode(w http.ResponseWriter, r *http.Request) {
+	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+	issuerName := "AdminAdmin"
+
+	var req models.QrReq
+	if err := easyjson.UnmarshalFromReader(r.Body, &req); err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка парсинга JSON: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "Неверный запрос", http.StatusBadRequest)
+		return
+	}
+
+	secret := make([]byte, 30)
+	_, _ = rand.Read(secret)
+
+	secret2fa := base32.StdEncoding.EncodeToString(secret)
+
+	_, err := h.client.GetQRCode(r.Context(), &gen.GetQRCodeRequest{Login: req.Login, Secret2Fa: secret})
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка уровнем ниже: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "Ошибка сервера", http.StatusInternalServerError)
+		return
+	}
+
+	URL, err := url.Parse("otpauth://totp")
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка создания URL структуры для qr кода: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "Неверный запрос", http.StatusBadRequest)
+		return
+	}
+
+	secretParam := url.Values{}
+	secretParam.Add("secret", secret2fa)
+
+	issuer := url.Values{}
+	issuer.Add("issuer", issuerName)
+
+	URL.RawQuery = secretParam.Encode() + "&" + issuer.Encode()
+	URL.Path += fmt.Sprintf("/%s:%s", url.PathEscape(issuerName), url.PathEscape(req.Login))
+
+	var png []byte
+	png, _ = qrcode.Encode(URL.String(), qrcode.Medium, 256)
+	_, _ = w.Write(png)
+}
+
+func (h *AuthHandler) CheckCode(w http.ResponseWriter, r *http.Request) {
+	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+	var req models.Check2fa
+	if err := easyjson.UnmarshalFromReader(r.Body, &req); err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка парсинга JSON: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "Неверный запрос", http.StatusBadRequest)
+		return
+	}
+
+	grpcOut, err := h.client.CheckCode(r.Context(), &gen.CheckCodeRequest{Login: req.Login})
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка уровнем ниже: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "Ошибка сервера", http.StatusInternalServerError)
+		return
+	}
+
+	user, err := h.client.SignIn(r.Context(), &gen.SignInRequest{
+		Login:    req.Login,
+		Password: req.Password})
+
+	if err != nil {
+		st, ok := status.FromError(err)
+		if !ok {
+			log.LogHandlerError(logger, fmt.Errorf("не gRPC ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "Ошибка сервера", http.StatusInternalServerError)
+			return
+		}
+
+		switch st.Code() {
+		case codes.InvalidArgument:
+			log.LogHandlerError(logger, err, http.StatusBadRequest)
+			utils.SendError(w, st.Message(), http.StatusBadRequest)
+		case codes.Unauthenticated:
+			log.LogHandlerError(logger, err, http.StatusUnauthorized)
+			utils.SendError(w, st.Message(), http.StatusUnauthorized)
+		default:
+			log.LogHandlerError(logger, fmt.Errorf("неизвестная ошибка: %w", err), http.StatusInternalServerError)
+			utils.SendError(w, "неизвестная ошибка", http.StatusInternalServerError)
+		}
+		return
+	}
+
+	otpc := &dgoogauth.OTPConfig{
+		Secret:      base32.StdEncoding.EncodeToString(grpcOut.Secret2Fa),
+		WindowSize:  30, 
+		HotpCounter: 0,
+	}
+
+	val, err := otpc.Authenticate(req.Code)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка при проверке кода: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "Ошибка сервера", http.StatusInternalServerError)
+		return
+	}
+
+	if !val {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка проверки кода: %w", err), http.StatusUnauthorized)
+		utils.SendError(w, "Ошибка проверки кода", http.StatusUnauthorized)
+		return
+	}
+
+	
+	parsedUUID, err := uuid.FromString(user.Id)
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("некорректный id: %w", err), http.StatusUnauthorized)
+		utils.SendError(w, "ошибка авторизации", http.StatusUnauthorized)
+	}
+
+	newModel := models.User{
+		Login:         user.Login,
+		PhoneNumber:   user.PhoneNumber,
+		Id:            parsedUUID,
+		FirstName:     user.FirstName,
+		LastName:      user.LastName,
+		Description:   user.Description,
+		UserPic:       user.UserPic,
 		ActiveAddress: user.ActiveAddress,
 	}
 
@@ -290,13 +437,13 @@ func (h *AuthHandler) Check(w http.ResponseWriter, r *http.Request) {
 	}
 
 	newModel := models.User{
-		Login:       user.Login,
-		PhoneNumber: user.PhoneNumber,
-		Id:          parsedUUID,
-		FirstName:   user.FirstName,
-		LastName:    user.LastName,
-		Description: user.Description,
-		UserPic:     user.UserPic,
+		Login:         user.Login,
+		PhoneNumber:   user.PhoneNumber,
+		Id:            parsedUUID,
+		FirstName:     user.FirstName,
+		LastName:      user.LastName,
+		Description:   user.Description,
+		UserPic:       user.UserPic,
 		ActiveAddress: user.ActiveAddress,
 	}
 
@@ -612,7 +759,7 @@ func (h *AuthHandler) GetUserAddresses(w http.ResponseWriter, r *http.Request) {
 			utils.SendError(w, "Ошибка сервера", http.StatusInternalServerError)
 			return
 		}
-	
+
 		switch st.Code() {
 		case codes.Internal:
 			log.LogHandlerError(logger, fmt.Errorf("ошибка на уровне usecase: %w", err), http.StatusInternalServerError)
@@ -683,7 +830,7 @@ func (h *AuthHandler) DeleteAddress(w http.ResponseWriter, r *http.Request) {
 			utils.SendError(w, "Ошибка сервера", http.StatusInternalServerError)
 			return
 		}
-	
+
 		switch st.Code() {
 		case codes.InvalidArgument:
 			log.LogHandlerError(logger, err, http.StatusBadRequest)
@@ -761,7 +908,7 @@ func (h *AuthHandler) AddAddress(w http.ResponseWriter, r *http.Request) {
 			utils.SendError(w, "Ошибка сервера", http.StatusInternalServerError)
 			return
 		}
-	
+
 		switch st.Code() {
 		case codes.InvalidArgument:
 			log.LogHandlerError(logger, err, http.StatusBadRequest)

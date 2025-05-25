@@ -46,17 +46,36 @@ func (h *AuthHandler) SignIn(ctx context.Context, in *gen.SignInRequest) (*gen.U
 	}
 
 	return &gen.UserResponse{
-		Login:       user.Login,
-		PhoneNumber: user.PhoneNumber,
-		Id:          user.Id.String(),
-		FirstName:   user.FirstName,
-		LastName:    user.LastName,
-		Description: user.Description,
-		UserPic:     user.UserPic,
-		Token:       token,
-		CsrfToken:   csrfToken,
+		Login:         user.Login,
+		PhoneNumber:   user.PhoneNumber,
+		Id:            user.Id.String(),
+		FirstName:     user.FirstName,
+		LastName:      user.LastName,
+		Description:   user.Description,
+		UserPic:       user.UserPic,
+		Token:         token,
+		CsrfToken:     csrfToken,
 		ActiveAddress: user.ActiveAddress,
+		HasSecret:     user.HasSecret,
 	}, nil
+}
+
+func (h *AuthHandler) GetQRCode(ctx context.Context, in *gen.GetQRCodeRequest) (*emptypb.Empty, error) {
+	err := h.uc.GetQRCode(ctx, in.Secret2Fa, in.Login)
+
+	if err != nil {
+		return &emptypb.Empty{}, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	return &emptypb.Empty{}, nil
+}
+
+func (h *AuthHandler) CheckCode(ctx context.Context, in *gen.CheckCodeRequest) (*gen.CheckCodeResponse, error) {
+	secret2fa, err := h.uc.GetSecret2fa(ctx, in.Login)
+
+	if err != nil {
+		return nil, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	return &gen.CheckCodeResponse{Secret2Fa: secret2fa}, nil
 }
 
 func (h *AuthHandler) SignUp(ctx context.Context, in *gen.SignUpRequest) (*gen.UserResponse, error) {
@@ -105,13 +124,13 @@ func (h *AuthHandler) Check(ctx context.Context, in *gen.CheckRequest) (*gen.Use
 	}
 
 	return &gen.UserResponse{
-		Login:       user.Login,
-		PhoneNumber: user.PhoneNumber,
-		Id:          user.Id.String(),
-		FirstName:   user.FirstName,
-		LastName:    user.LastName,
-		Description: user.Description,
-		UserPic:     user.UserPic,
+		Login:         user.Login,
+		PhoneNumber:   user.PhoneNumber,
+		Id:            user.Id.String(),
+		FirstName:     user.FirstName,
+		LastName:      user.LastName,
+		Description:   user.Description,
+		UserPic:       user.UserPic,
 		ActiveAddress: user.ActiveAddress,
 	}, nil
 }

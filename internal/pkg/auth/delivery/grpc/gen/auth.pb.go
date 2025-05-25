@@ -162,6 +162,102 @@ func (x *SignInRequest) GetPassword() string {
 	return ""
 }
 
+type GetQRCodeRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Login         string                 `protobuf:"bytes,1,opt,name=Login,proto3" json:"Login,omitempty"`
+	Secret2Fa     []byte                 `protobuf:"bytes,2,opt,name=Secret2fa,proto3" json:"Secret2fa,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetQRCodeRequest) Reset() {
+	*x = GetQRCodeRequest{}
+	mi := &file_proto_auth_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetQRCodeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetQRCodeRequest) ProtoMessage() {}
+
+func (x *GetQRCodeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_auth_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetQRCodeRequest.ProtoReflect.Descriptor instead.
+func (*GetQRCodeRequest) Descriptor() ([]byte, []int) {
+	return file_proto_auth_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *GetQRCodeRequest) GetLogin() string {
+	if x != nil {
+		return x.Login
+	}
+	return ""
+}
+
+func (x *GetQRCodeRequest) GetSecret2Fa() []byte {
+	if x != nil {
+		return x.Secret2Fa
+	}
+	return nil
+}
+
+type CheckCodeRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Login         string                 `protobuf:"bytes,1,opt,name=Login,proto3" json:"Login,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CheckCodeRequest) Reset() {
+	*x = CheckCodeRequest{}
+	mi := &file_proto_auth_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CheckCodeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CheckCodeRequest) ProtoMessage() {}
+
+func (x *CheckCodeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_auth_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CheckCodeRequest.ProtoReflect.Descriptor instead.
+func (*CheckCodeRequest) Descriptor() ([]byte, []int) {
+	return file_proto_auth_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *CheckCodeRequest) GetLogin() string {
+	if x != nil {
+		return x.Login
+	}
+	return ""
+}
+
 type SignUpRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Login         string                 `protobuf:"bytes,1,opt,name=Login,proto3" json:"Login,omitempty"`
@@ -175,7 +271,7 @@ type SignUpRequest struct {
 
 func (x *SignUpRequest) Reset() {
 	*x = SignUpRequest{}
-	mi := &file_proto_auth_proto_msgTypes[3]
+	mi := &file_proto_auth_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -187,7 +283,7 @@ func (x *SignUpRequest) String() string {
 func (*SignUpRequest) ProtoMessage() {}
 
 func (x *SignUpRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_auth_proto_msgTypes[3]
+	mi := &file_proto_auth_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -200,7 +296,7 @@ func (x *SignUpRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SignUpRequest.ProtoReflect.Descriptor instead.
 func (*SignUpRequest) Descriptor() ([]byte, []int) {
-	return file_proto_auth_proto_rawDescGZIP(), []int{3}
+	return file_proto_auth_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *SignUpRequest) GetLogin() string {
@@ -252,7 +348,7 @@ type UpdateUserRequest struct {
 
 func (x *UpdateUserRequest) Reset() {
 	*x = UpdateUserRequest{}
-	mi := &file_proto_auth_proto_msgTypes[4]
+	mi := &file_proto_auth_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -264,7 +360,7 @@ func (x *UpdateUserRequest) String() string {
 func (*UpdateUserRequest) ProtoMessage() {}
 
 func (x *UpdateUserRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_auth_proto_msgTypes[4]
+	mi := &file_proto_auth_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -277,7 +373,7 @@ func (x *UpdateUserRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateUserRequest.ProtoReflect.Descriptor instead.
 func (*UpdateUserRequest) Descriptor() ([]byte, []int) {
-	return file_proto_auth_proto_rawDescGZIP(), []int{4}
+	return file_proto_auth_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *UpdateUserRequest) GetLogin() string {
@@ -333,7 +429,7 @@ type UpdateUserPicRequest struct {
 
 func (x *UpdateUserPicRequest) Reset() {
 	*x = UpdateUserPicRequest{}
-	mi := &file_proto_auth_proto_msgTypes[5]
+	mi := &file_proto_auth_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -345,7 +441,7 @@ func (x *UpdateUserPicRequest) String() string {
 func (*UpdateUserPicRequest) ProtoMessage() {}
 
 func (x *UpdateUserPicRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_auth_proto_msgTypes[5]
+	mi := &file_proto_auth_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -358,7 +454,7 @@ func (x *UpdateUserPicRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateUserPicRequest.ProtoReflect.Descriptor instead.
 func (*UpdateUserPicRequest) Descriptor() ([]byte, []int) {
-	return file_proto_auth_proto_rawDescGZIP(), []int{5}
+	return file_proto_auth_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *UpdateUserPicRequest) GetLogin() string {
@@ -391,7 +487,7 @@ type DeleteAddressRequest struct {
 
 func (x *DeleteAddressRequest) Reset() {
 	*x = DeleteAddressRequest{}
-	mi := &file_proto_auth_proto_msgTypes[6]
+	mi := &file_proto_auth_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -403,7 +499,7 @@ func (x *DeleteAddressRequest) String() string {
 func (*DeleteAddressRequest) ProtoMessage() {}
 
 func (x *DeleteAddressRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_auth_proto_msgTypes[6]
+	mi := &file_proto_auth_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -416,7 +512,7 @@ func (x *DeleteAddressRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteAddressRequest.ProtoReflect.Descriptor instead.
 func (*DeleteAddressRequest) Descriptor() ([]byte, []int) {
-	return file_proto_auth_proto_rawDescGZIP(), []int{6}
+	return file_proto_auth_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *DeleteAddressRequest) GetId() string {
@@ -438,7 +534,7 @@ type Address struct {
 
 func (x *Address) Reset() {
 	*x = Address{}
-	mi := &file_proto_auth_proto_msgTypes[7]
+	mi := &file_proto_auth_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -450,7 +546,7 @@ func (x *Address) String() string {
 func (*Address) ProtoMessage() {}
 
 func (x *Address) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_auth_proto_msgTypes[7]
+	mi := &file_proto_auth_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -463,7 +559,7 @@ func (x *Address) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Address.ProtoReflect.Descriptor instead.
 func (*Address) Descriptor() ([]byte, []int) {
-	return file_proto_auth_proto_rawDescGZIP(), []int{7}
+	return file_proto_auth_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *Address) GetId() string {
@@ -506,13 +602,14 @@ type UserResponse struct {
 	Token         string                 `protobuf:"bytes,8,opt,name=Token,proto3" json:"Token,omitempty"`
 	CsrfToken     string                 `protobuf:"bytes,9,opt,name=CsrfToken,proto3" json:"CsrfToken,omitempty"`
 	ActiveAddress string                 `protobuf:"bytes,10,opt,name=ActiveAddress,proto3" json:"ActiveAddress,omitempty"`
+	HasSecret     bool                   `protobuf:"varint,11,opt,name=HasSecret,proto3" json:"HasSecret,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *UserResponse) Reset() {
 	*x = UserResponse{}
-	mi := &file_proto_auth_proto_msgTypes[8]
+	mi := &file_proto_auth_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -524,7 +621,7 @@ func (x *UserResponse) String() string {
 func (*UserResponse) ProtoMessage() {}
 
 func (x *UserResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_auth_proto_msgTypes[8]
+	mi := &file_proto_auth_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -537,7 +634,7 @@ func (x *UserResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UserResponse.ProtoReflect.Descriptor instead.
 func (*UserResponse) Descriptor() ([]byte, []int) {
-	return file_proto_auth_proto_rawDescGZIP(), []int{8}
+	return file_proto_auth_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *UserResponse) GetLogin() string {
@@ -610,6 +707,57 @@ func (x *UserResponse) GetActiveAddress() string {
 	return ""
 }
 
+func (x *UserResponse) GetHasSecret() bool {
+	if x != nil {
+		return x.HasSecret
+	}
+	return false
+}
+
+type CheckCodeResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Secret2Fa     []byte                 `protobuf:"bytes,1,opt,name=Secret2fa,proto3" json:"Secret2fa,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CheckCodeResponse) Reset() {
+	*x = CheckCodeResponse{}
+	mi := &file_proto_auth_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CheckCodeResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CheckCodeResponse) ProtoMessage() {}
+
+func (x *CheckCodeResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_auth_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CheckCodeResponse.ProtoReflect.Descriptor instead.
+func (*CheckCodeResponse) Descriptor() ([]byte, []int) {
+	return file_proto_auth_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *CheckCodeResponse) GetSecret2Fa() []byte {
+	if x != nil {
+		return x.Secret2Fa
+	}
+	return nil
+}
+
 type AddressListResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Addresses     []*Address             `protobuf:"bytes,1,rep,name=Addresses,proto3" json:"Addresses,omitempty"`
@@ -619,7 +767,7 @@ type AddressListResponse struct {
 
 func (x *AddressListResponse) Reset() {
 	*x = AddressListResponse{}
-	mi := &file_proto_auth_proto_msgTypes[9]
+	mi := &file_proto_auth_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -631,7 +779,7 @@ func (x *AddressListResponse) String() string {
 func (*AddressListResponse) ProtoMessage() {}
 
 func (x *AddressListResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_auth_proto_msgTypes[9]
+	mi := &file_proto_auth_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -644,7 +792,7 @@ func (x *AddressListResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddressListResponse.ProtoReflect.Descriptor instead.
 func (*AddressListResponse) Descriptor() ([]byte, []int) {
-	return file_proto_auth_proto_rawDescGZIP(), []int{9}
+	return file_proto_auth_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *AddressListResponse) GetAddresses() []*Address {
@@ -665,7 +813,12 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\x05Login\x18\x01 \x01(\tR\x05Login\"A\n" +
 	"\rSignInRequest\x12\x14\n" +
 	"\x05Login\x18\x01 \x01(\tR\x05Login\x12\x1a\n" +
-	"\bPassword\x18\x02 \x01(\tR\bPassword\"\x9d\x01\n" +
+	"\bPassword\x18\x02 \x01(\tR\bPassword\"F\n" +
+	"\x10GetQRCodeRequest\x12\x14\n" +
+	"\x05Login\x18\x01 \x01(\tR\x05Login\x12\x1c\n" +
+	"\tSecret2fa\x18\x02 \x01(\fR\tSecret2fa\"(\n" +
+	"\x10CheckCodeRequest\x12\x14\n" +
+	"\x05Login\x18\x01 \x01(\tR\x05Login\"\x9d\x01\n" +
 	"\rSignUpRequest\x12\x14\n" +
 	"\x05Login\x18\x01 \x01(\tR\x05Login\x12\x1c\n" +
 	"\tFirstName\x18\x02 \x01(\tR\tFirstName\x12\x1a\n" +
@@ -689,7 +842,7 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\x02Id\x18\x01 \x01(\tR\x02Id\x12\x18\n" +
 	"\aAddress\x18\x02 \x01(\tR\aAddress\x12\x16\n" +
 	"\x06UserId\x18\x03 \x01(\tR\x06UserId\x12\x1a\n" +
-	"\bIsActive\x18\x04 \x01(\bR\bIsActive\"\xa6\x02\n" +
+	"\bIsActive\x18\x04 \x01(\bR\bIsActive\"\xc4\x02\n" +
 	"\fUserResponse\x12\x14\n" +
 	"\x05Login\x18\x01 \x01(\tR\x05Login\x12 \n" +
 	"\vPhoneNumber\x18\x02 \x01(\tR\vPhoneNumber\x12\x0e\n" +
@@ -701,11 +854,16 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\x05Token\x18\b \x01(\tR\x05Token\x12\x1c\n" +
 	"\tCsrfToken\x18\t \x01(\tR\tCsrfToken\x12$\n" +
 	"\rActiveAddress\x18\n" +
-	" \x01(\tR\rActiveAddress\"B\n" +
+	" \x01(\tR\rActiveAddress\x12\x1c\n" +
+	"\tHasSecret\x18\v \x01(\bR\tHasSecret\"1\n" +
+	"\x11CheckCodeResponse\x12\x1c\n" +
+	"\tSecret2fa\x18\x01 \x01(\fR\tSecret2fa\"B\n" +
 	"\x13AddressListResponse\x12+\n" +
-	"\tAddresses\x18\x01 \x03(\v2\r.auth.AddressR\tAddresses2\xef\x03\n" +
+	"\tAddresses\x18\x01 \x03(\v2\r.auth.AddressR\tAddresses2\xee\x04\n" +
 	"\vAuthService\x123\n" +
-	"\x06SignIn\x12\x13.auth.SignInRequest\x1a\x12.auth.UserResponse\"\x00\x123\n" +
+	"\x06SignIn\x12\x13.auth.SignInRequest\x1a\x12.auth.UserResponse\"\x00\x12=\n" +
+	"\tGetQRCode\x12\x16.auth.GetQRCodeRequest\x1a\x16.google.protobuf.Empty\"\x00\x12>\n" +
+	"\tCheckCode\x12\x16.auth.CheckCodeRequest\x1a\x17.auth.CheckCodeResponse\"\x00\x123\n" +
 	"\x06SignUp\x12\x13.auth.SignUpRequest\x1a\x12.auth.UserResponse\"\x00\x121\n" +
 	"\x05Check\x12\x12.auth.CheckRequest\x1a\x12.auth.UserResponse\"\x00\x12;\n" +
 	"\n" +
@@ -728,40 +886,47 @@ func file_proto_auth_proto_rawDescGZIP() []byte {
 	return file_proto_auth_proto_rawDescData
 }
 
-var file_proto_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_proto_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
 var file_proto_auth_proto_goTypes = []any{
 	(*CheckRequest)(nil),         // 0: auth.CheckRequest
 	(*AddressRequest)(nil),       // 1: auth.AddressRequest
 	(*SignInRequest)(nil),        // 2: auth.SignInRequest
-	(*SignUpRequest)(nil),        // 3: auth.SignUpRequest
-	(*UpdateUserRequest)(nil),    // 4: auth.UpdateUserRequest
-	(*UpdateUserPicRequest)(nil), // 5: auth.UpdateUserPicRequest
-	(*DeleteAddressRequest)(nil), // 6: auth.DeleteAddressRequest
-	(*Address)(nil),              // 7: auth.Address
-	(*UserResponse)(nil),         // 8: auth.UserResponse
-	(*AddressListResponse)(nil),  // 9: auth.AddressListResponse
-	(*emptypb.Empty)(nil),        // 10: google.protobuf.Empty
+	(*GetQRCodeRequest)(nil),     // 3: auth.GetQRCodeRequest
+	(*CheckCodeRequest)(nil),     // 4: auth.CheckCodeRequest
+	(*SignUpRequest)(nil),        // 5: auth.SignUpRequest
+	(*UpdateUserRequest)(nil),    // 6: auth.UpdateUserRequest
+	(*UpdateUserPicRequest)(nil), // 7: auth.UpdateUserPicRequest
+	(*DeleteAddressRequest)(nil), // 8: auth.DeleteAddressRequest
+	(*Address)(nil),              // 9: auth.Address
+	(*UserResponse)(nil),         // 10: auth.UserResponse
+	(*CheckCodeResponse)(nil),    // 11: auth.CheckCodeResponse
+	(*AddressListResponse)(nil),  // 12: auth.AddressListResponse
+	(*emptypb.Empty)(nil),        // 13: google.protobuf.Empty
 }
 var file_proto_auth_proto_depIdxs = []int32{
-	7,  // 0: auth.AddressListResponse.Addresses:type_name -> auth.Address
+	9,  // 0: auth.AddressListResponse.Addresses:type_name -> auth.Address
 	2,  // 1: auth.AuthService.SignIn:input_type -> auth.SignInRequest
-	3,  // 2: auth.AuthService.SignUp:input_type -> auth.SignUpRequest
-	0,  // 3: auth.AuthService.Check:input_type -> auth.CheckRequest
-	4,  // 4: auth.AuthService.UpdateUser:input_type -> auth.UpdateUserRequest
-	5,  // 5: auth.AuthService.UpdateUserPic:input_type -> auth.UpdateUserPicRequest
-	1,  // 6: auth.AuthService.GetUserAddresses:input_type -> auth.AddressRequest
-	6,  // 7: auth.AuthService.DeleteAddress:input_type -> auth.DeleteAddressRequest
-	7,  // 8: auth.AuthService.AddAddress:input_type -> auth.Address
-	8,  // 9: auth.AuthService.SignIn:output_type -> auth.UserResponse
-	8,  // 10: auth.AuthService.SignUp:output_type -> auth.UserResponse
-	8,  // 11: auth.AuthService.Check:output_type -> auth.UserResponse
-	8,  // 12: auth.AuthService.UpdateUser:output_type -> auth.UserResponse
-	8,  // 13: auth.AuthService.UpdateUserPic:output_type -> auth.UserResponse
-	9,  // 14: auth.AuthService.GetUserAddresses:output_type -> auth.AddressListResponse
-	10, // 15: auth.AuthService.DeleteAddress:output_type -> google.protobuf.Empty
-	10, // 16: auth.AuthService.AddAddress:output_type -> google.protobuf.Empty
-	9,  // [9:17] is the sub-list for method output_type
-	1,  // [1:9] is the sub-list for method input_type
+	3,  // 2: auth.AuthService.GetQRCode:input_type -> auth.GetQRCodeRequest
+	4,  // 3: auth.AuthService.CheckCode:input_type -> auth.CheckCodeRequest
+	5,  // 4: auth.AuthService.SignUp:input_type -> auth.SignUpRequest
+	0,  // 5: auth.AuthService.Check:input_type -> auth.CheckRequest
+	6,  // 6: auth.AuthService.UpdateUser:input_type -> auth.UpdateUserRequest
+	7,  // 7: auth.AuthService.UpdateUserPic:input_type -> auth.UpdateUserPicRequest
+	1,  // 8: auth.AuthService.GetUserAddresses:input_type -> auth.AddressRequest
+	8,  // 9: auth.AuthService.DeleteAddress:input_type -> auth.DeleteAddressRequest
+	9,  // 10: auth.AuthService.AddAddress:input_type -> auth.Address
+	10, // 11: auth.AuthService.SignIn:output_type -> auth.UserResponse
+	13, // 12: auth.AuthService.GetQRCode:output_type -> google.protobuf.Empty
+	11, // 13: auth.AuthService.CheckCode:output_type -> auth.CheckCodeResponse
+	10, // 14: auth.AuthService.SignUp:output_type -> auth.UserResponse
+	10, // 15: auth.AuthService.Check:output_type -> auth.UserResponse
+	10, // 16: auth.AuthService.UpdateUser:output_type -> auth.UserResponse
+	10, // 17: auth.AuthService.UpdateUserPic:output_type -> auth.UserResponse
+	12, // 18: auth.AuthService.GetUserAddresses:output_type -> auth.AddressListResponse
+	13, // 19: auth.AuthService.DeleteAddress:output_type -> google.protobuf.Empty
+	13, // 20: auth.AuthService.AddAddress:output_type -> google.protobuf.Empty
+	11, // [11:21] is the sub-list for method output_type
+	1,  // [1:11] is the sub-list for method input_type
 	1,  // [1:1] is the sub-list for extension type_name
 	1,  // [1:1] is the sub-list for extension extendee
 	0,  // [0:1] is the sub-list for field type_name
@@ -778,7 +943,7 @@ func file_proto_auth_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_auth_proto_rawDesc), len(file_proto_auth_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   13,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
