@@ -153,6 +153,11 @@ func (h *AuthHandler) GetQRCode(w http.ResponseWriter, r *http.Request) {
 		utils.SendError(w, "Ошибка авторизации", http.StatusBadRequest)
 		return
 	}
+	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
+		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
+		utils.SendError(w, "Ошибка авторизации", http.StatusForbidden)
+		return
+	}
 	JWTStr := cookie.Value
 
 	claims := jwt.MapClaims{}
@@ -322,6 +327,11 @@ func (h *AuthHandler) Disable2fa(w http.ResponseWriter, r *http.Request) {
 		}
 		log.LogHandlerError(logger, fmt.Errorf("ошибка при чтении куки: %w", err), http.StatusBadRequest)
 		utils.SendError(w, "Ошибка авторизации", http.StatusBadRequest)
+		return
+	}
+	if !jwtUtils.CheckDoubleSubmitCookie(w, r) {
+		log.LogHandlerError(logger, errors.New("некорректный CSRF-токен"), http.StatusForbidden)
+		utils.SendError(w, "Ошибка авторизации", http.StatusForbidden)
 		return
 	}
 	JWTStr := cookie.Value
