@@ -30,6 +30,7 @@ const (
 	activeAddressExists = "SELECT EXISTS(SELECT 1 FROM addresses WHERE user_id = $1 AND is_active = TRUE)"
 	setSecret2fa        = "UPDATE users SET secret2fa = $1 WHERE login = $2"
 	getSecret2fa        = "SELECT secret2fa FROM users WHERE login = $1"
+	disable2fa          = "UPDATE users SET secret2fa = NULL WHERE login = $1"
 )
 
 type AuthRepo struct {
@@ -108,6 +109,19 @@ func (repo *AuthRepo) GetSecret2fa(ctx context.Context, login string) ([]byte, e
 
 	logger.Info("Successful")
 	return secret2fa, nil
+}
+
+func (repo *AuthRepo) Disable2fa(ctx context.Context, login string) error {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	_, err := repo.db.Exec(ctx, disable2fa, login)
+	if err != nil {
+		logger.Error(err.Error())
+		return err
+	}
+
+	logger.Info("Successful")
+	return nil
 }
 
 func (repo *AuthRepo) UpdateUser(ctx context.Context, user models.User) error {

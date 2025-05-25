@@ -196,6 +196,10 @@ func (uc *AuthUsecase) GetSecret2fa(ctx context.Context, login string) ([]byte, 
 	return secret2fa, err
 }
 
+func (uc *AuthUsecase) Disable2fa(ctx context.Context, login string) error {
+	return uc.repo.Disable2fa(ctx, login)
+}
+
 func (uc *AuthUsecase) SignUp(ctx context.Context, data models.SignUpReq) (models.User, string, string, error) {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 

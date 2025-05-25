@@ -34,6 +34,7 @@ type AuthRepo interface {
 	SelectUserByLogin(ctx context.Context, login string) (models.User, error)
 	SetSecret2fa(ctx context.Context,secret2fa []byte, login string) error
 	GetSecret2fa(ctx context.Context, login string) ([]byte, error)
+	Disable2fa(ctx context.Context, login string) error
 	UpdateUser(ctx context.Context, user models.User) error
 	UpdateUserPic(ctx context.Context, login string, userPic string) error
 	InsertAddress(ctx context.Context, address models.Address) error
@@ -48,6 +49,7 @@ type AuthUsecase interface {
 	SignIn(ctx context.Context, data models.SignInReq) (models.User, string, string, error)
 	GetQRCode(ctx context.Context, secret2fa []byte, login string) error
 	GetSecret2fa(ctx context.Context, login string) ([]byte, error)
+	Disable2fa(ctx context.Context, login string) error
 	SignUp(ctx context.Context, data models.SignUpReq) (models.User, string, string, error)
 	Check(ctx context.Context, login string) (models.User, error)
 	UpdateUser(ctx context.Context, login string, updateData models.UpdateUserReq) (models.User, error)

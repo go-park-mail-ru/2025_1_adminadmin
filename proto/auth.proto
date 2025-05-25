@@ -12,6 +12,8 @@ service AuthService {
   rpc GetQRCode (GetQRCodeRequest) returns (google.protobuf.Empty) {}
 
   rpc CheckCode (CheckCodeRequest) returns (CheckCodeResponse) {}
+
+  rpc Disable2fa (Disable2faRequest) returns (google.protobuf.Empty) {}
   
   rpc SignUp (SignUpRequest) returns (UserResponse) {}
   
@@ -47,6 +49,10 @@ message GetQRCodeRequest {
 }
 
 message CheckCodeRequest {
+  string Login = 1;
+}
+
+message Disable2faRequest {
   string Login = 1;
 }
 

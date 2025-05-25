@@ -310,6 +310,42 @@ func (h *AuthHandler) CheckCode(w http.ResponseWriter, r *http.Request) {
 	log.LogHandlerInfo(logger, "Success", http.StatusOK)
 }
 
+func (h *AuthHandler) Disable2fa(w http.ResponseWriter, r *http.Request) {
+	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
+
+	cookie, err := r.Cookie("AdminJWT")
+	if err != nil {
+		if err == http.ErrNoCookie {
+			log.LogHandlerError(logger, fmt.Errorf("токен отсутствует: %w", err), http.StatusUnauthorized)
+			utils.SendError(w, "Ошибка авторизации", http.StatusUnauthorized)
+			return
+		}
+		log.LogHandlerError(logger, fmt.Errorf("ошибка при чтении куки: %w", err), http.StatusBadRequest)
+		utils.SendError(w, "Ошибка авторизации", http.StatusBadRequest)
+		return
+	}
+	JWTStr := cookie.Value
+
+	claims := jwt.MapClaims{}
+
+	login, ok := jwtUtils.GetLoginFromJWT(JWTStr, claims, h.secret)
+	if !ok || login == "" {
+		log.LogHandlerError(logger, errors.New("недействительный токен: login отсутствует"), http.StatusUnauthorized)
+		utils.SendError(w, "Ошибка авторизации", http.StatusUnauthorized)
+		return
+	}
+
+	_, err = h.client.Disable2Fa(r.Context(), &gen.Disable2FaRequest{Login: login})
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка уровнем ниже: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "Ошибка сервера", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	log.LogHandlerInfo(logger, "Success", http.StatusOK)
+}
+
 func (h *AuthHandler) SignUp(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
 

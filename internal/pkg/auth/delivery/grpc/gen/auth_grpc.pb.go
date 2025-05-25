@@ -23,6 +23,7 @@ const (
 	AuthService_SignIn_FullMethodName           = "/auth.AuthService/SignIn"
 	AuthService_GetQRCode_FullMethodName        = "/auth.AuthService/GetQRCode"
 	AuthService_CheckCode_FullMethodName        = "/auth.AuthService/CheckCode"
+	AuthService_Disable2Fa_FullMethodName       = "/auth.AuthService/Disable2fa"
 	AuthService_SignUp_FullMethodName           = "/auth.AuthService/SignUp"
 	AuthService_Check_FullMethodName            = "/auth.AuthService/Check"
 	AuthService_UpdateUser_FullMethodName       = "/auth.AuthService/UpdateUser"
@@ -39,6 +40,7 @@ type AuthServiceClient interface {
 	SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*UserResponse, error)
 	GetQRCode(ctx context.Context, in *GetQRCodeRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	CheckCode(ctx context.Context, in *CheckCodeRequest, opts ...grpc.CallOption) (*CheckCodeResponse, error)
+	Disable2Fa(ctx context.Context, in *Disable2FaRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	SignUp(ctx context.Context, in *SignUpRequest, opts ...grpc.CallOption) (*UserResponse, error)
 	Check(ctx context.Context, in *CheckRequest, opts ...grpc.CallOption) (*UserResponse, error)
 	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UserResponse, error)
@@ -80,6 +82,16 @@ func (c *authServiceClient) CheckCode(ctx context.Context, in *CheckCodeRequest,
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CheckCodeResponse)
 	err := c.cc.Invoke(ctx, AuthService_CheckCode_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) Disable2Fa(ctx context.Context, in *Disable2FaRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, AuthService_Disable2Fa_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -163,6 +175,7 @@ type AuthServiceServer interface {
 	SignIn(context.Context, *SignInRequest) (*UserResponse, error)
 	GetQRCode(context.Context, *GetQRCodeRequest) (*emptypb.Empty, error)
 	CheckCode(context.Context, *CheckCodeRequest) (*CheckCodeResponse, error)
+	Disable2Fa(context.Context, *Disable2FaRequest) (*emptypb.Empty, error)
 	SignUp(context.Context, *SignUpRequest) (*UserResponse, error)
 	Check(context.Context, *CheckRequest) (*UserResponse, error)
 	UpdateUser(context.Context, *UpdateUserRequest) (*UserResponse, error)
@@ -188,6 +201,9 @@ func (UnimplementedAuthServiceServer) GetQRCode(context.Context, *GetQRCodeReque
 }
 func (UnimplementedAuthServiceServer) CheckCode(context.Context, *CheckCodeRequest) (*CheckCodeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckCode not implemented")
+}
+func (UnimplementedAuthServiceServer) Disable2Fa(context.Context, *Disable2FaRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Disable2Fa not implemented")
 }
 func (UnimplementedAuthServiceServer) SignUp(context.Context, *SignUpRequest) (*UserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SignUp not implemented")
@@ -281,6 +297,24 @@ func _AuthService_CheckCode_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AuthServiceServer).CheckCode(ctx, req.(*CheckCodeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_Disable2Fa_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Disable2FaRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).Disable2Fa(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_Disable2Fa_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).Disable2Fa(ctx, req.(*Disable2FaRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -429,6 +463,10 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CheckCode",
 			Handler:    _AuthService_CheckCode_Handler,
+		},
+		{
+			MethodName: "Disable2fa",
+			Handler:    _AuthService_Disable2Fa_Handler,
 		},
 		{
 			MethodName: "SignUp",
