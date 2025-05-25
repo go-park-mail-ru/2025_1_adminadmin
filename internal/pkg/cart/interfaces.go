@@ -41,5 +41,5 @@ type RestaurantRepo interface {
 	InsertAddress(ctx context.Context, address models.Address) error
 	AddressExists(ctx context.Context, address string, userID uuid.UUID) (bool, error)
 	SetActiveAddress(ctx context.Context, userId uuid.UUID, address string) error
-	GetUpdates(ctx context.Context, userID string, currentOffset time.Time) models.Order
+	GetUpdates(ctx context.Context, userID string, currentOffset time.Time) (models.Order, bool)
 }

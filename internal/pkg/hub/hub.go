@@ -45,14 +45,27 @@ func (h *Hub) Run(ctx context.Context) {
 		select {
 		case <-t.C:
 			h.connect.Range(func(key, value interface{}) bool {
-				connect := key.(*websocket.Conn)
+				conn := key.(*websocket.Conn)
 				userID := value.(string)
 
-				mes := h.Repo.GetUpdates(ctx, userID, h.currentOffset)
-				err := connect.WriteJSON(mes)
-				return err == nil
+				// Получаем обновление
+				order, ok := h.Repo.GetUpdates(ctx, userID, h.currentOffset)
+				if !ok {
+					return true // продолжаем работу, но не отправляем ничего
+				}
+
+				// Отправляем только если есть что отправить
+				if err := conn.WriteJSON(order); err != nil {
+					_ = conn.Close()
+					return false // удаляем соединение
+				}
+
+				return true
 			})
-			h.currentOffset = h.currentOffset.Add(5 * time.Second)
+
+			// Обновляем offset после проверки
+			h.currentOffset = time.Now()
+
 		case <-ctx.Done():
 			return
 		}

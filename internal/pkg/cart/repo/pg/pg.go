@@ -11,6 +11,7 @@ import (
 	dbUtils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/db"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	"github.com/jackc/pgtype/pgxtype"
+	"github.com/jackc/pgx"
 	"github.com/lib/pq"
 	"github.com/satori/uuid"
 )
@@ -105,38 +106,67 @@ func NewRestaurantRepository() (*RestaurantRepository, error) {
 	return &RestaurantRepository{db: db}, err
 }
 
-func (r *RestaurantRepository) GetUpdates(ctx context.Context, userID string, currentOffset time.Time) models.Order {
+func (r *RestaurantRepository) GetUpdates(ctx context.Context, userID string, currentOffset time.Time) (models.Order, bool) {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 
 	var order models.Order
 	var orderProductsJSON string
-	query := `SELECT id,
-    user_id,
-    status,
-    address_id,
-    order_products,
-    apartment_or_office,
-    intercom,
-    entrance,
-    floor,
-    courier_comment,
-    leave_at_door,
-    final_price,
-    created_at FROM orders WHERE created_at > $1 AND user_id = $2 ORDER BY created_at DESC LIMIT 1;`
-	err := r.db.QueryRow(ctx, query, currentOffset, userID).Scan(&order.ID, &order.UserID, &order.Status, &order.Address, &orderProductsJSON,
-		&order.ApartmentOrOffice, &order.Intercom, &order.Entrance, &order.Floor, &order.CourierComment,
-		&order.LeaveAtDoor, &order.FinalPrice, &order.CreatedAt)
+
+	query := `
+        SELECT 
+            id,
+            user_id,
+            status,
+            address_id,
+            order_products,
+            apartment_or_office,
+            intercom,
+            entrance,
+            floor,
+            courier_comment,
+            leave_at_door,
+            final_price,
+            created_at 
+        FROM orders 
+        WHERE created_at > $1 AND user_id = $2 
+        ORDER BY created_at DESC 
+        LIMIT 1;
+    `
+
+	row := r.db.QueryRow(ctx, query, currentOffset, userID)
+
+	err := row.Scan(
+		&order.ID,
+		&order.UserID,
+		&order.Status,
+		&order.Address,
+		&orderProductsJSON,
+		&order.ApartmentOrOffice,
+		&order.Intercom,
+		&order.Entrance,
+		&order.Floor,
+		&order.CourierComment,
+		&order.LeaveAtDoor,
+		&order.FinalPrice,
+		&order.CreatedAt,
+	)
+
 	if err != nil {
+		if err == pgx.ErrNoRows {
+			logger.Debug("Новых заказов нет")
+			return models.Order{}, false
+		}
 		logger.Error("Ошибка при получении заказа", slog.String("error", err.Error()))
-		return models.Order{}
+		return models.Order{}, false
 	}
 
-	if err = json.Unmarshal([]byte(orderProductsJSON), &order.OrderProducts); err != nil {
-		logger.Error("ошибка анмаршалинга JSON: " + err.Error())
-		return models.Order{}
+	if err := json.Unmarshal([]byte(orderProductsJSON), &order.OrderProducts); err != nil {
+		logger.Error("Ошибка анмаршалинга JSON: " + err.Error())
+		return models.Order{}, false
 	}
-	logger.Info("Successful")
-	return order
+
+	logger.Info("Найдено новое обновление")
+	return order, true
 }
 
 func (r *RestaurantRepository) GetProductPrice(ctx context.Context, productID string) (float64, error) {
