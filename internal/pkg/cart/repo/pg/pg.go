@@ -23,21 +23,25 @@ const (
 		apartment_or_office, intercom, entrance, floor,
 		courier_comment, leave_at_door, created_at, final_price, order_items) 
 		VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)`
-	getAllOrders = `SELECT
-    id,
-    user_id,
-    status,
-    address_id,
-    order_products,
-    apartment_or_office,
-    intercom,
-    entrance,
-    floor,
-    courier_comment,
-    leave_at_door,
-    final_price,
-    created_at
-FROM orders WHERE user_id = $1 LIMIT $2 OFFSET $3;`
+	getAllOrders = `
+    SELECT
+        id,
+        user_id,
+        status,
+        address_id,
+        order_products,
+        apartment_or_office,
+        intercom,
+        entrance,
+        floor,
+        courier_comment,
+        leave_at_door,
+        final_price,
+        created_at
+    FROM orders 
+    WHERE user_id = $1
+    ORDER BY created_at DESC
+    LIMIT $2 OFFSET $3;`
 	countOrdersQuery = `SELECT COUNT(*) FROM orders WHERE user_id = $1;`
 
 	getOrderById = `SELECT
