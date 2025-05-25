@@ -177,6 +177,8 @@ func (h *AuthHandler) GetQRCode(w http.ResponseWriter, r *http.Request) {
 	URL.RawQuery = secretParam.Encode() + "&" + issuer.Encode()
 	URL.Path += fmt.Sprintf("/%s:%s", url.PathEscape(issuerName), url.PathEscape(req.Login))
 
+	w.Header().Set("Content-Type", "image/png")
+
 	var png []byte
 	png, _ = qrcode.Encode(URL.String(), qrcode.Medium, 256)
 	_, _ = w.Write(png)
