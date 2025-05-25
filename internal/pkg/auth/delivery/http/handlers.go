@@ -267,6 +267,25 @@ func (h *AuthHandler) CheckCode(w http.ResponseWriter, r *http.Request) {
 		utils.SendError(w, "ошибка авторизации", http.StatusUnauthorized)
 	}
 
+	http.SetCookie(w, &http.Cookie{
+		Name:     "AdminJWT",
+		Value:    user.Token,
+		HttpOnly: true,
+		Secure:   false,
+		Expires:  time.Now().Add(24 * time.Hour),
+		Path:     "/",
+	})
+
+	http.SetCookie(w, &http.Cookie{
+		Name:     "CSRF-Token",
+		Value:    user.CsrfToken,
+		Expires:  time.Now().Add(24 * time.Hour),
+		HttpOnly: false,
+		Secure:   false,
+		SameSite: http.SameSiteStrictMode,
+		Path:     "/",
+	})
+
 	newModel := models.User{
 		Login:         user.Login,
 		PhoneNumber:   user.PhoneNumber,
