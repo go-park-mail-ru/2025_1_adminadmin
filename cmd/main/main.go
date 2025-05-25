@@ -366,7 +366,7 @@ func main() {
 		auth.HandleFunc("/signin", authHandler.SignIn).Methods(http.MethodPost, http.MethodOptions)
 		auth.HandleFunc("/qr", authHandler.GetQRCode).Methods(http.MethodPost, http.MethodOptions)
 		auth.HandleFunc("/check2fa", authHandler.CheckCode).Methods(http.MethodPost, http.MethodOptions)
-		auth.HandleFunc("/disable2fa", authHandler.Disable2fa).Methods(http.MethodPost, http.MethodOptions)
+		auth.HandleFunc("/disable2fa", authHandler.Disable2fa).Methods(http.MethodDelete, http.MethodOptions)
 		auth.HandleFunc("/signup", authHandler.SignUp).Methods(http.MethodPost, http.MethodOptions)
 		auth.HandleFunc("/check", authHandler.Check).Methods(http.MethodGet, http.MethodOptions)
 		auth.HandleFunc("/logout", authHandler.LogOut).Methods(http.MethodGet, http.MethodOptions)
