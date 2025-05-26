@@ -23,7 +23,7 @@ const (
 	AuthService_SignIn_FullMethodName           = "/auth.AuthService/SignIn"
 	AuthService_GetQRCode_FullMethodName        = "/auth.AuthService/GetQRCode"
 	AuthService_CheckCode_FullMethodName        = "/auth.AuthService/CheckCode"
-	AuthService_Disable2Fa_FullMethodName       = "/auth.AuthService/Disable2fa"
+	AuthService_Disable2Fa_FullMethodName       = "/auth.AuthService/Disable2Fa"
 	AuthService_SignUp_FullMethodName           = "/auth.AuthService/SignUp"
 	AuthService_Check_FullMethodName            = "/auth.AuthService/Check"
 	AuthService_UpdateUser_FullMethodName       = "/auth.AuthService/UpdateUser"
@@ -465,7 +465,7 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AuthService_CheckCode_Handler,
 		},
 		{
-			MethodName: "Disable2fa",
+			MethodName: "Disable2Fa",
 			Handler:    _AuthService_Disable2Fa_Handler,
 		},
 		{

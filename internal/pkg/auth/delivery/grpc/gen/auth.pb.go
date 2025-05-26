@@ -863,7 +863,7 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\tSecret2fa\x18\x02 \x01(\fR\tSecret2fa\"(\n" +
 	"\x10CheckCodeRequest\x12\x14\n" +
 	"\x05Login\x18\x01 \x01(\tR\x05Login\")\n" +
-	"\x11Disable2faRequest\x12\x14\n" +
+	"\x11Disable2FaRequest\x12\x14\n" +
 	"\x05Login\x18\x01 \x01(\tR\x05Login\"\x9d\x01\n" +
 	"\rSignUpRequest\x12\x14\n" +
 	"\x05Login\x18\x01 \x01(\tR\x05Login\x12\x1c\n" +
@@ -911,7 +911,7 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\tGetQRCode\x12\x16.auth.GetQRCodeRequest\x1a\x16.google.protobuf.Empty\"\x00\x12>\n" +
 	"\tCheckCode\x12\x16.auth.CheckCodeRequest\x1a\x17.auth.CheckCodeResponse\"\x00\x12?\n" +
 	"\n" +
-	"Disable2fa\x12\x17.auth.Disable2faRequest\x1a\x16.google.protobuf.Empty\"\x00\x123\n" +
+	"Disable2Fa\x12\x17.auth.Disable2FaRequest\x1a\x16.google.protobuf.Empty\"\x00\x123\n" +
 	"\x06SignUp\x12\x13.auth.SignUpRequest\x1a\x12.auth.UserResponse\"\x00\x121\n" +
 	"\x05Check\x12\x12.auth.CheckRequest\x1a\x12.auth.UserResponse\"\x00\x12;\n" +
 	"\n" +
@@ -941,7 +941,7 @@ var file_proto_auth_proto_goTypes = []any{
 	(*SignInRequest)(nil),        // 2: auth.SignInRequest
 	(*GetQRCodeRequest)(nil),     // 3: auth.GetQRCodeRequest
 	(*CheckCodeRequest)(nil),     // 4: auth.CheckCodeRequest
-	(*Disable2FaRequest)(nil),    // 5: auth.Disable2faRequest
+	(*Disable2FaRequest)(nil),    // 5: auth.Disable2FaRequest
 	(*SignUpRequest)(nil),        // 6: auth.SignUpRequest
 	(*UpdateUserRequest)(nil),    // 7: auth.UpdateUserRequest
 	(*UpdateUserPicRequest)(nil), // 8: auth.UpdateUserPicRequest
@@ -957,7 +957,7 @@ var file_proto_auth_proto_depIdxs = []int32{
 	2,  // 1: auth.AuthService.SignIn:input_type -> auth.SignInRequest
 	3,  // 2: auth.AuthService.GetQRCode:input_type -> auth.GetQRCodeRequest
 	4,  // 3: auth.AuthService.CheckCode:input_type -> auth.CheckCodeRequest
-	5,  // 4: auth.AuthService.Disable2fa:input_type -> auth.Disable2faRequest
+	5,  // 4: auth.AuthService.Disable2Fa:input_type -> auth.Disable2FaRequest
 	6,  // 5: auth.AuthService.SignUp:input_type -> auth.SignUpRequest
 	0,  // 6: auth.AuthService.Check:input_type -> auth.CheckRequest
 	7,  // 7: auth.AuthService.UpdateUser:input_type -> auth.UpdateUserRequest
@@ -968,7 +968,7 @@ var file_proto_auth_proto_depIdxs = []int32{
 	11, // 12: auth.AuthService.SignIn:output_type -> auth.UserResponse
 	14, // 13: auth.AuthService.GetQRCode:output_type -> google.protobuf.Empty
 	12, // 14: auth.AuthService.CheckCode:output_type -> auth.CheckCodeResponse
-	14, // 15: auth.AuthService.Disable2fa:output_type -> google.protobuf.Empty
+	14, // 15: auth.AuthService.Disable2Fa:output_type -> google.protobuf.Empty
 	11, // 16: auth.AuthService.SignUp:output_type -> auth.UserResponse
 	11, // 17: auth.AuthService.Check:output_type -> auth.UserResponse
 	11, // 18: auth.AuthService.UpdateUser:output_type -> auth.UserResponse

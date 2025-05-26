@@ -13,7 +13,7 @@ service AuthService {
 
   rpc CheckCode (CheckCodeRequest) returns (CheckCodeResponse) {}
 
-  rpc Disable2fa (Disable2faRequest) returns (google.protobuf.Empty) {}
+  rpc Disable2Fa (Disable2FaRequest) returns (google.protobuf.Empty) {}
   
   rpc SignUp (SignUpRequest) returns (UserResponse) {}
   
@@ -52,7 +52,7 @@ message CheckCodeRequest {
   string Login = 1;
 }
 
-message Disable2faRequest {
+message Disable2FaRequest {
   string Login = 1;
 }
 

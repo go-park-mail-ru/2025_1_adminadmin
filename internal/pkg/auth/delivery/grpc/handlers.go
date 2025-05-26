@@ -78,7 +78,7 @@ func (h *AuthHandler) CheckCode(ctx context.Context, in *gen.CheckCodeRequest) (
 	return &gen.CheckCodeResponse{Secret2Fa: secret2fa}, nil
 }
 
-func (h *AuthHandler) Disable2fa(ctx context.Context, in *gen.Disable2FaRequest) (*emptypb.Empty, error) {
+func (h *AuthHandler) Disable2Fa(ctx context.Context, in *gen.Disable2FaRequest) (*emptypb.Empty, error) {
 	err := h.uc.Disable2fa(ctx, in.Login)
 
 	if err != nil {
