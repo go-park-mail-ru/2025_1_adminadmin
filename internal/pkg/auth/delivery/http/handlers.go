@@ -290,6 +290,7 @@ func (h *AuthHandler) CheckCode(w http.ResponseWriter, r *http.Request) {
 		SameSite: http.SameSiteStrictMode,
 		Path:     "/",
 	})
+	w.Header().Set("X-CSRF-Token", user.CsrfToken)
 
 	newModel := models.User{
 		Login:         user.Login,
