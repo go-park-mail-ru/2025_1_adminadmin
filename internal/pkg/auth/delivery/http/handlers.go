@@ -644,13 +644,15 @@ func (h *AuthHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	newModel := models.User{
-		Login:       user.Login,
-		PhoneNumber: user.PhoneNumber,
-		Id:          parsedUUID,
-		FirstName:   user.FirstName,
-		LastName:    user.LastName,
-		Description: user.Description,
-		UserPic:     user.UserPic,
+		Login:         user.Login,
+		PhoneNumber:   user.PhoneNumber,
+		Id:            parsedUUID,
+		FirstName:     user.FirstName,
+		LastName:      user.LastName,
+		Description:   user.Description,
+		UserPic:       user.UserPic,
+		ActiveAddress: user.ActiveAddress,
+		HasSecret:     user.HasSecret,
 	}
 
 	data, err := json.Marshal(newModel)
@@ -780,13 +782,15 @@ func (h *AuthHandler) UpdateUserPic(w http.ResponseWriter, r *http.Request) {
 	}
 
 	newModel := models.User{
-		Login:       user.Login,
-		PhoneNumber: user.PhoneNumber,
-		Id:          parsedUUID,
-		FirstName:   user.FirstName,
-		LastName:    user.LastName,
-		Description: user.Description,
-		UserPic:     user.UserPic,
+		Login:         user.Login,
+		PhoneNumber:   user.PhoneNumber,
+		Id:            parsedUUID,
+		FirstName:     user.FirstName,
+		LastName:      user.LastName,
+		Description:   user.Description,
+		UserPic:       user.UserPic,
+		ActiveAddress: user.ActiveAddress,
+		HasSecret:     user.HasSecret,
 	}
 
 	data, err := json.Marshal(newModel)
