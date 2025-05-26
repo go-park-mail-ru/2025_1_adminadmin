@@ -8,6 +8,7 @@ type SignInReq struct {
 	Password string `json:"password"`
 }
 
+// easyjson:json
 type Check2fa struct {
 	Login    string `json:"login"`
 	Password string `json:"password"`

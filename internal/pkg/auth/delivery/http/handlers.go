@@ -21,6 +21,7 @@ import (
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/log"
 	utils "github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/utils/send_error"
 	"github.com/golang-jwt/jwt"
+	"github.com/gorilla/mux"
 	"github.com/mailru/easyjson"
 	"github.com/satori/uuid"
 	"github.com/skip2/go-qrcode"
@@ -899,17 +900,22 @@ func (h *AuthHandler) DeleteAddress(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var address models.Address
-	err := easyjson.UnmarshalFromReader(r.Body, &address)
-	if err != nil {
-		log.LogHandlerError(logger, fmt.Errorf("ошибка парсинга JSON: %w", err), http.StatusBadRequest)
+	vars := mux.Vars(r)
+	addressIDStr, ok := vars["id"]
+	if !ok || addressIDStr == "" {
+	log.LogHandlerError(logger, errors.New("id адреса отсутствует в URL"), http.StatusBadRequest)
+	utils.SendError(w, "Неверный запрос", http.StatusBadRequest)
+	return
+	}
+	addressID := uuid.FromStringOrNil(addressIDStr)
+	if addressID == uuid.Nil {
+		log.LogHandlerError(logger, errors.New("неверный формат id адреса"), http.StatusBadRequest)
 		utils.SendError(w, "Неверный запрос", http.StatusBadRequest)
 		return
 	}
-	address.Sanitize()
 
-	_, err = h.client.DeleteAddress(r.Context(), &gen.DeleteAddressRequest{
-		Id: address.Id.String(),
+	_, err := h.client.DeleteAddress(r.Context(), &gen.DeleteAddressRequest{
+		Id: addressIDStr,
 	})
 	if err != nil {
 		st, ok := status.FromError(err)

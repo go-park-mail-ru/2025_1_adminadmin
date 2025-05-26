@@ -14,6 +14,7 @@ type Address struct {
 	IsActive bool      `json:"is_active"`
 }
 
+// esyjson:json
 type DeleteAddressReq struct {
 	Id string `json:"id"`
 }
