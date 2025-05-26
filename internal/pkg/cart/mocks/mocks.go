@@ -7,78 +7,12 @@ package mocks
 import (
 	context "context"
 	reflect "reflect"
+	time "time"
 
 	models "github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	gomock "github.com/golang/mock/gomock"
 	uuid "github.com/satori/uuid"
 )
-
-// MockCartRepo is a mock of CartRepo interface.
-type MockCartRepo struct {
-	ctrl     *gomock.Controller
-	recorder *MockCartRepoMockRecorder
-}
-
-// MockCartRepoMockRecorder is the mock recorder for MockCartRepo.
-type MockCartRepoMockRecorder struct {
-	mock *MockCartRepo
-}
-
-// NewMockCartRepo creates a new mock instance.
-func NewMockCartRepo(ctrl *gomock.Controller) *MockCartRepo {
-	mock := &MockCartRepo{ctrl: ctrl}
-	mock.recorder = &MockCartRepoMockRecorder{mock}
-	return mock
-}
-
-// EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockCartRepo) EXPECT() *MockCartRepoMockRecorder {
-	return m.recorder
-}
-
-// ClearCart mocks base method.
-func (m *MockCartRepo) ClearCart(ctx context.Context, userID string) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ClearCart", ctx, userID)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// ClearCart indicates an expected call of ClearCart.
-func (mr *MockCartRepoMockRecorder) ClearCart(ctx, userID interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ClearCart", reflect.TypeOf((*MockCartRepo)(nil).ClearCart), ctx, userID)
-}
-
-// GetCart mocks base method.
-func (m *MockCartRepo) GetCart(ctx context.Context, userID string) (map[string]int, string, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetCart", ctx, userID)
-	ret0, _ := ret[0].(map[string]int)
-	ret1, _ := ret[1].(string)
-	ret2, _ := ret[2].(error)
-	return ret0, ret1, ret2
-}
-
-// GetCart indicates an expected call of GetCart.
-func (mr *MockCartRepoMockRecorder) GetCart(ctx, userID interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCart", reflect.TypeOf((*MockCartRepo)(nil).GetCart), ctx, userID)
-}
-
-// UpdateItemQuantity mocks base method.
-func (m *MockCartRepo) UpdateItemQuantity(ctx context.Context, userID, productID, restaurantId string, quantity int) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpdateItemQuantity", ctx, userID, productID, restaurantId, quantity)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// UpdateItemQuantity indicates an expected call of UpdateItemQuantity.
-func (mr *MockCartRepoMockRecorder) UpdateItemQuantity(ctx, userID, productID, restaurantId, quantity interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateItemQuantity", reflect.TypeOf((*MockCartRepo)(nil).UpdateItemQuantity), ctx, userID, productID, restaurantId, quantity)
-}
 
 // MockCartUsecase is a mock of CartUsecase interface.
 type MockCartUsecase struct {
@@ -164,12 +98,13 @@ func (mr *MockCartUsecaseMockRecorder) GetOrderById(ctx, order_id, user_id inter
 }
 
 // GetOrders mocks base method.
-func (m *MockCartUsecase) GetOrders(ctx context.Context, user_id uuid.UUID, count, offset int) ([]models.Order, error) {
+func (m *MockCartUsecase) GetOrders(ctx context.Context, user_id uuid.UUID, count, offset int) ([]models.Order, int, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetOrders", ctx, user_id, count, offset)
 	ret0, _ := ret[0].([]models.Order)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	ret1, _ := ret[1].(int)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
 }
 
 // GetOrders indicates an expected call of GetOrders.
@@ -206,6 +141,74 @@ func (mr *MockCartUsecaseMockRecorder) UpdateOrderStatus(ctx, order_id interface
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateOrderStatus", reflect.TypeOf((*MockCartUsecase)(nil).UpdateOrderStatus), ctx, order_id)
 }
 
+// MockCartRepo is a mock of CartRepo interface.
+type MockCartRepo struct {
+	ctrl     *gomock.Controller
+	recorder *MockCartRepoMockRecorder
+}
+
+// MockCartRepoMockRecorder is the mock recorder for MockCartRepo.
+type MockCartRepoMockRecorder struct {
+	mock *MockCartRepo
+}
+
+// NewMockCartRepo creates a new mock instance.
+func NewMockCartRepo(ctrl *gomock.Controller) *MockCartRepo {
+	mock := &MockCartRepo{ctrl: ctrl}
+	mock.recorder = &MockCartRepoMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockCartRepo) EXPECT() *MockCartRepoMockRecorder {
+	return m.recorder
+}
+
+// ClearCart mocks base method.
+func (m *MockCartRepo) ClearCart(ctx context.Context, userID string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ClearCart", ctx, userID)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// ClearCart indicates an expected call of ClearCart.
+func (mr *MockCartRepoMockRecorder) ClearCart(ctx, userID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ClearCart", reflect.TypeOf((*MockCartRepo)(nil).ClearCart), ctx, userID)
+}
+
+// GetCart mocks base method.
+func (m *MockCartRepo) GetCart(ctx context.Context, userID string) (map[string]int, string, float64, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetCart", ctx, userID)
+	ret0, _ := ret[0].(map[string]int)
+	ret1, _ := ret[1].(string)
+	ret2, _ := ret[2].(float64)
+	ret3, _ := ret[3].(error)
+	return ret0, ret1, ret2, ret3
+}
+
+// GetCart indicates an expected call of GetCart.
+func (mr *MockCartRepoMockRecorder) GetCart(ctx, userID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCart", reflect.TypeOf((*MockCartRepo)(nil).GetCart), ctx, userID)
+}
+
+// UpdateItemQuantity mocks base method.
+func (m *MockCartRepo) UpdateItemQuantity(ctx context.Context, userID, productID, restaurantID string, quantity int, price float64) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateItemQuantity", ctx, userID, productID, restaurantID, quantity, price)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateItemQuantity indicates an expected call of UpdateItemQuantity.
+func (mr *MockCartRepoMockRecorder) UpdateItemQuantity(ctx, userID, productID, restaurantID, quantity, price interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateItemQuantity", reflect.TypeOf((*MockCartRepo)(nil).UpdateItemQuantity), ctx, userID, productID, restaurantID, quantity, price)
+}
+
 // MockRestaurantRepo is a mock of RestaurantRepo interface.
 type MockRestaurantRepo struct {
 	ctrl     *gomock.Controller
@@ -229,6 +232,35 @@ func (m *MockRestaurantRepo) EXPECT() *MockRestaurantRepoMockRecorder {
 	return m.recorder
 }
 
+// AddressExists mocks base method.
+func (m *MockRestaurantRepo) AddressExists(ctx context.Context, address string, userID uuid.UUID) (bool, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "AddressExists", ctx, address, userID)
+	ret0, _ := ret[0].(bool)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// AddressExists indicates an expected call of AddressExists.
+func (mr *MockRestaurantRepoMockRecorder) AddressExists(ctx, address, userID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddressExists", reflect.TypeOf((*MockRestaurantRepo)(nil).AddressExists), ctx, address, userID)
+}
+
+// DeletePromocode mocks base method.
+func (m *MockRestaurantRepo) DeletePromocode(ctx context.Context, userId uuid.UUID, promocode string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeletePromocode", ctx, userId, promocode)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeletePromocode indicates an expected call of DeletePromocode.
+func (mr *MockRestaurantRepoMockRecorder) DeletePromocode(ctx, userId, promocode interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeletePromocode", reflect.TypeOf((*MockRestaurantRepo)(nil).DeletePromocode), ctx, userId, promocode)
+}
+
 // GetCartItem mocks base method.
 func (m *MockRestaurantRepo) GetCartItem(ctx context.Context, productIDs []string, productAmounts map[string]int, restaurantID string) (models.Cart, error) {
 	m.ctrl.T.Helper()
@@ -242,6 +274,36 @@ func (m *MockRestaurantRepo) GetCartItem(ctx context.Context, productIDs []strin
 func (mr *MockRestaurantRepoMockRecorder) GetCartItem(ctx, productIDs, productAmounts, restaurantID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCartItem", reflect.TypeOf((*MockRestaurantRepo)(nil).GetCartItem), ctx, productIDs, productAmounts, restaurantID)
+}
+
+// GetDiscount mocks base method.
+func (m *MockRestaurantRepo) GetDiscount(ctx context.Context, user_id uuid.UUID, promocode string) (float64, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetDiscount", ctx, user_id, promocode)
+	ret0, _ := ret[0].(float64)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetDiscount indicates an expected call of GetDiscount.
+func (mr *MockRestaurantRepoMockRecorder) GetDiscount(ctx, user_id, promocode interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetDiscount", reflect.TypeOf((*MockRestaurantRepo)(nil).GetDiscount), ctx, user_id, promocode)
+}
+
+// GetIdByLogin mocks base method.
+func (m *MockRestaurantRepo) GetIdByLogin(ctx context.Context, login string) (uuid.UUID, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetIdByLogin", ctx, login)
+	ret0, _ := ret[0].(uuid.UUID)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetIdByLogin indicates an expected call of GetIdByLogin.
+func (mr *MockRestaurantRepoMockRecorder) GetIdByLogin(ctx, login interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetIdByLogin", reflect.TypeOf((*MockRestaurantRepo)(nil).GetIdByLogin), ctx, login)
 }
 
 // GetOrderById mocks base method.
@@ -260,18 +322,78 @@ func (mr *MockRestaurantRepoMockRecorder) GetOrderById(ctx, order_id, user_id in
 }
 
 // GetOrders mocks base method.
-func (m *MockRestaurantRepo) GetOrders(ctx context.Context, user_id uuid.UUID, count, offset int) ([]models.Order, error) {
+func (m *MockRestaurantRepo) GetOrders(ctx context.Context, user_id uuid.UUID, count, offset int) ([]models.Order, int, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetOrders", ctx, user_id, count, offset)
 	ret0, _ := ret[0].([]models.Order)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	ret1, _ := ret[1].(int)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
 }
 
 // GetOrders indicates an expected call of GetOrders.
 func (mr *MockRestaurantRepoMockRecorder) GetOrders(ctx, user_id, count, offset interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetOrders", reflect.TypeOf((*MockRestaurantRepo)(nil).GetOrders), ctx, user_id, count, offset)
+}
+
+// GetProductPrice mocks base method.
+func (m *MockRestaurantRepo) GetProductPrice(ctx context.Context, productID string) (float64, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetProductPrice", ctx, productID)
+	ret0, _ := ret[0].(float64)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetProductPrice indicates an expected call of GetProductPrice.
+func (mr *MockRestaurantRepoMockRecorder) GetProductPrice(ctx, productID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetProductPrice", reflect.TypeOf((*MockRestaurantRepo)(nil).GetProductPrice), ctx, productID)
+}
+
+// GetRecommendedProducts mocks base method.
+func (m *MockRestaurantRepo) GetRecommendedProducts(ctx context.Context, productIDs []string, restaurantID string) ([]models.CartItem, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetRecommendedProducts", ctx, productIDs, restaurantID)
+	ret0, _ := ret[0].([]models.CartItem)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetRecommendedProducts indicates an expected call of GetRecommendedProducts.
+func (mr *MockRestaurantRepoMockRecorder) GetRecommendedProducts(ctx, productIDs, restaurantID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetRecommendedProducts", reflect.TypeOf((*MockRestaurantRepo)(nil).GetRecommendedProducts), ctx, productIDs, restaurantID)
+}
+
+// GetUpdates mocks base method.
+func (m *MockRestaurantRepo) GetUpdates(ctx context.Context, userID string, currentOffset time.Time) (models.Order, bool) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetUpdates", ctx, userID, currentOffset)
+	ret0, _ := ret[0].(models.Order)
+	ret1, _ := ret[1].(bool)
+	return ret0, ret1
+}
+
+// GetUpdates indicates an expected call of GetUpdates.
+func (mr *MockRestaurantRepoMockRecorder) GetUpdates(ctx, userID, currentOffset interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUpdates", reflect.TypeOf((*MockRestaurantRepo)(nil).GetUpdates), ctx, userID, currentOffset)
+}
+
+// InsertAddress mocks base method.
+func (m *MockRestaurantRepo) InsertAddress(ctx context.Context, address models.Address) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "InsertAddress", ctx, address)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// InsertAddress indicates an expected call of InsertAddress.
+func (mr *MockRestaurantRepoMockRecorder) InsertAddress(ctx, address interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InsertAddress", reflect.TypeOf((*MockRestaurantRepo)(nil).InsertAddress), ctx, address)
 }
 
 // Save mocks base method.
@@ -300,6 +422,20 @@ func (m *MockRestaurantRepo) ScheduleDeliveryStatusChange(ctx context.Context, o
 func (mr *MockRestaurantRepoMockRecorder) ScheduleDeliveryStatusChange(ctx, orderID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ScheduleDeliveryStatusChange", reflect.TypeOf((*MockRestaurantRepo)(nil).ScheduleDeliveryStatusChange), ctx, orderID)
+}
+
+// SetActiveAddress mocks base method.
+func (m *MockRestaurantRepo) SetActiveAddress(ctx context.Context, userId uuid.UUID, address string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SetActiveAddress", ctx, userId, address)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SetActiveAddress indicates an expected call of SetActiveAddress.
+func (mr *MockRestaurantRepoMockRecorder) SetActiveAddress(ctx, userId, address interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetActiveAddress", reflect.TypeOf((*MockRestaurantRepo)(nil).SetActiveAddress), ctx, userId, address)
 }
 
 // UpdateOrderStatus mocks base method.

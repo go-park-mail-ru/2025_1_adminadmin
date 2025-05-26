@@ -95,6 +95,20 @@ func (mr *MockRestaurantRepoMockRecorder) GetReviews(ctx, restaurantID, count, o
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetReviews", reflect.TypeOf((*MockRestaurantRepo)(nil).GetReviews), ctx, restaurantID, count, offset)
 }
 
+// GetUserPic mocks base method.
+func (m *MockRestaurantRepo) GetUserPic(ctx context.Context, id uuid.UUID) string {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetUserPic", ctx, id)
+	ret0, _ := ret[0].(string)
+	return ret0
+}
+
+// GetUserPic indicates an expected call of GetUserPic.
+func (mr *MockRestaurantRepoMockRecorder) GetUserPic(ctx, id interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserPic", reflect.TypeOf((*MockRestaurantRepo)(nil).GetUserPic), ctx, id)
+}
+
 // ReviewExists mocks base method.
 func (m *MockRestaurantRepo) ReviewExists(ctx context.Context, userID, restaurantID uuid.UUID) (bool, error) {
 	m.ctrl.T.Helper()

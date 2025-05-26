@@ -37,6 +37,21 @@ func (m *MockAuthRepo) EXPECT() *MockAuthRepoMockRecorder {
 	return m.recorder
 }
 
+// ActiveAddressExists mocks base method.
+func (m *MockAuthRepo) ActiveAddressExists(ctx context.Context, userID uuid.UUID) (bool, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ActiveAddressExists", ctx, userID)
+	ret0, _ := ret[0].(bool)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ActiveAddressExists indicates an expected call of ActiveAddressExists.
+func (mr *MockAuthRepoMockRecorder) ActiveAddressExists(ctx, userID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ActiveAddressExists", reflect.TypeOf((*MockAuthRepo)(nil).ActiveAddressExists), ctx, userID)
+}
+
 // AddressExists mocks base method.
 func (m *MockAuthRepo) AddressExists(ctx context.Context, address string, userID uuid.UUID) (bool, error) {
 	m.ctrl.T.Helper()
@@ -64,6 +79,50 @@ func (m *MockAuthRepo) DeleteAddress(ctx context.Context, addressId uuid.UUID) e
 func (mr *MockAuthRepoMockRecorder) DeleteAddress(ctx, addressId interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteAddress", reflect.TypeOf((*MockAuthRepo)(nil).DeleteAddress), ctx, addressId)
+}
+
+// Disable2fa mocks base method.
+func (m *MockAuthRepo) Disable2fa(ctx context.Context, login string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Disable2fa", ctx, login)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Disable2fa indicates an expected call of Disable2fa.
+func (mr *MockAuthRepoMockRecorder) Disable2fa(ctx, login interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Disable2fa", reflect.TypeOf((*MockAuthRepo)(nil).Disable2fa), ctx, login)
+}
+
+// GetActiveAddress mocks base method.
+func (m *MockAuthRepo) GetActiveAddress(ctx context.Context, userId uuid.UUID) (models.Address, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetActiveAddress", ctx, userId)
+	ret0, _ := ret[0].(models.Address)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetActiveAddress indicates an expected call of GetActiveAddress.
+func (mr *MockAuthRepoMockRecorder) GetActiveAddress(ctx, userId interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetActiveAddress", reflect.TypeOf((*MockAuthRepo)(nil).GetActiveAddress), ctx, userId)
+}
+
+// GetSecret2fa mocks base method.
+func (m *MockAuthRepo) GetSecret2fa(ctx context.Context, login string) ([]byte, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetSecret2fa", ctx, login)
+	ret0, _ := ret[0].([]byte)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetSecret2fa indicates an expected call of GetSecret2fa.
+func (mr *MockAuthRepoMockRecorder) GetSecret2fa(ctx, login interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSecret2fa", reflect.TypeOf((*MockAuthRepo)(nil).GetSecret2fa), ctx, login)
 }
 
 // InsertAddress mocks base method.
@@ -122,6 +181,20 @@ func (m *MockAuthRepo) SelectUserByLogin(ctx context.Context, login string) (mod
 func (mr *MockAuthRepoMockRecorder) SelectUserByLogin(ctx, login interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SelectUserByLogin", reflect.TypeOf((*MockAuthRepo)(nil).SelectUserByLogin), ctx, login)
+}
+
+// SetSecret2fa mocks base method.
+func (m *MockAuthRepo) SetSecret2fa(ctx context.Context, secret2fa []byte, login string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "SetSecret2fa", ctx, secret2fa, login)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// SetSecret2fa indicates an expected call of SetSecret2fa.
+func (mr *MockAuthRepoMockRecorder) SetSecret2fa(ctx, secret2fa, login interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetSecret2fa", reflect.TypeOf((*MockAuthRepo)(nil).SetSecret2fa), ctx, secret2fa, login)
 }
 
 // UpdateUser mocks base method.
@@ -216,6 +289,49 @@ func (m *MockAuthUsecase) DeleteAddress(ctx context.Context, addressId uuid.UUID
 func (mr *MockAuthUsecaseMockRecorder) DeleteAddress(ctx, addressId interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteAddress", reflect.TypeOf((*MockAuthUsecase)(nil).DeleteAddress), ctx, addressId)
+}
+
+// Disable2fa mocks base method.
+func (m *MockAuthUsecase) Disable2fa(ctx context.Context, login string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Disable2fa", ctx, login)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Disable2fa indicates an expected call of Disable2fa.
+func (mr *MockAuthUsecaseMockRecorder) Disable2fa(ctx, login interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Disable2fa", reflect.TypeOf((*MockAuthUsecase)(nil).Disable2fa), ctx, login)
+}
+
+// GetQRCode mocks base method.
+func (m *MockAuthUsecase) GetQRCode(ctx context.Context, secret2fa []byte, login string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetQRCode", ctx, secret2fa, login)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// GetQRCode indicates an expected call of GetQRCode.
+func (mr *MockAuthUsecaseMockRecorder) GetQRCode(ctx, secret2fa, login interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetQRCode", reflect.TypeOf((*MockAuthUsecase)(nil).GetQRCode), ctx, secret2fa, login)
+}
+
+// GetSecret2fa mocks base method.
+func (m *MockAuthUsecase) GetSecret2fa(ctx context.Context, login string) ([]byte, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetSecret2fa", ctx, login)
+	ret0, _ := ret[0].([]byte)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetSecret2fa indicates an expected call of GetSecret2fa.
+func (mr *MockAuthUsecaseMockRecorder) GetSecret2fa(ctx, login interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetSecret2fa", reflect.TypeOf((*MockAuthUsecase)(nil).GetSecret2fa), ctx, login)
 }
 
 // GetUserAddresses mocks base method.

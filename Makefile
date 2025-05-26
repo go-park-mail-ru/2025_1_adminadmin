@@ -16,6 +16,7 @@ generate-mocks:
 	mockgen -source=internal/pkg/cart/interfaces.go -destination=internal/pkg/cart/mocks/mocks.go -package=mocks
 	mockgen -source=internal/pkg/auth/interfaces.go -destination=internal/pkg/auth/mocks/mocks.go -package=mocks
 	mockgen -source=internal/pkg/search/interfaces.go -destination=internal/pkg/search/mocks/mocks.go -package=mocks
+	mockgen -source=internal/pkg/promocode/interfaces.go -destination=internal/pkg/promocode/mocks/mocks.go -package=mocks
 
 easyjson:
 	easyjson -all -pkg ./internal/models/

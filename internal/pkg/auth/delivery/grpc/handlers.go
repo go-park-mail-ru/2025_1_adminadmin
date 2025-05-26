@@ -165,13 +165,15 @@ func (h *AuthHandler) UpdateUser(ctx context.Context, in *gen.UpdateUserRequest)
 		}
 	}
 	return &gen.UserResponse{
-		Login:       user.Login,
-		PhoneNumber: user.PhoneNumber,
-		Id:          user.Id.String(),
-		FirstName:   user.FirstName,
-		LastName:    user.LastName,
-		Description: user.Description,
-		UserPic:     user.UserPic,
+		Login:         user.Login,
+		PhoneNumber:   user.PhoneNumber,
+		Id:            user.Id.String(),
+		FirstName:     user.FirstName,
+		LastName:      user.LastName,
+		Description:   user.Description,
+		UserPic:       user.UserPic,
+		ActiveAddress: user.ActiveAddress,
+		HasSecret:     user.HasSecret,
 	}, nil
 
 }
@@ -192,13 +194,15 @@ func (h *AuthHandler) UpdateUserPic(ctx context.Context, in *gen.UpdateUserPicRe
 		}
 	}
 	return &gen.UserResponse{
-		Login:       user.Login,
-		PhoneNumber: user.PhoneNumber,
-		Id:          user.Id.String(),
-		FirstName:   user.FirstName,
-		LastName:    user.LastName,
-		Description: user.Description,
-		UserPic:     user.UserPic,
+		Login:         user.Login,
+		PhoneNumber:   user.PhoneNumber,
+		Id:            user.Id.String(),
+		FirstName:     user.FirstName,
+		LastName:      user.LastName,
+		Description:   user.Description,
+		UserPic:       user.UserPic,
+		ActiveAddress: user.ActiveAddress,
+		HasSecret:     user.HasSecret,
 	}, nil
 
 }

@@ -19,6 +19,7 @@ func TestUpdateItemQuantity(t *testing.T) {
 		productID    string
 		restaurantID string
 		quantity     int
+		price        int
 	}
 	tests := []struct {
 		name       string
@@ -33,9 +34,10 @@ func TestUpdateItemQuantity(t *testing.T) {
 				productID:    "product456",
 				restaurantID: "restaurant789",
 				quantity:     3,
+				price:        10,
 			},
 			repoMocker: func(repo *mocks.MockCartRepo) {
-				repo.EXPECT().UpdateItemQuantity(gomock.Any(), "user123", "product456", "restaurant789", 3).Return(nil).Times(1)
+				repo.EXPECT().UpdateItemQuantity(gomock.Any(), "user123", "product456", "restaurant789", 3, 10).Return(nil).Times(1)
 			},
 			wantErr: nil,
 		},
@@ -46,9 +48,10 @@ func TestUpdateItemQuantity(t *testing.T) {
 				productID:    "product456",
 				restaurantID: "restaurant789",
 				quantity:     3,
+				price:        10,
 			},
 			repoMocker: func(repo *mocks.MockCartRepo) {
-				repo.EXPECT().UpdateItemQuantity(gomock.Any(), "user123", "product456", "restaurant789", 3).Return(errors.New("update error")).Times(1)
+				repo.EXPECT().UpdateItemQuantity(gomock.Any(), "user123", "product456", "restaurant789", 3, 10).Return(errors.New("update error")).Times(1)
 			},
 			wantErr: errors.New("update error"),
 		},
@@ -214,6 +217,7 @@ func TestGetCart(t *testing.T) {
 						map[string]int{"product1": 2, "product2": 1},
 						"restaurant123",
 						nil,
+						10,
 					).Times(1)
 			},
 			restaurantRepoMock: func(repo *mocks.MockRestaurantRepo) {

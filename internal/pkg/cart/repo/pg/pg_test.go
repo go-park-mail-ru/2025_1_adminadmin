@@ -350,7 +350,7 @@ func TestGetOrders(t *testing.T) {
             
             repo := &RestaurantRepository{db: mockPool}
             
-            orders, err := repo.GetOrders(context.Background(), tt.userID, tt.count, tt.offset)
+            orders, _, err := repo.GetOrders(context.Background(), tt.userID, tt.count, tt.offset)
             
             if tt.expectError {
                 assert.Error(t, err)
