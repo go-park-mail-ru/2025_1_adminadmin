@@ -45,7 +45,6 @@ jobs:
 
   adminadmin-tests:
     name: tests
-    needs: adminadmin-linters
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -62,7 +61,6 @@ jobs:
         run: go test -v ./...
 
   build:
-    needs: adminadmin-tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
