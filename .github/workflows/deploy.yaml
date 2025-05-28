@@ -7,7 +7,7 @@ on:
       - main 
 
 jobs:
-adminadmin-linters:
+  adminadmin-linters:
   runs-on: ubuntu-latest
   steps:
     - name: Checkout code
