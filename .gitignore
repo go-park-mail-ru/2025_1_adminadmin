@@ -30,4 +30,5 @@ go.work.sum
 coverage.html
 heatmap.html
 coverprofile.tmp
+docs/perf_test/
 
