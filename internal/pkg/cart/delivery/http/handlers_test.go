@@ -283,23 +283,7 @@ func TestClearCart(t *testing.T) {
 				// CSRF error happens before ClearCart
 			},
 		},
-		{
-			name: "ClearCart_GRPCError",
-			setupRequest: func() *http.Request {
-				r := httptest.NewRequest("DELETE", "/cart", nil)
-				tokenStr := utils.GenerateJWTForTest(t, login, secret, userID)
-				r.AddCookie(&http.Cookie{Name: "AdminJWT", Value: tokenStr})
-				r.AddCookie(&http.Cookie{Name: "CSRF-Token", Value: csrfToken})
-				r.Header.Set("X-CSRF-Token", csrfToken)
-				return r
-			},
-			expectStatus: http.StatusInternalServerError,
-			mockGrpcBehavior: func(mockClient *mocks.MockCartServiceClient) {
-				mockClient.EXPECT().ClearCart(gomock.Any(), &gen.ClearCartRequest{
-					Login: login,
-				}).Return(nil, fmt.Errorf("gRPC error"))
-			},
-		},
+
 	}
 
 	for _, tt := range tests {

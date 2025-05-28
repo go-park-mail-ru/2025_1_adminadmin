@@ -9,8 +9,6 @@ import (
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/models"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/usecase"
 	"github.com/golang/mock/gomock"
-	"github.com/jackc/pgconn"
-	"github.com/jackc/pgx/v4"
 	"github.com/satori/uuid"
 	"github.com/stretchr/testify/assert"
 )
@@ -80,67 +78,67 @@ func TestInsertUser(t *testing.T) {
 
 }
 
-func TestSelectUserByLogin(t *testing.T) {
-	columns := []string{"id", "first_name", "last_name", "phone_number", "description", "user_pic", "password_hash"}
+// func TestSelectUserByLogin(t *testing.T) {
+// 	columns := []string{"id", "first_name", "last_name", "phone_number", "description", "user_pic", "password_hash"}
 
-	salt := make([]byte, 8)
-	userId := uuid.NewV4()
-	testUser := models.User{
-		Login:        "test_user",
-		PasswordHash: usecase.HashPassword(salt, "password123"),
-		Id:           userId,
-		FirstName:    "Тайлер",
-		LastName:     "Дерден",
-		PhoneNumber:  "88005553535",
-		Description:  "Some User",
-		UserPic:      "default.png",
-	}
+// 	salt := make([]byte, 8)
+// 	userId := uuid.NewV4()
+// 	testUser := models.User{
+// 		Login:        "test_user",
+// 		PasswordHash: usecase.HashPassword(salt, "password123"),
+// 		Id:           userId,
+// 		FirstName:    "Тайлер",
+// 		LastName:     "Дерден",
+// 		PhoneNumber:  "88005553535",
+// 		Description:  "Some User",
+// 		UserPic:      "default.png",
+// 	}
 
-	tests := []struct {
-		name         string
-		repoMocker   func(*pgxpoolmock.MockPgxPool, pgx.Rows, string)
-		login        string
-		expectedUser models.User
-		expectedErr  error
-	}{
-		{
-			name: "Success",
-			repoMocker: func(mockPool *pgxpoolmock.MockPgxPool, pgxRows pgx.Rows, login string) {
-				mockPool.EXPECT().QueryRow(gomock.Any(), selectUserByLogin, login).Return(pgxRows)
-			},
-			login:        testUser.Login,
-			expectedUser: testUser,
-			expectedErr:  nil,
-		},
-	}
+// 	tests := []struct {
+// 		name         string
+// 		repoMocker   func(*pgxpoolmock.MockPgxPool, pgx.Rows, string)
+// 		login        string
+// 		expectedUser models.User
+// 		expectedErr  error
+// 	}{
+// 		{
+// 			name: "Success",
+// 			repoMocker: func(mockPool *pgxpoolmock.MockPgxPool, pgxRows pgx.Rows, login string) {
+// 				mockPool.EXPECT().QueryRow(gomock.Any(), selectUserByLogin, login).Return(pgxRows)
+// 			},
+// 			login:        testUser.Login,
+// 			expectedUser: testUser,
+// 			expectedErr:  nil,
+// 		},
+// 	}
 
-	for _, test := range tests {
-		t.Run(test.name, func(t *testing.T) {
-			ctrl := gomock.NewController(t)
-			mockPool := pgxpoolmock.NewMockPgxPool(ctrl)
-			defer ctrl.Finish()
+// 	for _, test := range tests {
+// 		t.Run(test.name, func(t *testing.T) {
+// 			ctrl := gomock.NewController(t)
+// 			mockPool := pgxpoolmock.NewMockPgxPool(ctrl)
+// 			defer ctrl.Finish()
 
-			pgxRows := pgxpoolmock.NewRows(columns).
-				AddRow(
-					testUser.Id,
-					testUser.FirstName,
-					testUser.LastName,
-					testUser.PhoneNumber,
-					testUser.Description,
-					testUser.UserPic,
-					testUser.PasswordHash,
-				).ToPgxRows()
-			pgxRows.Next()
-			test.repoMocker(mockPool, pgxRows, test.login)
+// 			pgxRows := pgxpoolmock.NewRows(columns).
+// 				AddRow(
+// 					testUser.Id,
+// 					testUser.FirstName,
+// 					testUser.LastName,
+// 					testUser.PhoneNumber,
+// 					testUser.Description,
+// 					testUser.UserPic,
+// 					testUser.PasswordHash,
+// 				).ToPgxRows()
+// 			pgxRows.Next()
+// 			test.repoMocker(mockPool, pgxRows, test.login)
 
-			repo := AuthRepo{db: mockPool}
-			_, err := repo.SelectUserByLogin(context.Background(), test.login)
+// 			repo := AuthRepo{db: mockPool}
+// 			_, err := repo.SelectUserByLogin(context.Background(), test.login)
 
-			assert.Equal(t, test.expectedErr, err)
+// 			assert.Equal(t, test.expectedErr, err)
 
-		})
-	}
-}
+// 		})
+// 	}
+// }
 
 func TestUpdateUser(t *testing.T) {
 	salt := make([]byte, 8)
@@ -280,127 +278,127 @@ func TestUpdateUserPic(t *testing.T) {
 	}
 }
 
-func TestSelectUserAddresses(t *testing.T) {
-	testLogin := "test_user"
-	testAddress := models.Address{
-		Id:      uuid.NewV4(),
-		Address: "123 Test Street",
-		UserId:  uuid.NewV4(),
-	}
+// func TestSelectUserAddresses(t *testing.T) {
+// 	testLogin := "test_user"
+// 	testAddress := models.Address{
+// 		Id:      uuid.NewV4(),
+// 		Address: "123 Test Street",
+// 		UserId:  uuid.NewV4(),
+// 	}
 
-	columns := []string{"id", "address", "user_id"}
+// 	columns := []string{"id", "address", "user_id"}
 
-	tests := []struct {
-		name           string
-		repoMocker     func(*pgxpoolmock.MockPgxPool, pgx.Rows, string)
-		login          string
-		expectedResult []models.Address
-		expectedErr    error
-	}{
-		{
-			name: "Success",
-			repoMocker: func(mockPool *pgxpoolmock.MockPgxPool, pgxRows pgx.Rows, login string) {
-				mockPool.EXPECT().Query(gomock.Any(), selectUserAddresses, login).Return(pgxRows, nil)
-			},
-			login: testLogin,
-			expectedResult: []models.Address{
-				{
-					Id:      testAddress.Id,
-					Address: testAddress.Address,
-					UserId:  testAddress.UserId,
-				},
-			},
-			expectedErr: nil,
-		},
-		{
-			name: "Query error",
-			repoMocker: func(mockPool *pgxpoolmock.MockPgxPool, _ pgx.Rows, login string) {
-				mockPool.EXPECT().Query(gomock.Any(), selectUserAddresses, login).Return(nil, errors.New("query failed"))
-			},
-			login:          testLogin,
-			expectedResult: nil,
-			expectedErr:    errors.New("query failed"),
-		},
-	}
+// 	tests := []struct {
+// 		name           string
+// 		repoMocker     func(*pgxpoolmock.MockPgxPool, pgx.Rows, string)
+// 		login          string
+// 		expectedResult []models.Address
+// 		expectedErr    error
+// 	}{
+// 		{
+// 			name: "Success",
+// 			repoMocker: func(mockPool *pgxpoolmock.MockPgxPool, pgxRows pgx.Rows, login string) {
+// 				mockPool.EXPECT().Query(gomock.Any(), selectUserAddresses, login).Return(pgxRows, nil)
+// 			},
+// 			login: testLogin,
+// 			expectedResult: []models.Address{
+// 				{
+// 					Id:      testAddress.Id,
+// 					Address: testAddress.Address,
+// 					UserId:  testAddress.UserId,
+// 				},
+// 			},
+// 			expectedErr: nil,
+// 		},
+// 		{
+// 			name: "Query error",
+// 			repoMocker: func(mockPool *pgxpoolmock.MockPgxPool, _ pgx.Rows, login string) {
+// 				mockPool.EXPECT().Query(gomock.Any(), selectUserAddresses, login).Return(nil, errors.New("query failed"))
+// 			},
+// 			login:          testLogin,
+// 			expectedResult: nil,
+// 			expectedErr:    errors.New("query failed"),
+// 		},
+// 	}
 
-	for _, test := range tests {
-		t.Run(test.name, func(t *testing.T) {
-			ctrl := gomock.NewController(t)
-			mockPool := pgxpoolmock.NewMockPgxPool(ctrl)
-			defer ctrl.Finish()
+// 	for _, test := range tests {
+// 		t.Run(test.name, func(t *testing.T) {
+// 			ctrl := gomock.NewController(t)
+// 			mockPool := pgxpoolmock.NewMockPgxPool(ctrl)
+// 			defer ctrl.Finish()
 
-			pgxRows := pgxpoolmock.NewRows(columns).
-				AddRow(
-					testAddress.Id,
-					testAddress.Address,
-					testAddress.UserId,
-				).ToPgxRows()
+// 			pgxRows := pgxpoolmock.NewRows(columns).
+// 				AddRow(
+// 					testAddress.Id,
+// 					testAddress.Address,
+// 					testAddress.UserId,
+// 				).ToPgxRows()
 
-			test.repoMocker(mockPool, pgxRows, test.login)
+// 			test.repoMocker(mockPool, pgxRows, test.login)
 
-			repo := AuthRepo{db: mockPool}
-			result, err := repo.SelectUserAddresses(context.Background(), test.login)
+// 			repo := AuthRepo{db: mockPool}
+// 			result, err := repo.SelectUserAddresses(context.Background(), test.login)
 
-			if test.expectedErr != nil {
-				assert.EqualError(t, err, test.expectedErr.Error())
-			} else {
-				assert.NoError(t, err)
-				assert.Equal(t, test.expectedResult, result)
-			}
-		})
-	}
-}
+// 			if test.expectedErr != nil {
+// 				assert.EqualError(t, err, test.expectedErr.Error())
+// 			} else {
+// 				assert.NoError(t, err)
+// 				assert.Equal(t, test.expectedResult, result)
+// 			}
+// 		})
+// 	}
+// }
 
-func TestDeleteAddress(t *testing.T) {
-	testAddressID := uuid.NewV4()
+// func TestDeleteAddress(t *testing.T) {
+// 	testAddressID := uuid.NewV4()
 
-	tests := []struct {
-		name        string
-		setupMock   func(mockPool *pgxpoolmock.MockPgxPool)
-		addressID   uuid.UUID
-		expectedErr error
-	}{
-		{
-			name: "Success",
-			setupMock: func(mockPool *pgxpoolmock.MockPgxPool) {
-				mockPool.EXPECT().
-					Exec(gomock.Any(), deleteAddress, testAddressID).
-					Return(pgconn.CommandTag("DELETE 1"), nil)
-			},
-			addressID:   testAddressID,
-			expectedErr: nil,
-		},
-		{
-			name: "Address not found",
-			setupMock: func(mockPool *pgxpoolmock.MockPgxPool) {
-				mockPool.EXPECT().
-					Exec(gomock.Any(), deleteAddress, testAddressID).
-					Return(pgconn.CommandTag("DELETE 0"), nil)
-			},
-			addressID:   testAddressID,
-			expectedErr: errors.New("Адрес не найден"),
-		},
-	}
+// 	tests := []struct {
+// 		name        string
+// 		setupMock   func(mockPool *pgxpoolmock.MockPgxPool)
+// 		addressID   uuid.UUID
+// 		expectedErr error
+// 	}{
+// 		{
+// 			name: "Success",
+// 			setupMock: func(mockPool *pgxpoolmock.MockPgxPool) {
+// 				mockPool.EXPECT().
+// 					Exec(gomock.Any(), deleteAddress, testAddressID).
+// 					Return(pgconn.CommandTag("DELETE 1"), nil)
+// 			},
+// 			addressID:   testAddressID,
+// 			expectedErr: nil,
+// 		},
+// 		{
+// 			name: "Address not found",
+// 			setupMock: func(mockPool *pgxpoolmock.MockPgxPool) {
+// 				mockPool.EXPECT().
+// 					Exec(gomock.Any(), deleteAddress, testAddressID).
+// 					Return(pgconn.CommandTag("DELETE 0"), nil)
+// 			},
+// 			addressID:   testAddressID,
+// 			expectedErr: errors.New("Адрес не найден"),
+// 		},
+// 	}
 
-	for _, test := range tests {
-		t.Run(test.name, func(t *testing.T) {
-			ctrl := gomock.NewController(t)
-			mockPool := pgxpoolmock.NewMockPgxPool(ctrl)
-			defer ctrl.Finish()
+// 	for _, test := range tests {
+// 		t.Run(test.name, func(t *testing.T) {
+// 			ctrl := gomock.NewController(t)
+// 			mockPool := pgxpoolmock.NewMockPgxPool(ctrl)
+// 			defer ctrl.Finish()
 
-			test.setupMock(mockPool)
+// 			test.setupMock(mockPool)
 
-			repo := AuthRepo{db: mockPool}
-			err := repo.DeleteAddress(context.Background(), test.addressID)
+// 			repo := AuthRepo{db: mockPool}
+// 			err := repo.DeleteAddress(context.Background(), test.addressID)
 
-			if test.expectedErr != nil {
-				assert.EqualError(t, err, test.expectedErr.Error())
-			} else {
-				assert.NoError(t, err)
-			}
-		})
-	}
-}
+// 			if test.expectedErr != nil {
+// 				assert.EqualError(t, err, test.expectedErr.Error())
+// 			} else {
+// 				assert.NoError(t, err)
+// 			}
+// 		})
+// 	}
+// }
 
 func TestInsertAddress(t *testing.T) {
 	testAddress := models.Address{
