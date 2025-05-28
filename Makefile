@@ -1,7 +1,8 @@
 COVERAGE_HTML=coverage.html
 COVERPROFILE_TMP=coverprofile.tmp
-TARGETS_FILE ?= docs/perf_test/signup-targets.txt
-RATE ?= 10
+TARGETS_FILE_SIGNUP ?= docs/perf_test/signup-targets.txt
+TARGETS_FILE_SIGNIN ?= docs/perf_test/auth-targets.txt
+RATE ?= 15
 DURATION ?= 60s
 REPORT_FILE ?= docs/perf_test/report.txt
 PLOT_FILE ?= docs/perf_test/plot.html
@@ -30,19 +31,34 @@ easyjson:
 clean:
 	rm -f $(COVERAGE_FILE) $(COVERAGE_HTML) ${COVERPROFILE_TMP} 
 
-perf_tests_get:
+perf_tests_get_signup:
 	clear
 	go run build/perf_test/main.go
 	@echo "Запуск нагрузки..."
 	$(MAKE) clean
-	$(MAKE) make_perf_test_get
+	$(MAKE) make_perf_test_get_signup
 	$(MAKE) report
 	$(MAKE) plot
 	$(MAKE) histogram
 
-make_perf_test_get:
+perf_tests_get_signin:
+	clear
+	go run build/perf_test/main.go
+	@echo "Запуск нагрузки..."
+	$(MAKE) clean
+	$(MAKE) make_perf_test_get_signin
+	$(MAKE) report
+	$(MAKE) plot
+	$(MAKE) histogram
+
+make_perf_test_get_signup:
 	@echo "Запуск нагрузки на $(DURATION) с частотой $(RATE) запросов/сек..."
-	vegeta attack -targets=$(TARGETS_FILE) -rate=$(RATE) -duration=$(DURATION) | tee /tmp/vegeta-test | vegeta report > $(REPORT_FILE)
+	vegeta attack -targets=$(TARGETS_FILE_SIGNUP) -rate=$(RATE) -duration=$(DURATION) | tee /tmp/vegeta-test | vegeta report > $(REPORT_FILE)
+
+make_perf_test_get_signin:
+	@echo "Запуск нагрузки на $(DURATION) с частотой $(RATE) запросов/сек..."
+	vegeta attack -targets=$(TARGETS_FILE_SIGNIN) -rate=$(RATE) -duration=$(DURATION) | tee /tmp/vegeta-test | vegeta report > $(REPORT_FILE)
+
 
 report:
 	@echo "Генерация текстового отчёта..."

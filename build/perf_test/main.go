@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	usersCount    = 1000
+	usersCount    = 6000
 	targetsDir    = "docs/perf_test"
 	signupTargets = "signup-targets.txt"
 	authTargets   = "auth-targets.txt"
@@ -30,60 +30,93 @@ func main() {
 }
 
 func generateSignupTargets() error {
-	file, err := os.Create(fmt.Sprintf("%s/%s", targetsDir, signupTargets))
-	if err != nil {
-		return err
+	bodiesDir := fmt.Sprintf("%s/bodies", targetsDir)
+	if err := os.MkdirAll(bodiesDir, os.ModePerm); err != nil {
+		return fmt.Errorf("не удалось создать директорию с JSON: %w", err)
 	}
-	defer file.Close()
+
+	targetsPath := fmt.Sprintf("%s/%s", targetsDir, signupTargets)
+	targetsFile, err := os.Create(targetsPath)
+	if err != nil {
+		return fmt.Errorf("не удалось создать файл целей: %w", err)
+	}
+	defer targetsFile.Close()
+
+	// Русские имена и фамилии для валидации
+	russianFirstNames := []string{"Алексей", "Ирина", "Дмитрий", "Екатерина", "Никита", "Ольга", "Сергей", "Анна", "Иван", "Мария"}
+	russianLastNames := []string{"Иванов", "Петрова", "Сидоров", "Кузнецова", "Смирнов", "Попова", "Козлов", "Морозова", "Новиков", "Федорова"}
 
 	for i := 1; i <= usersCount; i++ {
-		data := map[string]string{
+		body := map[string]string{
 			"login":        fmt.Sprintf("testuser%d", i),
 			"password":     "TestPassword123!",
-			"phone_number": fmt.Sprintf("+7%010d", i),
-			"first_name":   fmt.Sprintf("User%d", i),
-			"last_name":    fmt.Sprintf("Lastname%d", i),
+			"phone_number": fmt.Sprintf("7%010d", i),
+			// Используем русские имена и фамилии по циклу
+			"first_name": russianFirstNames[(i-1)%len(russianFirstNames)],
+			"last_name":  russianLastNames[(i-1)%len(russianLastNames)],
 		}
-		jsonData, _ := json.Marshal(data)
 
-		// ВНИМАНИЕ: нет пустой строки между заголовками и телом
-		target := fmt.Sprintf("POST https://%s/api/auth/signup\n", apiAddress) +
-			"Content-Type: application/json\n" +
-			string(jsonData) + "\n"
+		jsonBody, err := json.MarshalIndent(body, "", "  ")
+		if err != nil {
+			fmt.Printf("Ошибка сериализации JSON: %v\n", err)
+			continue
+		}
 
-		if _, err := file.WriteString(target); err != nil {
-			return err
+		jsonFilename := fmt.Sprintf("signup_user_%05d.json", i)
+		jsonPath := fmt.Sprintf("%s/%s", bodiesDir, jsonFilename)
+		if err := os.WriteFile(jsonPath, jsonBody, 0644); err != nil {
+			fmt.Printf("Ошибка записи JSON: %v\n", err)
+			continue
+		}
+
+		target := fmt.Sprintf("POST https://%s/api/auth/signup\n@%s\n", apiAddress, jsonPath)
+		if _, err := targetsFile.WriteString(target); err != nil {
+			fmt.Printf("Ошибка записи в targets файл: %v\n", err)
 		}
 	}
-	fmt.Printf("Generated %d signup targets in %s\n", usersCount, signupTargets)
+
+	fmt.Printf("✔️  Сгенерировано %d signup-запросов в %s и тела в %s\n", usersCount, signupTargets, bodiesDir)
 	return nil
 }
 
-
-
 func generateAuthTargets() error {
-	file, err := os.Create(fmt.Sprintf("%s/%s", targetsDir, authTargets))
-	if err != nil {
-		return err
+	bodiesDir := fmt.Sprintf("%s/bodies", targetsDir)
+	if err := os.MkdirAll(bodiesDir, os.ModePerm); err != nil {
+		return fmt.Errorf("не удалось создать директорию с JSON: %w", err)
 	}
-	defer file.Close()
+
+	targetsPath := fmt.Sprintf("%s/%s", targetsDir, authTargets)
+	targetsFile, err := os.Create(targetsPath)
+	if err != nil {
+		return fmt.Errorf("не удалось создать файл целей: %w", err)
+	}
+	defer targetsFile.Close()
 
 	for i := 1; i <= usersCount; i++ {
-		data := map[string]string{
+		body := map[string]string{
 			"login":    fmt.Sprintf("testuser%d", i),
 			"password": "TestPassword123!",
 		}
-		jsonData, _ := json.Marshal(data)
 
-		target := fmt.Sprintf("POST https://%s/api/auth/signin\n", apiAddress) +
-			"Content-Type: application/json\n" +
-			"\n" +
-			string(jsonData) + "\n\n"
+		jsonBody, err := json.MarshalIndent(body, "", "  ")
+		if err != nil {
+			fmt.Printf("Ошибка сериализации JSON: %v\n", err)
+			continue
+		}
 
-		if _, err := file.WriteString(target); err != nil {
-			return err
+		jsonFilename := fmt.Sprintf("auth_user_%05d.json", i)
+		jsonPath := fmt.Sprintf("%s/%s", bodiesDir, jsonFilename)
+		if err := os.WriteFile(jsonPath, jsonBody, 0644); err != nil {
+			fmt.Printf("Ошибка записи JSON: %v\n", err)
+			continue
+		}
+
+		target := fmt.Sprintf("POST https://%s/api/auth/signin\n@%s\n", apiAddress, jsonPath)
+		if _, err := targetsFile.WriteString(target); err != nil {
+			fmt.Printf("Ошибка записи в targets файл: %v\n", err)
 		}
 	}
-	fmt.Printf("Generated %d auth targets in %s\n", usersCount, authTargets)
+
+	fmt.Printf("✔️  Сгенерировано %d auth-запросов в %s и тела в %s\n", usersCount, authTargets, bodiesDir)
 	return nil
 }
