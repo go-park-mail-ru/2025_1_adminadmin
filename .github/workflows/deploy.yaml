@@ -21,15 +21,18 @@ jobs:
       - name: Download dependencies
         run: |
           go mod tidy
-          go get github.com/go-redis/redis/v8
-          go get github.com/skip2/go-qrcode
+          go mod verify
+          go get github.com/go-redis/redis/v8@latest
+          go get github.com/skip2/go-qrcode@latest
 
       - name: Install mockgen
         run: |
           go install github.com/golang/mock/mockgen@v1.6.0
 
       - name: Generate mocks
-        run: make generate-mocks || echo "No mocks to generate"
+        run: |
+          make generate-mocks
+          find . -name "*mock*.go"
 
       - name: Build project
         run: go build ./...
@@ -37,7 +40,7 @@ jobs:
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v4
         with:
-          version: v1.54
+          version: latest
           skip-cache: true
 
   adminadmin-tests:
