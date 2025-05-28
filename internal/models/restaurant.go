@@ -35,12 +35,12 @@ type ProductCategory struct {
 
 // easyjson:json
 type ProductSearch struct {
-	ID           uuid.UUID `json:"id"`
-	Name         string    `json:"name"`
-	Price        float64   `json:"price"`
-	ImageURL     string    `json:"image_url"`
-	Weight       int       `json:"weight"`
-	Category     string    `json:"category"`
+	ID       uuid.UUID `json:"id"`
+	Name     string    `json:"name"`
+	Price    float64   `json:"price"`
+	ImageURL string    `json:"image_url"`
+	Weight   int       `json:"weight"`
+	Category string    `json:"category"`
 }
 
 func (r *Restaurant) Sanitize() {

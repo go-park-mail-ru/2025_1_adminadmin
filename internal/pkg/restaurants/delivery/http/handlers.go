@@ -207,7 +207,7 @@ func (h *RestaurantHandler) CreateReview(w http.ResponseWriter, r *http.Request)
 	if req.Rating < 1 || req.Rating > 5 {
 		log.LogHandlerError(logger, fmt.Errorf("рейтинг должен быть от 1 до 5"), http.StatusBadRequest)
 		utils.SendError(w, "рейтинг должен быть от 1 до 5", http.StatusBadRequest)
-		return 
+		return
 	}
 	cookieJWT, err := r.Cookie("AdminJWT")
 	if err != nil {
@@ -245,32 +245,31 @@ func (h *RestaurantHandler) CreateReview(w http.ResponseWriter, r *http.Request)
 	}
 
 	exists, err := h.restaurantUsecase.ReviewExists(r.Context(), id, restaurantID)
-    if err != nil {
-        log.LogHandlerError(logger, fmt.Errorf("ошибка проверки отзыва: %w", err), http.StatusInternalServerError)
-        utils.SendError(w, "ошибка проверки отзыва", http.StatusInternalServerError)
-        return
-    }
-    if exists {
-        log.LogHandlerError(logger, errors.New("пользователь уже оставил отзыв для этого ресторана"), http.StatusBadRequest)
-        utils.SendError(w, "вы уже оставляли отзыв для этого ресторана", http.StatusBadRequest)
-        return
-    }
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка проверки отзыва: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "ошибка проверки отзыва", http.StatusInternalServerError)
+		return
+	}
+	if exists {
+		log.LogHandlerError(logger, errors.New("пользователь уже оставил отзыв для этого ресторана"), http.StatusBadRequest)
+		utils.SendError(w, "вы уже оставляли отзыв для этого ресторана", http.StatusBadRequest)
+		return
+	}
 
 	review, err := h.restaurantUsecase.CreateReview(r.Context(), req, id, restaurantID, login)
 	if err != nil {
-        log.LogHandlerError(logger, fmt.Errorf("ошибка создания отзыва: %w", err), http.StatusInternalServerError)
-        utils.SendError(w, "ошибка создания отзыва", http.StatusInternalServerError)
-        return
-    }
+		log.LogHandlerError(logger, fmt.Errorf("ошибка создания отзыва: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "ошибка создания отзыва", http.StatusInternalServerError)
+		return
+	}
 
 	w.Header().Set("Content-Type", "application/json")
 
 	if err := json.NewEncoder(w).Encode(review); err != nil {
 		log.LogHandlerError(logger, fmt.Errorf("ошибка формирования JSON: %w", err), http.StatusInternalServerError)
-        utils.SendError(w, "Ошибка сервера", http.StatusInternalServerError)
+		utils.SendError(w, "Ошибка сервера", http.StatusInternalServerError)
 	}
 }
-
 
 func (h *RestaurantHandler) CheckReviews(w http.ResponseWriter, r *http.Request) {
 	logger := log.GetLoggerFromContext(r.Context()).With(slog.String("func", log.GetFuncName()))
@@ -280,7 +279,7 @@ func (h *RestaurantHandler) CheckReviews(w http.ResponseWriter, r *http.Request)
 	restaurantID := uuid.FromStringOrNil(restaurantIDStr)
 	if restaurantID == uuid.Nil {
 		log.LogHandlerError(logger, errors.New("неверный формат id ресторана"), http.StatusBadRequest)
-        utils.SendError(w, "Неверный запрос", http.StatusBadRequest)
+		utils.SendError(w, "Неверный запрос", http.StatusBadRequest)
 		return
 	}
 
@@ -313,11 +312,11 @@ func (h *RestaurantHandler) CheckReviews(w http.ResponseWriter, r *http.Request)
 	}
 
 	exists, err := h.restaurantUsecase.ReviewExistsReturn(r.Context(), id, restaurantID)
-    if err != nil {
-        log.LogHandlerError(logger, fmt.Errorf("ошибка проверки отзыва: %w", err), http.StatusInternalServerError)
-        utils.SendError(w, "ошибка проверки отзыва", http.StatusInternalServerError)
-        return
-    }
+	if err != nil {
+		log.LogHandlerError(logger, fmt.Errorf("ошибка проверки отзыва: %w", err), http.StatusInternalServerError)
+		utils.SendError(w, "ошибка проверки отзыва", http.StatusInternalServerError)
+		return
+	}
 
 	if exists != (models.ReviewUser{}) {
 		data, err := json.Marshal(exists)

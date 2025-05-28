@@ -10,22 +10,22 @@ import (
 
 func TestCorsMiddleware(t *testing.T) {
 	tests := []struct {
-		name              string
-		method            string
-		expectedHeaders   map[string]string
+		name               string
+		method             string
+		expectedHeaders    map[string]string
 		expectedStatusCode int
 	}{
 		{
 			name:   "GET request",
 			method: http.MethodGet,
 			expectedHeaders: map[string]string{
-				"Access-Control-Allow-Methods":    "POST,GET",
-				"Access-Control-Allow-Headers":    "Authorization,Content-Type,X-Csrf-Token",
+				"Access-Control-Allow-Methods":     "POST,GET",
+				"Access-Control-Allow-Headers":     "Authorization,Content-Type,X-Csrf-Token",
 				"Access-Control-Allow-Credentials": "true",
-				"Access-Control-Expose-Headers":   "Authorization,X-Csrf-Token",
-				"Access-Control-Allow-Origin":     "http://localhost:3000",
-				"Access-Control-Max-Age":          "86400",
-				"Content-Security-Policy":         CSP,
+				"Access-Control-Expose-Headers":    "Authorization,X-Csrf-Token",
+				"Access-Control-Allow-Origin":      "http://localhost:3000",
+				"Access-Control-Max-Age":           "86400",
+				"Content-Security-Policy":          CSP,
 			},
 			expectedStatusCode: http.StatusOK,
 		},
@@ -33,13 +33,13 @@ func TestCorsMiddleware(t *testing.T) {
 			name:   "OPTIONS request",
 			method: http.MethodOptions,
 			expectedHeaders: map[string]string{
-				"Access-Control-Allow-Methods":    "POST,GET",
-				"Access-Control-Allow-Headers":    "Authorization,Content-Type,X-Csrf-Token",
+				"Access-Control-Allow-Methods":     "POST,GET",
+				"Access-Control-Allow-Headers":     "Authorization,Content-Type,X-Csrf-Token",
 				"Access-Control-Allow-Credentials": "true",
-				"Access-Control-Expose-Headers":   "Authorization,X-Csrf-Token",
-				"Access-Control-Allow-Origin":     "http://localhost:3000",
-				"Access-Control-Max-Age":          "86400",
-				"Content-Security-Policy":         CSP,
+				"Access-Control-Expose-Headers":    "Authorization,X-Csrf-Token",
+				"Access-Control-Allow-Origin":      "http://localhost:3000",
+				"Access-Control-Max-Age":           "86400",
+				"Content-Security-Policy":          CSP,
 			},
 			expectedStatusCode: http.StatusOK,
 		},

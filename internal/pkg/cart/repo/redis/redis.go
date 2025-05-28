@@ -138,7 +138,7 @@ func (r *CartRepository) UpdateItemQuantity(ctx context.Context, userID, product
 	pipe := r.redisClient.TxPipeline()
 	pipe.HSet(ctx, key, productID, quantity)
 	pipe.HSet(ctx, key, "restaurant_id", restaurantID)
-	pipe.HSet(ctx, key, "total_sum", newTotal) 
+	pipe.HSet(ctx, key, "total_sum", newTotal)
 
 	_, err = pipe.Exec(ctx)
 	if err != nil {

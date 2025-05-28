@@ -14,7 +14,7 @@ import (
 func TestGetFuncName(t *testing.T) {
 	funcName := GetFuncName()
 	assert.NotEmpty(t, funcName)
-	assert.Equal(t, "log.TestGetFuncName", funcName) 
+	assert.Equal(t, "log.TestGetFuncName", funcName)
 }
 
 func TestLogHandlerInfo(t *testing.T) {
@@ -33,7 +33,7 @@ func TestLogHandlerError(t *testing.T) {
 	assert.NotNil(t, logger)
 
 	unwrappedErr := errors.Unwrap(err)
-	assert.Nil(t, unwrappedErr) 
+	assert.Nil(t, unwrappedErr)
 }
 
 func TestGetLoggerFromContext(t *testing.T) {

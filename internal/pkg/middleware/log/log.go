@@ -5,8 +5,8 @@ import (
 	"log/slog"
 	"net/http"
 
-	"github.com/satori/uuid"
 	"github.com/gorilla/mux"
+	"github.com/satori/uuid"
 )
 
 func CreateLoggerMiddleware(logger *slog.Logger) mux.MiddlewareFunc {

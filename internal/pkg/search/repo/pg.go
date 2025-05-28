@@ -87,7 +87,7 @@ func (r *SearchRepo) SearchRestaurantWithProducts(ctx context.Context, query str
 			logger.Error("Ошибка при сканировании", slog.String("error", err.Error()))
 			return nil, fmt.Errorf("error in rows.Scan: %w", err)
 		}
-		
+
 		products, err := r.db.Query(ctx, searchRestaurantWithProducts2, query, restaurant.ID)
 		if err != nil {
 			logger.Error("Ошибка при выполнении запроса", slog.String("error", err.Error()))

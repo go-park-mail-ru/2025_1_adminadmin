@@ -24,7 +24,7 @@ func NewPromocodeRepository() (*PromocodeRepository, error) {
 const (
 	getAllPromocodes = "SELECT id, promocode, discount, created_at, expires_at FROM promocodes WHERE user_id = $1 AND is_used = FALSE ORDER BY id ASC LIMIT $2 OFFSET $3;"
 	getDiscount      = "SELECT discount FROM promocodes WHERE user_id = $1 AND promocode = $2 AND is_used = FALSE"
-	deletePromocode = "UPDATE promocodes SET is_used = TRUE WHERE user_id = $1 AND promocode = $2"
+	deletePromocode  = "UPDATE promocodes SET is_used = TRUE WHERE user_id = $1 AND promocode = $2"
 )
 
 func (r *PromocodeRepository) GetPromocodes(ctx context.Context, user_id uuid.UUID, count, offset int) ([]models.Promocode, error) {

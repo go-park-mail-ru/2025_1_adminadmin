@@ -60,7 +60,7 @@ func (h *Hub) Run(ctx context.Context) {
 				if err := conn.WriteJSON(order); err != nil {
 					_ = conn.Close()
 					log.Print(err)
-					return false 
+					return false
 				}
 
 				return true

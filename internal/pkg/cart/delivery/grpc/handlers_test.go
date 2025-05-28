@@ -598,7 +598,7 @@ func TestGetOrderById(t *testing.T) {
 				CourierComment:    "Call me",
 				LeaveAtDoor:       true,
 				FinalPrice:        100.50,
-				UserId:           userID.String(),
+				UserId:            userID.String(),
 			},
 			expectedErr: nil,
 		},

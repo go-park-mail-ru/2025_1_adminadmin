@@ -32,6 +32,6 @@ func (u *PromocodeUsecase) CheckPromocode(ctx context.Context, user_id uuid.UUID
 	}
 
 	logger.Info("success")
-	
+
 	return discount, nil
 }

@@ -97,7 +97,7 @@ func TestValidateOrderInput(t *testing.T) {
 		{
 			name: "Valid status with max length",
 			input: models.OrderInReq{
-				Status:            "12345678901234567890", 
+				Status:            "12345678901234567890",
 				Address:           "г. Москва",
 				ApartmentOrOffice: "12",
 				Intercom:          "123",
@@ -111,7 +111,7 @@ func TestValidateOrderInput(t *testing.T) {
 			name: "Valid address with max length",
 			input: models.OrderInReq{
 				Status:            "Ожидается",
-				Address:           strings.Repeat("a", maxAddressLength), 
+				Address:           strings.Repeat("a", maxAddressLength),
 				ApartmentOrOffice: "12",
 				Intercom:          "123",
 				Entrance:          "1",

@@ -172,7 +172,7 @@ func TestRestaurantList(t *testing.T) {
 				var decoded []models.Restaurant
 				err := json.Unmarshal(w.Body.Bytes(), &decoded)
 				assert.NoError(t, err)
-				for i, _ := range decoded {
+				for i := range decoded {
 					assert.Equal(t, expectedData[i].Name, decoded[i].Name)
 				}
 
@@ -300,8 +300,8 @@ func TestRestaurantHandler_CreateReview(t *testing.T) {
 		expectedStatus int
 	}{
 		{
-			name:   "Success",
-			url:    "/restaurants/1234/reviews", 
+			name: "Success",
+			url:  "/restaurants/1234/reviews",
 			mockSetup: func() {
 				mockUsecase.EXPECT().
 					CreateReview(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).
@@ -317,14 +317,14 @@ func TestRestaurantHandler_CreateReview(t *testing.T) {
 			expectedStatus: http.StatusOK,
 		},
 		{
-			name:   "Invalid restaurant ID",
-			url:    "/restaurants/invalid/reviews", 
-			mockSetup: func() {},
+			name:           "Invalid restaurant ID",
+			url:            "/restaurants/invalid/reviews",
+			mockSetup:      func() {},
 			expectedStatus: http.StatusBadRequest,
 		},
 		{
-			name:   "Invalid rating",
-			url:    "/restaurants/1234/reviews",
+			name: "Invalid rating",
+			url:  "/restaurants/1234/reviews",
 			mockSetup: func() {
 				mockUsecase.EXPECT().CreateReview(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).
 					Return(models.Review{}, errors.New("invalid rating"))
@@ -332,14 +332,14 @@ func TestRestaurantHandler_CreateReview(t *testing.T) {
 			expectedStatus: http.StatusBadRequest,
 		},
 		{
-			name:   "JWT not provided",
-			url:    "/restaurants/1234/reviews",
-			mockSetup: func() {},
-			expectedStatus: http.StatusUnauthorized, 
+			name:           "JWT not provided",
+			url:            "/restaurants/1234/reviews",
+			mockSetup:      func() {},
+			expectedStatus: http.StatusUnauthorized,
 		},
 		{
-			name:   "User already reviewed",
-			url:    "/restaurants/1234/reviews",
+			name: "User already reviewed",
+			url:  "/restaurants/1234/reviews",
 			mockSetup: func() {
 				mockUsecase.EXPECT().ReviewExists(gomock.Any(), gomock.Any(), gomock.Any()).Return(true, nil)
 			},
@@ -353,7 +353,7 @@ func TestRestaurantHandler_CreateReview(t *testing.T) {
 
 			r := httptest.NewRequest(http.MethodPost, tt.url, nil)
 			r.Header.Add("Content-Type", "application/json")
-			
+
 			if tt.name != "JWT not provided" {
 				r.Header.Add("Authorization", "Bearer valid-jwt-token")
 			}
@@ -367,8 +367,6 @@ func TestRestaurantHandler_CreateReview(t *testing.T) {
 		})
 	}
 }
-
-
 
 func TestRestaurantHandler_CheckReviews(t *testing.T) {
 	ctrl := gomock.NewController(t)

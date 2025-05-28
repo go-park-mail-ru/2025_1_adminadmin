@@ -20,7 +20,6 @@ func GetFuncName() string {
 	return values[len(values)-1]
 }
 
-
 func LogHandlerInfo(logger *slog.Logger, msg string, statusCode int) {
 	logger = logger.With(slog.String("status", strconv.Itoa(statusCode)))
 	logger.Info(msg)

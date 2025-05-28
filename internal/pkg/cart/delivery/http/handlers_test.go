@@ -283,7 +283,6 @@ func TestClearCart(t *testing.T) {
 				// CSRF error happens before ClearCart
 			},
 		},
-
 	}
 
 	for _, tt := range tests {

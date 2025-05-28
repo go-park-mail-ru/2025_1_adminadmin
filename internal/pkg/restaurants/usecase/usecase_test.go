@@ -259,8 +259,6 @@ func TestCreateReview(t *testing.T) {
 	}
 }
 
-
-
 func TestReviewExists(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()

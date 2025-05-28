@@ -161,7 +161,6 @@ func (uc *AuthUsecase) SignIn(ctx context.Context, data models.SignInReq) (model
 		user.ActiveAddress = address.Address
 	}
 
-
 	if !checkPassword(user.PasswordHash, data.Password) {
 		logger.Error(auth.ErrInvalidCredentials.Error())
 		return models.User{}, "", "", auth.ErrInvalidCredentials
@@ -264,7 +263,7 @@ func (uc *AuthUsecase) Check(ctx context.Context, login string) (models.User, er
 		logger.Error(err.Error())
 		return models.User{}, auth.ErrUserNotFound
 	}
-	
+
 	doesExist, err := uc.repo.ActiveAddressExists(ctx, user.Id)
 	if err != nil {
 		logger.Error("Ошибка при проверке наличия активного адреса: " + err.Error())

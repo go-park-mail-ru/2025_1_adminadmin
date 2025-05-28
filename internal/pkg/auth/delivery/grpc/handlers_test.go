@@ -10,448 +10,448 @@ import (
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/delivery/grpc/gen"
 	"github.com/go-park-mail-ru/2025_1_adminadmin/internal/pkg/auth/mocks"
-	"github.com/satori/uuid"
 	"github.com/golang/mock/gomock"
+	"github.com/satori/uuid"
 	"google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
 )
 
 func TestAuthHandler_SignIn(t *testing.T) {
-    ctrl := gomock.NewController(t)
-    defer ctrl.Finish()
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
 
-    type fields struct {
-        uc *mocks.MockAuthUsecase
-    }
-    type args struct {
-        ctx context.Context
-        in  *gen.SignInRequest
-    }
+	type fields struct {
+		uc *mocks.MockAuthUsecase
+	}
+	type args struct {
+		ctx context.Context
+		in  *gen.SignInRequest
+	}
 
-    testUserID := uuid.NewV4()
-    testCases := []struct {
-        name        string
-        setup       func(f *fields)
-        args        args
-        want        *gen.UserResponse
-        wantErr     bool
-        wantErrCode codes.Code
-    }{
-        {
-            name: "Success",
-            setup: func(f *fields) {
-                // Исправляем возвращаемый тип - убираем указатель
-                f.uc.EXPECT().SignIn(gomock.Any(), models.SignInReq{
-                    Login:    "test@example.com",
-                    Password: "password123",
-                }).Return(
-                    models.User{ // Убрали & - возвращаем значение, а не указатель
-                        Id:          testUserID,
-                        Login:       "test@example.com",
-                        PhoneNumber: "+1234567890",
-                        FirstName:   "John",
-                        LastName:    "Doe",
-                        Description: "Test user",
-                        UserPic:     "avatar.jpg",
-                    },
-                    "access_token",
-                    "csrf_token",
-                    nil,
-                )
-            },
-            args: args{
-                ctx: context.Background(),
-                in: &gen.SignInRequest{
-                    Login:    "test@example.com",
-                    Password: "password123",
-                },
-            },
-            want: &gen.UserResponse{
-                Login:       "test@example.com",
-                PhoneNumber: "+1234567890",
-                Id:          testUserID.String(),
-                FirstName:   "John",
-                LastName:    "Doe",
-                Description: "Test user",
-                UserPic:     "avatar.jpg",
-                Token:       "access_token",
-                CsrfToken:   "csrf_token",
-            },
-            wantErr: false,
-        },
-        // Остальные тестовые случаи остаются без изменений
-        {
-            name: "Invalid login format",
-            setup: func(f *fields) {
-                f.uc.EXPECT().SignIn(gomock.Any(), models.SignInReq{
-                    Login:    "invalid",
-                    Password: "password123",
-                }).Return(models.User{}, "", "", auth.ErrInvalidLogin) // Возвращаем пустую структуру вместо nil
-            },
-            args: args{
-                ctx: context.Background(),
-                in: &gen.SignInRequest{
-                    Login:    "invalid",
-                    Password: "password123",
-                },
-            },
-            want:        nil,
-            wantErr:     true,
-            wantErrCode: codes.InvalidArgument,
-        },
-        {
-            name: "User not found",
-            setup: func(f *fields) {
-                f.uc.EXPECT().SignIn(gomock.Any(), models.SignInReq{
-                    Login:    "notfound@example.com",
-                    Password: "password123",
-                }).Return(models.User{}, "", "", auth.ErrUserNotFound)
-            },
-            args: args{
-                ctx: context.Background(),
-                in: &gen.SignInRequest{
-                    Login:    "notfound@example.com",
-                    Password: "password123",
-                },
-            },
-            want:        nil,
-            wantErr:     true,
-            wantErrCode: codes.InvalidArgument,
-        },
-        {
-            name: "Invalid credentials",
-            setup: func(f *fields) {
-                f.uc.EXPECT().SignIn(gomock.Any(), models.SignInReq{
-                    Login:    "test@example.com",
-                    Password: "wrongpassword",
-                }).Return(models.User{}, "", "", auth.ErrInvalidCredentials)
-            },
-            args: args{
-                ctx: context.Background(),
-                in: &gen.SignInRequest{
-                    Login:    "test@example.com",
-                    Password: "wrongpassword",
-                },
-            },
-            want:        nil,
-            wantErr:     true,
-            wantErrCode: codes.Unauthenticated,
-        },
-        {
-            name: "Internal server error",
-            setup: func(f *fields) {
-                f.uc.EXPECT().SignIn(gomock.Any(), models.SignInReq{
-                    Login:    "test@example.com",
-                    Password: "password123",
-                }).Return(models.User{}, "", "", errors.New("database error"))
-            },
-            args: args{
-                ctx: context.Background(),
-                in: &gen.SignInRequest{
-                    Login:    "test@example.com",
-                    Password: "password123",
-                },
-            },
-            want:        nil,
-            wantErr:     true,
-            wantErrCode: codes.Internal,
-        },
-    }
+	testUserID := uuid.NewV4()
+	testCases := []struct {
+		name        string
+		setup       func(f *fields)
+		args        args
+		want        *gen.UserResponse
+		wantErr     bool
+		wantErrCode codes.Code
+	}{
+		{
+			name: "Success",
+			setup: func(f *fields) {
+				// Исправляем возвращаемый тип - убираем указатель
+				f.uc.EXPECT().SignIn(gomock.Any(), models.SignInReq{
+					Login:    "test@example.com",
+					Password: "password123",
+				}).Return(
+					models.User{ // Убрали & - возвращаем значение, а не указатель
+						Id:          testUserID,
+						Login:       "test@example.com",
+						PhoneNumber: "+1234567890",
+						FirstName:   "John",
+						LastName:    "Doe",
+						Description: "Test user",
+						UserPic:     "avatar.jpg",
+					},
+					"access_token",
+					"csrf_token",
+					nil,
+				)
+			},
+			args: args{
+				ctx: context.Background(),
+				in: &gen.SignInRequest{
+					Login:    "test@example.com",
+					Password: "password123",
+				},
+			},
+			want: &gen.UserResponse{
+				Login:       "test@example.com",
+				PhoneNumber: "+1234567890",
+				Id:          testUserID.String(),
+				FirstName:   "John",
+				LastName:    "Doe",
+				Description: "Test user",
+				UserPic:     "avatar.jpg",
+				Token:       "access_token",
+				CsrfToken:   "csrf_token",
+			},
+			wantErr: false,
+		},
+		// Остальные тестовые случаи остаются без изменений
+		{
+			name: "Invalid login format",
+			setup: func(f *fields) {
+				f.uc.EXPECT().SignIn(gomock.Any(), models.SignInReq{
+					Login:    "invalid",
+					Password: "password123",
+				}).Return(models.User{}, "", "", auth.ErrInvalidLogin) // Возвращаем пустую структуру вместо nil
+			},
+			args: args{
+				ctx: context.Background(),
+				in: &gen.SignInRequest{
+					Login:    "invalid",
+					Password: "password123",
+				},
+			},
+			want:        nil,
+			wantErr:     true,
+			wantErrCode: codes.InvalidArgument,
+		},
+		{
+			name: "User not found",
+			setup: func(f *fields) {
+				f.uc.EXPECT().SignIn(gomock.Any(), models.SignInReq{
+					Login:    "notfound@example.com",
+					Password: "password123",
+				}).Return(models.User{}, "", "", auth.ErrUserNotFound)
+			},
+			args: args{
+				ctx: context.Background(),
+				in: &gen.SignInRequest{
+					Login:    "notfound@example.com",
+					Password: "password123",
+				},
+			},
+			want:        nil,
+			wantErr:     true,
+			wantErrCode: codes.InvalidArgument,
+		},
+		{
+			name: "Invalid credentials",
+			setup: func(f *fields) {
+				f.uc.EXPECT().SignIn(gomock.Any(), models.SignInReq{
+					Login:    "test@example.com",
+					Password: "wrongpassword",
+				}).Return(models.User{}, "", "", auth.ErrInvalidCredentials)
+			},
+			args: args{
+				ctx: context.Background(),
+				in: &gen.SignInRequest{
+					Login:    "test@example.com",
+					Password: "wrongpassword",
+				},
+			},
+			want:        nil,
+			wantErr:     true,
+			wantErrCode: codes.Unauthenticated,
+		},
+		{
+			name: "Internal server error",
+			setup: func(f *fields) {
+				f.uc.EXPECT().SignIn(gomock.Any(), models.SignInReq{
+					Login:    "test@example.com",
+					Password: "password123",
+				}).Return(models.User{}, "", "", errors.New("database error"))
+			},
+			args: args{
+				ctx: context.Background(),
+				in: &gen.SignInRequest{
+					Login:    "test@example.com",
+					Password: "password123",
+				},
+			},
+			want:        nil,
+			wantErr:     true,
+			wantErrCode: codes.Internal,
+		},
+	}
 
-    for _, tc := range testCases {
-        t.Run(tc.name, func(t *testing.T) {
-            fields := fields{
-                uc: mocks.NewMockAuthUsecase(ctrl),
-            }
-            if tc.setup != nil {
-                tc.setup(&fields)
-            }
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			fields := fields{
+				uc: mocks.NewMockAuthUsecase(ctrl),
+			}
+			if tc.setup != nil {
+				tc.setup(&fields)
+			}
 
-            h := &AuthHandler{
-                uc: fields.uc,
-            }
+			h := &AuthHandler{
+				uc: fields.uc,
+			}
 
-            got, err := h.SignIn(tc.args.ctx, tc.args.in)
-            if (err != nil) != tc.wantErr {
-                t.Errorf("SignIn() error = %v, wantErr %v", err, tc.wantErr)
-                return
-            }
+			got, err := h.SignIn(tc.args.ctx, tc.args.in)
+			if (err != nil) != tc.wantErr {
+				t.Errorf("SignIn() error = %v, wantErr %v", err, tc.wantErr)
+				return
+			}
 
-            if tc.wantErr {
-                st, ok := status.FromError(err)
-                if !ok {
-                    t.Errorf("SignIn() expected gRPC status error")
-                    return
-                }
-                if st.Code() != tc.wantErrCode {
-                    t.Errorf("SignIn() error code = %v, want %v", st.Code(), tc.wantErrCode)
-                }
-                return
-            }
+			if tc.wantErr {
+				st, ok := status.FromError(err)
+				if !ok {
+					t.Errorf("SignIn() expected gRPC status error")
+					return
+				}
+				if st.Code() != tc.wantErrCode {
+					t.Errorf("SignIn() error code = %v, want %v", st.Code(), tc.wantErrCode)
+				}
+				return
+			}
 
-            if !reflect.DeepEqual(got, tc.want) {
-                t.Errorf("SignIn() = %v, want %v", got, tc.want)
-            }
-        })
-    }
+			if !reflect.DeepEqual(got, tc.want) {
+				t.Errorf("SignIn() = %v, want %v", got, tc.want)
+			}
+		})
+	}
 }
 
 func TestAuthHandler_SignUp(t *testing.T) {
-    ctrl := gomock.NewController(t)
-    defer ctrl.Finish()
+	ctrl := gomock.NewController(t)
+	defer ctrl.Finish()
 
-    type fields struct {
-        uc *mocks.MockAuthUsecase
-    }
-    type args struct {
-        ctx context.Context
-        in  *gen.SignUpRequest
-    }
+	type fields struct {
+		uc *mocks.MockAuthUsecase
+	}
+	type args struct {
+		ctx context.Context
+		in  *gen.SignUpRequest
+	}
 
-    testUserID := uuid.NewV4()
-    testCases := []struct {
-        name        string
-        setup       func(f *fields)
-        args        args
-        want        *gen.UserResponse
-        wantErr     bool
-        wantErrCode codes.Code
-    }{
-        {
-            name: "Success",
-            setup: func(f *fields) {
-                f.uc.EXPECT().SignUp(gomock.Any(), models.SignUpReq{
-                    Login:       "test@example.com",
-                    FirstName:   "John",
-                    LastName:    "Doe",
-                    PhoneNumber: "+1234567890",
-                    Password:    "password123",
-                }).Return(
-                    models.User{
-                        Id:          testUserID,
-                        Login:       "test@example.com",
-                        PhoneNumber: "+1234567890",
-                        FirstName:   "John",
-                        LastName:    "Doe",
-                        Description: "Test user",
-                        UserPic:     "avatar.jpg",
-                    },
-                    "access_token",
-                    "csrf_token",
-                    nil,
-                )
-            },
-            args: args{
-                ctx: context.Background(),
-                in: &gen.SignUpRequest{
-                    Login:       "test@example.com",
-                    FirstName:   "John",
-                    LastName:    "Doe",
-                    PhoneNumber: "+1234567890",
-                    Password:    "password123",
-                },
-            },
-            want: &gen.UserResponse{
-                Login:       "test@example.com",
-                PhoneNumber: "+1234567890",
-                Id:          testUserID.String(),
-                FirstName:   "John",
-                LastName:    "Doe",
-                Description: "Test user",
-                UserPic:     "avatar.jpg",
-                Token:       "access_token",
-                CsrfToken:   "csrf_token",
-            },
-            wantErr: false,
-        },
-        {
-            name: "Invalid login",
-            setup: func(f *fields) {
-                f.uc.EXPECT().SignUp(gomock.Any(), models.SignUpReq{
-                    Login:       "invalid",
-                    FirstName:   "John",
-                    LastName:    "Doe",
-                    PhoneNumber: "+1234567890",
-                    Password:    "password123",
-                }).Return(models.User{}, "", "", auth.ErrInvalidLogin)
-            },
-            args: args{
-                ctx: context.Background(),
-                in: &gen.SignUpRequest{
-                    Login:       "invalid",
-                    FirstName:   "John",
-                    LastName:    "Doe",
-                    PhoneNumber: "+1234567890",
-                    Password:    "password123",
-                },
-            },
-            want:        nil,
-            wantErr:     true,
-            wantErrCode: codes.InvalidArgument,
-        },
-        {
-            name: "Invalid password",
-            setup: func(f *fields) {
-                f.uc.EXPECT().SignUp(gomock.Any(), models.SignUpReq{
-                    Login:       "test@example.com",
-                    FirstName:   "John",
-                    LastName:    "Doe",
-                    PhoneNumber: "+1234567890",
-                    Password:    "short",
-                }).Return(models.User{}, "", "", auth.ErrInvalidPassword)
-            },
-            args: args{
-                ctx: context.Background(),
-                in: &gen.SignUpRequest{
-                    Login:       "test@example.com",
-                    FirstName:   "John",
-                    LastName:    "Doe",
-                    PhoneNumber: "+1234567890",
-                    Password:    "short",
-                },
-            },
-            want:        nil,
-            wantErr:     true,
-            wantErrCode: codes.InvalidArgument,
-        },
-        {
-            name: "Invalid name",
-            setup: func(f *fields) {
-                f.uc.EXPECT().SignUp(gomock.Any(), models.SignUpReq{
-                    Login:       "test@example.com",
-                    FirstName:   "",
-                    LastName:    "Doe",
-                    PhoneNumber: "+1234567890",
-                    Password:    "password123",
-                }).Return(models.User{}, "", "", auth.ErrInvalidName)
-            },
-            args: args{
-                ctx: context.Background(),
-                in: &gen.SignUpRequest{
-                    Login:       "test@example.com",
-                    FirstName:   "",
-                    LastName:    "Doe",
-                    PhoneNumber: "+1234567890",
-                    Password:    "password123",
-                },
-            },
-            want:        nil,
-            wantErr:     true,
-            wantErrCode: codes.InvalidArgument,
-        },
-        {
-            name: "Invalid phone",
-            setup: func(f *fields) {
-                f.uc.EXPECT().SignUp(gomock.Any(), models.SignUpReq{
-                    Login:       "test@example.com",
-                    FirstName:   "John",
-                    LastName:    "Doe",
-                    PhoneNumber: "invalid",
-                    Password:    "password123",
-                }).Return(models.User{}, "", "", auth.ErrInvalidPhone)
-            },
-            args: args{
-                ctx: context.Background(),
-                in: &gen.SignUpRequest{
-                    Login:       "test@example.com",
-                    FirstName:   "John",
-                    LastName:    "Doe",
-                    PhoneNumber: "invalid",
-                    Password:    "password123",
-                },
-            },
-            want:        nil,
-            wantErr:     true,
-            wantErrCode: codes.InvalidArgument,
-        },
-        {
-            name: "User creation error",
-            setup: func(f *fields) {
-                f.uc.EXPECT().SignUp(gomock.Any(), models.SignUpReq{
-                    Login:       "test@example.com",
-                    FirstName:   "John",
-                    LastName:    "Doe",
-                    PhoneNumber: "+1234567890",
-                    Password:    "password123",
-                }).Return(models.User{}, "", "", auth.ErrCreatingUser)
-            },
-            args: args{
-                ctx: context.Background(),
-                in: &gen.SignUpRequest{
-                    Login:       "test@example.com",
-                    FirstName:   "John",
-                    LastName:    "Doe",
-                    PhoneNumber: "+1234567890",
-                    Password:    "password123",
-                },
-            },
-            want:        nil,
-            wantErr:     true,
-            wantErrCode: codes.InvalidArgument,
-        },
-        {
-            name: "Internal server error",
-            setup: func(f *fields) {
-                f.uc.EXPECT().SignUp(gomock.Any(), models.SignUpReq{
-                    Login:       "test@example.com",
-                    FirstName:   "John",
-                    LastName:    "Doe",
-                    PhoneNumber: "+1234567890",
-                    Password:    "password123",
-                }).Return(models.User{}, "", "", errors.New("database error"))
-            },
-            args: args{
-                ctx: context.Background(),
-                in: &gen.SignUpRequest{
-                    Login:       "test@example.com",
-                    FirstName:   "John",
-                    LastName:    "Doe",
-                    PhoneNumber: "+1234567890",
-                    Password:    "password123",
-                },
-            },
-            want:        nil,
-            wantErr:     true,
-            wantErrCode: codes.Internal,
-        },
-    }
+	testUserID := uuid.NewV4()
+	testCases := []struct {
+		name        string
+		setup       func(f *fields)
+		args        args
+		want        *gen.UserResponse
+		wantErr     bool
+		wantErrCode codes.Code
+	}{
+		{
+			name: "Success",
+			setup: func(f *fields) {
+				f.uc.EXPECT().SignUp(gomock.Any(), models.SignUpReq{
+					Login:       "test@example.com",
+					FirstName:   "John",
+					LastName:    "Doe",
+					PhoneNumber: "+1234567890",
+					Password:    "password123",
+				}).Return(
+					models.User{
+						Id:          testUserID,
+						Login:       "test@example.com",
+						PhoneNumber: "+1234567890",
+						FirstName:   "John",
+						LastName:    "Doe",
+						Description: "Test user",
+						UserPic:     "avatar.jpg",
+					},
+					"access_token",
+					"csrf_token",
+					nil,
+				)
+			},
+			args: args{
+				ctx: context.Background(),
+				in: &gen.SignUpRequest{
+					Login:       "test@example.com",
+					FirstName:   "John",
+					LastName:    "Doe",
+					PhoneNumber: "+1234567890",
+					Password:    "password123",
+				},
+			},
+			want: &gen.UserResponse{
+				Login:       "test@example.com",
+				PhoneNumber: "+1234567890",
+				Id:          testUserID.String(),
+				FirstName:   "John",
+				LastName:    "Doe",
+				Description: "Test user",
+				UserPic:     "avatar.jpg",
+				Token:       "access_token",
+				CsrfToken:   "csrf_token",
+			},
+			wantErr: false,
+		},
+		{
+			name: "Invalid login",
+			setup: func(f *fields) {
+				f.uc.EXPECT().SignUp(gomock.Any(), models.SignUpReq{
+					Login:       "invalid",
+					FirstName:   "John",
+					LastName:    "Doe",
+					PhoneNumber: "+1234567890",
+					Password:    "password123",
+				}).Return(models.User{}, "", "", auth.ErrInvalidLogin)
+			},
+			args: args{
+				ctx: context.Background(),
+				in: &gen.SignUpRequest{
+					Login:       "invalid",
+					FirstName:   "John",
+					LastName:    "Doe",
+					PhoneNumber: "+1234567890",
+					Password:    "password123",
+				},
+			},
+			want:        nil,
+			wantErr:     true,
+			wantErrCode: codes.InvalidArgument,
+		},
+		{
+			name: "Invalid password",
+			setup: func(f *fields) {
+				f.uc.EXPECT().SignUp(gomock.Any(), models.SignUpReq{
+					Login:       "test@example.com",
+					FirstName:   "John",
+					LastName:    "Doe",
+					PhoneNumber: "+1234567890",
+					Password:    "short",
+				}).Return(models.User{}, "", "", auth.ErrInvalidPassword)
+			},
+			args: args{
+				ctx: context.Background(),
+				in: &gen.SignUpRequest{
+					Login:       "test@example.com",
+					FirstName:   "John",
+					LastName:    "Doe",
+					PhoneNumber: "+1234567890",
+					Password:    "short",
+				},
+			},
+			want:        nil,
+			wantErr:     true,
+			wantErrCode: codes.InvalidArgument,
+		},
+		{
+			name: "Invalid name",
+			setup: func(f *fields) {
+				f.uc.EXPECT().SignUp(gomock.Any(), models.SignUpReq{
+					Login:       "test@example.com",
+					FirstName:   "",
+					LastName:    "Doe",
+					PhoneNumber: "+1234567890",
+					Password:    "password123",
+				}).Return(models.User{}, "", "", auth.ErrInvalidName)
+			},
+			args: args{
+				ctx: context.Background(),
+				in: &gen.SignUpRequest{
+					Login:       "test@example.com",
+					FirstName:   "",
+					LastName:    "Doe",
+					PhoneNumber: "+1234567890",
+					Password:    "password123",
+				},
+			},
+			want:        nil,
+			wantErr:     true,
+			wantErrCode: codes.InvalidArgument,
+		},
+		{
+			name: "Invalid phone",
+			setup: func(f *fields) {
+				f.uc.EXPECT().SignUp(gomock.Any(), models.SignUpReq{
+					Login:       "test@example.com",
+					FirstName:   "John",
+					LastName:    "Doe",
+					PhoneNumber: "invalid",
+					Password:    "password123",
+				}).Return(models.User{}, "", "", auth.ErrInvalidPhone)
+			},
+			args: args{
+				ctx: context.Background(),
+				in: &gen.SignUpRequest{
+					Login:       "test@example.com",
+					FirstName:   "John",
+					LastName:    "Doe",
+					PhoneNumber: "invalid",
+					Password:    "password123",
+				},
+			},
+			want:        nil,
+			wantErr:     true,
+			wantErrCode: codes.InvalidArgument,
+		},
+		{
+			name: "User creation error",
+			setup: func(f *fields) {
+				f.uc.EXPECT().SignUp(gomock.Any(), models.SignUpReq{
+					Login:       "test@example.com",
+					FirstName:   "John",
+					LastName:    "Doe",
+					PhoneNumber: "+1234567890",
+					Password:    "password123",
+				}).Return(models.User{}, "", "", auth.ErrCreatingUser)
+			},
+			args: args{
+				ctx: context.Background(),
+				in: &gen.SignUpRequest{
+					Login:       "test@example.com",
+					FirstName:   "John",
+					LastName:    "Doe",
+					PhoneNumber: "+1234567890",
+					Password:    "password123",
+				},
+			},
+			want:        nil,
+			wantErr:     true,
+			wantErrCode: codes.InvalidArgument,
+		},
+		{
+			name: "Internal server error",
+			setup: func(f *fields) {
+				f.uc.EXPECT().SignUp(gomock.Any(), models.SignUpReq{
+					Login:       "test@example.com",
+					FirstName:   "John",
+					LastName:    "Doe",
+					PhoneNumber: "+1234567890",
+					Password:    "password123",
+				}).Return(models.User{}, "", "", errors.New("database error"))
+			},
+			args: args{
+				ctx: context.Background(),
+				in: &gen.SignUpRequest{
+					Login:       "test@example.com",
+					FirstName:   "John",
+					LastName:    "Doe",
+					PhoneNumber: "+1234567890",
+					Password:    "password123",
+				},
+			},
+			want:        nil,
+			wantErr:     true,
+			wantErrCode: codes.Internal,
+		},
+	}
 
-    for _, tc := range testCases {
-        t.Run(tc.name, func(t *testing.T) {
-            fields := fields{
-                uc: mocks.NewMockAuthUsecase(ctrl),
-            }
-            if tc.setup != nil {
-                tc.setup(&fields)
-            }
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			fields := fields{
+				uc: mocks.NewMockAuthUsecase(ctrl),
+			}
+			if tc.setup != nil {
+				tc.setup(&fields)
+			}
 
-            h := &AuthHandler{
-                uc: fields.uc,
-            }
+			h := &AuthHandler{
+				uc: fields.uc,
+			}
 
-            got, err := h.SignUp(tc.args.ctx, tc.args.in)
-            if (err != nil) != tc.wantErr {
-                t.Errorf("SignUp() error = %v, wantErr %v", err, tc.wantErr)
-                return
-            }
+			got, err := h.SignUp(tc.args.ctx, tc.args.in)
+			if (err != nil) != tc.wantErr {
+				t.Errorf("SignUp() error = %v, wantErr %v", err, tc.wantErr)
+				return
+			}
 
-            if tc.wantErr {
-                st, ok := status.FromError(err)
-                if !ok {
-                    t.Errorf("SignUp() expected gRPC status error")
-                    return
-                }
-                if st.Code() != tc.wantErrCode {
-                    t.Errorf("SignUp() error code = %v, want %v", st.Code(), tc.wantErrCode)
-                }
-                return
-            }
+			if tc.wantErr {
+				st, ok := status.FromError(err)
+				if !ok {
+					t.Errorf("SignUp() expected gRPC status error")
+					return
+				}
+				if st.Code() != tc.wantErrCode {
+					t.Errorf("SignUp() error code = %v, want %v", st.Code(), tc.wantErrCode)
+				}
+				return
+			}
 
-            if !reflect.DeepEqual(got, tc.want) {
-                t.Errorf("SignUp() = %v, want %v", got, tc.want)
-            }
-        })
-    }
+			if !reflect.DeepEqual(got, tc.want) {
+				t.Errorf("SignUp() = %v, want %v", got, tc.want)
+			}
+		})
+	}
 }
 
 func TestAuthHandler_Check(t *testing.T) {
@@ -551,7 +551,6 @@ func TestAuthHandler_Check(t *testing.T) {
 		})
 	}
 }
-
 
 func TestAuthHandler_UpdateUser(t *testing.T) {
 	ctrl := gomock.NewController(t)
@@ -965,7 +964,7 @@ func TestAuthHandler_GetUserAddresses(t *testing.T) {
 			want: &gen.AddressListResponse{
 				Addresses: []*gen.Address{
 					{
-						Id:      "", 
+						Id:      "",
 						Address: "123 Main St",
 						UserId:  "",
 					},
@@ -1067,8 +1066,8 @@ func TestAuthHandler_DeleteAddress(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name: "Invalid UUID",
-			setup: func(f *fields) {}, 
+			name:  "Invalid UUID",
+			setup: func(f *fields) {},
 			args: args{
 				ctx: context.Background(),
 				in:  &gen.DeleteAddressRequest{Id: invalidID},
@@ -1165,7 +1164,7 @@ func TestAuthHandler_AddAddress(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name: "Invalid Address ID",
+			name:  "Invalid Address ID",
 			setup: func(f *fields) {},
 			args: args{
 				ctx: context.Background(),
@@ -1179,8 +1178,8 @@ func TestAuthHandler_AddAddress(t *testing.T) {
 			wantErrCode: codes.InvalidArgument,
 		},
 		{
-			name: "Invalid User ID",
-			setup: func(f *fields) {}, 
+			name:  "Invalid User ID",
+			setup: func(f *fields) {},
 			args: args{
 				ctx: context.Background(),
 				in: &gen.Address{

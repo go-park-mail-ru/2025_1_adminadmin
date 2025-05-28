@@ -79,11 +79,11 @@ func TestOrderConversion(t *testing.T) {
 		{
 			name: "Valid order",
 			order: models.Order{
-				ID:                orderID,
-				UserID:            userID,
-				Status:            "created",
-				Address:           "Main St",
-				OrderProducts:     models.Cart{
+				ID:      orderID,
+				UserID:  userID,
+				Status:  "created",
+				Address: "Main St",
+				OrderProducts: models.Cart{
 					Id:   uuid.NewV4(),
 					Name: "Place",
 					CartItems: []models.CartItem{
@@ -135,8 +135,8 @@ func TestProtoToCartItems_Errors(t *testing.T) {
 		expectErr bool
 	}{
 		{
-			name: "Nil input",
-			input: nil,
+			name:      "Nil input",
+			input:     nil,
 			expectErr: false,
 		},
 		{

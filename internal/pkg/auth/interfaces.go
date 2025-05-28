@@ -15,7 +15,7 @@ var (
 	ErrInvalidLogin       = errors.New("неверный формат логина")
 	ErrInvalidPassword    = errors.New("неверный формат пароля")
 	ErrInvalidCredentials = errors.New("неверный логин или пароль")
-	ErrAlreadyExists         = errors.New("пользователь с таким логином уже существует")
+	ErrAlreadyExists      = errors.New("пользователь с таким логином уже существует")
 	ErrGeneratingToken    = errors.New("ошибка генерации токена")
 	ErrInvalidName        = errors.New("имя и фамилия должны содержать только русские буквы и быть от 2 до 25 символов")
 	ErrInvalidPhone       = errors.New("некорректный номер телефона")
@@ -32,7 +32,7 @@ var (
 type AuthRepo interface {
 	InsertUser(ctx context.Context, user models.User) error
 	SelectUserByLogin(ctx context.Context, login string) (models.User, error)
-	SetSecret2fa(ctx context.Context,secret2fa []byte, login string) error
+	SetSecret2fa(ctx context.Context, secret2fa []byte, login string) error
 	GetSecret2fa(ctx context.Context, login string) ([]byte, error)
 	Disable2fa(ctx context.Context, login string) error
 	UpdateUser(ctx context.Context, user models.User) error

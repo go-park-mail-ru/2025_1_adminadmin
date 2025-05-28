@@ -25,41 +25,41 @@ func NewCartUsecase(cartRepo cart.CartRepo, restaurantRepo cart.RestaurantRepo) 
 }
 
 func (uc *CartUsecase) GetCart(ctx context.Context, login string) (models.Cart, error, bool) {
-    logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 
-    cartRaw, restaurantID, totalSum, err := uc.cartRepo.GetCart(ctx, login)
-    if err != nil {
-        logger.Error("ошибка получения корзины", slog.String("error", err.Error()))
-        return models.Cart{}, err, false
-    }
+	cartRaw, restaurantID, totalSum, err := uc.cartRepo.GetCart(ctx, login)
+	if err != nil {
+		logger.Error("ошибка получения корзины", slog.String("error", err.Error()))
+		return models.Cart{}, err, false
+	}
 
-    if restaurantID == "" || cartRaw == nil {
-        logger.Info("корзина пуста или нет restaurantID")
-        return models.Cart{}, nil, false
-    }
+	if restaurantID == "" || cartRaw == nil {
+		logger.Info("корзина пуста или нет restaurantID")
+		return models.Cart{}, nil, false
+	}
 
-    productIDs := make([]string, 0, len(cartRaw))
-    for id := range cartRaw {
-        productIDs = append(productIDs, id)
-    }
+	productIDs := make([]string, 0, len(cartRaw))
+	for id := range cartRaw {
+		productIDs = append(productIDs, id)
+	}
 
-    items, err := uc.restaurantRepo.GetCartItem(ctx, productIDs, cartRaw, restaurantID)
-    if err != nil {
-        logger.Error("ошибка получения данных по товарам", slog.String("restaurantID", restaurantID), slog.String("error", err.Error()))
-        return models.Cart{}, err, false
-    }
-    items.TotalSum = totalSum
+	items, err := uc.restaurantRepo.GetCartItem(ctx, productIDs, cartRaw, restaurantID)
+	if err != nil {
+		logger.Error("ошибка получения данных по товарам", slog.String("restaurantID", restaurantID), slog.String("error", err.Error()))
+		return models.Cart{}, err, false
+	}
+	items.TotalSum = totalSum
 
-    recommendedProducts, err := uc.restaurantRepo.GetRecommendedProducts(ctx, productIDs, restaurantID)
-    if err != nil {
-        logger.Warn("не удалось получить рекомендации", slog.String("error", err.Error()))
-    } else {
-        items.RecommendedItems = recommendedProducts
-    }
+	recommendedProducts, err := uc.restaurantRepo.GetRecommendedProducts(ctx, productIDs, restaurantID)
+	if err != nil {
+		logger.Warn("не удалось получить рекомендации", slog.String("error", err.Error()))
+	} else {
+		items.RecommendedItems = recommendedProducts
+	}
 	logger.Info("Рекомендуемые товары", slog.Any("recommended", items))
 
-    logger.Info("успешное получение корзины")
-    return items, nil, true
+	logger.Info("успешное получение корзины")
+	return items, nil, true
 }
 
 func (uc *CartUsecase) UpdateItemQuantity(ctx context.Context, login, productID string, restaurantId string, quantity int) error {
@@ -139,21 +139,21 @@ func (u *CartUsecase) CreateOrder(ctx context.Context, login string, req models.
 		}
 	}
 
-	doesExist, err := u.restaurantRepo.AddressExists(ctx, order.Address, userId);
+	doesExist, err := u.restaurantRepo.AddressExists(ctx, order.Address, userId)
 	if err != nil {
 		logger.Error("ошибка поиска адреса", slog.String("error", err.Error()))
 		return models.Order{}, err
 	}
 	if !doesExist {
-		address := models.Address {
-			Id: uuid.NewV4(),
+		address := models.Address{
+			Id:      uuid.NewV4(),
 			Address: order.Address,
-			UserId: userId,
+			UserId:  userId,
 		}
 		err := u.restaurantRepo.InsertAddress(ctx, address)
 		if err != nil {
-		logger.Error("ошибка при создании адреса", slog.String("error", err.Error()))
-		return models.Order{}, err
+			logger.Error("ошибка при создании адреса", slog.String("error", err.Error()))
+			return models.Order{}, err
 		}
 	}
 
@@ -179,7 +179,7 @@ func (u *CartUsecase) UpdateOrderStatus(ctx context.Context, order_id uuid.UUID)
 
 	status := "paid"
 	err := u.restaurantRepo.UpdateOrderStatus(ctx, order_id, status)
-	if err != nil{
+	if err != nil {
 		logger.Error(err.Error())
 		return err
 	}
@@ -191,28 +191,28 @@ func (u *CartUsecase) UpdateOrderStatus(ctx context.Context, order_id uuid.UUID)
 }
 
 func (u *CartUsecase) scheduleDeliveryStatusUpdate(orderID uuid.UUID) {
-    ctx, cancel := context.WithTimeout(context.Background(), 120*time.Second)
-    defer cancel()
-	
+	ctx, cancel := context.WithTimeout(context.Background(), 120*time.Second)
+	defer cancel()
+
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 
-    time.Sleep(60 * time.Second)
+	time.Sleep(60 * time.Second)
 
-    err := u.restaurantRepo.UpdateOrderStatus(ctx, orderID, "in_delivery")
-    if err != nil {
-        logger.Error("Failed to update delivery status",
-            slog.String("error", err.Error()))
-        return
-    }
+	err := u.restaurantRepo.UpdateOrderStatus(ctx, orderID, "in_delivery")
+	if err != nil {
+		logger.Error("Failed to update delivery status",
+			slog.String("error", err.Error()))
+		return
+	}
 
-    logger.Info("Order status updated to 'in_delivery'")
+	logger.Info("Order status updated to 'in_delivery'")
 
 	time.Sleep(20 * time.Second)
-    err = u.restaurantRepo.UpdateOrderStatus(ctx, orderID, "delivered")
-    if err != nil {
-        logger.Error("Failed to update to 'delivered'",
-            slog.String("error", err.Error()))
-        return
-    }
-    logger.Info("Order status updated to 'delivered'")
+	err = u.restaurantRepo.UpdateOrderStatus(ctx, orderID, "delivered")
+	if err != nil {
+		logger.Error("Failed to update to 'delivered'",
+			slog.String("error", err.Error()))
+		return
+	}
+	logger.Info("Order status updated to 'delivered'")
 }

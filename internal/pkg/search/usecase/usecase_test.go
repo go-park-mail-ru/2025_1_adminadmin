@@ -67,7 +67,6 @@ func TestSearchRestaurantWithProducts_Error(t *testing.T) {
 	assert.Contains(t, err.Error(), "error in SearchRestaurantWithProducts")
 }
 
-
 func TestSearchProductsInRestaurant_Error(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
