@@ -8,37 +8,37 @@ on:
 
 jobs:
   adminadmin-linters:
-  runs-on: ubuntu-latest
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Set up Go
-      uses: actions/setup-go@v5
-      with:
-        go-version: '1.21'
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
 
-    - name: Download dependencies
-      run: |
-        go mod tidy
-        go get github.com/go-redis/redis/v8
-        go get github.com/skip2/go-qrcode
+      - name: Download dependencies
+        run: |
+          go mod tidy
+          go get github.com/go-redis/redis/v8
+          go get github.com/skip2/go-qrcode
 
-    - name: Install mockgen
-      run: |
-        go install github.com/golang/mock/mockgen@v1.6.0
+      - name: Install mockgen
+        run: |
+          go install github.com/golang/mock/mockgen@v1.6.0
 
-    - name: Generate mocks
-      run: make generate-mocks || echo "No mocks to generate"
+      - name: Generate mocks
+        run: make generate-mocks || echo "No mocks to generate"
 
-    - name: Build project
-      run: go build ./...
+      - name: Build project
+        run: go build ./...
 
-    - name: Run golangci-lint
-      uses: golangci/golangci-lint-action@v4
-      with:
-        version: v1.54
-        skip-cache: true
+      - name: Run golangci-lint
+        uses: golangci/golangci-lint-action@v4
+        with:
+          version: v1.54
+          skip-cache: true
 
   adminadmin-tests:
     name: tests
