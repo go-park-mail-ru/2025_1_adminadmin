@@ -8,7 +8,6 @@ on:
 
 jobs:
   adminadmin-linters:
-    name: Linters
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
