@@ -66,97 +66,107 @@ func (r *CartRepository) GetCart(ctx context.Context, userID string) (map[string
 }
 
 func (r *CartRepository) UpdateItemQuantity(ctx context.Context, userID, productID, restaurantID string, quantity int, price float64) error {
-	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()),
-		slog.String("user_id", userID),
-		slog.String("product_id", productID),
-		slog.String("restaurant_id", restaurantID),
-		slog.Int("quantity", quantity))
+    logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()),
+        slog.String("user_id", userID),
+        slog.String("product_id", productID),
+        slog.String("restaurant_id", restaurantID),
+        slog.Int("quantity", quantity))
 
-	key := "cart:" + userID
+    key := "cart:" + userID
 
-	currentRestaurantID, err := r.redisClient.HGet(ctx, key, "restaurant_id").Result()
-	if err != nil && err != redis.Nil {
-		logger.Error("Ошибка при получении restaurant_id из Redis", slog.String("error", err.Error()))
-		return err
-	}
+    currentRestaurantID, err := r.redisClient.HGet(ctx, key, "restaurant_id").Result()
+    if err != nil && err != redis.Nil {
+        logger.Error("Ошибка при получении restaurant_id из Redis", slog.String("error", err.Error()))
+        return err
+    }
 
-	if currentRestaurantID != "" && currentRestaurantID != restaurantID {
-		if err := r.redisClient.Del(ctx, key).Err(); err != nil {
-			logger.Error("Ошибка при удалении ключа Redis", slog.String("error", err.Error()))
-			return err
-		}
-	}
+    if currentRestaurantID != "" && currentRestaurantID != restaurantID {
+        if err := r.redisClient.Del(ctx, key).Err(); err != nil {
+            logger.Error("Ошибка при удалении ключа Redis", slog.String("error", err.Error()))
+            return err
+        }
+    }
 
-	oldQtyStr, _ := r.redisClient.HGet(ctx, key, productID).Result()
-	oldQty, _ := strconv.Atoi(oldQtyStr)
+    oldQtyStr, _ := r.redisClient.HGet(ctx, key, productID).Result()
+    oldQty, _ := strconv.Atoi(oldQtyStr)
 
-	if quantity <= 0 {
-		err := r.redisClient.HDel(ctx, key, productID).Err()
-		if err != nil {
-			logger.Error("Ошибка при удалении товара из корзины", slog.String("error", err.Error()))
-			return err
-		}
+    if quantity <= 0 {
+        err := r.redisClient.HDel(ctx, key, productID).Err()
+        if err != nil {
+            logger.Error("Ошибка при удалении товара из корзины", slog.String("error", err.Error()))
+            return err
+        }
 
-		totalStr, _ := r.redisClient.HGet(ctx, key, "total_sum").Result()
-		totalSum, _ := strconv.ParseFloat(totalStr, 64)
+        totalStr, _ := r.redisClient.HGet(ctx, key, "total_sum").Result()
+        totalSum, _ := strconv.ParseFloat(totalStr, 64)
 
-		totalSum -= float64(oldQty) * price
+        totalSum -= float64(oldQty) * price
 
-		if totalSum >= 100000 {
-			err := fmt.Errorf("сумма заказа не должна превышать 100000 рублей")
-			logger.Error("Ошибка при обновлении суммы корзины", slog.String("error", err.Error()))
-			return err
-		}
+        if totalSum >= 100000 {
+            err := fmt.Errorf("сумма заказа не должна превышать 100000 рублей")
+            logger.Error("Ошибка при обновлении суммы корзины", slog.String("error", err.Error()))
+            return err
+        }
 
-		_, err = r.redisClient.HSet(ctx, key, "total_sum", totalSum).Result()
-		if err != nil {
-			logger.Error("Ошибка при обновлении суммы корзины", slog.String("error", err.Error()))
-			return err
-		}
+        _, err = r.redisClient.HSet(ctx, key, "total_sum", totalSum).Result()
+        if err != nil {
+            logger.Error("Ошибка при обновлении суммы корзины", slog.String("error", err.Error()))
+            return err
+        }
 
-		fields, err := r.redisClient.HKeys(ctx, key).Result()
-		if err == nil {
-			onlyRestaurantID := len(fields) == 1 && fields[0] == "restaurant_id"
-			if onlyRestaurantID || len(fields) == 0 {
-				logger.Info("Корзина пуста, удаляем restaurant_id")
-				_ = r.redisClient.HDel(ctx, key, "restaurant_id").Err()
-			}
-		} else {
-			logger.Error("Ошибка при получении ключей из Redis", slog.String("error", err.Error()))
-		}
+        fields, err := r.redisClient.HKeys(ctx, key).Result()
+        if err == nil {
+            onlyRestaurantID := len(fields) == 1 && fields[0] == "restaurant_id"
+            if onlyRestaurantID || len(fields) == 0 {
+                logger.Info("Корзина пуста, удаляем restaurant_id")
+                _ = r.redisClient.HDel(ctx, key, "restaurant_id").Err()
+            }
+        } else {
+            logger.Error("Ошибка при получении ключей из Redis", slog.String("error", err.Error()))
+        }
 
-		return nil
-	}
+        return nil
+    }
 
-	if quantity > 99 {
-		logger.Warn("Превышен лимит количества товара", slog.Int("quantity", quantity))
-		return fmt.Errorf("товар уже в корзине")
-	}
+    if quantity > 99 {
+        quantity = 99
+        logger.Warn("Превышен лимит количества товара, установлено максимальное значение", slog.Int("quantity", quantity))
+    }
 
-	totalStr, _ := r.redisClient.HGet(ctx, key, "total_sum").Result()
-	totalSum, _ := strconv.ParseFloat(totalStr, 64)
+    totalStr, _ := r.redisClient.HGet(ctx, key, "total_sum").Result()
+    totalSum, _ := strconv.ParseFloat(totalStr, 64)
 
-	
-	newTotal := totalSum - float64(oldQty)*price + float64(quantity)*price
+    newTotal := totalSum - float64(oldQty)*price + float64(quantity)*price
 
-	if newTotal > 100000 {
-		logger.Error("Превышен лимит суммы заказа", slog.Float64("new_total", newTotal))
-		return fmt.Errorf("сумма заказа не должна превышать 100000 рублей")
-	}
+    if newTotal > 100000 {
+        maxPossibleQuantity := int((100000 - (totalSum - float64(oldQty)*price)) / price)
+        if maxPossibleQuantity < 1 {
+            maxPossibleQuantity = 1
+        }
+        
+        if maxPossibleQuantity < quantity {
+            quantity = maxPossibleQuantity
+            logger.Warn("Превышен лимит суммы заказа, количество товара уменьшено", 
+                slog.Int("new_quantity", quantity),
+                slog.Float64("new_total", totalSum - float64(oldQty)*price + float64(quantity)*price))
+        }
+        
+        newTotal = totalSum - float64(oldQty)*price + float64(quantity)*price
+    }
 
-	pipe := r.redisClient.TxPipeline()
-	pipe.HSet(ctx, key, productID, quantity)
-	pipe.HSet(ctx, key, "restaurant_id", restaurantID)
-	pipe.HSet(ctx, key, "total_sum", newTotal)
+    pipe := r.redisClient.TxPipeline()
+    pipe.HSet(ctx, key, productID, quantity)
+    pipe.HSet(ctx, key, "restaurant_id", restaurantID)
+    pipe.HSet(ctx, key, "total_sum", newTotal)
 
-	_, err = pipe.Exec(ctx)
-	if err != nil {
-		logger.Error("Ошибка при выполнении транзакции Redis", slog.String("error", err.Error()))
-	} else {
-		logger.Info("Успешно обновлено", slog.String("product_id", productID), slog.Int("quantity", quantity))
-	}
+    _, err = pipe.Exec(ctx)
+    if err != nil {
+        logger.Error("Ошибка при выполнении транзакции Redis", slog.String("error", err.Error()))
+    } else {
+        logger.Info("Успешно обновлено", slog.String("product_id", productID), slog.Int("quantity", quantity))
+    }
 
-	return err
+    return err
 }
 
 func (r *CartRepository) ClearCart(ctx context.Context, userID string) error {
