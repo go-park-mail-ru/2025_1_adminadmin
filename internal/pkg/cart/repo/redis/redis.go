@@ -128,18 +128,21 @@ func (r *CartRepository) UpdateItemQuantity(ctx context.Context, userID, product
 		return nil
 	}
 
-	if quantity > 999 {
+	if quantity > 99 {
 		logger.Warn("Превышен лимит количества товара", slog.Int("quantity", quantity))
 		return fmt.Errorf("товар уже в корзине")
 	}
 
-	delta := quantity - oldQty
-	deltaSum := float64(delta) * price
-
 	totalStr, _ := r.redisClient.HGet(ctx, key, "total_sum").Result()
 	totalSum, _ := strconv.ParseFloat(totalStr, 64)
 
-	newTotal := totalSum + deltaSum
+	
+	newTotal := totalSum - float64(oldQty)*price + float64(quantity)*price
+
+	if newTotal > 100000 {
+		logger.Error("Превышен лимит суммы заказа", slog.Float64("new_total", newTotal))
+		return fmt.Errorf("сумма заказа не должна превышать 100000 рублей")
+	}
 
 	pipe := r.redisClient.TxPipeline()
 	pipe.HSet(ctx, key, productID, quantity)
