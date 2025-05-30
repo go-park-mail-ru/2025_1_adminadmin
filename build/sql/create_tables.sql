@@ -1098,7 +1098,7 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 ((SELECT id FROM restaurants WHERE name = 'Сыто Пьяно'), 'Соус Блю чиз', 59, 'СытоПьяно_35.png', 30, 'Соусы'),
 ((SELECT id FROM restaurants WHERE name = 'Сыто Пьяно'), 'Ассорти колбасок гриль', 1355, 'СытоПьяно_36.png', 810, 'Мясные горячие блюда'),
 ((SELECT id FROM restaurants WHERE name = 'Сыто Пьяно'), 'Куриная грудка на гриле', 515, 'СытоПьяно_37.png', 310, 'Мясные горячие блюда'),
-((SELECT id FROM restaurants WHERE name = 'Сыто Пьяно'), 'Люля-кебаб из говядины', 'СытоПьяно_38.png', 625, 'Мясные горячие блюда'),
+((SELECT id FROM restaurants WHERE name = 'Сыто Пьяно'), 'Люля-кебаб из говядины', 418, 'СытоПьяно_38.png', 625, 'Мясные горячие блюда'),
 ((SELECT id FROM restaurants WHERE name = 'Сыто Пьяно'), 'Пельмени ручной лепки', 399, 'СытоПьяно_39.png', 230, 'Мясные горячие блюда'),
 ((SELECT id FROM restaurants WHERE name = 'Сыто Пьяно'), 'Стейк Мясника', 885, 'СытоПьяно_40.png', 300, 'Мясные горячие блюда'),
 ((SELECT id FROM restaurants WHERE name = 'Сыто Пьяно'), 'Стейк Скёрт', 519, 'СытоПьяно_41.png', 200, 'Мясные горячие блюда'),
