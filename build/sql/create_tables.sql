@@ -704,7 +704,7 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 ((SELECT id FROM restaurants WHERE name = 'Вкусно и точка'), 'Соус Чесночный', 45, 'ВкусноИТочка_37.png', 25, 'Соусы'),
 ((SELECT id FROM restaurants WHERE name = 'Вкусно и точка'), 'Кетчуп', 45, 'ВкусноИТочка_38.png', 25, 'Соусы'),
 ((SELECT id FROM restaurants WHERE name = 'Вкусно и точка'), 'Соус Барбекю', 45, 'ВкусноИТочка_39.png', 25, 'Соусы'),
-((SELECT id FROM restaurants WHERE name = 'Вкусно и точка'), 'Влажная салфетка', 5, 'ВкусноИТочка_40.png', 1, 'Соусы'),
+((SELECT id FROM restaurants WHERE name = 'Вкусно и точка'), 'Влажная салфетка', 5, 'ВкусноИТочка_40.png', 1, 'Соусы');
 
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
 ((SELECT id FROM restaurants WHERE name = 'Ростикс'), 'Домашний Баскет', 899, 'Ростикс_1.png', 842, 'Баскеты'),
@@ -1242,7 +1242,7 @@ INSERT INTO products (restaurant_id, name, price, image_url, weight, category) V
 ((SELECT id FROM restaurants WHERE name = 'Достаевский'), 'Куриные крылышки', 458, 'Достаевский_36.png', 230, 'Закуски'),
 ((SELECT id FROM restaurants WHERE name = 'Достаевский'), 'Куриные наггетсы', 357, 'Достаевский_37.png', 190, 'Закуски'),
 ((SELECT id FROM restaurants WHERE name = 'Достаевский'), 'Луковые кольца', 301, 'Достаевский_38.png', 135, 'Закуски'),
-((SELECT id FROM restaurants WHERE name = 'Достаевский'), 'Сырные палочки', 379, 'Достаевский_39.png', 155, 'Закуски'),
+((SELECT id FROM restaurants WHERE name = 'Достаевский'), 'Сырные палочки', 379, 'Достаевский_39.png', 155, 'Закуски');
 
 INSERT INTO products (restaurant_id, name, price, image_url, weight, category) VALUES
 ((SELECT id FROM restaurants WHERE name = 'Синнабон'), 'Классический Синнабон', 320, 'Синнабон_1.png', 240, 'Выпечка'),
