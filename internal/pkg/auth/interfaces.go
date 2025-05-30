@@ -31,6 +31,7 @@ var (
 
 type AuthRepo interface {
 	InsertUser(ctx context.Context, user models.User) error
+	AddPromocode(ctx context.Context, userId uuid.UUID) error
 	SelectUserByLogin(ctx context.Context, login string) (models.User, error)
 	SetSecret2fa(ctx context.Context, secret2fa []byte, login string) error
 	GetSecret2fa(ctx context.Context, login string) ([]byte, error)

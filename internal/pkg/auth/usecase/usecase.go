@@ -243,6 +243,12 @@ func (uc *AuthUsecase) SignUp(ctx context.Context, data models.SignUpReq) (model
 		return models.User{}, "", "", auth.ErrCreatingUser
 	}
 
+	err = uc.repo.AddPromocode(ctx, newUser.Id)
+	if err != nil {
+		logger.Error(err.Error())
+		return models.User{}, "", "", auth.ErrCreatingUser
+	}
+
 	token, err := generateToken(newUser.Login, newUser.Id)
 	if err != nil {
 		logger.Error(err.Error())

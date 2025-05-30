@@ -14,6 +14,7 @@ import (
 
 const (
 	insertUser          = "INSERT INTO users (id, login, first_name, last_name, phone_number, description, user_pic, password_hash) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)"
+	addPromocode        = "INSERT INTO promocodes (promocode, discount, user_id, created_at, expires_at) VALUES ('WELCOME10', 0.10, $1, now(), now() + INTERVAL '7 days')"
 	selectUserByLogin   = "SELECT id, first_name, last_name, phone_number, description, user_pic, password_hash, secret2fa FROM users WHERE login = $1"
 	updateUser          = "UPDATE users SET phone_number = $1, first_name = $2, last_name = $3, description = $4, password_hash = $5 WHERE id = $6;"
 	updateUserPic       = "UPDATE users SET user_pic = $1 WHERE login = $2"
@@ -48,6 +49,18 @@ func (repo *AuthRepo) InsertUser(ctx context.Context, user models.User) error {
 	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
 
 	_, err := repo.db.Exec(ctx, insertUser, user.Id, user.Login, user.FirstName, user.LastName, user.PhoneNumber, user.Description, user.UserPic, user.PasswordHash)
+	if err != nil {
+		logger.Error(err.Error())
+		return err
+	}
+	logger.Info("Successful")
+	return nil
+}
+
+func (repo *AuthRepo) AddPromocode(ctx context.Context, userId uuid.UUID) error {
+	logger := log.GetLoggerFromContext(ctx).With(slog.String("func", log.GetFuncName()))
+
+	_, err := repo.db.Exec(ctx, addPromocode, userId)
 	if err != nil {
 		logger.Error(err.Error())
 		return err

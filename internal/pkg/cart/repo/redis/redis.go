@@ -102,6 +102,12 @@ func (r *CartRepository) UpdateItemQuantity(ctx context.Context, userID, product
 
 		totalSum -= float64(oldQty) * price
 
+		if totalSum >= 100000 {
+			err := fmt.Errorf("сумма заказа не должна превышать 100000 рублей")
+			logger.Error("Ошибка при обновлении суммы корзины", slog.String("error", err.Error()))
+			return err
+		}
+
 		_, err = r.redisClient.HSet(ctx, key, "total_sum", totalSum).Result()
 		if err != nil {
 			logger.Error("Ошибка при обновлении суммы корзины", slog.String("error", err.Error()))
