@@ -261,7 +261,6 @@ VALUES
 ((SELECT id FROM restaurants WHERE name = 'Квартирник'), (SELECT id FROM restaurant_tags WHERE name = 'Французский')),
 ((SELECT id FROM restaurants WHERE name = 'Том и Ям'), (SELECT id FROM restaurant_tags WHERE name = 'Фастфуд')),
 ((SELECT id FROM restaurants WHERE name = 'Квартирник'), (SELECT id FROM restaurant_tags WHERE name = 'Мексиканский')),
-((SELECT id FROM restaurants WHERE name = 'ФудБанд'), (SELECT id FROM restaurant_tags WHERE name = 'Фастфуд')),
 ((SELECT id FROM restaurants WHERE name = 'Сыто Пьяно'), (SELECT id FROM restaurant_tags WHERE name = 'Фастфуд')),
 ((SELECT id FROM restaurants WHERE name = 'Вкус и только'), (SELECT id FROM restaurant_tags WHERE name = 'Итальянский')),
 ((SELECT id FROM restaurants WHERE name = 'ФудБанд'), (SELECT id FROM restaurant_tags WHERE name = 'Фастфуд')),
