@@ -61,35 +61,68 @@ const (
 FROM orders WHERE id = $1 AND user_id = $2;`
 	getRecommendsByPtoducts = `
         WITH current_cart AS (
-            SELECT unnest($1::UUID[]) AS product_id
-        ),
-        orders_with_cart_items AS (
-            SELECT o.id AS order_id
-            FROM orders o
-            JOIN current_cart cc ON cc.product_id = ANY(o.order_items)
-        ),
-        related_products AS (
-            SELECT p.*
-            FROM orders_with_cart_items owci
-            JOIN orders o ON o.id = owci.order_id
-            JOIN products p ON p.id = ANY(o.order_items)
-            WHERE NOT EXISTS (
-                SELECT 1
-                FROM current_cart cc
-                WHERE cc.product_id = p.id
-            )
-            AND p.restaurant_id = $2
-        )
-        SELECT 
-            rp.id,
-            rp.name,
-            rp.price,
-            rp.image_url,
-            rp.weight
-        FROM related_products rp
-        GROUP BY rp.id, rp.name, rp.price, rp.image_url, rp.weight
-        ORDER BY COUNT(*) DESC
-        LIMIT 5;`
+    SELECT unnest($1::UUID[]) AS product_id
+),
+orders_with_cart_items AS (
+    SELECT o.id AS order_id
+    FROM orders o
+    JOIN current_cart cc ON cc.product_id = ANY(o.order_items)
+),
+related_products AS (
+    SELECT p.*
+    FROM orders_with_cart_items owci
+    JOIN orders o ON o.id = owci.order_id
+    JOIN products p ON p.id = ANY(o.order_items)
+    WHERE NOT EXISTS (
+        SELECT 1
+        FROM current_cart cc
+        WHERE cc.product_id = p.id
+    )
+    AND p.restaurant_id = $2
+),
+
+recommendations_based_on_orders AS (
+    SELECT 
+        rp.id,
+        rp.name,
+        rp.price,
+        rp.image_url,
+        rp.weight,
+        1 AS sort_order
+    FROM related_products rp
+    GROUP BY rp.id, rp.name, rp.price, rp.image_url, rp.weight
+    ORDER BY COUNT(*) DESC
+    LIMIT 5
+),
+
+fallback_recommendations AS (
+    SELECT 
+        p.id,
+        p.name,
+        p.price,
+        p.image_url,
+        p.weight,
+        2 AS sort_order
+    FROM products p
+    WHERE p.restaurant_id = $2
+    AND NOT EXISTS (
+        SELECT 1
+        FROM current_cart cc
+        WHERE cc.product_id = p.id
+    )
+    ORDER BY random()
+    LIMIT 5
+)
+
+SELECT id, name, price, image_url, weight
+FROM (
+    SELECT *, 1 AS has_data FROM recommendations_based_on_orders
+    UNION ALL
+    SELECT *, (SELECT CASE WHEN COUNT(*) = 0 THEN 1 ELSE 0 END FROM recommendations_based_on_orders) AS has_data
+    FROM fallback_recommendations
+) combined
+WHERE has_data = 1
+LIMIT 5;`
 	updateOrderStatus            = `UPDATE orders SET status = $1, created_at = NOW() WHERE id = $2;`
 	scheduleDeliveryStatusChange = `SELECT cron.schedule_in('20 seconds', $$UPDATE orders SET status = 'in delivery' WHERE id = $1$$);`
 	deactivateAddress            = "UPDATE addresses SET is_active = false WHERE user_id = $1 AND is_active = true"
